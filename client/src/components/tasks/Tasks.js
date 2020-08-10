@@ -51,18 +51,18 @@ const Tasks = ({tasks, loading, getTasks}) => {
                                 >
                                     <div className='tasks-tooltip hidden'>
                                         <em
-                                            title='Create Task'
+                                            title='Create'
                                             onClick={displayCreateTaskModal}
                                             className='create-task'
                                         />
                                         <em
-                                            title='Edit Task'
+                                            title='Edit'
                                             onClick={
                                                 () => editTask(task._id,
                                                     setEditTaskId)}
                                             className='edit-task'/>
                                         <em
-                                            title='Delete Task'
+                                            title='Delete'
                                             onClick={() =>
                                                 deleteTaskDelete(task._id,
                                                     getTasks)
