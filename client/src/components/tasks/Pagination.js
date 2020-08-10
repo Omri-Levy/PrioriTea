@@ -37,6 +37,7 @@ const Pagination = ({
                 {currentPage >= 4 && pages > 5 &&
                 <li key={1}>
                     <a
+                        id='first-page'
                         onClick={() => paginate(1)}
                     >
                         &#171; First
@@ -59,6 +60,7 @@ const Pagination = ({
                 {maxRight !== totalTasks &&
                 <li key={pages}>
                     <a
+                        id='last-page'
                         onClick={() => paginate(pages)}
                     >
                         Last &#187;
