@@ -34,7 +34,7 @@ const Pagination = ({
     return (
         <nav>
             <ul>
-                {currentPage >= 4 &&
+                {currentPage >= 4 && pages > 5 &&
                 <li key={1}>
                     <a
                         onClick={() => paginate(1)}
