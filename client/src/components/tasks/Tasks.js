@@ -9,14 +9,24 @@ import CreateTaskModal from './modals/CreateTaskModal.js';
 import Loading from '../loading/Loading.js';
 import {deleteTaskDelete} from '../../static/js/requests/deleteTaskDelete.js';
 import EditTaskModal from './modals/EditTaskModal.js';
+import axios from 'axios';
 
-const Tasks = ({tasks, loading, getTasks}) => {
+const Tasks = ({tasks, loading, getTasks, setTasks}) => {
     if (loading) {
         return <Loading/>
     }
-
     const [editTaskId, setEditTaskId] = useState('');
-
+    const onClick = async (Event) => {
+        const url = 'http://localhost:4000/api/task/filter_tasks'
+        const filter = Event.target.parentElement.innerText.toLowerCase();
+        const res = (
+            await
+                axios.post(url, {
+                        filter: filter
+                    }
+                ));
+        setTasks(res.data);
+    }
     return (
         <>
             <CreateTaskModal
@@ -32,7 +42,15 @@ const Tasks = ({tasks, loading, getTasks}) => {
                         <tr>
                             <th
                                 title='Sort'
-                                className='relative-parent'>
+                                className='relative-parent'
+                                onClick={
+                                    (Event) => {
+                                        onClick(Event).catch(err => {
+                                            console.log(err)
+                                        })
+                                    }
+                                }
+                            >
                                 <em
                                     title='Filter'
                                     className='filter-task excluded-link'>

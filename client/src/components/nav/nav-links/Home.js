@@ -64,6 +64,7 @@ const Home = () => {
                         tasks={currentTasks}
                         loading={loading}
                         getTasks={getTasks}
+                        setTasks={setTasks}
                     />
                     <Pagination
                         tasksPerPage={tasksPerPage}

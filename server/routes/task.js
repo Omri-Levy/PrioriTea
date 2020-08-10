@@ -4,13 +4,53 @@ import taskValidation from '../validation/taskValidation.js';
 
 
 const task = express.Router();
+let filterExists = false;
+
+const checkFilter = async () => {
+    if (filterExists) {
+        return (
+            await Task
+                .find({priority: 'ASAP'})
+                .sort([['createdAt', -1]])
+        );
+
+    } else {
+        return (
+            await Task
+                .find({})
+                .sort([['createdAt', -1]])
+        );
+    }
+}
+
+task.post('/filter_tasks',
+    async (req,
+           res) => {
+        try {
+            filterExists = await req.body.filter;
+            const tasks = await checkFilter();
+            res.json(tasks);
+            return filterExists;
+        } catch (err) {
+            res.json(err);
+            console.log(err);
+        }
+    }
+)
 
 task.get('/get_tasks',
     async (req,
            res) => {
-        const tasks = await Task.find().sort([['createdAt', -1]]);
-        res.json(tasks)
-    })
+        try {
+            const tasks = await checkFilter();
+            res.json(tasks)
+            console.log(tasks)
+        } catch (err) {
+            res.json(err);
+            console.log(err);
+        }
+    }
+)
 
 task.post('/create_task',
     async (req,
