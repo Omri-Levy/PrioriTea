@@ -44,6 +44,10 @@ const Tasks = ({tasks, loading, getTasks}) => {
                                 className='relative-parent'
                             >
                                 <em
+                                    title='Filter'
+                                    className='filter-task excluded-link'>
+                                </em>
+                                <em
                                     title='Options'
                                     onMouseEnter={displayTasksTooltip}
                                     onMouseLeave={hideTasksTooltip}
