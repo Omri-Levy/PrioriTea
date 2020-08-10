@@ -85,10 +85,6 @@
   @include center;
 }
 
-.tasks-tooltip-th {
-  position: relative;
-}
-
 .tasks-tooltip {
   position: absolute;
   display: flex;
@@ -141,11 +137,12 @@
   @extend .fas, .fa-filter;
   position: absolute;
   left: 0;
-  margin: 7px 0 0 5px
+  margin: 7px 0 0 5px;
 }
 
 .relative-parent {
   position: relative;
+  padding: 0 40px;
 }
 
 .current-link::after {

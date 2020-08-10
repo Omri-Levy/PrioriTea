@@ -30,13 +30,18 @@ const Tasks = ({tasks, loading, getTasks}) => {
                     <table key={task._id}>
                         <thead>
                         <tr>
-                            <th className='relative-parent'>
-                                <em className='filter-task excluded-link'>
+                            <th
+                                title='Sort'
+                                className='relative-parent'>
+                                <em
+                                    title='Filter'
+                                    className='filter-task excluded-link'>
                                 </em>
                                 Title
                             </th>
                             <th
-                                className='tasks-tooltip-th'
+                                title='Sort'
+                                className='relative-parent'
                             >
                                 <em
                                     title='Options'

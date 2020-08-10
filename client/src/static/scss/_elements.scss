@@ -83,7 +83,6 @@ table, tr, th, td {
 }
 
 th, td {
-  padding: 15px;
   text-align: center;
 }
 
@@ -91,6 +90,7 @@ th {
   background-color: $primary-color;
   font-weight: bolder;
   font-size: 1.7rem;
+  cursor: pointer;
 }
 
 td {
