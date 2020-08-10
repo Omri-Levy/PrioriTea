@@ -1,37 +1,37 @@
-export const displayListsTooltip = () => {
-    const listsTooltip =
-        document.querySelector('.lists-tooltip');
-    listsTooltip.classList.remove('hidden');
+export const displayTasksTooltip = () => {
+    const tasksTooltip =
+        document.querySelector('.tasks-tooltip');
+    tasksTooltip.classList.remove('hidden');
 }
-export const hideListsTooltip = () => {
-    const listsTooltip =
-        document.querySelector('.lists-tooltip');
-    listsTooltip.classList.add('hidden');
-}
-
-export const displayCreateListModal = () => {
-    const createListModal =
-        document.querySelector('.create-list-modal-container');
-    createListModal.classList.remove('hidden');
-}
-export const hideCreateListModal = () => {
-    const createListModal =
-        document.querySelector('.create-list-modal-container');
-    createListModal.classList.add('hidden');
+export const hideTasksTooltip = () => {
+    const tasksTooltip =
+        document.querySelector('.tasks-tooltip');
+    tasksTooltip.classList.add('hidden');
 }
 
-export const displayEditListModal = () => {
-    const createListModal =
-        document.querySelector('.edit-list-modal-container');
-    createListModal.classList.remove('hidden');
+export const displayCreateTaskModal = () => {
+    const createTaskModal =
+        document.querySelector('.create-task-modal-container');
+    createTaskModal.classList.remove('hidden');
 }
-export const hideEditListModal = () => {
-    const createListModal =
-        document.querySelector('.edit-list-modal-container');
-    createListModal.classList.add('hidden');
+export const hideCreateTaskModal = () => {
+    const createTaskModal =
+        document.querySelector('.create-task-modal-container');
+    createTaskModal.classList.add('hidden');
 }
 
-export const editList = (id, setEditListId) => {
-    displayEditListModal();
-    setEditListId(id);
+export const displayEditTaskModal = () => {
+    const createTaskModal =
+        document.querySelector('.edit-task-modal-container');
+    createTaskModal.classList.remove('hidden');
+}
+export const hideEditTaskModal = () => {
+    const createTaskModal =
+        document.querySelector('.edit-task-modal-container');
+    createTaskModal.classList.add('hidden');
+}
+
+export const editTask = (id, setEditTaskId) => {
+    displayEditTaskModal();
+    setEditTaskId(id);
 }

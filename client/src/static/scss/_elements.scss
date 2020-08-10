@@ -97,5 +97,9 @@ td {
   background-color: $secondary-color;
 }
 
+em {
+  cursor: pointer;
+}
+
 @include link-underline(em, $primary-color);
 @include link-underline(a, $primary-color);

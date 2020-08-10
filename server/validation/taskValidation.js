@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
-const listValidation = (data) => {
-    const listSchema = Joi.object({
+const taskValidation = (data) => {
+    const taskSchema = Joi.object({
         title: Joi.string()
             .min(1)
             .max(70)
@@ -11,7 +11,7 @@ const listValidation = (data) => {
             .max(70)
             .required(),
     });
-    return listSchema.validate(data);
+    return taskSchema.validate(data);
 };
 
-export default listValidation;
+export default taskValidation;

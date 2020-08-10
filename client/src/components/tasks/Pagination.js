@@ -1,8 +1,8 @@
 import React from 'react';
 
 const Pagination = ({
-                        listsPerPage,
-                        totalLists,
+                        tasksPerPage,
+                        totalTasks,
                         paginate,
                         currentPage
                     }) => {
@@ -12,7 +12,7 @@ const Pagination = ({
 
     let maxLeft = (currentPage - Math.floor(maxPages / 2));
     let maxRight = (currentPage + Math.floor(maxPages / 2));
-    let pages = Math.round(totalLists / listsPerPage);
+    let pages = Math.round(totalTasks / tasksPerPage);
 
     if (maxLeft < 1) {
         maxLeft = 1
@@ -56,7 +56,7 @@ const Pagination = ({
                         </a>
                     </li>
                 ))}
-                {maxRight !== totalLists &&
+                {maxRight !== totalTasks &&
                 <li key={pages}>
                     <a
                         onClick={() => paginate(pages)}

@@ -85,11 +85,11 @@
   @include center;
 }
 
-.lists-tooltip-th {
+.tasks-tooltip-th {
   position: relative;
 }
 
-.lists-tooltip {
+.tasks-tooltip {
   position: absolute;
   display: flex;
   bottom: 23px;
@@ -118,23 +118,34 @@
   height: 40vh;
 }
 
-.create-list {
+.create-task {
   @extend .fas, .fa-plus;
 }
 
-.edit-list {
+.edit-task {
   @extend .fas, .fa-edit;
 }
 
-.delete-list {
+.delete-task {
   @extend .fas, .fa-trash;
 }
 
-.create-list,
-.edit-list,
-.delete-list {
+.create-task,
+.edit-task,
+.delete-task {
   position: initial;
   margin: 10px;
+}
+
+.filter-task {
+  @extend .fas, .fa-filter;
+  position: absolute;
+  left: 0;
+  margin: 7px 0 0 5px
+}
+
+.relative-parent {
+  position: relative;
 }
 
 .current-link::after {
@@ -162,4 +173,17 @@
   transition: width 0.3s;
   height: 2px;
   background-color: $primary-color;
+}
+
+.excluded-link::after {
+  content: initial;
+  display: initial;
+  width: initial;
+  transition: initial;
+  height: initial;
+  background-color: initial;
+  &:hover::after {
+    transition: initial;
+    width: initial;
+  }
 }

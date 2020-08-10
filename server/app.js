@@ -4,7 +4,7 @@ import cors from 'cors';
 import 'dotenv/config.js';
 
 const app = express();
-const PORT = process.env.PROTOCOL || 3000;
+const PORT = process.env.PORT || 4000;
 
 
 app.use(cors({
@@ -17,11 +17,11 @@ app.use(express.json());
 //import routes
 import auth from './routes/auth.js';
 
-import list from './routes/list.js';
+import task from './routes/task.js';
 
 //route middlewares
 app.use('/api/user', auth);
-app.use('/api/list', list);
+app.use('/api/task', task);
 
 //routes
 

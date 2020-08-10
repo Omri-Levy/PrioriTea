@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {hideCreateListModal} from '../handlers.js';
+import {hideCreateTaskModal} from '../handlers.js';
 
-const createListPost = async (data, getLists) => {
-    const url = 'http://localhost:3000/api/list/create_list';
+const createTaskPost = async (data, getTasks) => {
+    const url = 'http://localhost:4000/api/task/create_task';
     try {
         const res = (
             await axios
@@ -12,11 +12,11 @@ const createListPost = async (data, getLists) => {
                 })
         );
         console.log(res);
-        hideCreateListModal();
-        getLists();
+        hideCreateTaskModal();
+        getTasks();
     } catch (err) {
         console.log(err);
     }
 }
 
-export default createListPost;
+export default createTaskPost;

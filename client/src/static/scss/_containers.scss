@@ -22,19 +22,19 @@
   width: 50vw;
 }
 
-.create-list-modal-container {
+.create-task-modal-container {
   @extend .modal-container
 }
 
-.create-list-modal-content {
+.create-task-modal-content {
   @extend .modal-content
 }
 
-.edit-list-modal-container {
+.edit-task-modal-container {
   @extend .modal-container
 }
 
-.edit-list-modal-content {
+.edit-task-modal-content {
   @extend .modal-content
 }
 
@@ -55,7 +55,7 @@
   width: 100vw;
 }
 
-.lists-container {
+.tasks-container {
   display: inline-flex;
   flex-direction: column;
   margin-top: 5%;
@@ -89,8 +89,9 @@
 
 }
 
-.lists-tooltip-container {
+.tasks-tooltip-container {
   @extend .fas, .fa-ellipsis-v;
+  @extend .excluded-link;
   position: absolute;
   text-align: center;
   margin: 5px auto;

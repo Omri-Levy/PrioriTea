@@ -1,30 +1,32 @@
-import editListSchema from '../../static/js/validation/editListSchema.js';
+import createTaskSchema from '../../static/js/validation/createTaskSchema';
 import {Form, Formik} from 'formik';
 import React from 'react';
 import {Input} from '../Input';
-import editListPatch from '../../static/js/requests/editListPatch.js';
-import {hideEditListModal} from '../../static/js/handlers.js';
+import createTaskPost from '../../static/js/requests/createTaskPost.js';
+import {hideCreateTaskModal} from '../../static/js/handlers.js';
 
-export const EditListForm = ({editListId, getLists}) => {
+export const CreateTaskForm = ({getTasks}) => {
     return (
         <Formik
             initialValues={{
                 title: '',
                 owner: '',
             }}
-            validationSchema={editListSchema}
-            onSubmit={
-                (data) => editListPatch(data, getLists,
-                    editListId)
-            }
+            validationSchema={createTaskSchema}
+            onSubmit={(data) => createTaskPost(data, getTasks)}
         >
             {() => (
-                <Form className='edit-list-form'>
+                <Form className='create-task-form'>
+                    <p className='required-fields-msg'>
+                        Indicates required fields
+                    </p>
                     <Input
                         autoFocus={true}
                         label='Title'
                         name='title'
                         type='text'
+                        required
+                        isRequired={true}
                         autoComplete='on'
                         placeholder='Title'
                     />
@@ -32,17 +34,19 @@ export const EditListForm = ({editListId, getLists}) => {
                         label='Owner'
                         name='owner'
                         type='text'
+                        required
+                        isRequired={true}
                         autoComplete='on'
                         placeholder='Owner'
                     />
                     <button
                         type='submit'
                         className='primary-btn'>
-                        Edit
+                        Create
                     </button>
                     <button
                         type='button'
-                        onClick={hideEditListModal}
+                        onClick={hideCreateTaskModal}
                         className='primary-btn'>
                         Cancel
                     </button>

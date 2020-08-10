@@ -1,24 +1,24 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import Lists from '../../lists/Lists.js';
-import Pagination from '../../lists/Pagination';
+import Tasks from '../../tasks/Tasks.js';
+import Pagination from '../../tasks/Pagination';
 import Loading from '../../loading/Loading.js';
-import {displayCreateListModal} from '../../../static/js/handlers.js';
+import {displayCreateTaskModal} from '../../../static/js/handlers.js';
 
 const Home = () => {
-    const [lists, setLists] = useState([]);
+    const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1);
-    const [listsPerPage] = useState(1);
+    const [tasksPerPage] = useState(1);
 
-    const getLists = async () => {
+    const getTasks = async () => {
         try {
             const res = (
                 await axios
-                    .get('http://localhost:3000/api/list/get_lists')
+                    .get('http://localhost:4000/api/task/get_tasks')
             );
-            setLists(res.data);
-            res.data.length === 0 && displayCreateListModal();
+            setTasks(res.data);
+            res.data.length === 0 && displayCreateTaskModal();
         } catch (err) {
             console.log(err);
         }
@@ -31,7 +31,7 @@ const Home = () => {
     }, []);
     useEffect(() => {
         setLoading(true);
-        getLists().catch(err => console.log(err));
+        getTasks().catch(err => console.log(err));
         setLoading(false);
 
     }, []);
@@ -45,9 +45,9 @@ const Home = () => {
         const storePage = currentPage.toString();
         localStorage.setItem('currentPage', storePage)
     }, [currentPage]);
-    const indexOfLastList = currentPage * listsPerPage;
-    const indexOfFirstList = indexOfLastList - listsPerPage;
-    const currentLists = lists.slice(indexOfFirstList, indexOfLastList);
+    const indexOfLastTask = currentPage * tasksPerPage;
+    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+    const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -59,15 +59,15 @@ const Home = () => {
     } else {
         return (
             <div className='body-container'>
-                <div className='lists-container'>
-                    <Lists
-                        lists={currentLists}
+                <div className='tasks-container'>
+                    <Tasks
+                        tasks={currentTasks}
                         loading={loading}
-                        getLists={getLists}
+                        getTasks={getTasks}
                     />
                     <Pagination
-                        listsPerPage={listsPerPage}
-                        totalLists={lists.length}
+                        tasksPerPage={tasksPerPage}
+                        totalTasks={tasks.length}
                         paginate={paginate}
                         currentPage={currentPage}
                     />

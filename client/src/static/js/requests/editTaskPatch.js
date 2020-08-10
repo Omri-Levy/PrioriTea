@@ -1,23 +1,23 @@
 import axios from 'axios';
-import {hideEditListModal} from '../handlers.js';
+import {hideEditTaskModal} from '../handlers.js';
 
-const editListPatch = async (data, getLists, editListId) => {
-    const url = 'http://localhost:3000/api/list/edit_list';
+const editTaskPatch = async (data, getTasks, editTaskId) => {
+    const url = 'http://localhost:4000/api/task/edit_task';
     try {
         const res = (
             await axios
                 .patch(url, {
-                    _id: editListId,
+                    _id: editTaskId,
                     title: data.title,
                     owner: data.owner
                 })
         );
         console.log(res);
-        hideEditListModal();
-        getLists();
+        hideEditTaskModal();
+        getTasks();
     } catch (err) {
         console.log(err);
     }
 }
 
-export default editListPatch;
+export default editTaskPatch;

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {NavLink} from 'react-router-dom';
 
 const Nav = () => {
-    const [isLogged, setIsLogged] = useState(false);
+    const [isLogged, setIsLogged] = useState(true);
     useEffect(() => {
         localStorage.setItem('isLogged', JSON.stringify(isLogged))
     }, [isLogged])

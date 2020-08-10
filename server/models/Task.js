@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 const model = mongoose.model;
 
-const ListSchema = Schema({
+const TaskSchema = Schema({
         title: {
             type: String,
             min: 1,
@@ -21,5 +21,5 @@ const ListSchema = Schema({
         timestamps: true
     });
 
-export default model('Lists', ListSchema);
+export default model('Tasks', TaskSchema);
 

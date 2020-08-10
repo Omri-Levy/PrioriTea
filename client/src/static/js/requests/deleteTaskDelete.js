@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const deleteListDelete = async (id, getLists) => {
-    const url = 'http://localhost:3000/api/list/delete_list';
+export const deleteTaskDelete = async (id, getTasks) => {
+    const url = 'http://localhost:4000/api/task/delete_task';
     try {
         const res = (
             await axios
@@ -13,7 +13,7 @@ export const deleteListDelete = async (id, getLists) => {
                 })
         );
         console.log(res);
-        getLists();
+        getTasks();
     } catch (err) {
         console.log(err);
     }
