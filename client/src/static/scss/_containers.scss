@@ -1,0 +1,99 @@
+@import 'variables';
+@import 'mixins';
+
+.container {
+  @include column-flex;
+}
+
+.modal-container {
+  @include column-flex;
+  background-color: rgba(black, 0.75);
+  height: 100vh;
+  position: fixed;
+  z-index: 1;
+  align-items: center;
+  @include reset-position;
+}
+
+.modal-content {
+  position: relative;
+  margin: 13% 0;
+  background-color: $secondary-color;
+  width: 50vw;
+}
+
+.create-list-modal-container {
+  @extend .modal-container
+}
+
+.create-list-modal-content {
+  @extend .modal-content
+}
+
+.edit-list-modal-container {
+  @extend .modal-container
+}
+
+.edit-list-modal-content {
+  @extend .modal-content
+}
+
+.form-container {
+  @include column-flex;
+  width: 30vw;
+  min-width: 182px;
+  max-width: 1700px;
+  @include center;
+  background-color: $secondary-color;
+  border-radius: $primary-border-radius;
+}
+
+.body-container {
+  @include column-flex;
+  align-items: center;
+  height: 80vh;
+  width: 100vw;
+}
+
+.lists-container {
+  display: inline-flex;
+  flex-direction: column;
+  margin-top: 5%;
+
+  nav {
+    @include center-end;
+    background-color: $primary-color;
+    border: 2px solid black;
+    border-radius: $primary-border-radius;
+
+    ul {
+      list-style-type: none;
+
+      li {
+        display: flex;
+        background-color: $secondary-color;
+        border-radius: $primary-border-radius;
+        border: 2px solid black;
+        justify-content: center;
+        align-items: center;
+        margin: 1px;
+        padding: 10px 25px;
+
+        a {
+          cursor: pointer;
+          @include global-font;
+        }
+      }
+    }
+  }
+
+}
+
+.lists-tooltip-container {
+  @extend .fas, .fa-ellipsis-v;
+  position: absolute;
+  text-align: center;
+  margin: 5px auto;
+  padding: 3px;
+  right: 5px;
+}

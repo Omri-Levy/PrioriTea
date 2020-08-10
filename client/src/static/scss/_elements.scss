@@ -1,0 +1,101 @@
+@import 'mixins';
+@import 'variables';
+
+* {
+  @include reset;
+  color: set-text-color($bg-color);
+}
+
+html {
+  font-size: 62.5%;
+  min-width: 208px;
+}
+
+body {
+  background-color: $bg-color;
+  font-family: $font-stack;
+  line-height: 1.6;
+}
+
+header {
+  width: 100vw;
+}
+
+header,
+nav,
+nav ul {
+  display: flex;
+  @include center-end();
+}
+
+header {
+  @include set-background-color($primary-color);
+
+  h1 {
+    padding: 15px;
+    font-size: 3rem;
+  }
+}
+
+em {
+  position: absolute;
+  font-style: normal;
+}
+
+a,
+a:visited {
+  text-decoration: none;
+  color: set-text-color($bg-color);
+}
+
+a:focus::after, .paginate-anchor {
+  width: 100%;
+  transition: width 0.3s;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: 4px solid $bg-color;
+  caret-color: white;
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0 1000px $bg-color inset,
+  0 0 0 1000px darken($bg-color, 10%) inset,
+  0 0 0 1000px darken($bg-color, 10%) inset,
+  0 0 0 1000px darken($bg-color, 10%) inset,
+  0 0 0 1000px darken($bg-color, 10%) inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+table {
+  background-color: black;
+}
+
+table, tr, th, td {
+  border-radius: $primary-border-radius;
+  @include global-font;
+}
+
+th, td {
+  padding: 15px;
+  text-align: center;
+}
+
+th {
+  background-color: $primary-color;
+  font-weight: bolder;
+  font-size: 1.7rem;
+}
+
+td {
+  background-color: $secondary-color;
+}
+
+@include link-underline(em, $primary-color);
+@include link-underline(a, $primary-color);

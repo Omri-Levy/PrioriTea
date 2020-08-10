@@ -1,0 +1,165 @@
+@import 'variables';
+@import 'mixins';
+@import 'keyframes';
+
+.form-label,
+.error,
+.primary-input,
+.primary-btn {
+  @include global-font;
+}
+
+.primary-input,
+.primary-btn {
+  @include custom-border($bg-color);
+}
+
+.main-nav {
+  @include center-end();
+  background-color: $secondary-color;
+  border-top: 4px solid white;
+  border-bottom: 2px solid black;
+  width: 100vw;
+
+  ul {
+    list-style-type: none;
+
+    li {
+      padding: 15px;
+      @include global-font();
+
+    }
+  }
+}
+
+.required:before {
+  content: '*';
+  color: red;
+}
+
+.error {
+  @include error-box;
+  border-radius: $primary-border-radius;
+  font-weight: initial;
+  font-size: 14px;
+}
+
+.primary-input,
+.primary-btn {
+  height: 55px;
+}
+
+.primary-btn {
+  border-radius: $primary-border-radius;
+  background-color: $primary-color;
+}
+
+.primary-input {
+  border-radius: $primary-border-radius;
+  background-color: $bg-color;
+}
+
+.required-fields-msg {
+  font-size: $primary-font-size;
+  text-align: center;
+
+  &:before {
+    content: '*';
+    color: red;
+  }
+}
+
+.email-exists {
+  display: flex;
+  width: 100%;
+  @include center;
+  @include error-box;
+  border-radius: $primary-border-radius;
+  font-size: $primary-font-size;
+
+}
+
+.email-exists-content {
+  display: flex;
+  position: relative;
+  @include center;
+}
+
+.lists-tooltip-th {
+  position: relative;
+}
+
+.lists-tooltip {
+  position: absolute;
+  display: flex;
+  bottom: 23px;
+  right: 6px;
+  justify-content: space-evenly;
+  background-color: $secondary-color;
+  border-radius: $primary-border-radius;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spinner {
+    animation: loading infinite 20s;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.spinner-container {
+  @include column-flex;
+  @include center;
+  overflow: hidden;
+  margin: auto;
+  width: 40vw;
+  height: 40vh;
+}
+
+.create-list {
+  @extend .fas, .fa-plus;
+}
+
+.edit-list {
+  @extend .fas, .fa-edit;
+}
+
+.delete-list {
+  @extend .fas, .fa-trash;
+}
+
+.create-list,
+.edit-list,
+.delete-list {
+  position: initial;
+  margin: 10px;
+}
+
+.current-link::after {
+  content: '';
+  display: block;
+  width: 100%;
+  transition: width 0.3s;
+  height: 2px;
+  background-color: $primary-color;
+}
+
+.page-btn::after {
+  content: '';
+  display: block;
+  width: 0;
+  transition: width 0.3s;
+  height: 2px;
+  background-color: $primary-color;
+}
+
+.current-page::after {
+  content: '';
+  display: block;
+  width: 100%;
+  transition: width 0.3s;
+  height: 2px;
+  background-color: $primary-color;
+}
