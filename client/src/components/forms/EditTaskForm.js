@@ -9,8 +9,9 @@ export const EditTaskForm = ({editTaskId, getTasks}) => {
     return (
         <Formik
             initialValues={{
-                title: '',
-                owner: '',
+                priority: '',
+                task: '',
+                status: ''
             }}
             validationSchema={editTaskSchema}
             onSubmit={
@@ -23,19 +24,27 @@ export const EditTaskForm = ({editTaskId, getTasks}) => {
                     <Input
                         maxLength='80'
                         autoFocus={true}
-                        label='Title'
-                        name='title'
+                        label='Priority'
+                        name='priority'
                         type='text'
                         autoComplete='on'
-                        placeholder='Title'
+                        placeholder='Priority'
                     />
                     <Input
-                        maxLength='70'
-                        label='Owner'
-                        name='owner'
+                        maxLength='80'
+                        label='Task'
+                        name='task'
                         type='text'
                         autoComplete='on'
-                        placeholder='Owner'
+                        placeholder='Task'
+                    />
+                    <Input
+                        maxLength='80'
+                        label='Status'
+                        name='status'
+                        type='text'
+                        autoComplete='on'
+                        placeholder='Status'
                     />
                     <button
                         type='submit'

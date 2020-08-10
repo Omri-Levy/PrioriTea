@@ -37,12 +37,21 @@ const Tasks = ({tasks, loading, getTasks}) => {
                                     title='Filter'
                                     className='filter-task excluded-link'>
                                 </em>
-                                Title
+                                Priority
                             </th>
                             <th
                                 title='Sort'
                                 className='relative-parent'
                             >
+                                <em
+                                    title='Filter'
+                                    className='filter-task excluded-link'>
+                                </em>
+                                Task
+                            </th>
+                            <th
+                                title='Sort'
+                                className='relative-parent'>
                                 <em
                                     title='Filter'
                                     className='filter-task excluded-link'>
@@ -75,17 +84,20 @@ const Tasks = ({tasks, loading, getTasks}) => {
                                         />
                                     </div>
                                 </em>
-                                Owner
+                                Status
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td className='title'>
-                                {task.title}
+                            <td className='priority'>
+                                {task.priority}
                             </td>
-                            <td className='owner'>
-                                {task.owner}
+                            <td className='task'>
+                                {task.task}
+                            </td>
+                            <td className='status'>
+                                {task.status}
                             </td>
                         </tr>
                         </tbody>

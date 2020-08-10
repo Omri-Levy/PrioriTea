@@ -19,8 +19,9 @@ task.post('/create_task',
         if (error) return res.status(400).send(error.details[0].message);
 
         const newTask = new Task({
-            title: req.body.title,
-            owner: req.body.owner
+            priority: req.body.priority,
+            task: req.body.task,
+            status: req.body.status
         });
 
         try {
@@ -41,8 +42,11 @@ task.patch('/edit_task',
                 {_id: req.body._id},
                 {
                     $set: {
-                        title: req.body.title ? req.body.title : oldTask.title,
-                        owner: req.body.owner ? req.body.owner : oldTask.owner,
+                        priority: req.body.priority ? req.body.priority :
+                            oldTask.priority,
+                        task: req.body.task ? req.body.task : oldTask.task,
+                        status: req.body.status ? req.body.status :
+                            oldTask.status
                     }
                 });
             res.json(updatedTask);
@@ -64,4 +68,3 @@ task.delete('/delete_task',
     });
 
 export default task;
-

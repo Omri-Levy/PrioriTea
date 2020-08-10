@@ -7,8 +7,8 @@ const createTaskPost = async (data, getTasks) => {
         const res = (
             await axios
                 .post(url, {
-                    title: data.title,
-                    owner: data.owner,
+                    priority: data.priority,
+                    task: data.task,
                 })
         );
         console.log(res);

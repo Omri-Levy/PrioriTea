@@ -8,8 +8,9 @@ const editTaskPatch = async (data, getTasks, editTaskId) => {
             await axios
                 .patch(url, {
                     _id: editTaskId,
-                    title: data.title,
-                    owner: data.owner
+                    priority: data.priority,
+                    task: data.task,
+                    status: data.status
                 })
         );
         console.log(res);

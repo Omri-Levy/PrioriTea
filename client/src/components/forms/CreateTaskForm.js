@@ -9,8 +9,9 @@ export const CreateTaskForm = ({getTasks}) => {
     return (
         <Formik
             initialValues={{
-                title: '',
-                owner: '',
+                priority: '',
+                task: '',
+                status: ''
             }}
             validationSchema={createTaskSchema}
             onSubmit={(data) => createTaskPost(data, getTasks)}
@@ -23,23 +24,23 @@ export const CreateTaskForm = ({getTasks}) => {
                     <Input
                         maxLength='80'
                         autoFocus={true}
-                        label='Title'
-                        name='title'
+                        label='Priority'
+                        name='priority'
                         type='text'
                         required
                         isRequired={true}
                         autoComplete='on'
-                        placeholder='Title'
+                        placeholder='Priority'
                     />
                     <Input
-                        maxLength='70'
-                        label='Owner'
-                        name='owner'
+                        maxLength='80'
+                        label='Task'
+                        name='task'
                         type='text'
                         required
                         isRequired={true}
                         autoComplete='on'
-                        placeholder='Owner'
+                        placeholder='Task'
                     />
                     <button
                         type='submit'

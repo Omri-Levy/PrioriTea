@@ -4,17 +4,23 @@ const Schema = mongoose.Schema;
 const model = mongoose.model;
 
 const TaskSchema = Schema({
-        title: {
+        priority: {
             type: String,
             min: 1,
-            max: 70,
+            max: 80,
             required: true
         },
-        owner: {
+        task: {
             type: String,
-            min: 2,
-            max: 70,
+            min: 1,
+            max: 80,
             required: true
+        },
+        status: {
+            type: String,
+            min: 1,
+            max: 80,
+            default: 'Standby'
         }
     },
     {
@@ -22,4 +28,3 @@ const TaskSchema = Schema({
     });
 
 export default model('Tasks', TaskSchema);
-
