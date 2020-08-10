@@ -11,7 +11,6 @@ const createTaskPost = async (data, getTasks) => {
                     task: data.task,
                 })
         );
-        console.log(res);
         hideCreateTaskModal();
         getTasks();
     } catch (err) {

@@ -1,110 +1,28 @@
 import express from 'express';
-import Task from '../models/Task.js';
-import taskValidation from '../validation/taskValidation.js';
+import {
+    createTask,
+    filterTasks,
+    getTasks,
+    editTask,
+    deleteTask
+} from '../controllers/task.js';
 
 
 const task = express.Router();
-let filterExists = false;
 
-const checkFilter = async () => {
-    if (filterExists) {
-        return (
-            await Task
-                .find({priority: 'ASAP'})
-                .sort([['createdAt', -1]])
-        );
+//sends back a filtered array using a parameter sent from the user
+task.post('/filter_tasks', (req, res) => filterTasks(req, res));
 
-    } else {
-        return (
-            await Task
-                .find({})
-                .sort([['createdAt', -1]])
-        );
-    }
-}
+//sends back all existing tasks from mongodb
+task.get('/get_tasks', (req, res) => getTasks(req, res));
 
-task.post('/filter_tasks',
-    async (req,
-           res) => {
-        try {
-            filterExists = await req.body.filter;
-            const tasks = await checkFilter();
-            res.json(tasks);
-            return filterExists;
-        } catch (err) {
-            res.json(err);
-            console.log(err);
-        }
-    }
-)
+//adds a new task to mongodb using parameters sent from the user
+task.post('/create_task', (req, res) => createTask(req, res));
 
-task.get('/get_tasks',
-    async (req,
-           res) => {
-        try {
-            const tasks = await checkFilter();
-            res.json(tasks)
-            console.log(tasks)
-        } catch (err) {
-            res.json(err);
-            console.log(err);
-        }
-    }
-)
+//updates an existing task from mongodb using an id sent from the user
+task.patch('/edit_task', (req, res) => editTask(req, res));
 
-task.post('/create_task',
-    async (req,
-           res) => {
-        const {error} = await taskValidation(req.body);
-        if (error) return res.status(400).send(error.details[0].message);
-
-        const newTask = new Task({
-            priority: req.body.priority,
-            task: req.body.task,
-            status: req.body.status
-        });
-
-        try {
-            const savedTask = await newTask.save();
-            res.json({task: savedTask._id});
-        } catch (err) {
-            res.json({message: err});
-        }
-
-    });
-
-task.patch('/edit_task',
-    async (req,
-           res) => {
-        try {
-            const oldTask = await Task.findById(req.body._id);
-            const updatedTask = await Task.updateOne(
-                {_id: req.body._id},
-                {
-                    $set: {
-                        priority: req.body.priority ? req.body.priority :
-                            oldTask.priority,
-                        task: req.body.task ? req.body.task : oldTask.task,
-                        status: req.body.status ? req.body.status :
-                            oldTask.status
-                    }
-                });
-            res.json(updatedTask);
-        } catch (err) {
-            res.json({message: err});
-        }
-    });
-
-task.delete('/delete_task',
-    async (req,
-           res) => {
-        try {
-            const deletedTask = await Task.deleteOne(
-                {_id: req.body._id});
-            res.json(deletedTask);
-        } catch (err) {
-            res.json({message: err});
-        }
-    });
+//deletes an existing task from mongodb using an id sent from the user
+task.delete('/delete_task', (req, res) => deleteTask(req, res));
 
 export default task;

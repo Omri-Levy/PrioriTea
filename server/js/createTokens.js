@@ -2,22 +2,27 @@ import * as jwt from 'jsonwebtoken';
 
 const sign = jwt.sign
 
-export const createAccessToken = (user) => {
+const createAccessToken = (user) => {
     return {
         token: sign({_id: user._id},
-            process.env.SECRET_TOKEN,
+            process.env.ACCESS_TOKEN_SECRET,
             {
                 expiresIn: '15m'
             })
     }
 }
 
-export const createRefreshToken = (user) => {
+const createRefreshToken = (user) => {
     return {
         token: sign({_id: user._id},
-            process.env.REFRESH_TOKEN,
+            process.env.REFRESH_TOKEN_SECRET,
             {
                 expiresIn: '30m'
             })
     }
+}
+
+export {
+    createAccessToken,
+    createRefreshToken
 }

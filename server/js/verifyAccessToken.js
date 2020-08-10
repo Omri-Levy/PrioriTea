@@ -1,6 +1,6 @@
 import {verify} from 'jsonwebtoken';
 
-const auth = (req, res, next) => {
+const verifyAccessToken = (req, res, next) => {
     const accessToken = req.header('auth-access-token');
     if (!accessToken) return res.status(401).send('Access Denied');
     try {
@@ -11,4 +11,4 @@ const auth = (req, res, next) => {
     }
 }
 
-module.exports = auth;
+export default verifyAccessToken;
