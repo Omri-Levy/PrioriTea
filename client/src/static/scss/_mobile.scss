@@ -15,6 +15,9 @@
   body {
     background-color: green;
   }
+  .body-container {
+    overflow-x: auto;
+  }
 }
 
 /* Medium devices (landscape tablets, 768px and up) */

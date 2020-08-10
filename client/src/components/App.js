@@ -11,7 +11,6 @@ import Signin from './nav/nav-links/Signin';
 import Signout from './nav/nav-links/Signout';
 import Signup from './nav/nav-links/Signup';
 import Nav from './nav/Nav.js';
-import '../static/js/listeners/media580';
 
 const App = () => {
     return (
