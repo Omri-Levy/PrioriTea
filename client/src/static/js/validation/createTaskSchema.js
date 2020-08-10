@@ -5,8 +5,8 @@ const createTaskSchema = Yup.object({
         .min(1,
             'Title must include a minimum of 1 characters.')
         .max(
-            320,
-            'Title must include of a maximum of 70 characters.')
+            80,
+            'Title must include of a maximum of 80 characters.')
         .required('Title is  a required field.'),
     owner: Yup.string()
         .min(2,

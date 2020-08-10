@@ -29,6 +29,7 @@ export const SignupForm = () => {
                                 Indicates required fields
                             </p>
                             <Input
+                                maxLength='320'
                                 autoFocus={true}
                                 label='Email'
                                 name='email'
@@ -39,6 +40,7 @@ export const SignupForm = () => {
                                 placeholder='Email'
                             />
                             <Input
+                                maxLength='70'
                                 label='Full name'
                                 name='fullName'
                                 type='text'
@@ -48,6 +50,7 @@ export const SignupForm = () => {
                                 placeholder='Full Name'
                             />
                             <Input
+                                maxLength='256'
                                 label='Password'
                                 name='password'
                                 type='password'
@@ -57,6 +60,7 @@ export const SignupForm = () => {
                                 placeholder='Password'
                             />
                             <Input
+                                maxLength='256'
                                 id='password-confirmation'
                                 label='Password Confirmation'
                                 name='passwordConfirmation'

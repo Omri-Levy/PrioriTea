@@ -5,6 +5,9 @@
   body {
     background-color: blue;
   }
+  .body-container {
+    overflow-x: auto;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -34,9 +37,3 @@
     background-color: $bg-color;
   }
 }
-
-
-
-
-
-

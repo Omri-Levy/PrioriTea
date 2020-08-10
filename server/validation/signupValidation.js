@@ -4,7 +4,7 @@ import passwordComplexity from 'joi-password-complexity';
 const signupValidation = (data) => {
     const complexityOptions = {
         min: 8,
-        max: 128,
+        max: 256,
         lowerCase: 1,
         upperCase: 1,
         numeric: 1,

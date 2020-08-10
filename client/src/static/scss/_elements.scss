@@ -84,6 +84,7 @@ table, tr, th, td {
 
 th, td {
   text-align: center;
+  padding: 20px;
 }
 
 th {
@@ -95,6 +96,7 @@ th {
 
 td {
   background-color: $secondary-color;
+  overflow-wrap: break-word;
 }
 
 em {

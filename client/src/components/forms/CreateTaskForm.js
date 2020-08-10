@@ -21,6 +21,7 @@ export const CreateTaskForm = ({getTasks}) => {
                         Indicates required fields
                     </p>
                     <Input
+                        maxLength='80'
                         autoFocus={true}
                         label='Title'
                         name='title'
@@ -31,6 +32,7 @@ export const CreateTaskForm = ({getTasks}) => {
                         placeholder='Title'
                     />
                     <Input
+                        maxLength='70'
                         label='Owner'
                         name='owner'
                         type='text'

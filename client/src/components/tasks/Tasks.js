@@ -77,8 +77,12 @@ const Tasks = ({tasks, loading, getTasks}) => {
                         </thead>
                         <tbody>
                         <tr>
-                            <td>{task.title}</td>
-                            <td>{task.owner}</td>
+                            <td className='title'>
+                                {task.title}
+                            </td>
+                            <td className='owner'>
+                                {task.owner}
+                            </td>
                         </tr>
                         </tbody>
                     </table>

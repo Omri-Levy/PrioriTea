@@ -32,6 +32,18 @@
   }
 }
 
+.title {
+  height: 176px;
+  min-width: 240px;
+  max-width: 240px;
+}
+
+.owner {
+  height: 176px;
+  min-width: 250px;
+  max-width: 250px;
+}
+
 .required:before {
   content: '*';
   color: red;
@@ -142,7 +154,6 @@
 
 .relative-parent {
   position: relative;
-  padding: 0 40px;
 }
 
 .current-link::after {

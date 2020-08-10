@@ -4,7 +4,7 @@ const taskValidation = (data) => {
     const taskSchema = Joi.object({
         title: Joi.string()
             .min(1)
-            .max(70)
+            .max(80)
             .required(),
         owner: Joi.string()
             .min(2)

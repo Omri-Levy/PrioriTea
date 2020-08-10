@@ -21,6 +21,7 @@ export const EditTaskForm = ({editTaskId, getTasks}) => {
             {() => (
                 <Form className='edit-task-form'>
                     <Input
+                        maxLength='80'
                         autoFocus={true}
                         label='Title'
                         name='title'
@@ -29,6 +30,7 @@ export const EditTaskForm = ({editTaskId, getTasks}) => {
                         placeholder='Title'
                     />
                     <Input
+                        maxLength='70'
                         label='Owner'
                         name='owner'
                         type='text'
