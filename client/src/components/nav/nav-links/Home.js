@@ -1,17 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useContext} from 'react';
 import axios from 'axios';
 import Tasks from '../../tasks/Tasks.js';
 import Pagination from '../../tasks/Pagination.js';
 import Loading from '../../loading/Loading.js';
 import {displayCreateTaskModal} from '../../../static/js/handlers.js';
+import {AppContext} from '../../context/AppContext';
 
 const Home = () => {
-    const [tasks, setTasks] = useState([]);
-    const [tasksCopy, setTasksCopy] = useState([]);
-    const [loading, setLoading] = useState(false)
-    const [currentPage, setCurrentPage] = useState(1);
-    const [tasksPerPage] = useState(1);
-
+    const [
+        tasks, setTasks,
+        tasksCopy, setTasksCopy,
+        loading, setLoading,
+        currentPage, setCurrentPage,
+        tasksPerPage
+    ] = useContext(AppContext);
     const getTasks = async () => {
         const res = (
             await axios
