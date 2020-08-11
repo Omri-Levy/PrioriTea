@@ -43,16 +43,13 @@ const Home = () => {
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
 
-    const filter = async (Event) => {
-        const value = Event.target.value.toLowerCase();
+    const filter = async (value) => {
         const valueIncluded = (task) => {
-            if (task.priority.includes(value)) {
-                return task.priority.includes(value);
-            } else if (task.task.includes(value)) {
-                return task.task.includes(value);
-            } else if (task.status.includes(value)) {
-                return task.status.includes(value);
-            }
+            return (
+                task.priority.includes(value) ||
+                task.task.includes(value) ||
+                task.status.includes(value)
+            );
         }
 
         const filteredTasks = tasks.filter(task => valueIncluded(task));
@@ -71,7 +68,7 @@ const Home = () => {
                 id='search-input'
                 className='primary-input'
                 type='text'
-                onChange={filter}
+                onChange={(Event) => filter(Event.target.value.toLowerCase())}
             />
             <div className='tasks-container'>
                 <Tasks
