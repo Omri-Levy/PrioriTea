@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import Tasks from '../../tasks/Tasks.js';
-import Pagination from '../../tasks/Pagination';
+import Pagination from '../../tasks/Pagination.js';
 import Loading from '../../loading/Loading.js';
 import {displayCreateTaskModal} from '../../../static/js/handlers.js';
 
@@ -13,35 +13,27 @@ const Home = () => {
     const [tasksPerPage] = useState(1);
 
     const getTasks = async () => {
-        try {
-            const res = (
-                await axios
-                    .get('http://localhost:4000/api/task/get_tasks')
-            );
-            setTasks(res.data);
-            setTasksCopy(res.data);
-            res.data.length === 0 && displayCreateTaskModal();
-        } catch (err) {
-            console.log(err);
-        }
+        const res = (
+            await axios
+                .get('http://localhost:4000/api/task/get_tasks')
+                .catch((err => console.log(err))
+                ));
+        setTasks(res.data);
+        setTasksCopy(res.data);
+        res.data.length === 0 && displayCreateTaskModal();
     }
     useEffect(() => {
         const isLogged = JSON.parse(localStorage.getItem('isLogged'));
-        if (!isLogged) {
-            location.href = '/signin';
-        }
-    }, []);
-    useEffect(() => {
-        setLoading(true);
-        getTasks().catch(err => console.log(err));
-        setLoading(false);
+        if (!isLogged) location.href = '/signin';
 
     }, []);
     useEffect(() => {
+        setLoading(true);
+        getTasks().then(() => setLoading(false));
+    }, []);
+    useEffect(() => {
         const storedPage = parseInt(localStorage.getItem('currentPage'));
-        if (storedPage) {
-            setCurrentPage(storedPage);
-        }
+        storedPage && setCurrentPage(storedPage);
     }, []);
     useEffect(() => {
         const storePage = currentPage.toString();
@@ -52,60 +44,50 @@ const Home = () => {
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
 
     const filter = async (Event) => {
-        const filteredTasks = []
         const value = Event.target.value.toLowerCase();
-
-        for (let i = 0; i < tasks.length; i++) {
-            const priority = tasks[i].priority.toLowerCase();
-            const task = tasks[i].task.toLowerCase();
-            const status = tasks[i].status.toLowerCase();
-            const includes = [priority, task, status]
-
-            for (let j = 0; j < includes.length; j++) {
-                if (includes[j].includes(value)) {
-                    filteredTasks.push(tasks[i]);
-                    break;
-                }
+        const valueIncluded = (task) => {
+            if (task.priority.includes(value)) {
+                return task.priority.includes(value);
+            } else if (task.task.includes(value)) {
+                return task.task.includes(value);
+            } else if (task.status.includes(value)) {
+                return task.status.includes(value);
             }
         }
+
+        const filteredTasks = tasks.filter(task => valueIncluded(task));
+
         setTasksCopy(filteredTasks);
     }
 
     let currentTasks = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
 
-    const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    }
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    if (loading) {
-        return (
-            <Loading/>
-        );
-    } else {
-        return (
-            <div className='body-container'>
-                <input
-                    id='search-input'
-                    className='primary-input'
-                    type='text'
-                    onChange={filter}
+    if (loading) return <Loading/>
+    else return (
+        <div className='body-container'>
+            <input
+                id='search-input'
+                className='primary-input'
+                type='text'
+                onChange={filter}
+            />
+            <div className='tasks-container'>
+                <Tasks
+                    tasks={currentTasks}
+                    loading={loading}
+                    getTasks={getTasks}
                 />
-                <div className='tasks-container'>
-                    <Tasks
-                        tasks={currentTasks}
-                        loading={loading}
-                        getTasks={getTasks}
-                    />
-                    <Pagination
-                        tasksPerPage={tasksPerPage}
-                        totalTasks={tasks.length}
-                        paginate={paginate}
-                        currentPage={currentPage}
-                    />
-                </div>
+                <Pagination
+                    tasksPerPage={tasksPerPage}
+                    totalTasks={tasks.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                />
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default Home;
