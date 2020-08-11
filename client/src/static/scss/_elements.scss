@@ -8,7 +8,6 @@
 
 html {
   font-size: 62.5%;
-  min-width: 208px;
 }
 
 body {
@@ -83,18 +82,24 @@ table, tr, th, td {
 }
 
 th, td {
-  padding: 15px;
   text-align: center;
+  padding: 20px;
 }
 
 th {
   background-color: $primary-color;
   font-weight: bolder;
   font-size: 1.7rem;
+  cursor: pointer;
 }
 
 td {
   background-color: $secondary-color;
+  overflow-wrap: break-word;
+}
+
+em {
+  cursor: pointer;
 }
 
 @include link-underline(em, $primary-color);

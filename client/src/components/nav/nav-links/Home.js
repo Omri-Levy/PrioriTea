@@ -1,80 +1,90 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import Lists from '../../lists/Lists.js';
-import Pagination from '../../lists/Pagination';
+import Tasks from '../../tasks/Tasks.js';
+import Pagination from '../../tasks/Pagination.js';
 import Loading from '../../loading/Loading.js';
-import {displayCreateListModal} from '../../../static/js/handlers.js';
+import {displayCreateTaskModal} from '../../../static/js/handlers.js';
 
 const Home = () => {
-    const [lists, setLists] = useState([]);
+    const [tasks, setTasks] = useState([]);
+    const [tasksCopy, setTasksCopy] = useState([]);
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1);
-    const [listsPerPage] = useState(1);
+    const [tasksPerPage] = useState(1);
 
-    const getLists = async () => {
-        try {
-            const res = (
-                await axios
-                    .get('http://localhost:3000/api/list/get_lists')
-            );
-            setLists(res.data);
-            res.data.length === 0 && displayCreateListModal();
-        } catch (err) {
-            console.log(err);
-        }
+    const getTasks = async () => {
+        const res = (
+            await axios
+                .get('http://localhost:4000/api/task/get_tasks')
+                .catch((err => console.log(err))
+                ));
+        setTasks(res.data);
+        setTasksCopy(res.data);
+        res.data.length === 0 && displayCreateTaskModal();
     }
     useEffect(() => {
         const isLogged = JSON.parse(localStorage.getItem('isLogged'));
-        if (!isLogged) {
-            location.href = '/signin';
-        }
-    }, []);
-    useEffect(() => {
-        setLoading(true);
-        getLists().catch(err => console.log(err));
-        setLoading(false);
+        if (!isLogged) location.href = '/signin';
 
     }, []);
     useEffect(() => {
+        setLoading(true);
+        getTasks().then(() => setLoading(false));
+    }, []);
+    useEffect(() => {
         const storedPage = parseInt(localStorage.getItem('currentPage'));
-        if (storedPage) {
-            setCurrentPage(storedPage);
-        }
+        storedPage && setCurrentPage(storedPage);
     }, []);
     useEffect(() => {
         const storePage = currentPage.toString();
         localStorage.setItem('currentPage', storePage)
     }, [currentPage]);
-    const indexOfLastList = currentPage * listsPerPage;
-    const indexOfFirstList = indexOfLastList - listsPerPage;
-    const currentLists = lists.slice(indexOfFirstList, indexOfLastList);
 
-    const paginate = (pageNumber) => {
-        setCurrentPage(pageNumber);
+    const indexOfLastTask = currentPage * tasksPerPage;
+    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+
+    const filter = async (value) => {
+        const valueIncluded = (task) => {
+            return (
+                task.priority.includes(value) ||
+                task.task.includes(value) ||
+                task.status.includes(value)
+            );
+        }
+
+        const filteredTasks = tasks.filter(task => valueIncluded(task));
+
+        setTasksCopy(filteredTasks);
     }
-    if (loading) {
-        return (
-            <Loading/>
-        );
-    } else {
-        return (
-            <div className='body-container'>
-                <div className='lists-container'>
-                    <Lists
-                        lists={currentLists}
-                        loading={loading}
-                        getLists={getLists}
-                    />
-                    <Pagination
-                        listsPerPage={listsPerPage}
-                        totalLists={lists.length}
-                        paginate={paginate}
-                        currentPage={currentPage}
-                    />
-                </div>
+
+    let currentTasks = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    if (loading) return <Loading/>
+    else return (
+        <div className='body-container'>
+            <input
+                id='search-input'
+                className='primary-input'
+                type='text'
+                onChange={(Event) => filter(Event.target.value.toLowerCase())}
+            />
+            <div className='tasks-container'>
+                <Tasks
+                    tasks={currentTasks}
+                    loading={loading}
+                    getTasks={getTasks}
+                />
+                <Pagination
+                    tasksPerPage={tasksPerPage}
+                    totalTasks={tasks.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                />
             </div>
-        );
-    }
+        </div>
+    );
 }
 
 export default Home;

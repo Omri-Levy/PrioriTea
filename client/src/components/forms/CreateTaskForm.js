@@ -1,43 +1,46 @@
-import createListSchema from '../../static/js/validation/createListSchema';
+import createTaskSchema from '../../static/js/validation/createTaskSchema';
 import {Form, Formik} from 'formik';
 import React from 'react';
 import {Input} from '../Input';
-import createListPost from '../../static/js/requests/createListPost.js';
-import {hideCreateListModal} from '../../static/js/handlers.js';
+import createTaskPost from '../../static/js/requests/createTaskPost.js';
+import {hideCreateTaskModal} from '../../static/js/handlers.js';
 
-export const CreateListForm = ({getLists}) => {
+export const CreateTaskForm = ({getTasks}) => {
     return (
         <Formik
             initialValues={{
-                title: '',
-                owner: '',
+                priority: '',
+                task: '',
+                status: ''
             }}
-            validationSchema={createListSchema}
-            onSubmit={(data) => createListPost(data, getLists)}
+            validationSchema={createTaskSchema}
+            onSubmit={(data) => createTaskPost(data, getTasks)}
         >
             {() => (
-                <Form className='create-list-form'>
+                <Form className='create-task-form'>
                     <p className='required-fields-msg'>
                         Indicates required fields
                     </p>
                     <Input
+                        maxLength='80'
                         autoFocus={true}
-                        label='Title'
-                        name='title'
+                        label='Priority'
+                        name='priority'
                         type='text'
                         required
                         isRequired={true}
                         autoComplete='on'
-                        placeholder='Title'
+                        placeholder='Priority'
                     />
                     <Input
-                        label='Owner'
-                        name='owner'
+                        maxLength='80'
+                        label='Task'
+                        name='task'
                         type='text'
                         required
                         isRequired={true}
                         autoComplete='on'
-                        placeholder='Owner'
+                        placeholder='Task'
                     />
                     <button
                         type='submit'
@@ -46,7 +49,7 @@ export const CreateListForm = ({getLists}) => {
                     </button>
                     <button
                         type='button'
-                        onClick={hideCreateListModal}
+                        onClick={hideCreateTaskModal}
                         className='primary-btn'>
                         Cancel
                     </button>

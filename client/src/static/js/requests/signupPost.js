@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const signupPost = async (data) => {
-    const url = 'http://localhost:3000/api/user/signup';
+    const url = 'http://localhost:4000/api/user/signup';
     try {
         const res = (
             await axios

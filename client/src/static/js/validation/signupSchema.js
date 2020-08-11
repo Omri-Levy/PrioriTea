@@ -1,12 +1,12 @@
 import * as Yup from 'yup';
 
 const passComplexityRegex = (
-    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,256}$/
 );
 const passComplexityMsg = (
-    'Password must contain at least 8 characters, at least one' +
-    ' uppercase, one lowercase,' +
-    ' one number and one special case character'
+    'Password must include a minimum of 8 characters, a maximum of 256' +
+    ' characters, at least one uppercase, one lowercase, one number and one' +
+    ' special case character'
 );
 
 const signupSchema = Yup.object({

@@ -5,12 +5,18 @@
   body {
     background-color: blue;
   }
+  .body-container {
+    overflow-x: auto;
+  }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
   body {
     background-color: green;
+  }
+  .body-container {
+    overflow-x: auto;
   }
 }
 
@@ -34,9 +40,4 @@
     background-color: $bg-color;
   }
 }
-
-
-
-
-
 
