@@ -7,6 +7,7 @@ import {displayCreateTaskModal} from '../../../static/js/handlers.js';
 
 const Home = () => {
     const [tasks, setTasks] = useState([]);
+    const [tasksCopy, setTasksCopy] = useState([]);
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1);
     const [tasksPerPage] = useState(1);
@@ -18,6 +19,7 @@ const Home = () => {
                     .get('http://localhost:4000/api/task/get_tasks')
             );
             setTasks(res.data);
+            setTasksCopy(res.data);
             res.data.length === 0 && displayCreateTaskModal();
         } catch (err) {
             console.log(err);
@@ -45,13 +47,36 @@ const Home = () => {
         const storePage = currentPage.toString();
         localStorage.setItem('currentPage', storePage)
     }, [currentPage]);
+
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-    const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
+
+    const filter = async (Event) => {
+        const filteredTasks = []
+        const value = Event.target.value.toLowerCase();
+
+        for (let i = 0; i < tasks.length; i++) {
+            const priority = tasks[i].priority.toLowerCase();
+            const task = tasks[i].task.toLowerCase();
+            const status = tasks[i].status.toLowerCase();
+            const includes = [priority, task, status]
+
+            for (let j = 0; j < includes.length; j++) {
+                if (includes[j].includes(value)) {
+                    filteredTasks.push(tasks[i]);
+                    break;
+                }
+            }
+        }
+        setTasksCopy(filteredTasks);
+    }
+
+    let currentTasks = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     }
+
     if (loading) {
         return (
             <Loading/>
@@ -59,12 +84,17 @@ const Home = () => {
     } else {
         return (
             <div className='body-container'>
+                <input
+                    id='search-input'
+                    className='primary-input'
+                    type='text'
+                    onChange={filter}
+                />
                 <div className='tasks-container'>
                     <Tasks
                         tasks={currentTasks}
                         loading={loading}
                         getTasks={getTasks}
-                        setTasks={setTasks}
                     />
                     <Pagination
                         tasksPerPage={tasksPerPage}

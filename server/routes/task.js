@@ -1,7 +1,6 @@
 import express from 'express';
 import {
     createTask,
-    filterTasks,
     getTasks,
     editTask,
     deleteTask
@@ -9,9 +8,6 @@ import {
 
 
 const task = express.Router();
-
-//sends back a filtered array using a parameter sent from the user
-task.post('/filter_tasks', (req, res) => filterTasks(req, res));
 
 //sends back all existing tasks from mongodb
 task.get('/get_tasks', (req, res) => getTasks(req, res));

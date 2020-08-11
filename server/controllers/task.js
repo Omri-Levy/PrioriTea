@@ -1,42 +1,6 @@
 import Task from '../models/Task.js';
 import taskValidation from '../validation/taskValidation.js';
 
-let filterExists = false;
-
-const checkFilter = async () => {
-    if (filterExists) {
-        return (
-            await Task
-                .find({priority: 'ASAP'})
-                .sort([['createdAt', -1]])
-        );
-
-    } else {
-        return (
-            await Task
-                .find({})
-                .sort([['createdAt', -1]])
-        );
-    }
-}
-
-/**
- * @path /api/task/filter_tasks
- * @request post
- * @desc sends back a filtered array using a parameter sent from the user
- */
-const filterTasks = async (req, res) => {
-    try {
-        filterExists = await req.body.filter;
-        const tasks = await checkFilter();
-        res.json(tasks);
-        return filterExists;
-    } catch (err) {
-        res.json(err);
-        console.log(err);
-    }
-}
-
 /**
  * @path /api/task/get_tasks
  * @request get
@@ -44,7 +8,7 @@ const filterTasks = async (req, res) => {
  */
 const getTasks = async (req, res) => {
     try {
-        const tasks = await checkFilter();
+        const tasks = await Task.find({});
         res.json(tasks)
     } catch (err) {
         res.json(err);
@@ -117,7 +81,6 @@ const deleteTask = async (req, res) => {
 }
 
 export {
-    filterTasks,
     getTasks,
     createTask,
     editTask,
