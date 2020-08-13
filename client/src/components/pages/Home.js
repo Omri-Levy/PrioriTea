@@ -1,51 +1,39 @@
-import React, {useEffect, useContext} from 'react';
-import axios from 'axios';
-import Tasks from '../../tasks/Tasks.js';
-import Pagination from '../../tasks/Pagination.js';
-import Loading from '../../loading/Loading.js';
-import {displayCreateTaskModal} from '../../../static/js/handlers.js';
-import {AppContext} from '../../context/AppContext';
+import React, {useEffect, useState} from 'react';
+import Tasks from '../tasks/Tasks.js';
+import Pagination from '../tasks/Pagination.js';
+import Loading from '../loading/Loading.js';
+import getTasksGet from '../../static/js/requests/getTasksGet';
 
 const Home = () => {
-    const [
-        tasks, setTasks,
-        tasksCopy, setTasksCopy,
-        loading, setLoading,
-        currentPage, setCurrentPage,
-        tasksPerPage
-    ] = useContext(AppContext);
-    const getTasks = async () => {
-        const res = (
-            await axios
-                .get('http://localhost:4000/api/task/get_tasks')
-                .catch((err => console.log(err))
-                ));
-        setTasks(res.data);
-        setTasksCopy(res.data);
-        res.data.length === 0 && displayCreateTaskModal();
-    }
+    const [currentPage, setCurrentPage] = useState(1);
+    const [tasks, setTasks] = useState([]);
+    const [tasksCopy, setTasksCopy] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [tasksPerPage] = useState(1);
+
     useEffect(() => {
         const isLogged = JSON.parse(localStorage.getItem('isLogged'));
         if (!isLogged) location.href = '/signin';
 
     }, []);
+
     useEffect(() => {
         setLoading(true);
-        getTasks().then(() => setLoading(false));
+        getTasksGet(setTasks, setTasksCopy)
+            .then(() => setLoading(false));
     }, []);
+
     useEffect(() => {
         const storedPage = parseInt(localStorage.getItem('currentPage'));
         storedPage && setCurrentPage(storedPage);
     }, []);
+
     useEffect(() => {
         const storePage = currentPage.toString();
         localStorage.setItem('currentPage', storePage)
     }, [currentPage]);
 
-    const indexOfLastTask = currentPage * tasksPerPage;
-    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-
-    const filter = async (value) => {
+    const filter = (value) => {
         const valueIncluded = (task) => {
             return (
                 task.priority.includes(value) ||
@@ -59,12 +47,12 @@ const Home = () => {
         setTasksCopy(filteredTasks);
     }
 
-    let currentTasks = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     if (loading) return <Loading/>
-    else return (
+
+    return (
         <div className='body-container'>
             <input
                 id='search-input'
@@ -74,9 +62,11 @@ const Home = () => {
             />
             <div className='tasks-container'>
                 <Tasks
-                    tasks={currentTasks}
-                    loading={loading}
-                    getTasks={getTasks}
+                    currentPage={currentPage}
+                    tasksPerPage={tasksPerPage}
+                    tasksCopy={tasksCopy}
+                    setTasksCopy={setTasksCopy}
+                    setTasks={setTasks}
                 />
                 <Pagination
                     tasksPerPage={tasksPerPage}

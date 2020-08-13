@@ -1,11 +1,15 @@
 import React from 'react';
 import {EditTaskForm} from '../../forms/EditTaskForm.js';
 
-const EditTaskModal = ({editTaskId, getTasks}) => {
+const EditTaskModal = ({editTaskId, setTasks, setTasksCopy}) => {
     return (
         <div className='edit-task-modal-container hidden'>
             <div className='edit-task-modal-content'>
-                <EditTaskForm editTaskId={editTaskId} getTasks={getTasks}/>
+                <EditTaskForm
+                    setTasks={setTasks}
+                    setTasksCopy={setTasksCopy}
+                    editTaskId={editTaskId}
+                />
             </div>
         </div>
     );

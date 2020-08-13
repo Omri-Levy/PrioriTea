@@ -3,9 +3,12 @@ import {Form, Formik} from 'formik';
 import React from 'react';
 import {Input} from '../Input';
 import createTaskPost from '../../static/js/requests/createTaskPost.js';
-import {hideCreateTaskModal} from '../../static/js/handlers.js';
+import {
+    hideCreateTaskModal
+} from '../../static/js/handlers.js';
 
-export const CreateTaskForm = ({getTasks}) => {
+export const CreateTaskForm = ({setTasks, setTasksCopy}) => {
+
     return (
         <Formik
             initialValues={{
@@ -14,7 +17,7 @@ export const CreateTaskForm = ({getTasks}) => {
                 status: ''
             }}
             validationSchema={createTaskSchema}
-            onSubmit={(data) => createTaskPost(data, getTasks)}
+            onSubmit={(data) => createTaskPost(data, setTasks, setTasksCopy)}
         >
             {() => (
                 <Form className='create-task-form'>

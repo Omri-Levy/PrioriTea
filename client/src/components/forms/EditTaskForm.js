@@ -3,9 +3,11 @@ import {Form, Formik} from 'formik';
 import React from 'react';
 import {Input} from '../Input';
 import editTaskPatch from '../../static/js/requests/editTaskPatch.js';
-import {hideEditTaskModal} from '../../static/js/handlers.js';
+import {
+    hideEditTaskModal
+} from '../../static/js/handlers.js';
 
-export const EditTaskForm = ({editTaskId, getTasks}) => {
+export const EditTaskForm = ({editTaskId, setTasks, setTasksCopy}) => {
     return (
         <Formik
             initialValues={{
@@ -14,9 +16,10 @@ export const EditTaskForm = ({editTaskId, getTasks}) => {
                 status: ''
             }}
             validationSchema={editTaskSchema}
-            onSubmit={
-                (data) => editTaskPatch(data, getTasks,
-                    editTaskId)
+            onSubmit={(data) => {
+                editTaskPatch(data, setTasks, setTasksCopy, editTaskId)
+                    .catch(err => console.log(err));
+            }
             }
         >
             {() => (

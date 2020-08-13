@@ -10,19 +10,37 @@ import Loading from '../loading/Loading.js';
 import {deleteTaskDelete} from '../../static/js/requests/deleteTaskDelete.js';
 import EditTaskModal from './modals/EditTaskModal.js';
 
-const Tasks = ({tasks, loading, getTasks}) => {
+const Tasks = ({
+                   currentPage,
+                   tasksPerPage,
+                   tasksCopy,
+                   setTasksCopy,
+                   setTasks
+               }) => {
+
+    const [loading] = useState(false);
+
+    const [editTaskId, setEditTaskId] = useState('');
+
+    const indexOfLastTask = currentPage * tasksPerPage;
+    const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+
+    let tasks = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
+
     if (loading) {
         return <Loading/>
     }
-    const [editTaskId, setEditTaskId] = useState('');
+
     return (
         <>
             <CreateTaskModal
-                getTasks={getTasks}
+                setTasks={setTasks}
+                setTasksCopy={setTasksCopy}
             />
             <EditTaskModal
+                setTasks={setTasks}
+                setTasksCopy={setTasksCopy}
                 editTaskId={editTaskId}
-                getTasks={getTasks}
             />
             {tasks.map(task => (
                     <table key={task._id}>
@@ -77,7 +95,9 @@ const Tasks = ({tasks, loading, getTasks}) => {
                                             title='Delete'
                                             onClick={() =>
                                                 deleteTaskDelete(task._id,
-                                                    getTasks)
+                                                    setTasks,
+                                                    setTasksCopy
+                                                )
                                             }
                                             className='delete-task'
                                         />
