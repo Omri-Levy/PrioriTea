@@ -1,10 +1,11 @@
 import React from 'react';
+import movePage from '../../static/js/movePage';
 
 const Pagination = ({
                         tasksPerPage,
                         totalTasks,
-                        paginate,
-                        currentPage
+                        currentPage,
+                        setCurrentPage
                     }) => {
 
     const pageNumbers = [];
@@ -38,7 +39,7 @@ const Pagination = ({
                 <li key={1}>
                     <a
                         id='first-page'
-                        onClick={() => paginate(1)}
+                        onClick={() => movePage(1, setCurrentPage)}
                     >
                         &#171; First
                     </a>
@@ -51,7 +52,7 @@ const Pagination = ({
                                 currentPage === number
                                     ? 'current-page' : 'page-btn'
                             }
-                            onClick={() => paginate(number)}
+                            onClick={() => movePage(number, setCurrentPage)}
                         >
                             {number}
                         </a>
@@ -61,7 +62,7 @@ const Pagination = ({
                 <li key={pages}>
                     <a
                         id='last-page'
-                        onClick={() => paginate(pages)}
+                        onClick={() => movePage(pages, setCurrentPage)}
                     >
                         Last &#187;
                     </a>

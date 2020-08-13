@@ -34,9 +34,6 @@ const Home = () => {
         localStorage.setItem('currentPage', storePage)
     }, [currentPage]);
 
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber);
-
     if (loading) return <Loading/>
 
     return (
@@ -59,8 +56,8 @@ const Home = () => {
                 <Pagination
                     tasksPerPage={tasksPerPage}
                     totalTasks={tasks.length}
-                    paginate={paginate}
                     currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
                 />
             </div>
         </div>
