@@ -3,6 +3,7 @@ import Tasks from '../tasks/Tasks.js';
 import Pagination from '../tasks/Pagination.js';
 import Loading from '../loading/Loading.js';
 import getTasksGet from '../../static/js/requests/getTasksGet';
+import filter from '../../static/js/filter';
 
 const Home = () => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,20 +34,6 @@ const Home = () => {
         localStorage.setItem('currentPage', storePage)
     }, [currentPage]);
 
-    const filter = (value) => {
-        const valueIncluded = (task) => {
-            return (
-                task.priority.includes(value) ||
-                task.task.includes(value) ||
-                task.status.includes(value)
-            );
-        }
-
-        const filteredTasks = tasks.filter(task => valueIncluded(task));
-
-        setTasksCopy(filteredTasks);
-    }
-
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -58,7 +45,8 @@ const Home = () => {
                 id='search-input'
                 className='primary-input'
                 type='text'
-                onChange={(Event) => filter(Event.target.value.toLowerCase())}
+                onChange={(Event) => filter(Event.target.value.toLowerCase(),
+                    setTasksCopy, tasks)}
             />
             <div className='tasks-container'>
                 <Tasks
