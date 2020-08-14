@@ -38,7 +38,10 @@ const Nav = () => {
                 <li>
                     <NavLink
                         activeClassName='current-link'
-                        onClick={() => setIsLogged(true)}
+                        onClick={() => {
+                            setIsLogged(true);
+                            location.href = '/home';
+                        }}
                         to='/signin'>
                         SIGNIN
                     </NavLink>

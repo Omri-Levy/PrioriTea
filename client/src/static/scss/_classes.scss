@@ -55,9 +55,16 @@
 }
 
 .error {
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
   @include error-box;
   border-radius: $primary-border-radius;
+  padding-left: 10px;
   font-size: 14px;
+}
+
+.error:before {
+  content: '*';
+  color: $secondary-text-color;
 }
 
 .primary-input,
@@ -72,11 +79,15 @@
 
 .primary-input {
   border-radius: $primary-border-radius;
-  background-color: $bg-color;
+  background-color: $primary-text-color;
   padding-left: 10px;
+  color: $secondary-text-color;
 }
 
 .required-fields-msg {
+  background-color: $bg-color;
+  margin-bottom: 1px;
+  border-radius: $primary-border-radius;
   font-size: $primary-font-size;
   text-align: center;
 
@@ -161,6 +172,7 @@
 .relative-parent {
   position: relative;
 }
+
 
 .current-link::after {
   content: '';

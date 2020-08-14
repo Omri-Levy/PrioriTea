@@ -52,6 +52,7 @@
 
 @mixin error-box() {
   background: $error-box;
+  color: $secondary-text-color;
   @include custom-border;
 }
 
