@@ -1,17 +1,23 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Tasks from '../tasks/Tasks.js';
 import Pagination from '../tasks/Pagination.js';
 import Loading from '../loading/Loading.js';
 import getTasksGet from '../../static/js/requests/getTasksGet';
 import filter from '../../static/js/filter';
+import {AppContext} from '../AppContext';
 
 const Home = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [tasks, setTasks] = useState([]);
     const [tasksCopy, setTasksCopy] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useContext(AppContext);
     const [tasksPerPage] = useState(1);
-
+    const apiRes = () => {
+        setTimeout(() => {
+            console.log('TIMEOUT')
+            setLoading(false);
+        }, 1000)
+    }
     useEffect(() => {
         const isLogged = JSON.parse(localStorage.getItem('isLogged'));
         if (!isLogged) location.href = '/signin';
@@ -21,7 +27,8 @@ const Home = () => {
     useEffect(() => {
         setLoading(true);
         getTasksGet(setTasks, setTasksCopy)
-            .then(() => setLoading(false));
+            .then(apiRes)
+            .catch((error => console.log(error)))
     }, []);
 
     useEffect(() => {
