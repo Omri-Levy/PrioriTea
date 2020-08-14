@@ -13,7 +13,7 @@ module.exports = {
         hot: true
     },
     entry: ['@babel/polyfill', path.resolve(__dirname,
-        '../src/static/js/index.js')],
+        '../src/static/js/index.jsx')],
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].bundle.js',
@@ -36,7 +36,7 @@ module.exports = {
                 use: 'html-loader'
             },
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
                 use: {
                     loader: 'babel-loader',
                     options: {
