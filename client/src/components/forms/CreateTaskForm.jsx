@@ -5,7 +5,7 @@ import createTaskPost from '../../static/js/requests/createTaskPost.js';
 import {
     hideCreateTaskModal
 } from '../../static/js/handlers.js';
-import {Input} from '../Input.jsx';
+import {FormikInput} from '../fields/FormikInput.jsx';
 
 export const CreateTaskForm = ({setTasks, setTasksCopy}) => {
 
@@ -24,7 +24,7 @@ export const CreateTaskForm = ({setTasks, setTasksCopy}) => {
                     <p className='required-fields-msg'>
                         Indicates required fields
                     </p>
-                    <Input
+                    <FormikInput
                         maxLength='80'
                         autoFocus={true}
                         label='Priority'
@@ -35,7 +35,7 @@ export const CreateTaskForm = ({setTasks, setTasksCopy}) => {
                         autoComplete='on'
                         placeholder='Priority'
                     />
-                    <Input
+                    <FormikInput
                         maxLength='80'
                         label='Task'
                         name='task'

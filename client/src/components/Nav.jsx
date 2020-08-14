@@ -3,23 +3,27 @@ import {NavLink} from 'react-router-dom';
 
 const Nav = () => {
     const [isLogged, setIsLogged] = useState(true);
+
     useEffect(() => {
-        localStorage.setItem('isLogged', JSON.stringify(isLogged))
+        localStorage.setItem('isLogged', JSON.stringify(isLogged));
     }, [isLogged]);
 
     useEffect(() => {
-        setIsLogged(JSON.parse(localStorage.getItem('isLogged')));
+        const isLogged = JSON.parse(
+            localStorage.getItem('isLogged'));
+        setIsLogged(isLogged);
     }, []);
 
     return (
         <nav className='main-nav'>
+            <h1 className='m-1'>PRIORITEA</h1>
             <ul>
                 {isLogged &&
                 <li>
                     <NavLink
                         activeClassName='current-link'
                         to='/home'>
-                        Home
+                        HOME
                     </NavLink>
                 </li>}
                 {isLogged &&
@@ -27,7 +31,7 @@ const Nav = () => {
                     <NavLink
                         activeClassName='current-link'
                         to='/profile'>
-                        Profile
+                        PROFILE
                     </NavLink>
                 </li>}
                 {!isLogged &&
@@ -36,7 +40,7 @@ const Nav = () => {
                         activeClassName='current-link'
                         onClick={() => setIsLogged(true)}
                         to='/signin'>
-                        Signin
+                        SIGNIN
                     </NavLink>
                 </li>}
                 {isLogged &&
@@ -45,7 +49,7 @@ const Nav = () => {
                         activeClassName='current-link'
                         onClick={() => setIsLogged(false)}
                         to='/signout'>
-                        Signout
+                        SIGNOUT
                     </NavLink>
                 </li>}
                 {!isLogged &&
@@ -53,7 +57,7 @@ const Nav = () => {
                     <NavLink
                         activeClassName='current-link'
                         to='/signup'>
-                        Signup
+                        SIGNUP
                     </NavLink>
                 </li>}
             </ul>

@@ -3,7 +3,7 @@ import {Form, Formik} from 'formik';
 import React, {useState} from 'react';
 import signupPost from '../../static/js/requests/signupPost.js';
 import EmailExists from '../EmailExists.jsx';
-import {Input} from '../Input.jsx';
+import {FormikInput} from '../fields/FormikInput.jsx';
 
 export const SignupForm = () => {
     const [displayEmailExistsMsg, setEmailExistsMsg] = (
@@ -28,7 +28,7 @@ export const SignupForm = () => {
                             <p className='required-fields-msg'>
                                 Indicates required fields
                             </p>
-                            <Input
+                            <FormikInput
                                 maxLength='320'
                                 autoFocus={true}
                                 label='Email'
@@ -39,7 +39,7 @@ export const SignupForm = () => {
                                 autoComplete='on'
                                 placeholder='Email'
                             />
-                            <Input
+                            <FormikInput
                                 maxLength='70'
                                 label='Full name'
                                 name='fullName'
@@ -49,7 +49,7 @@ export const SignupForm = () => {
                                 autoComplete='on'
                                 placeholder='Full Name'
                             />
-                            <Input
+                            <FormikInput
                                 maxLength='256'
                                 label='Password'
                                 name='password'
@@ -59,7 +59,7 @@ export const SignupForm = () => {
                                 autoComplete='new-password'
                                 placeholder='Password'
                             />
-                            <Input
+                            <FormikInput
                                 maxLength='256'
                                 id='password-confirmation'
                                 label='Password Confirmation'

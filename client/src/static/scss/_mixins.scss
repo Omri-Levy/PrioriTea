@@ -1,18 +1,12 @@
 @import 'functions';
 @import 'variables';
 
-@mixin set-background-color($color) {
-  background-color: $color;
-  color: set-text-color($color)
+@mixin custom-border() {
+  border: 1px solid $primary-border-color;
 }
 
-@mixin custom-border($color) {
-  border: 1px solid darken($color, 10%);
-}
-
-@mixin global-font() {
+@mixin global-font-size() {
   font-size: 1.7rem;
-  font-weight: bold;
 }
 
 @mixin column-flex() {
@@ -43,22 +37,22 @@
 
 @mixin info-box() {
   background: $primary-color;
-  @include custom-border($primary-color);
+  @include custom-border;
 }
 
 @mixin success-box() {
   background: $success-box;
-  @include custom-border($success-box);
+  @include custom-border;
 }
 
 @mixin warning-box() {
   background: $warning-box;
-  @include custom-border($warning-box);
+  @include custom-border;
 }
 
 @mixin error-box() {
   background: $error-box;
-  @include custom-border($error-box);
+  @include custom-border;
 }
 
 @mixin link-underline($element, $color) {

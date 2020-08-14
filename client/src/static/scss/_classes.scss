@@ -6,19 +6,27 @@
 .error,
 .primary-input,
 .primary-btn {
-  @include global-font;
+  @include global-font-size;
+}
+
+.form-label {
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+  padding-left: 10px;
+  background-color: $primary-color;
+  @include custom-border;
+  display: flex;
+  border-radius: $primary-border-radius;
 }
 
 .primary-input,
 .primary-btn {
-  @include custom-border($bg-color);
+  @include custom-border;
 }
 
 .main-nav {
-  @include center-end();
-  background-color: $secondary-color;
-  border-top: 4px solid white;
-  border-bottom: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+  background-color: $theme-dark-gray;
   width: 100vw;
 
   ul {
@@ -26,8 +34,11 @@
 
     li {
       padding: 15px;
-      @include global-font();
+      @include global-font-size();
 
+      a {
+        color: set-text-color($bg-color);
+      }
     }
   }
 }
@@ -40,13 +51,12 @@
 
 .required:before {
   content: '*';
-  color: red;
+  color: $required-color;
 }
 
 .error {
   @include error-box;
   border-radius: $primary-border-radius;
-  font-weight: initial;
   font-size: 14px;
 }
 
@@ -57,12 +67,13 @@
 
 .primary-btn {
   border-radius: $primary-border-radius;
-  background-color: $primary-color;
+  background-color: $primary-btn-color;
 }
 
 .primary-input {
   border-radius: $primary-border-radius;
   background-color: $bg-color;
+  padding-left: 10px;
 }
 
 .required-fields-msg {
@@ -71,7 +82,7 @@
 
   &:before {
     content: '*';
-    color: red;
+    color: $required-color;
   }
 }
 
@@ -141,6 +152,7 @@
 
 .filter-task {
   @extend .fas, .fa-filter;
+  color: set-text-color($bg-color);
   position: absolute;
   left: 0;
   margin: 0 10px;
@@ -150,13 +162,18 @@
   position: relative;
 }
 
+
 .current-link::after {
   content: '';
   display: block;
   width: 100%;
   transition: width 0.3s;
   height: 2px;
-  background-color: $primary-color;
+  background-color: set-text-color($bg-color);
+}
+
+.tasks-container li {
+  background-color: $primary-btn-color;
 }
 
 .page-btn::after {
@@ -165,7 +182,7 @@
   width: 0;
   transition: width 0.3s;
   height: 2px;
-  background-color: $primary-color;
+  background-color: set-text-color($bg-color);
 }
 
 .current-page::after {
@@ -174,7 +191,7 @@
   width: 100%;
   transition: width 0.3s;
   height: 2px;
-  background-color: $primary-color;
+  background-color: set-text-color($bg-color);
 }
 
 .excluded-link::after {
@@ -184,6 +201,7 @@
   transition: initial;
   height: initial;
   background-color: initial;
+
   &:hover::after {
     transition: initial;
     width: initial;

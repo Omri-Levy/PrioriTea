@@ -5,7 +5,7 @@ import editTaskPatch from '../../static/js/requests/editTaskPatch.js';
 import {
     hideEditTaskModal
 } from '../../static/js/handlers.js';
-import {Input} from '../Input.jsx';
+import {FormikInput} from '../fields/FormikInput.jsx';
 
 export const EditTaskForm = ({editTaskId, setTasks, setTasksCopy}) => {
     return (
@@ -24,7 +24,7 @@ export const EditTaskForm = ({editTaskId, setTasks, setTasksCopy}) => {
         >
             {() => (
                 <Form className='edit-task-form'>
-                    <Input
+                    <FormikInput
                         maxLength='80'
                         autoFocus={true}
                         label='Priority'
@@ -33,7 +33,7 @@ export const EditTaskForm = ({editTaskId, setTasks, setTasksCopy}) => {
                         autoComplete='on'
                         placeholder='Priority'
                     />
-                    <Input
+                    <FormikInput
                         maxLength='80'
                         label='Task'
                         name='task'
@@ -41,7 +41,7 @@ export const EditTaskForm = ({editTaskId, setTasks, setTasksCopy}) => {
                         autoComplete='on'
                         placeholder='Task'
                     />
-                    <Input
+                    <FormikInput
                         maxLength='80'
                         label='Status'
                         name='status'

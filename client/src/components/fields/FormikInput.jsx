@@ -1,7 +1,7 @@
 import {useField} from 'formik';
 import React from 'react';
 
-export const Input = ({label, isRequired, ...props}) => {
+export const FormikInput = ({label, isRequired, ...props}) => {
     const [field, meta] = useField(props);
 
     return (

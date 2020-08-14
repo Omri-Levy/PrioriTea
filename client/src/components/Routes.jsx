@@ -12,7 +12,6 @@ const Routes = () => {
     return (
         <Router>
             <Header/>
-            <Nav/>
             <Switch>
                 <Route exact path='/'
                        component={Home}/>
