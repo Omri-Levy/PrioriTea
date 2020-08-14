@@ -27,6 +27,11 @@ nav ul {
   @include center-end();
 }
 
+button,
+input[type='button'] {
+  cursor: pointer;
+}
+
 header {
   letter-spacing: 3px;
   background: $primary-color;
