@@ -14,7 +14,7 @@ const Home = () => {
 
     useEffect(() => {
         const isLogged = JSON.parse(localStorage.getItem('isLogged'));
-        if (!isLogged) location.href = '/signin';
+        if (!isLogged) history.push('/signin');
 
     }, []);
 
