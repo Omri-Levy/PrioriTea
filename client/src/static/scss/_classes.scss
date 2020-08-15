@@ -24,15 +24,14 @@
 }
 
 .main-nav {
-  display: flex;
-  justify-content: space-between;
   background-color: $theme-dark-gray;
-  width: 100vw;
+  @include flex-between;
 
   ul {
-    list-style-type: none;
+    display: flex;
 
     li {
+      list-style-type: none;
       padding: 15px;
       @include global-font-size();
 
@@ -113,28 +112,25 @@
   @include center;
 }
 
-.task-options-tooltip {
+.task-options-tooltip, .task-filter-tooltip {
   position: absolute;
-  display: flex;
-  bottom: 23px;
-  right: 6px;
-  justify-content: space-evenly;
+  @include flex-between;
   background-color: $bg-color;
   border-radius: $primary-border-radius;
-  @include custom-border;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+  @include custom-border;
+}
+
+.task-options-tooltip {
+  bottom: 23px;
+  right: 6px;
 }
 
 .task-filter-tooltip {
-  position: absolute;
-  display: flex;
-  width: 200px;
-  height: 200px;
-  justify-content: space-evenly;
-  background-color: $bg-color;
-  border-radius: $primary-border-radius;
-  @include custom-border;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+  li {
+    padding: 0 15px;
+    list-style-type: none;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {

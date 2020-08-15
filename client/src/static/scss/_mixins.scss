@@ -24,9 +24,9 @@
   left: 0;
 }
 
-@mixin center-end() {
-  align-items: center;
-  justify-content: flex-end;
+@mixin flex-between() {
+  display: flex;
+  justify-content: space-between;
 }
 
 @mixin reset() {

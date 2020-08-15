@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {displayCreateTaskModal} from '../handlers';
+import {toggleCreateTaskModal} from '../handlers';
 
 const getTasksGet = async (setTasks, setTasksCopy) => {
     const res = (
@@ -9,7 +9,7 @@ const getTasksGet = async (setTasks, setTasksCopy) => {
             ));
     setTasks(res.data);
     setTasksCopy(res.data);
-    res.data.length === 0 && displayCreateTaskModal();
+    res.data.length === 0 && toggleCreateTaskModal();
 }
 
 export default getTasksGet;

@@ -1,8 +1,9 @@
 import React from 'react';
 import {
-    displayCreateTaskModal,
+    toggleCreateTaskModal,
+    editTask,
     displayTaskOptionsTooltip,
-    editTask, hideTaskOptionsTooltip
+    hideTaskOptionsTooltip
 } from '../../../static/js/handlers';
 import {deleteTaskDelete} from '../../../static/js/requests/deleteTaskDelete';
 
@@ -15,27 +16,27 @@ const TaskOptionsModal = ({setEditTaskId, task, setTasks, setTasksCopy}) => {
             className='task-options-tooltip-container'
         >
             <div className='task-options-tooltip hidden'>
-                    <em
-                        title='Create'
-                        onClick={displayCreateTaskModal}
-                        className='create-task'
-                    />
-                    <em
-                        title='Edit'
-                        onClick={
-                            () => editTask(task._id,
-                                setEditTaskId)}
-                        className='edit-task'/>
-                    <em
-                        title='Delete'
-                        onClick={() =>
-                            deleteTaskDelete(task._id,
-                                setTasks,
-                                setTasksCopy
-                            )
-                        }
-                        className='delete-task'
-                    />
+                <em
+                    title='Create'
+                    onClick={toggleCreateTaskModal}
+                    className='create-task'
+                />
+                <em
+                    title='Edit'
+                    onClick={
+                        () => editTask(task._id,
+                            setEditTaskId)}
+                    className='edit-task'/>
+                <em
+                    title='Delete'
+                    onClick={() =>
+                        deleteTaskDelete(task._id,
+                            setTasks,
+                            setTasksCopy
+                        )
+                    }
+                    className='delete-task'
+                />
             </div>
         </em>
     );

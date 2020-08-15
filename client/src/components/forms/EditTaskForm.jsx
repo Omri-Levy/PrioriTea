@@ -3,7 +3,7 @@ import {Form, Formik} from 'formik';
 import React from 'react';
 import editTaskPatch from '../../static/js/requests/editTaskPatch.js';
 import {
-    hideEditTaskModal
+    toggleEditTaskModal
 } from '../../static/js/handlers.js';
 import {FormikInput} from '../fields/FormikInput.jsx';
 
@@ -56,7 +56,7 @@ export const EditTaskForm = ({editTaskId, setTasks, setTasksCopy}) => {
                     </button>
                     <button
                         type='button'
-                        onClick={hideEditTaskModal}
+                        onClick={toggleEditTaskModal}
                         className='primary-btn'>
                         Cancel
                     </button>

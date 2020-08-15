@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {hideCreateTaskModal} from '../handlers.js';
+import {toggleCreateTaskModal} from '../handlers.js';
 import getTasksGet from './getTasksGet';
 
 const createTaskPost = async (data, setTasks, setTasksCopy) => {
@@ -13,7 +13,7 @@ const createTaskPost = async (data, setTasks, setTasksCopy) => {
                 })
         );
         console.log(res);
-        hideCreateTaskModal();
+        toggleCreateTaskModal();
         await getTasksGet(setTasks, setTasksCopy);
     } catch (err) {
         console.log(err);

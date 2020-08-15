@@ -1,11 +1,6 @@
 @import 'mixins';
 @import 'variables';
 
-#root {
-  height: 100vh;
-  width: 100vw;
-}
-
 #filter-search {
   background-color: $primary-text-color;
   color: $secondary-text-color;

@@ -16,17 +16,6 @@ body {
   line-height: 1.6;
 }
 
-header {
-  width: 100vw;
-}
-
-header,
-nav,
-nav ul {
-  display: flex;
-  @include center-end();
-}
-
 button,
 input[type='button'] {
   cursor: pointer;
@@ -37,7 +26,7 @@ header {
   background: $primary-color;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  justify-content: space-between;
 
   h1 {
     font-family: $logo-font;

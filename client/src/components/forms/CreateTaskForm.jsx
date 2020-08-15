@@ -3,7 +3,7 @@ import {Form, Formik} from 'formik';
 import React from 'react';
 import createTaskPost from '../../static/js/requests/createTaskPost.js';
 import {
-    hideCreateTaskModal
+    toggleCreateTaskModal
 } from '../../static/js/handlers.js';
 import {FormikInput} from '../fields/FormikInput.jsx';
 
@@ -52,7 +52,7 @@ export const CreateTaskForm = ({setTasks, setTasksCopy}) => {
                     </button>
                     <button
                         type='button'
-                        onClick={hideCreateTaskModal}
+                        onClick={toggleCreateTaskModal}
                         className='primary-btn'>
                         Cancel
                     </button>
