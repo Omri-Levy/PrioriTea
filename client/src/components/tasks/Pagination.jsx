@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import movePage from '../../static/js/movePage.js';
 
 const Pagination = ({
@@ -36,7 +36,7 @@ const Pagination = ({
         <nav>
             <ul>
                 {currentPage >= 4 && pages > 5 &&
-                <li key={1}>
+                <li>
                     <a
                         id='first-page'
                         onClick={() => movePage(1, setCurrentPage)}
@@ -59,7 +59,7 @@ const Pagination = ({
                     </li>
                 ))}
                 {maxRight !== totalTasks &&
-                <li key={pages}>
+                <li>
                     <a
                         id='last-page'
                         onClick={() => movePage(pages, setCurrentPage)}

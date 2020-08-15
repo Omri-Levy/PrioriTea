@@ -40,12 +40,15 @@ const Home = () => {
     }, []);
 
     useEffect(() => {
-        const storedPage = parseInt(localStorage.getItem('currentPage'));
+        let storedPage = parseInt(localStorage.getItem('currentPage'));
         storedPage && setCurrentPage(storedPage);
     }, []);
 
     useEffect(() => {
-        const storePage = currentPage.toString();
+        let totalPages = parseInt(localStorage.getItem('totalPages'));
+        let storePage = currentPage.toString();
+
+        if (storePage > totalPages) storePage = totalPages;
         localStorage.setItem('currentPage', storePage)
     }, [currentPage]);
 
@@ -71,7 +74,9 @@ const Home = () => {
                 />
                 <Tasks
                     currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
                     tasksPerPage={tasksPerPage}
+                    rawTasks={tasks}
                     tasksCopy={tasksCopy}
                     setTasksCopy={setTasksCopy}
                     setTasks={setTasks}

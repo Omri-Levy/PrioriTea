@@ -1,7 +1,9 @@
 import axios from 'axios';
-import getTasksGet from './getTasksGet';
 
-export const deleteTaskDelete = async (id, setTasks, setTasksCopy) => {
+export const deleteTaskDelete = async (id,
+                                       setCurrentPage,
+                                       rawTasks,
+                                       setTasks) => {
     const url = 'http://localhost:4000/api/task/delete_task';
     try {
         const res = (
@@ -14,7 +16,11 @@ export const deleteTaskDelete = async (id, setTasks, setTasksCopy) => {
                 })
         );
         console.log(res);
-        await getTasksGet(setTasks, setTasksCopy);
+        const updatedTasks = rawTasks.filter(task => task._id !== id);
+        setTasks(updatedTasks);
+        const currentPage = localStorage.getItem('currentPage');
+        setCurrentPage(JSON.parse(currentPage));
+
     } catch (err) {
         console.log(err);
     }

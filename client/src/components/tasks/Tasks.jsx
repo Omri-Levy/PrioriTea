@@ -7,7 +7,9 @@ import TaskFilterModal from './modals/TaskFilterModal.jsx';
 
 const Tasks = ({
                    currentPage,
+                   setCurrentPage,
                    tasksPerPage,
+                   rawTasks,
                    tasksCopy,
                    setTasksCopy,
                    setTasks
@@ -60,6 +62,8 @@ const Tasks = ({
                                 className='relative-parent'>
                                 <TaskOptionsModal
                                     task={task}
+                                    setCurrentPage={setCurrentPage}
+                                    rawTasks={rawTasks}
                                     setTasks={setTasks}
                                     setTasksCopy={setTasksCopy}
                                     setEditTaskId={setEditTaskId}

@@ -7,7 +7,13 @@ import {
 } from '../../../static/js/handlers';
 import {deleteTaskDelete} from '../../../static/js/requests/deleteTaskDelete';
 
-const TaskOptionsModal = ({setEditTaskId, task, setTasks, setTasksCopy}) => {
+const TaskOptionsModal = ({
+                              setEditTaskId,
+                              task,
+                              setCurrentPage,
+                              rawTasks,
+                              setTasks
+                          }) => {
     return (
         <em
             title='Options'
@@ -30,9 +36,11 @@ const TaskOptionsModal = ({setEditTaskId, task, setTasks, setTasksCopy}) => {
                 <em
                     title='Delete'
                     onClick={() =>
-                        deleteTaskDelete(task._id,
-                            setTasks,
-                            setTasksCopy
+                        deleteTaskDelete(
+                            task._id,
+                            setCurrentPage,
+                            rawTasks,
+                            setTasks
                         )
                     }
                     className='delete-task'
