@@ -22,7 +22,7 @@ const Nav = () => {
                 <li>
                     <NavLink
                         activeClassName='current-link'
-                        to='/home'>
+                        to='/'>
                         HOME
                     </NavLink>
                 </li>}
