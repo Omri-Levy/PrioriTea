@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {hideEditTaskModal} from '../handlers.js';
+import {toggleEditTaskModal} from '../handlers.js';
 import getTasksGet from './getTasksGet';
 
 const editTaskPatch = async (data, setTasks, setTasksCopy, editTaskId) => {
@@ -15,7 +15,7 @@ const editTaskPatch = async (data, setTasks, setTasksCopy, editTaskId) => {
                 })
         );
         console.log(res);
-        hideEditTaskModal();
+        toggleEditTaskModal();
         await getTasksGet(setTasks, setTasksCopy);
     } catch (err) {
         console.log(err);
