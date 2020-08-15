@@ -41,7 +41,7 @@ const Pagination = ({
                         id='first-page'
                         onClick={() => movePage(1, setCurrentPage)}
                     >
-                        &#171; First
+                        <i className='fas fa-angle-double-left padded'/>First
                     </a>
                 </li>}
                 {pageNumbers.map(number => (
@@ -64,7 +64,7 @@ const Pagination = ({
                         id='last-page'
                         onClick={() => movePage(pages, setCurrentPage)}
                     >
-                        Last &#187;
+                        Last<i className='fas fa-angle-double-right padded'/>
                     </a>
                 </li>}
             </ul>

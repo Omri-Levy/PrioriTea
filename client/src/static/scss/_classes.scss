@@ -135,6 +135,10 @@
   display: none;
 }
 
+.padded {
+  padding: 0 5px;
+}
+
 .spinner-container {
   @include column-flex;
   @include center;
