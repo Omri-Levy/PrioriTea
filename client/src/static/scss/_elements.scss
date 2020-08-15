@@ -72,12 +72,12 @@ select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
   @include custom-border;
   caret-color: $primary-caret-color;
-  -webkit-text-fill-color: white;
-  -webkit-box-shadow: 0 0 0 1000px $bg-color inset,
-  0 0 0 1000px darken($bg-color, 10%) inset,
-  0 0 0 1000px darken($bg-color, 10%) inset,
-  0 0 0 1000px darken($bg-color, 10%) inset,
-  0 0 0 1000px darken($bg-color, 10%) inset;
+  -webkit-text-fill-color: $secondary-text-color;
+  -webkit-box-shadow: 0 0 0 1000px $primary-text-color inset,
+  0 0 0 1000px darken($primary-text-color, 10%) inset,
+  0 0 0 1000px darken($primary-text-color, 10%) inset,
+  0 0 0 1000px darken($primary-text-color, 10%) inset,
+  0 0 0 1000px darken($primary-text-color, 10%) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
