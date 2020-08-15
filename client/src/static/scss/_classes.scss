@@ -113,11 +113,23 @@
   @include center;
 }
 
-.tasks-tooltip {
+.task-options-tooltip {
   position: absolute;
   display: flex;
   bottom: 23px;
   right: 6px;
+  justify-content: space-evenly;
+  background-color: $bg-color;
+  border-radius: $primary-border-radius;
+  @include custom-border;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+}
+
+.task-filter-tooltip {
+  position: absolute;
+  display: flex;
+  width: 200px;
+  height: 200px;
   justify-content: space-evenly;
   background-color: $bg-color;
   border-radius: $primary-border-radius;
@@ -139,15 +151,6 @@
   padding: 0 5px;
 }
 
-.spinner-container {
-  @include column-flex;
-  @include center;
-  overflow: hidden;
-  margin: auto;
-  width: 40vw;
-  height: 40vh;
-}
-
 .create-task {
   @extend .fas, .fa-plus;
 }
@@ -167,13 +170,6 @@
   margin: 10px;
 }
 
-.filter-task {
-  @extend .fas, .fa-filter;
-  color: set-text-color($bg-color);
-  position: absolute;
-  left: 0;
-  margin: 0 10px;
-}
 
 .relative-parent {
   position: relative;
@@ -187,10 +183,6 @@
   transition: width 0.3s;
   height: 2px;
   background-color: set-text-color($bg-color);
-}
-
-.tasks-container li {
-  background-color: $primary-btn-color;
 }
 
 .current-page::after {

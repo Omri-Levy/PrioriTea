@@ -92,11 +92,32 @@
 
 }
 
-.tasks-tooltip-container {
-  @extend .fas, .fa-ellipsis-v;
+.spinner-container {
+  @include column-flex;
+  @include center;
+  overflow: hidden;
+  margin: auto;
+  width: 40vw;
+  height: 40vh;
+}
+
+.task-options-tooltip-container, .task-filter-tooltip-container {
   @extend .excluded-link;
   color: set-text-color($bg-color);
-  position: absolute;
   text-align: center;
+  position: absolute;
+}
+
+.task-filter-tooltip-container {
+  @extend .fas, .fa-filter;
+  left: 5px;
+}
+
+.task-options-tooltip-container {
+  @extend .fas, .fa-ellipsis-v;
   right: 5px;
+}
+
+.tasks-container li {
+  background-color: $primary-btn-color;
 }

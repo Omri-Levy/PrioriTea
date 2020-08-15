@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Redirect} from 'react-router-dom';
 
 const Signin = () => {
-    return (
-        <div>
-            <h1>Signin</h1>
-        </div>
-    );
+    const [redirectLink] = useState({redirect: '/'});
+
+    return <Redirect to={redirectLink}/>;
 }
 
 export default Signin;

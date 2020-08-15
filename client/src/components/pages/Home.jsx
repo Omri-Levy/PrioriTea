@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
+import {Redirect} from 'react-router-dom';
 import Tasks from '../tasks/Tasks.jsx';
 import Pagination from '../tasks/Pagination.jsx';
 import Loading from '../loading/Loading.jsx';
@@ -14,6 +15,7 @@ const Home = () => {
     const [loading, setLoading] = useContext(AppContext);
     const [tasksPerPage] = useState(1);
     const [isLogged, setIsLogged] = useState(true);
+    const [redirectLink] = useState({redirect: '/signin'});
 
     const apiRes = () => {
         setTimeout(() => {
@@ -47,7 +49,7 @@ const Home = () => {
         localStorage.setItem('currentPage', storePage)
     }, [currentPage]);
 
-    if (!isLogged) location.href = '/signin';
+    if (!isLogged) return <Redirect to={redirectLink}/>;
 
     if (loading) return <Loading/>
     return (

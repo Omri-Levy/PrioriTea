@@ -22,8 +22,8 @@ const signupPost = async (data) => {
         } else {
             console.log('email does not exist');
         }
-            // dispatchHideEmailExistsMsg();
-        }
+        // dispatchHideEmailExistsMsg();
+    }
 }
 
 export default signupPost;

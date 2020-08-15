@@ -1,12 +1,23 @@
-const displayTasksTooltip = () => {
-    const tasksTooltip =
-        document.querySelector('.tasks-tooltip');
-    tasksTooltip.classList.remove('hidden');
+const displayTaskOptionsTooltip = () => {
+    const taskOptionsTooltip =
+        document.querySelector('.task-options-tooltip');
+    taskOptionsTooltip.classList.remove('hidden');
 }
-const hideTasksTooltip = () => {
-    const tasksTooltip =
-        document.querySelector('.tasks-tooltip');
-    tasksTooltip.classList.add('hidden');
+const hideTaskOptionsTooltip = () => {
+    const taskOptionsTooltip =
+        document.querySelector('.task-options-tooltip');
+    taskOptionsTooltip.classList.add('hidden');
+}
+
+const displayTaskFilterTooltip = () => {
+    const taskFilterTooltip =
+        document.querySelector('.task-filter-tooltip');
+    taskFilterTooltip.classList.remove('hidden');
+}
+const hideTaskFilterTooltip = () => {
+    const taskFilterTooltip =
+        document.querySelector('.task-filter-tooltip');
+    taskFilterTooltip.classList.add('hidden');
 }
 
 const displayCreateTaskModal = () => {
@@ -37,8 +48,10 @@ const editTask = (id, setEditTaskId) => {
 }
 
 export {
-    displayTasksTooltip,
-    hideTasksTooltip,
+    displayTaskOptionsTooltip,
+    hideTaskOptionsTooltip,
+    displayTaskFilterTooltip,
+    hideTaskFilterTooltip,
     displayCreateTaskModal,
     hideCreateTaskModal,
     hideEditTaskModal,

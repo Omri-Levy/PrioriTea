@@ -2,13 +2,8 @@ import React, {useState} from 'react';
 import CreateTaskModal from './modals/CreateTaskModal.jsx';
 import Loading from '../loading/Loading.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
-import {
-    displayCreateTaskModal,
-    displayTasksTooltip,
-    editTask,
-    hideTasksTooltip
-} from '../../static/js/handlers.js';
-import {deleteTaskDelete} from '../../static/js/requests/deleteTaskDelete.js';
+import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
+import TaskFilterModal from './modals/TaskFilterModal.jsx';
 
 const Tasks = ({
                    currentPage,
@@ -50,59 +45,26 @@ const Tasks = ({
                                 title='Sort'
                                 className='relative-parent'
                             >
-                                <em
-                                    title='Filter'
-                                    className='filter-task excluded-link'>
-                                </em>
+                                <TaskFilterModal/>
                                 Priority
                             </th>
                             <th
                                 title='Sort'
                                 className='relative-parent'
                             >
-                                <em
-                                    title='Filter'
-                                    className='filter-task excluded-link'>
-                                </em>
+                                <TaskFilterModal/>
                                 Task
                             </th>
                             <th
                                 title='Sort'
                                 className='relative-parent'>
-                                <em
-                                    title='Filter'
-                                    className='filter-task excluded-link'>
-                                </em>
-                                <em
-                                    title='Options'
-                                    onMouseEnter={displayTasksTooltip}
-                                    onMouseLeave={hideTasksTooltip}
-                                    className='tasks-tooltip-container'
-                                >
-                                    <div className='tasks-tooltip hidden'>
-                                        <em
-                                            title='Create'
-                                            onClick={displayCreateTaskModal}
-                                            className='create-task'
-                                        />
-                                        <em
-                                            title='Edit'
-                                            onClick={
-                                                () => editTask(task._id,
-                                                    setEditTaskId)}
-                                            className='edit-task'/>
-                                        <em
-                                            title='Delete'
-                                            onClick={() =>
-                                                deleteTaskDelete(task._id,
-                                                    setTasks,
-                                                    setTasksCopy
-                                                )
-                                            }
-                                            className='delete-task'
-                                        />
-                                    </div>
-                                </em>
+                                <TaskOptionsModal
+                                    task={task}
+                                    setTasks={setTasks}
+                                    setTasksCopy={setTasksCopy}
+                                    setEditTaskId={setEditTaskId}
+                                />
+                                <TaskFilterModal/>
                                 Status
                             </th>
                         </tr>

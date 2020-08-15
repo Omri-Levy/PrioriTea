@@ -40,7 +40,6 @@ const Nav = () => {
                         activeClassName='current-link'
                         onClick={() => {
                             setIsLogged(true);
-                            location.href = '/home';
                         }}
                         to='/signin'>
                         SIGNIN
