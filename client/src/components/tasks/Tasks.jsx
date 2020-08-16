@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import CreateTaskModal from './modals/CreateTaskModal.jsx';
 import Loading from '../loading/Loading.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
@@ -47,19 +47,29 @@ const Tasks = ({
                                 title='Sort'
                                 className='relative-parent'
                             >
-                                <TaskFilterModal/>
+                                <TaskFilterModal
+                                    tasksCopy={tasksCopy}
+                                    target={'priority'}
+                                />
                                 Priority
                             </th>
                             <th
                                 title='Sort'
                                 className='relative-parent'
                             >
-                                <TaskFilterModal/>
+                                <TaskFilterModal
+                                    tasksCopy={tasksCopy}
+                                    target={'task'}
+                                />
                                 Task
                             </th>
                             <th
                                 title='Sort'
                                 className='relative-parent'>
+                                <TaskFilterModal
+                                    tasksCopy={tasksCopy}
+                                    target={'status'}
+                                />
                                 <TaskOptionsModal
                                     task={task}
                                     setCurrentPage={setCurrentPage}
@@ -68,7 +78,6 @@ const Tasks = ({
                                     setTasksCopy={setTasksCopy}
                                     setEditTaskId={setEditTaskId}
                                 />
-                                <TaskFilterModal/>
                                 Status
                             </th>
                         </tr>

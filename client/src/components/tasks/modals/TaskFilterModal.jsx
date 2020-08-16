@@ -4,7 +4,25 @@ import {
     hideTaskFilterTooltip
 } from '../../../static/js/handlers.js';
 
-const TaskFilterModal = () => {
+const TaskFilterModal = ({tasksCopy, target}) => {
+    let itemsArr = [];
+
+    tasksCopy.forEach(item => {
+        switch (target) {
+            case 'priority':
+                itemsArr.push(item.priority);
+                break;
+            case 'task':
+                itemsArr.push(item.task);
+                break;
+            case 'status':
+                itemsArr.push(item.status);
+                break;
+        }
+    });
+
+    itemsArr = new Set(itemsArr);
+
     return (
         <em
             title='Filter'
@@ -15,10 +33,13 @@ const TaskFilterModal = () => {
             <div className='relative-parent'>
                 <div className='task-filter-tooltip hidden'>
                     <ul>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
+                        {[...itemsArr].map(item => {
+                            return (
+                                <li key={item}>
+                                    {item}
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             </div>
