@@ -1,6 +1,6 @@
 import {cloneDeep} from 'lodash';
 
-const filterBySearch = (value, tasksOriginal, setTasksCopy) => {
+const filterBySearch = (value, tasks, setTasks) => {
 
     const valueIncluded = (task) => {
         return (
@@ -10,12 +10,12 @@ const filterBySearch = (value, tasksOriginal, setTasksCopy) => {
         );
     }
 
-    const tasksClone = cloneDeep(tasksOriginal);
+    const tasksClone = cloneDeep(tasks);
     const filteredTasks = tasksClone.filter(task => valueIncluded(task));
-    setTasksCopy(filteredTasks);
+    setTasks(filteredTasks);
 }
 
-const filterByBtn = (Event, tasksOriginal, setTasksCopy) => {
+const filterByBtn = (Event, tasks, setTasks) => {
     const key = (
         Event.target
             .closest('th')
@@ -23,9 +23,9 @@ const filterByBtn = (Event, tasksOriginal, setTasksCopy) => {
             .innerHTML.toLowerCase()
     );
     const value = Event.target.innerText;
-    const tasksClone = cloneDeep(tasksOriginal);
+    const tasksClone = cloneDeep(tasks);
     const filteredTasks = tasksClone.filter(task => task[key] === value);
-    setTasksCopy(filteredTasks);
+    setTasks(filteredTasks);
 }
 
 export {

@@ -1,14 +1,11 @@
 import React from 'react';
 import {CreateTaskForm} from '../../forms/CreateTaskForm.jsx';
 
-const CreateTaskModal = ({setTasksOriginal, setTasksCopy}) => {
+const CreateTaskModal = () => {
     return (
         <div className='create-task-modal-container hidden'>
             <div className='create-task-modal-content'>
-                <CreateTaskForm
-                    setTasksOriginal={setTasksOriginal}
-                    setTaskCopy={setTasksCopy}
-                />
+                <CreateTaskForm/>
             </div>
         </div>
     );

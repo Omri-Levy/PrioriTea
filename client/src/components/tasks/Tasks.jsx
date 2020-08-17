@@ -7,19 +7,14 @@ import EditTaskModal from './modals/EditTaskModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 import TaskFilterModal from './modals/TaskFilterModal.jsx';
 
-const Tasks = ({
-                   tasksOriginal,
-                   setTasksOriginal,
-                   tasksCopy,
-                   setTasksCopy
-               }) => {
+const Tasks = ({tasks, setTasks}) => {
 
     const {loading} = useContext(LoadingContext);
     const [editTaskId, setEditTaskId] = useState('');
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-    let tasks = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
+    let slicedTasksCopy = tasks.slice(indexOfFirstTask, indexOfLastTask);
 
     if (loading) {
         return <Loading/>
@@ -27,16 +22,7 @@ const Tasks = ({
 
     return (
         <>
-            <CreateTaskModal
-                setTasksOriginal={setTasksOriginal}
-                setTasksCopy={setTasksCopy}
-            />
-            <EditTaskModal
-                editTaskId={editTaskId}
-                setTasksOriginal={setTasksOriginal}
-                setTasksCopy={setTasksCopy}
-            />
-            {tasks.map(task => (
+            {slicedTasksCopy.map(task => (
                     <table key={task._id}>
                         <thead>
                         <tr>
@@ -45,8 +31,8 @@ const Tasks = ({
                                 className='relative-parent'
                             >
                                 <TaskFilterModal
-                                    tasksOriginal={tasksOriginal}
-                                    setTasksCopy={setTasksCopy}
+                                    tasks={tasks}
+                                    setTasks={setTasks}
                                     target={'priority'}
                                 />
                                 <span>
@@ -58,8 +44,8 @@ const Tasks = ({
                                 className='relative-parent'
                             >
                                 <TaskFilterModal
-                                    tasksOriginal={tasksOriginal}
-                                    setTasksCopy={setTasksCopy}
+                                    tasks={tasks}
+                                    setTasks={setTasks}
                                     target={'task'}
                                 />
                                 <span>
@@ -70,14 +56,13 @@ const Tasks = ({
                                 title='Sort'
                                 className='relative-parent'>
                                 <TaskFilterModal
-                                    tasksOriginal={tasksOriginal}
-                                    setTasksCopy={setTasksCopy}
+                                    tasks={tasks}
+                                    setTasks={setTasks}
                                     target={'status'}
                                 />
                                 <TaskOptionsModal
-                                    tasksOriginal={tasksOriginal}
+                                    tasks={tasks}
                                     taskId={task._id}
-                                    setTasksCopy={setTasksCopy}
                                     setEditTaskId={setEditTaskId}
                                 />
                                 <span>
@@ -102,6 +87,8 @@ const Tasks = ({
                     </table>
                 )
             )}
+            <CreateTaskModal/>
+            <EditTaskModal editTaskId={editTaskId}/>
         </>
     );
 }

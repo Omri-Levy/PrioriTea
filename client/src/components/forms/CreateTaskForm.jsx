@@ -7,7 +7,7 @@ import {
 } from '../../static/js/handlers.js';
 import {FormikInput} from '../fields/FormikInput.jsx';
 
-export const CreateTaskForm = ({setTasksOriginal, setTasksCopy}) => {
+export const CreateTaskForm = () => {
 
     return (
         <Formik
@@ -17,9 +17,7 @@ export const CreateTaskForm = ({setTasksOriginal, setTasksCopy}) => {
                 status: ''
             }}
             validationSchema={createTaskSchema}
-            onSubmit={(data) => createTaskPost(data,
-                setTasksCopy,
-                setTasksOriginal)}
+            onSubmit={(data) => createTaskPost(data)}
         >
             {() => (
                 <Form className='create-task-form'>

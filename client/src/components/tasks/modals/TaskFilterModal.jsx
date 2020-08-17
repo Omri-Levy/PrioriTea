@@ -8,13 +8,13 @@ import {
 
 const TaskFilterModal = ({
                              target,
-                             tasksOriginal,
-                             setTasksCopy
+                             tasks,
+                             setTasks
                          }) => {
 
     const filterSet = () => {
         const tempArr = [];
-        const tasksClone = cloneDeep(tasksOriginal);
+        const tasksClone = cloneDeep(tasks);
         tasksClone.forEach(item => {
             switch (target) {
                 case 'priority':
@@ -49,8 +49,8 @@ const TaskFilterModal = ({
                                     onClick={(Event) => {
                                         filterByBtn(
                                             Event,
-                                            tasksOriginal,
-                                            setTasksCopy
+                                            tasks,
+                                            setTasks
                                         )
                                     }
                                     }
