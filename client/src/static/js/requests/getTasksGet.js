@@ -1,13 +1,13 @@
 import axios from 'axios';
 import {toggleCreateTaskModal} from '../handlers';
 
-const getTasksGet = async (setTasks, setTasksCopy) => {
+const getTasksGet = async (setTasksOriginal, setTasksCopy) => {
     const res = (
         await axios
             .get('http://localhost:4000/api/task/get_tasks')
-            .catch((err => console.log(err))
+            .catch((err => console.error(err))
             ));
-    setTasks(res.data);
+    setTasksOriginal(res.data);
     setTasksCopy(res.data);
     res.data.length === 0 && toggleCreateTaskModal();
 }

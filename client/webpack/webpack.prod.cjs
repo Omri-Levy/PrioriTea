@@ -10,7 +10,7 @@ const path = require('path'),
 
 module.exports = {
     mode: 'production',
-    entry: path.resolve(__dirname, '../src/static/js/Index.jsx'),
+    entry: path.resolve(__dirname, '../src/Index.jsx'),
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].[contentHash].bundle.js'

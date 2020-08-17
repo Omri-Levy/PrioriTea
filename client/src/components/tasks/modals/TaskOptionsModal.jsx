@@ -11,8 +11,8 @@ const TaskOptionsModal = ({
                               setEditTaskId,
                               task,
                               setCurrentPage,
-                              rawTasks,
-                              setTasks
+                              tasksOriginal,
+                              setTasksOriginal
                           }) => {
     return (
         <em
@@ -39,8 +39,8 @@ const TaskOptionsModal = ({
                         deleteTaskDelete(
                             task._id,
                             setCurrentPage,
-                            rawTasks,
-                            setTasks
+                            tasksOriginal,
+                            setTasksOriginal
                         )
                     }
                     className='delete-task'

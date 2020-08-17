@@ -2,7 +2,9 @@ import axios from 'axios';
 import {toggleEditTaskModal} from '../handlers.js';
 import getTasksGet from './getTasksGet';
 
-const editTaskPatch = async (data, setTasks, setTasksCopy, editTaskId) => {
+const editTaskPatch = async (data, editTaskId, setTasksOriginal,
+                             setTasksCopy
+) => {
     const url = 'http://localhost:4000/api/task/edit_task';
     try {
         const res = (
@@ -16,9 +18,9 @@ const editTaskPatch = async (data, setTasks, setTasksCopy, editTaskId) => {
         );
         console.log(res);
         toggleEditTaskModal();
-        await getTasksGet(setTasks, setTasksCopy);
+        await getTasksGet(setTasksOriginal, setTasksCopy);
     } catch (err) {
-        console.log(err);
+        console.error(err);
     }
 }
 

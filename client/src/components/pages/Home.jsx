@@ -3,24 +3,23 @@ import {Redirect} from 'react-router-dom';
 import Tasks from '../tasks/Tasks.jsx';
 import Pagination from '../tasks/Pagination.jsx';
 import Loading from '../loading/Loading.jsx';
-import {AppContext} from '../AppContext.jsx';
+import {LoadingContext} from '../../context/LoadingContext.jsx';
 import getTasksGet from '../../static/js/requests/getTasksGet.js';
-import filter from '../../static/js/filter.js';
+import {filterBySearch} from '../../static/js/filter.js';
 import {CustomInput} from '../fields/CustomInput.jsx';
 
 const Home = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [tasks, setTasks] = useState([]);
+    const [tasksOriginal, setTasksOriginal] = useState([]);
     const [tasksCopy, setTasksCopy] = useState([]);
-    const [loading, setLoading] = useContext(AppContext);
+    const {loading, startLoading, stopLoading} = useContext(LoadingContext);
     const [tasksPerPage] = useState(1);
     const [isLogged, setIsLogged] = useState(true);
     const [redirectLink] = useState({redirect: '/signin'});
 
     const apiRes = () => {
         setTimeout(() => {
-            console.log('TIMEOUT')
-            setLoading(false);
+            stopLoading();
         }, 120)
     }
 
@@ -29,28 +28,24 @@ const Home = () => {
     }, [isLogged]);
 
     useEffect(() => {
-        setIsLogged(JSON.parse(localStorage.getItem('isLogged')));
-    }, []);
-
-    useEffect(() => {
-        setLoading(true);
-        getTasksGet(setTasks, setTasksCopy)
-            .then(apiRes)
-            .catch((error => console.log(error)))
-    }, []);
-
-    useEffect(() => {
-        let storedPage = parseInt(localStorage.getItem('currentPage'));
-        storedPage && setCurrentPage(storedPage);
-    }, []);
-
-    useEffect(() => {
         let totalPages = parseInt(localStorage.getItem('totalPages'));
-        let storePage = currentPage.toString();
-
-        if (storePage > totalPages) storePage = totalPages;
-        localStorage.setItem('currentPage', storePage)
+        let pageToStore = currentPage;
+        if (pageToStore > totalPages) pageToStore = totalPages;
+        localStorage.setItem('currentPage', JSON.stringify(pageToStore));
     }, [currentPage]);
+
+    useEffect(() => {
+        setIsLogged(JSON.parse(localStorage.getItem('isLogged')));
+        setCurrentPage(parseInt(localStorage.getItem('currentPage')));
+    }, []);
+
+    useEffect(() => {
+        startLoading();
+        getTasksGet(setTasksOriginal, setTasksCopy)
+            .catch(err => console.error(err));
+        apiRes();
+    }, []);
+
 
     if (!isLogged) return <Redirect to={redirectLink}/>;
 
@@ -68,22 +63,25 @@ const Home = () => {
                     autoComplete='on'
                     placeholder='Filter'
                     onChange={(Event) => {
-                        filter(Event.target.value.toLowerCase(),
-                            setTasksCopy, tasks)
+                        filterBySearch(
+                            Event.target.value.toLowerCase(),
+                            tasksOriginal,
+                            setTasksCopy
+                        )
                     }}
                 />
                 <Tasks
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     tasksPerPage={tasksPerPage}
-                    rawTasks={tasks}
                     tasksCopy={tasksCopy}
                     setTasksCopy={setTasksCopy}
-                    setTasks={setTasks}
+                    tasksOriginal={tasksCopy}
+                    setTasksOriginal={setTasksCopy}
                 />
                 <Pagination
                     tasksPerPage={tasksPerPage}
-                    totalTasks={tasks.length}
+                    tasksOriginal={tasksOriginal.length}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                 />

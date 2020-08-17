@@ -13,7 +13,7 @@ module.exports = {
         hot: true
     },
     entry: ['@babel/polyfill', path.resolve(__dirname,
-        '../src/components/Index.jsx')],
+        '../src/Index.jsx')],
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].bundle.js',

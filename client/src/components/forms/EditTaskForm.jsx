@@ -7,7 +7,10 @@ import {
 } from '../../static/js/handlers.js';
 import {FormikInput} from '../fields/FormikInput.jsx';
 
-export const EditTaskForm = ({editTaskId, setTasks, setTasksCopy}) => {
+export const EditTaskForm = ({
+                                 editTaskId,
+                                 setTasksOriginal, setTasksCopy
+                             }) => {
     return (
         <Formik
             initialValues={{
@@ -17,8 +20,9 @@ export const EditTaskForm = ({editTaskId, setTasks, setTasksCopy}) => {
             }}
             validationSchema={editTaskSchema}
             onSubmit={(data) => {
-                editTaskPatch(data, setTasks, setTasksCopy, editTaskId)
-                    .catch(err => console.log(err));
+                editTaskPatch(data, editTaskId, setTasksOriginal,
+                    setTasksCopy)
+                    .catch(err => console.error(err));
             }
             }
         >

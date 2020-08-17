@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import {cloneDeep} from 'lodash';
+import React, {useState} from 'react';
 import CreateTaskModal from './modals/CreateTaskModal.jsx';
 import Loading from '../loading/Loading.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
@@ -9,10 +10,10 @@ const Tasks = ({
                    currentPage,
                    setCurrentPage,
                    tasksPerPage,
-                   rawTasks,
                    tasksCopy,
                    setTasksCopy,
-                   setTasks
+                   tasksOriginal,
+                   setTasksOriginal
                }) => {
 
     const [loading] = useState(false);
@@ -21,8 +22,8 @@ const Tasks = ({
 
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-
-    let tasks = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
+    let tasksCopyClone = cloneDeep(tasksCopy);
+    let tasks = tasksCopyClone.slice(indexOfFirstTask, indexOfLastTask);
 
     if (loading) {
         return <Loading/>
@@ -30,15 +31,6 @@ const Tasks = ({
 
     return (
         <>
-            <CreateTaskModal
-                setTasks={setTasks}
-                setTasksCopy={setTasksCopy}
-            />
-            <EditTaskModal
-                setTasks={setTasks}
-                setTasksCopy={setTasksCopy}
-                editTaskId={editTaskId}
-            />
             {tasks.map(task => (
                     <table key={task._id}>
                         <thead>
@@ -48,37 +40,45 @@ const Tasks = ({
                                 className='relative-parent'
                             >
                                 <TaskFilterModal
-                                    tasksCopy={tasksCopy}
+                                    tasksOriginal={tasksOriginal}
+                                    setTasksCopy={setTasksCopy}
                                     target={'priority'}
                                 />
+                                <span>
                                 Priority
+                                    </span>
                             </th>
                             <th
                                 title='Sort'
                                 className='relative-parent'
                             >
                                 <TaskFilterModal
-                                    tasksCopy={tasksCopy}
+                                    tasksOriginal={tasksOriginal}
+                                    setTasksCopy={setTasksCopy}
                                     target={'task'}
                                 />
+                                <span>
                                 Task
+                                    </span>
                             </th>
                             <th
                                 title='Sort'
                                 className='relative-parent'>
                                 <TaskFilterModal
-                                    tasksCopy={tasksCopy}
+                                    tasksOriginal={tasksOriginal}
+                                    setTasksCopy={setTasksCopy}
                                     target={'status'}
                                 />
                                 <TaskOptionsModal
                                     task={task}
                                     setCurrentPage={setCurrentPage}
-                                    rawTasks={rawTasks}
-                                    setTasks={setTasks}
+                                    tasksOriginal={tasksOriginal}
                                     setTasksCopy={setTasksCopy}
                                     setEditTaskId={setEditTaskId}
                                 />
+                                <span>
                                 Status
+                                    </span>
                             </th>
                         </tr>
                         </thead>
@@ -98,6 +98,15 @@ const Tasks = ({
                     </table>
                 )
             )}
+            <CreateTaskModal
+                setTasksOriginal={setTasksOriginal}
+                setTasksCopy={setTasksCopy}
+            />
+            <EditTaskModal
+                setTasksOriginal={setTasksOriginal}
+                setTasksCopy={setTasksCopy}
+                editTaskId={editTaskId}
+            />
         </>
     );
 }

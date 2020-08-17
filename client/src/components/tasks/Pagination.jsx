@@ -3,7 +3,7 @@ import movePage from '../../static/js/movePage.js';
 
 const Pagination = ({
                         tasksPerPage,
-                        totalTasks,
+                        tasksOriginal,
                         currentPage,
                         setCurrentPage
                     }) => {
@@ -13,7 +13,7 @@ const Pagination = ({
 
     let maxLeft = (currentPage - Math.floor(maxPages / 2));
     let maxRight = (currentPage + Math.floor(maxPages / 2));
-    let pages = Math.round(totalTasks / tasksPerPage);
+    let pages = Math.round(tasksOriginal / tasksPerPage);
 
     if (maxLeft < 1) {
         maxLeft = 1
@@ -58,7 +58,7 @@ const Pagination = ({
                         </a>
                     </li>
                 ))}
-                {maxRight !== totalTasks &&
+                {maxRight !== tasksOriginal &&
                 <li>
                     <a
                         id='last-page'

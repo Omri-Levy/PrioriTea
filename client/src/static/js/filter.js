@@ -1,15 +1,34 @@
-const filter = (value, setTasksCopy, tasks) => {
+import {cloneDeep} from 'lodash';
+
+const filterBySearch = (value, tasksOriginal, setTasksCopy) => {
+
     const valueIncluded = (task) => {
         return (
-            task.priority.includes(value) ||
-            task.task.includes(value) ||
-            task.status.includes(value)
+            task.priority.toLowerCase().includes(value) ||
+            task.task.toLowerCase().includes(value) ||
+            task.status.toLowerCase().includes(value)
         );
     }
 
-    const filteredTasks = tasks.filter(task => valueIncluded(task));
-
+    const tasksClone = cloneDeep(tasksOriginal);
+    const filteredTasks = tasksClone.filter(task => valueIncluded(task));
     setTasksCopy(filteredTasks);
 }
 
-export default filter;
+const filterByBtn = (Event, tasksOriginal, setTasksCopy) => {
+    const key = (
+        Event.target
+            .closest('th')
+            .getElementsByTagName('span')[0]
+            .innerHTML.toLowerCase()
+    );
+    const value = Event.target.innerText;
+    const tasksClone = cloneDeep(tasksOriginal);
+    const filteredTasks = tasksClone.filter(task => task[key] === value);
+    setTasksCopy(filteredTasks);
+}
+
+export {
+    filterBySearch,
+    filterByBtn
+};

@@ -1,27 +1,38 @@
+import {cloneDeep} from 'lodash';
 import React from 'react';
+import {filterByBtn} from '../../../static/js/filter.js';
 import {
     displayTaskFilterTooltip,
     hideTaskFilterTooltip
 } from '../../../static/js/handlers.js';
 
-const TaskFilterModal = ({tasksCopy, target}) => {
-    let itemsArr = [];
+const TaskFilterModal = ({
+                             target,
+                             tasksOriginal,
+                             setTasksCopy
+                         }) => {
 
-    tasksCopy.forEach(item => {
-        switch (target) {
-            case 'priority':
-                itemsArr.push(item.priority);
-                break;
-            case 'task':
-                itemsArr.push(item.task);
-                break;
-            case 'status':
-                itemsArr.push(item.status);
-                break;
-        }
-    });
+    const filterSet = () => {
+        const tempArr = [];
+        const tasksClone = cloneDeep(tasksOriginal);
+        tasksClone.forEach(item => {
+            switch (target) {
+                case 'priority':
+                    tempArr.push(item.priority);
+                    break;
+                case 'task':
+                    tempArr.push(item.task);
+                    break;
+                case 'status':
+                    tempArr.push(item.status);
+                    break;
+            }
+        });
+        return new Set(tempArr)
+    }
 
-    itemsArr = new Set(itemsArr);
+    const mySet = filterSet();
+    console.log(mySet);
 
     return (
         <em
@@ -33,9 +44,19 @@ const TaskFilterModal = ({tasksCopy, target}) => {
             <div className='relative-parent'>
                 <div className='task-filter-tooltip hidden'>
                     <ul>
-                        {[...itemsArr].map(item => {
+                        {[...mySet].map(item => {
                             return (
-                                <li key={item}>
+                                <li
+                                    onClick={(Event) => {
+                                        filterByBtn(
+                                            Event,
+                                            tasksOriginal,
+                                            setTasksCopy
+                                        )
+                                    }
+                                    }
+                                    key={item}
+                                >
                                     {item}
                                 </li>
                             );
