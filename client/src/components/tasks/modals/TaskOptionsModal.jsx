@@ -14,7 +14,6 @@ const TaskOptionsModal = ({
                               tasksOriginal,
                               setTasksOriginal
                           }) => {
-    const {setCurrentPage} = useContext(PaginationContext);
     return (
         <em
             title='Options'
@@ -35,9 +34,10 @@ const TaskOptionsModal = ({
                 <em
                     title='Delete'
                     onClick={() => {
-                        deleteTaskDelete(taskId, setCurrentPage, tasksOriginal,
-                            setTasksOriginal
-                        ).catch(err => console.error(err))}}
+                        deleteTaskDelete(taskId, tasksOriginal,
+                            setTasksOriginal,
+                        ).catch(err => console.error(err))
+                    }}
                     className='delete-task'
                 />
             </div>

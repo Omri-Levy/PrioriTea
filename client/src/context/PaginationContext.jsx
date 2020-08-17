@@ -7,9 +7,11 @@ const PaginationContext = createContext(undefined);
 const PaginationProvider = props => {
     const [paginationObj, dispatch] = useReducer(paginationReducer,
         {
-            totalPages: JSON.parse(localStorage.getItem('totalPages')),
+            totalPages: JSON.parse(localStorage.getItem('totalPages')) ||
+                0,
             tasksPerPage: 1,
             currentPage: JSON.parse(localStorage.getItem('currentPage'))
+                || 1
         });
 
     const setTotalPages = (pagesNum) => dispatch({
@@ -33,12 +35,13 @@ const PaginationProvider = props => {
     }, [paginationObj.totalPages]);
 
     useEffect(() => {
-        if (paginationObj.totalPages < paginationObj.currentPage) {
+        if (paginationObj.totalPages < paginationObj.currentPage &&
+            paginationObj.totalPages !== 0) {
             setCurrentPage(paginationObj.totalPages)
         }
         localStorage.setItem('currentPage',
             JSON.stringify(paginationObj.currentPage));
-    }, [paginationObj.currentPage]);
+    }, [paginationObj.currentPage, paginationObj.totalPages]);
 
     return (
         <PaginationContext.Provider value={{

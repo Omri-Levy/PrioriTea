@@ -6,7 +6,7 @@ const AuthContext = createContext(undefined);
 
 const AuthProvider = props => {
     const [isLoggedIn, dispatch] = useReducer(authReducer,
-        JSON.parse(localStorage.getItem('isLoggedIn')));
+        JSON.parse(localStorage.getItem('isLoggedIn')) || false);
 
     const signin = () => dispatch({type: 'SIGNIN'});
     const signout = () => dispatch({type: 'SIGNOUT'});
