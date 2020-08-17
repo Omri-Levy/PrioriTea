@@ -1,41 +1,51 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
+import {PaginationContext} from '../../context/PaginationContext.jsx';
 import movePage from '../../static/js/movePage.js';
 
-const Pagination = ({
-                        tasksPerPage,
-                        tasksOriginal,
-                        currentPage,
-                        setCurrentPage
-                    }) => {
+const Pagination = ({tasksOriginal}) => {
 
     const pageNumbers = [];
     const maxPages = 5;
+    const {currentPage, setCurrentPage} = useContext(PaginationContext);
 
     let maxLeft = (currentPage - Math.floor(maxPages / 2));
     let maxRight = (currentPage + Math.floor(maxPages / 2));
-    let pages = Math.round(tasksOriginal / tasksPerPage);
+    const {
+        totalPages, setTotalPages,
+        tasksPerPage
+    } = useContext(PaginationContext);
+
+    useEffect(() => {
+        setTotalPages(Math.round(tasksOriginal / tasksPerPage));
+    }, []);
+
 
     if (maxLeft < 1) {
         maxLeft = 1
         maxRight = maxPages
     }
 
-    if (maxRight > pages) {
-        maxLeft = pages - (maxPages - 1)
+    if (maxRight > totalPages) {
+        maxLeft = totalPages - (maxPages - 1)
 
         if (maxLeft < 1) {
             maxLeft = 1
         }
-        maxRight = pages
+        maxRight = totalPages
     }
+
     for (let page = maxLeft; page <= maxRight; page++) {
         pageNumbers.push(page)
+    }
+
+    const isCurrentPage = (number) => {
+        return currentPage === number ? 'current-page' : 'page-btn'
     }
 
     return (
         <nav>
             <ul>
-                {currentPage >= 4 && pages > 5 &&
+                {currentPage >= 4 && totalPages > 5 &&
                 <li>
                     <a
                         id='first-page'
@@ -48,10 +58,7 @@ const Pagination = ({
                     <li key={number}>
                         <a
                             id={'page-' + number}
-                            className={
-                                currentPage === number
-                                    ? 'current-page' : 'page-btn'
-                            }
+                            className={isCurrentPage(number)}
                             onClick={() => movePage(number, setCurrentPage)}
                         >
                             {number}
@@ -62,7 +69,7 @@ const Pagination = ({
                 <li>
                     <a
                         id='last-page'
-                        onClick={() => movePage(pages, setCurrentPage)}
+                        onClick={() => movePage(totalPages, setCurrentPage)}
                     >
                         Last<i className='fas fa-angle-double-right padded'/>
                     </a>

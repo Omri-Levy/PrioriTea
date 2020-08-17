@@ -10,13 +10,11 @@ import Pagination from './Pagination.jsx';
 import Tasks from './Tasks.jsx';
 
 const TasksContainer = () => {
-    const [currentPage, setCurrentPage] = useState(1);
     const [tasksOriginal, setTasksOriginal] = useState([]);
     const [tasksCopy, setTasksCopy] = useState([]);
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
-    const [tasksPerPage] = useState(1);
     const {isLoggedIn} = useContext(AuthContext);
-    const [redirectLink] = useState({redirect: '/signin'});
+    const redirectLink = {redirect: '/signin'};
 
     const apiRes = () => {
         setTimeout(() => {
@@ -25,21 +23,11 @@ const TasksContainer = () => {
     }
 
     useEffect(() => {
-        let totalPages = parseInt(localStorage.getItem('totalPages'));
-        let pageToStore = currentPage;
-        if (pageToStore > totalPages) pageToStore = totalPages;
-        localStorage.setItem('currentPage', JSON.stringify(pageToStore));
-    }, [currentPage]);
-
-    useEffect(() => {
-        setCurrentPage(parseInt(localStorage.getItem('currentPage')));
-    }, []);
-
-    useEffect(() => {
         startLoading();
         getTasksGet(setTasksOriginal, setTasksCopy)
-            .catch(err => console.error(err));
-        apiRes();
+            .then(() => apiRes())
+            .catch(err => console.error(err))
+
     }, []);
 
 
@@ -67,19 +55,13 @@ const TasksContainer = () => {
                 }}
             />
             <Tasks
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                tasksPerPage={tasksPerPage}
-                tasksCopy={tasksCopy}
-                setTasksCopy={setTasksCopy}
                 tasksOriginal={tasksCopy}
                 setTasksOriginal={setTasksCopy}
+                tasksCopy={tasksCopy}
+                setTasksCopy={setTasksCopy}
             />
             <Pagination
-                tasksPerPage={tasksPerPage}
                 tasksOriginal={tasksOriginal.length}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
             />
         </div>
     );

@@ -1,23 +1,12 @@
 import axios from 'axios';
 
-export const deleteTaskDelete = async (id,
-                                       setCurrentPage,
-                                       tasksOriginal,
-                                       setTasksOriginal) => {
-    const url = 'http://localhost:4000/api/task/delete_task';
+const deleteTaskDelete = async (id, setCurrentPage, tasksOriginal,
+                                setTasksOriginal) => {
     try {
-        const res = (
-            await axios
-                .delete(url, {
-                    data:
-                        {
-                            _id: id
-                        }
-                })
-        );
+        const url = 'http://localhost:4000/api/task/delete_task';
+        const res = await axios.delete(url, {data: {_id: id}});
         console.log(res);
-        const updatedTasks = tasksOriginal.filter(task => task._id !== id);
-        setTasksOriginal(updatedTasks);
+        setTasksOriginal(tasksOriginal.filter(task => task._id !== id));
         const currentPage = localStorage.getItem('currentPage');
         setCurrentPage(JSON.parse(currentPage));
 
@@ -25,3 +14,5 @@ export const deleteTaskDelete = async (id,
         console.error(err);
     }
 }
+
+export default deleteTaskDelete;

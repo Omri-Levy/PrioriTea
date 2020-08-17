@@ -1,7 +1,7 @@
 import React, {useReducer, createContext} from 'react';
 import tasksReducer from './reducers/tasksReducer.js';
 
-const TasksContext = createContext();
+const TasksContext = createContext(undefined);
 
 const TasksProvider = props => {
     const [tasks, dispatch] = useReducer(tasksReducer, []);

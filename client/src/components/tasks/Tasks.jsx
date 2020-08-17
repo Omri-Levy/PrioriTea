@@ -1,5 +1,6 @@
-import {cloneDeep} from 'lodash';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
+import {LoadingContext} from '../../context/LoadingContext.jsx';
+import {PaginationContext} from '../../context/PaginationContext.jsx';
 import CreateTaskModal from './modals/CreateTaskModal.jsx';
 import Loading from '../loading/Loading.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
@@ -7,23 +8,18 @@ import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 import TaskFilterModal from './modals/TaskFilterModal.jsx';
 
 const Tasks = ({
-                   currentPage,
-                   setCurrentPage,
-                   tasksPerPage,
-                   tasksCopy,
-                   setTasksCopy,
                    tasksOriginal,
-                   setTasksOriginal
+                   setTasksOriginal,
+                   tasksCopy,
+                   setTasksCopy
                }) => {
 
-    const [loading] = useState(false);
-
+    const {loading} = useContext(LoadingContext);
     const [editTaskId, setEditTaskId] = useState('');
-
+    const {currentPage, tasksPerPage} = useContext(PaginationContext);
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-    let tasksCopyClone = cloneDeep(tasksCopy);
-    let tasks = tasksCopyClone.slice(indexOfFirstTask, indexOfLastTask);
+    let tasks = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
 
     if (loading) {
         return <Loading/>
@@ -31,6 +27,15 @@ const Tasks = ({
 
     return (
         <>
+            <CreateTaskModal
+                setTasksOriginal={setTasksOriginal}
+                setTasksCopy={setTasksCopy}
+            />
+            <EditTaskModal
+                editTaskId={editTaskId}
+                setTasksOriginal={setTasksOriginal}
+                setTasksCopy={setTasksCopy}
+            />
             {tasks.map(task => (
                     <table key={task._id}>
                         <thead>
@@ -70,9 +75,8 @@ const Tasks = ({
                                     target={'status'}
                                 />
                                 <TaskOptionsModal
-                                    task={task}
-                                    setCurrentPage={setCurrentPage}
                                     tasksOriginal={tasksOriginal}
+                                    taskId={task._id}
                                     setTasksCopy={setTasksCopy}
                                     setEditTaskId={setEditTaskId}
                                 />
@@ -98,15 +102,6 @@ const Tasks = ({
                     </table>
                 )
             )}
-            <CreateTaskModal
-                setTasksOriginal={setTasksOriginal}
-                setTasksCopy={setTasksCopy}
-            />
-            <EditTaskModal
-                setTasksOriginal={setTasksOriginal}
-                setTasksCopy={setTasksCopy}
-                editTaskId={editTaskId}
-            />
         </>
     );
 }

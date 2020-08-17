@@ -1,19 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {PaginationContext} from '../../../context/PaginationContext.jsx';
 import {
     toggleCreateTaskModal,
     editTask,
     displayTaskOptionsTooltip,
     hideTaskOptionsTooltip
 } from '../../../static/js/handlers';
-import {deleteTaskDelete} from '../../../static/js/requests/deleteTaskDelete';
+import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';
 
 const TaskOptionsModal = ({
                               setEditTaskId,
-                              task,
-                              setCurrentPage,
+                              taskId,
                               tasksOriginal,
                               setTasksOriginal
                           }) => {
+    const {setCurrentPage} = useContext(PaginationContext);
     return (
         <em
             title='Options'
@@ -29,20 +30,14 @@ const TaskOptionsModal = ({
                 />
                 <em
                     title='Edit'
-                    onClick={
-                        () => editTask(task._id,
-                            setEditTaskId)}
+                    onClick={() => editTask(taskId, setEditTaskId)}
                     className='edit-task'/>
                 <em
                     title='Delete'
-                    onClick={() =>
-                        deleteTaskDelete(
-                            task._id,
-                            setCurrentPage,
-                            tasksOriginal,
+                    onClick={() => {
+                        deleteTaskDelete(taskId, setCurrentPage, tasksOriginal,
                             setTasksOriginal
-                        )
-                    }
+                        ).catch(err => console.error(err))}}
                     className='delete-task'
                 />
             </div>

@@ -3,15 +3,19 @@ const paginationReducer = (state, action) => {
         case 'SET_CURRENT_PAGE':
             return {
                 ...state,
-                currentPage: action.payload.pageNum
-            };
+                currentPage: action.payload
+            }
         case 'SET_TASKS_PER_PAGE':
             return {
                 ...state,
-                tasksPerPage: action.payload.num
-            };
-        default:
-            return state;
+                tasksPerPage: action.payload
+            }
+        case 'SET_TOTAL_PAGES':
+            return {
+                ...state,
+                totalPages: action.payload
+            }
+
     }
 }
 
