@@ -5,7 +5,7 @@ const LoadingContext = createContext(undefined);
 
 
 const LoadingProvider = props => {
-    const [loading, dispatch] = useReducer(loadingReducer, false, _);
+    const [loading, dispatch] = useReducer(loadingReducer, false);
 
     const startLoading = () => dispatch({type: 'START_LOADING'});
     const stopLoading = () => dispatch({type: 'STOP_LOADING'});

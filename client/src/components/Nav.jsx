@@ -1,24 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext} from 'react';
 import {NavLink} from 'react-router-dom';
+import {AuthContext} from '../context/AuthContext.jsx';
 
 const Nav = () => {
-    const [isLogged, setIsLogged] = useState(true);
-
-    useEffect(() => {
-        localStorage.setItem('isLogged', JSON.stringify(isLogged));
-    }, [isLogged]);
-
-    useEffect(() => {
-        const isLogged = JSON.parse(
-            localStorage.getItem('isLogged'));
-        setIsLogged(isLogged);
-    }, []);
+    const {isLoggedIn, signin, signout} = useContext(AuthContext);
 
     return (
         <nav className='main-nav'>
             <h1 className='m-1'>PRIORITEA</h1>
             <ul>
-                {isLogged &&
+                {isLoggedIn &&
                 <li>
                     <NavLink
                         activeClassName='current-link'
@@ -26,7 +17,7 @@ const Nav = () => {
                         HOME
                     </NavLink>
                 </li>}
-                {isLogged &&
+                {isLoggedIn &&
                 <li>
                     <NavLink
                         activeClassName='current-link'
@@ -34,27 +25,25 @@ const Nav = () => {
                         PROFILE
                     </NavLink>
                 </li>}
-                {!isLogged &&
+                {!isLoggedIn &&
                 <li>
                     <NavLink
                         activeClassName='current-link'
-                        onClick={() => {
-                            setIsLogged(true);
-                        }}
+                        onClick={signin}
                         to='/signin'>
                         SIGNIN
                     </NavLink>
                 </li>}
-                {isLogged &&
+                {isLoggedIn &&
                 <li>
                     <NavLink
                         activeClassName='current-link'
-                        onClick={() => setIsLogged(false)}
+                        onClick={signout}
                         to='/signout'>
                         SIGNOUT
                     </NavLink>
                 </li>}
-                {!isLogged &&
+                {!isLoggedIn &&
                 <li>
                     <NavLink
                         activeClassName='current-link'

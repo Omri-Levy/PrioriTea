@@ -32,7 +32,6 @@ const TaskFilterModal = ({
     }
 
     const mySet = filterSet();
-    console.log(mySet);
 
     return (
         <em
