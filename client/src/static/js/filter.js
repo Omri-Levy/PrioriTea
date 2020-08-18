@@ -19,12 +19,29 @@ const filterByBtn = (Event, tasks, setTasksCopy) => {
     const key = (Event.target.closest('th').getElementsByTagName(
         'span')[0].innerHTML.toLowerCase());
     const value = Event.target.innerText;
+    setFilter(key, value);
     const tasksClone = cloneDeep(tasks);
     const filteredTasks = tasksClone.filter(task => task[key] === value);
     setTasksCopy(filteredTasks);
 }
 
+const setFilter = (key, value) => {
+    const filterObj = {'key': key, 'value': value};
+    localStorage.setItem('filter', JSON.stringify(filterObj));
+}
+
+const persistFilter = (tasks, setTasksCopy) => {
+    const filterObj = JSON.parse(localStorage.getItem('filter'));
+    if (filterObj) {
+        const {key, value} = filterObj;
+        const tasksClone = cloneDeep(tasks);
+        const filteredTasks = tasksClone.filter(task => task[key] === value);
+        setTasksCopy(filteredTasks);
+    }
+}
+
 export {
     filterBySearch,
-    filterByBtn
+    filterByBtn,
+    persistFilter
 };

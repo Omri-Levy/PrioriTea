@@ -6,7 +6,8 @@ const TasksContext = createContext(undefined);
 const TasksProvider = props => {
     const [tasksObj, dispatch] = useReducer(tasksReducer, {
         tasks: [],
-        tasksCopy: []
+        tasksCopy: [],
+        filter: localStorage.getItem('filter')
     });
     const setTasks = data => dispatch({
         type: 'GET_TASKS',

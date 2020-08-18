@@ -30,7 +30,7 @@ const TaskFilterModal = ({target}) => {
 
     const mySet = filterSet();
     const filterByBtnWrapper = (Event) => {
-        filterByBtn(Event, tasks, setTasksCopy);
+      filterByBtn(Event, tasks, setTasksCopy);
     }
     return (
         <em title='Filter' className='task-filter-tooltip-container'
