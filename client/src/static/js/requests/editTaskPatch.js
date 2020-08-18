@@ -21,9 +21,11 @@ const editTaskPatch = async (data, editTaskId, tasks, setTasks,
         for (let i in tasksCopy) {
             if (tasksCopy[i]._id === editTaskId) {
                 tasksCopy[i].priority = data.priority ? data.priority :
-                    task.priority;
-                tasksCopy[i].task = data.task ? data.task : task.task;
-                tasksCopy[i].status = data.status ? data.status : task.status;
+                    tasksCopy[i].priority;
+                tasksCopy[i].task = data.task ? data.task :
+                    tasksCopy[i].task;
+                tasksCopy[i].status = data.status ? data.status :
+                    tasksCopy[i].status;
                 break;
             }
         }
