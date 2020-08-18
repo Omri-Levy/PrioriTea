@@ -5,10 +5,14 @@ import signupPost from '../../static/js/requests/signupPost.js';
 import EmailExists from '../EmailExists.jsx';
 import {FormikInput} from '../fields/FormikInput.jsx';
 
-export const SignupForm = () => {
+export const SignupForm = ({history}) => {
     const [displayEmailExistsMsg, setEmailExistsMsg] = (
         useState(false)
     );
+    const signup = (data) => {
+        signupPost(data).catch(err => console.log(err));
+        history.push('/signin')
+    }
     return (
         <div className='body-container'>
             <div className='form-container'>
@@ -21,7 +25,7 @@ export const SignupForm = () => {
                         passwordConfirmation: '',
                     }}
                     validationSchema={signupSchema}
-                    onSubmit={(data) => signupPost(data)}
+                    onSubmit={(data) => signup(data)}
                 >
                     {() => (
                         <Form className='signup-form'>

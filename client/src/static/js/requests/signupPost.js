@@ -14,7 +14,7 @@ const signupPost = async (data) => {
         );
         console.log(res);
         // dispatchHideEmailExistsMsg();
-        window.location.href = '/signin';
+
     } catch (err) {
         if (err.response.data.message === 'Email already exists.') {
             // dispatchDisplayEmailExistsMsg();
