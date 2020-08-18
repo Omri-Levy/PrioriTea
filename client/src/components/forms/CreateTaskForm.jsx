@@ -1,6 +1,7 @@
+import {TasksContext} from '../../context/TasksContext.jsx';
 import createTaskSchema from '../../static/js/validation/createTaskSchema';
 import {Form, Formik} from 'formik';
-import React from 'react';
+import React, {useContext} from 'react';
 import createTaskPost from '../../static/js/requests/createTaskPost.js';
 import {
     toggleCreateTaskModal
@@ -8,7 +9,7 @@ import {
 import {FormikInput} from '../fields/FormikInput.jsx';
 
 export const CreateTaskForm = () => {
-
+    const {setTasks, setTasksCopy} = useContext(TasksContext);
     return (
         <Formik
             initialValues={{
@@ -17,7 +18,7 @@ export const CreateTaskForm = () => {
                 status: ''
             }}
             validationSchema={createTaskSchema}
-            onSubmit={(data) => createTaskPost(data)}
+            onSubmit={(data) => createTaskPost(data, setTasks, setTasksCopy)}
         >
             {() => (
                 <Form className='create-task-form'>

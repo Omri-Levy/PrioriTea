@@ -8,7 +8,7 @@ import {
 } from '../../../static/js/handlers.js';
 
 const TaskFilterModal = ({target}) => {
-    const {tasks, setTasks} = useContext(TasksContext);
+    const {tasks, setTasksCopy} = useContext(TasksContext);
     const filterSet = () => {
         const tempArr = [];
         const tasksClone = cloneDeep(tasks);
@@ -29,11 +29,11 @@ const TaskFilterModal = ({target}) => {
     }
 
     const mySet = filterSet();
-
+    const filterByBtnWrapper = (Event) => {
+        filterByBtn(Event, tasks, setTasksCopy);
+    }
     return (
-        <em
-            title='Filter'
-            className='task-filter-tooltip-container'
+        <em title='Filter' className='task-filter-tooltip-container'
             onMouseEnter={displayTaskFilterTooltip}
             onMouseLeave={hideTaskFilterTooltip}
         >
@@ -42,17 +42,9 @@ const TaskFilterModal = ({target}) => {
                     <ul>
                         {[...mySet].map(item => {
                             return (
-                                <li
-                                    onClick={(Event) => {
-                                        filterByBtn(
-                                            Event,
-                                            tasks,
-                                            setTasks
-                                        )
-                                    }
-                                    }
-                                    key={item}
-                                >
+                                <li onClick={(Event) =>
+                                    filterByBtnWrapper(Event)}
+                                    key={item}>
                                     {item}
                                 </li>
                             );

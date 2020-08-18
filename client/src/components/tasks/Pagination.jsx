@@ -1,23 +1,23 @@
 import React, {useContext, useEffect} from 'react';
 import {PaginationContext} from '../../context/PaginationContext.jsx';
+import {TasksContext} from '../../context/TasksContext.jsx';
 import movePage from '../../static/js/movePage.js';
 
-const Pagination = ({tasksLength}) => {
+const Pagination = ({tasksCopyLength}) => {
 
     const pageNumbers = [];
     const maxPages = 5;
     const {currentPage, setCurrentPage} = useContext(PaginationContext);
+    const {tasks, tasksCopy} = useContext(TasksContext);
 
     let maxLeft = (currentPage - Math.floor(maxPages / 2));
     let maxRight = (currentPage + Math.floor(maxPages / 2));
-    const {
-        totalPages, setTotalPages,
-        tasksPerPage
-    } = useContext(PaginationContext);
+    const {totalPages, setTotalPages, tasksPerPage} = useContext(
+        PaginationContext);
 
     useEffect(() => {
-        setTotalPages(Math.round(tasksLength / tasksPerPage));
-    }, []);
+        setTotalPages(Math.round(tasksCopyLength / tasksPerPage));
+    }, [tasks, tasksCopy]);
 
 
     if (maxLeft < 1) {
@@ -65,7 +65,7 @@ const Pagination = ({tasksLength}) => {
                         </a>
                     </li>
                 ))}
-                {maxRight !== tasksLength &&
+                {maxRight !== tasksCopyLength &&
                 <li>
                     <a
                         id='last-page'

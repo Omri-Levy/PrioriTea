@@ -1,7 +1,9 @@
 import axios from 'axios';
+import {cloneDeep} from 'lodash';
 import {toggleEditTaskModal} from '../handlers.js';
 
-const editTaskPatch = async (data, editTaskId) => {
+const editTaskPatch = async (data, editTaskId, tasks, setTasks,
+                             setTasksCopy) => {
     const url = 'http://localhost:4000/api/task/edit_task';
     try {
         const res = (
@@ -15,6 +17,18 @@ const editTaskPatch = async (data, editTaskId) => {
         );
         console.log(res);
         toggleEditTaskModal();
+        let tasksCopy = cloneDeep(tasks);
+        for (let i in tasksCopy) {
+            if (tasksCopy[i]._id === editTaskId) {
+                tasksCopy[i].priority = data.priority ? data.priority :
+                    task.priority;
+                tasksCopy[i].task = data.task ? data.task : task.task;
+                tasksCopy[i].status = data.status ? data.status : task.status;
+                break;
+            }
+        }
+        setTasks(tasksCopy);
+        setTasksCopy(tasksCopy);
     } catch (err) {
         console.error(err);
     }

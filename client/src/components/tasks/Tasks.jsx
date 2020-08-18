@@ -1,3 +1,4 @@
+import {cloneDeep} from 'lodash';
 import React, {useContext, useState} from 'react';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {PaginationContext} from '../../context/PaginationContext.jsx';
@@ -9,13 +10,14 @@ import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 import TaskFilterModal from './modals/TaskFilterModal.jsx';
 
 const Tasks = () => {
-    const {tasks} = useContext(TasksContext);
+    const {tasksCopy} = useContext(TasksContext);
     const {loading} = useContext(LoadingContext);
     const [editTaskId, setEditTaskId] = useState('');
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-    let slicedTasksCopy = tasks.slice(indexOfFirstTask, indexOfLastTask);
+    const tasksClone = cloneDeep(tasksCopy);
+    let slicedTasksCopy = tasksClone.slice(indexOfFirstTask, indexOfLastTask);
 
     if (loading) {
         return <Loading/>
@@ -51,7 +53,7 @@ const Tasks = () => {
                                 className='relative-parent'>
                                 <TaskFilterModal target={'status'}/>
                                 <TaskOptionsModal taskId={task._id}
-                                    setEditTaskId={setEditTaskId}
+                                                  setEditTaskId={setEditTaskId}
                                 />
                                 <span>
                                 Status

@@ -1,5 +1,5 @@
-import axios from 'axios';
-import React, {useContext, useEffect, useState} from 'react';
+import {cloneDeep} from 'lodash';
+import React, {useContext, useEffect} from 'react';
 import {Redirect} from 'react-router-dom';
 import {AuthContext} from '../../context/AuthContext.jsx';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
@@ -12,7 +12,7 @@ import Pagination from './Pagination.jsx';
 import Tasks from './Tasks.jsx';
 
 const TasksContainer = () => {
-    const {tasks, setTasks} = useContext(TasksContext);
+    const {tasks, setTasks, tasksCopy, setTasksCopy} = useContext(TasksContext);
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
     const {isLoggedIn} = useContext(AuthContext);
     const redirectLink = {redirect: '/signin'};
@@ -20,12 +20,12 @@ const TasksContainer = () => {
     const apiRes = () => {
         setTimeout(() => {
             stopLoading();
-        }, 1000);
+        }, 120);
     };
 
     useEffect(() => {
         startLoading();
-        getTasksGet(setTasks).catch(err => console.log(err));
+        getTasksGet(setTasks, setTasksCopy).catch(err => console.error(err));
         apiRes();
     }, []);
 
@@ -33,7 +33,9 @@ const TasksContainer = () => {
     if (!isLoggedIn) return <Redirect to={redirectLink}/>;
 
     if (loading) return <Loading/>
-
+    const filterBySearchWrapper = (Event) => {
+        filterBySearch(Event.target.value.toLowerCase(), tasks, setTasksCopy);
+    }
     return (
         <div className='tasks-container'>
             <CustomInput
@@ -45,16 +47,10 @@ const TasksContainer = () => {
                 type='text'
                 autoComplete='on'
                 placeholder='Filter'
-                onChange={(Event) => {
-                    filterBySearch(
-                        Event.target.value.toLowerCase(),
-                        tasks,
-                        setTasks
-                    )
-                }}
+                onChange={(Event) => filterBySearchWrapper(Event)}
             />
             <Tasks/>
-            <Pagination tasksLength={tasks.length}/>
+            <Pagination tasksCopyLength={tasksCopy.length}/>
         </div>
     );
 }

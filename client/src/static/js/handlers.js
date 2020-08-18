@@ -36,9 +36,9 @@ const toggleEditTaskModal = () => {
     target && target.classList.toggle('hidden');
 }
 
-const editTask = (id, setEditTaskId) => {
+const editTask = (taskId, setEditTaskId) => {
     toggleEditTaskModal();
-    setEditTaskId(id);
+    setEditTaskId(taskId);
 }
 
 export {

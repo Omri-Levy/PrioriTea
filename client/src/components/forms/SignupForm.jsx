@@ -10,7 +10,7 @@ export const SignupForm = ({history}) => {
         useState(false)
     );
     const signup = (data) => {
-        signupPost(data).catch(err => console.log(err));
+        signupPost(data).catch(err => console.error(err));
         history.push('/signin')
     }
     return (

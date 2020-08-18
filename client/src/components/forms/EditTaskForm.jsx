@@ -1,6 +1,7 @@
+import {TasksContext} from '../../context/TasksContext.jsx';
 import editTaskSchema from '../../static/js/validation/editTaskSchema.js';
 import {Form, Formik} from 'formik';
-import React from 'react';
+import React, {useContext} from 'react';
 import editTaskPatch from '../../static/js/requests/editTaskPatch.js';
 import {
     toggleEditTaskModal
@@ -8,14 +9,14 @@ import {
 import {FormikInput} from '../fields/FormikInput.jsx';
 
 export const EditTaskForm = ({editTaskId}) => {
+    const {tasks, setTasks, setTasksCopy} = useContext(TasksContext);
     return (
         <Formik
             initialValues={{priority: '', task: '', status: ''}}
             validationSchema={editTaskSchema}
             onSubmit={(data) => {
-                editTaskPatch(data, editTaskId).catch(err => {
-                    console.error(err)
-                })
+                editTaskPatch(data, editTaskId, tasks,
+                    setTasks, setTasksCopy).catch(err => console.error(err));
             }}>
             {() => (
                 <Form className='edit-task-form'>

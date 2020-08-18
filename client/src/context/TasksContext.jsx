@@ -4,14 +4,22 @@ import tasksReducer from './reducers/tasksReducer.js';
 const TasksContext = createContext(undefined);
 
 const TasksProvider = props => {
-    const [tasks, dispatch] = useReducer(tasksReducer, []);
+    const [tasksObj, dispatch] = useReducer(tasksReducer, {
+        tasks: [],
+        tasksCopy: []
+    });
     const setTasks = data => dispatch({
         type: 'GET_TASKS',
         payload: data
     });
 
+    const setTasksCopy = data => dispatch({
+        type: 'SET_TASKS_COPY',
+        payload: data
+    });
+
     return (
-        <TasksContext.Provider value={{tasks, setTasks}}>
+        <TasksContext.Provider value={{...tasksObj, setTasks, setTasksCopy}}>
             {props.children}
         </TasksContext.Provider>
     );

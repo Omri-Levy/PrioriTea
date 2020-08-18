@@ -1,10 +1,13 @@
-import React from 'react';
-import {toggleCreateTaskModal, editTask, displayTaskOptionsTooltip,
+import React, {useContext} from 'react';
+import {TasksContext} from '../../../context/TasksContext.jsx';
+import {
+    toggleCreateTaskModal, editTask, displayTaskOptionsTooltip,
     hideTaskOptionsTooltip
 } from '../../../static/js/handlers';
 import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';
 
 const TaskOptionsModal = ({setEditTaskId, taskId}) => {
+    const {tasks, setTasks, setTasksCopy} = useContext(TasksContext);
     return (
         <em
             title='Options'
@@ -25,9 +28,8 @@ const TaskOptionsModal = ({setEditTaskId, taskId}) => {
                 <em
                     title='Delete'
                     onClick={() => {
-                        deleteTaskDelete(taskId).catch(err => {
-                            console.error(err);
-                        })
+                        deleteTaskDelete(taskId, tasks, setTasks, setTasksCopy)
+                            .catch(err => console.error(err));
                     }}
                     className='delete-task'
                 />
