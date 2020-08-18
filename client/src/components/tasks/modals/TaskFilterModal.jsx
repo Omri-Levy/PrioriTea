@@ -30,29 +30,38 @@ const TaskFilterModal = ({target}) => {
 
     const mySet = filterSet();
     const filterByBtnWrapper = (Event) => {
-      filterByBtn(Event, tasks, setTasksCopy);
+        filterByBtn(Event, tasks, setTasksCopy);
+    }
+    const filterObj = localStorage.getItem('filter');
+    const resetFilter = () => {
+        localStorage.removeItem('filter');
+        setTasksCopy(tasks);
     }
     return (
-        <em title='Filter' className='task-filter-tooltip-container'
-            onMouseEnter={displayTaskFilterTooltip}
-            onMouseLeave={hideTaskFilterTooltip}
-        >
-            <div className='relative-parent'>
-                <div className='task-filter-tooltip hidden'>
-                    <ul>
-                        {[...mySet].map(item => {
-                            return (
-                                <li onClick={(Event) =>
-                                    filterByBtnWrapper(Event)}
-                                    key={item}>
-                                    {item}
-                                </li>
-                            );
-                        })}
-                    </ul>
+        <>
+            {filterObj && <em title='Clear Filter' className='clear-filter'
+                              onClick={resetFilter}/>}
+            <em title='Filter' className='task-filter-tooltip-container'
+                onMouseEnter={displayTaskFilterTooltip}
+                onMouseLeave={hideTaskFilterTooltip}
+            >
+                <div className='relative-parent'>
+                    <div className='task-filter-tooltip hidden'>
+                        <ul>
+                            {[...mySet].map(item => {
+                                return (
+                                    <li onClick={(Event) =>
+                                        filterByBtnWrapper(Event)}
+                                        key={item}>
+                                        {item}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </em>
+            </em>
+        </>
     );
 }
 

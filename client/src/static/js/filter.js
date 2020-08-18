@@ -1,6 +1,8 @@
 import {cloneDeep} from 'lodash';
 
 const filterBySearch = (value, tasks, setTasksCopy) => {
+    localStorage.getItem('filter') && localStorage.removeItem(
+        'filter');
 
     const valueIncluded = (task) => {
         return (

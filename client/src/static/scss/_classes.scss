@@ -132,6 +132,16 @@
   }
 }
 
+.clear-filter {
+  @extend .fas, .fa-slash;
+  @extend .excluded-link;
+  color: set-clear-filter-color($bg-color);
+  text-align: center;
+  position: absolute;
+  z-index: 1;
+  left: 0;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .spinner {
     animation: loading infinite 20s;
