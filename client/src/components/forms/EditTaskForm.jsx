@@ -10,16 +10,12 @@ import {FormikInput} from '../fields/FormikInput.jsx';
 export const EditTaskForm = ({editTaskId}) => {
     return (
         <Formik
-            initialValues={{
-                priority: '',
-                task: '',
-                status: ''
-            }}
+            initialValues={{priority: '', task: '', status: ''}}
             validationSchema={editTaskSchema}
             onSubmit={(data) => {
                 editTaskPatch(data, editTaskId).catch(err => {
                     console.error(err)
-                });
+                })
             }}>
             {() => (
                 <Form className='edit-task-form'>
@@ -48,15 +44,11 @@ export const EditTaskForm = ({editTaskId}) => {
                         autoComplete='on'
                         placeholder='Status'
                     />
-                    <button
-                        type='submit'
-                        className='primary-btn'>
+                    <button type='submit' className='primary-btn'>
                         Edit
                     </button>
-                    <button
-                        type='button'
-                        onClick={toggleEditTaskModal}
-                        className='primary-btn'>
+                    <button type='button' onClick={toggleEditTaskModal}
+                            className='primary-btn'>
                         Cancel
                     </button>
                 </Form>

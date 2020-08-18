@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-    toggleCreateTaskModal,
-    editTask,
-    displayTaskOptionsTooltip,
+import {toggleCreateTaskModal, editTask, displayTaskOptionsTooltip,
     hideTaskOptionsTooltip
 } from '../../../static/js/handlers';
 import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';

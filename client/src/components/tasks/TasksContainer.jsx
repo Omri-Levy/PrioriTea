@@ -53,13 +53,8 @@ const TasksContainer = () => {
                     )
                 }}
             />
-            <Tasks
-                tasks={tasks}
-                setTasks={setTasks}
-            />
-            <Pagination
-                tasks={tasks.length}
-            />
+            <Tasks/>
+            <Pagination tasksLength={tasks.length}/>
         </div>
     );
 }

@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import {PaginationContext} from '../../context/PaginationContext.jsx';
 import movePage from '../../static/js/movePage.js';
 
-const Pagination = ({tasks}) => {
+const Pagination = ({tasksLength}) => {
 
     const pageNumbers = [];
     const maxPages = 5;
@@ -16,7 +16,7 @@ const Pagination = ({tasks}) => {
     } = useContext(PaginationContext);
 
     useEffect(() => {
-        setTotalPages(Math.round(tasks / tasksPerPage));
+        setTotalPages(Math.round(tasksLength / tasksPerPage));
     }, []);
 
 
@@ -65,7 +65,7 @@ const Pagination = ({tasks}) => {
                         </a>
                     </li>
                 ))}
-                {maxRight !== tasks &&
+                {maxRight !== tasksLength &&
                 <li>
                     <a
                         id='last-page'

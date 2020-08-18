@@ -1,17 +1,14 @@
 import {cloneDeep} from 'lodash';
-import React from 'react';
+import React, {useContext} from 'react';
+import {TasksContext} from '../../../context/TasksContext.jsx';
 import {filterByBtn} from '../../../static/js/filter.js';
 import {
     displayTaskFilterTooltip,
     hideTaskFilterTooltip
 } from '../../../static/js/handlers.js';
 
-const TaskFilterModal = ({
-                             target,
-                             tasks,
-                             setTasks
-                         }) => {
-
+const TaskFilterModal = ({target}) => {
+    const {tasks, setTasks} = useContext(TasksContext);
     const filterSet = () => {
         const tempArr = [];
         const tasksClone = cloneDeep(tasks);

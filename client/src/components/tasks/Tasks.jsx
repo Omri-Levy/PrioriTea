@@ -1,14 +1,15 @@
 import React, {useContext, useState} from 'react';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {PaginationContext} from '../../context/PaginationContext.jsx';
+import {TasksContext} from '../../context/TasksContext.jsx';
 import CreateTaskModal from './modals/CreateTaskModal.jsx';
 import Loading from '../loading/Loading.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 import TaskFilterModal from './modals/TaskFilterModal.jsx';
 
-const Tasks = ({tasks, setTasks}) => {
-
+const Tasks = () => {
+    const {tasks} = useContext(TasksContext);
     const {loading} = useContext(LoadingContext);
     const [editTaskId, setEditTaskId] = useState('');
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
@@ -30,10 +31,7 @@ const Tasks = ({tasks, setTasks}) => {
                                 title='Sort'
                                 className='relative-parent'
                             >
-                                <TaskFilterModal
-                                    tasks={tasks}
-                                    setTasks={setTasks}
-                                    target={'priority'}
+                                <TaskFilterModal target={'priority'}
                                 />
                                 <span>
                                 Priority
@@ -43,11 +41,7 @@ const Tasks = ({tasks, setTasks}) => {
                                 title='Sort'
                                 className='relative-parent'
                             >
-                                <TaskFilterModal
-                                    tasks={tasks}
-                                    setTasks={setTasks}
-                                    target={'task'}
-                                />
+                                <TaskFilterModal target={'task'}/>
                                 <span>
                                 Task
                                     </span>
@@ -55,14 +49,8 @@ const Tasks = ({tasks, setTasks}) => {
                             <th
                                 title='Sort'
                                 className='relative-parent'>
-                                <TaskFilterModal
-                                    tasks={tasks}
-                                    setTasks={setTasks}
-                                    target={'status'}
-                                />
-                                <TaskOptionsModal
-                                    tasks={tasks}
-                                    taskId={task._id}
+                                <TaskFilterModal target={'status'}/>
+                                <TaskOptionsModal taskId={task._id}
                                     setEditTaskId={setEditTaskId}
                                 />
                                 <span>
