@@ -19,7 +19,8 @@ const editTaskPatch = async (data, editTaskId, tasks, setTasks,
         toggleEditTaskModal();
         let tasksCopy = cloneDeep(tasks);
         for (let i in tasksCopy) {
-            if (tasksCopy[i]._id === editTaskId) {
+            if (tasksCopy.hasOwnProperty(i) && tasksCopy[i]._id === editTaskId
+            ) {
                 tasksCopy[i].priority = data.priority ? data.priority :
                     tasksCopy[i].priority;
                 tasksCopy[i].task = data.task ? data.task :
