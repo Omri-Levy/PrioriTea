@@ -6,7 +6,7 @@ import {
 } from '../../../static/js/handlers';
 import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';
 
-const TaskOptionsModal = ({taskId}) => {
+const TaskOptionsModal = ({taskId, noTasks}) => {
     const {tasks, setTasks, setTasksCopy, setEditTaskId} = useContext(
         TasksContext);
     const editTask = () => {
@@ -27,16 +27,20 @@ const TaskOptionsModal = ({taskId}) => {
                     className='create-task'
                 />
                 <em
-                    title='Edit'
-                    onClick={editTask}
-                    className='edit-task'/>
+                    title={!noTasks ? 'Edit' :
+                        'Edit Is Unavailable On Draft'}
+                    onClick={!noTasks ? editTask : null}
+                    className={!noTasks ? 'edit-task' :
+                        'edit-task excluded-link'}/>
                 <em
-                    title='Delete'
-                    onClick={() => {
+                    title={!noTasks ? 'Delete' :
+                        'Delete Is Unavailable On Draft'}
+                    onClick={!noTasks ? () => {
                         deleteTaskDelete(taskId, tasks, setTasks, setTasksCopy)
                             .catch(err => console.error(err));
-                    }}
-                    className='delete-task'
+                    } : null}
+                    className={!noTasks ? 'delete-task' :
+                        'delete-task excluded-link'}
                 />
             </div>
         </em>

@@ -7,7 +7,7 @@ import {
     hideTaskFilterTooltip
 } from '../../../static/js/handlers.js';
 
-const TaskFilterModal = ({target}) => {
+const TaskFilterModal = ({target, noTasks}) => {
     const {tasks, setTasksCopy} = useContext(TasksContext);
     const filterSet = () => {
         const tempArr = [];
@@ -41,8 +41,9 @@ const TaskFilterModal = ({target}) => {
         <>
             {filterObj && <em title='Clear Filter' className='clear-filter'
                               onClick={resetFilter}/>}
-            <em title='Filter' className='task-filter-tooltip-container'
-                onMouseEnter={displayTaskFilterTooltip}
+            <em title={noTasks ? 'Filter Is Unavailable On Draft' : 'Filter'}
+                className='task-filter-tooltip-container'
+                onMouseEnter={!noTasks ? displayTaskFilterTooltip : null}
                 onMouseLeave={hideTaskFilterTooltip}
             >
                 <div className='relative-parent'>
