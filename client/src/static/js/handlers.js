@@ -27,10 +27,16 @@ const hideTaskFilterTooltip = (Event) => {
     target && target.classList.add('hidden');
 }
 
+const toggleSort = (Event) => {
+    const target = Event.target;
+    target && target.classList.toggle('sorted-asc');
+    target && target.classList.toggle('sorted-desc');
+}
+
+
 const toggleCreateTaskModal = () => {
     const selector = '.create-task-modal-container';
     const target = document.querySelector(selector);
-
     target && target.classList.toggle('hidden');
 }
 
@@ -40,11 +46,6 @@ const toggleEditTaskModal = () => {
     target && target.classList.toggle('hidden');
 }
 
-const editTask = (taskId, setEditTaskId) => {
-    toggleEditTaskModal();
-    setEditTaskId(taskId);
-}
-
 export {
     displayTaskOptionsTooltip,
     hideTaskOptionsTooltip,
@@ -52,5 +53,5 @@ export {
     hideTaskFilterTooltip,
     toggleCreateTaskModal,
     toggleEditTaskModal,
-    editTask
+    toggleSort
 }

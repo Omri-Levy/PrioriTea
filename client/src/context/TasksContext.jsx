@@ -7,6 +7,7 @@ const TasksProvider = props => {
     const [tasksObj, dispatch] = useReducer(tasksReducer, {
         tasks: [],
         tasksCopy: [],
+        editTaskId: '',
         filter: localStorage.getItem('filter')
     });
     const setTasks = data => dispatch({
@@ -19,8 +20,16 @@ const TasksProvider = props => {
         payload: data
     });
 
+    const setEditTaskId = data => dispatch({
+        type: 'SET_EDIT_TASK_ID',
+        payload: data
+    });
+
     return (
-        <TasksContext.Provider value={{...tasksObj, setTasks, setTasksCopy}}>
+        <TasksContext.Provider value={{
+            ...tasksObj, setTasks, setTasksCopy,
+            setEditTaskId
+        }}>
             {props.children}
         </TasksContext.Provider>
     );

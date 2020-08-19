@@ -1,13 +1,18 @@
 import React, {useContext} from 'react';
 import {TasksContext} from '../../../context/TasksContext.jsx';
 import {
-    toggleCreateTaskModal, editTask, displayTaskOptionsTooltip,
-    hideTaskOptionsTooltip
+    toggleCreateTaskModal, displayTaskOptionsTooltip,
+    hideTaskOptionsTooltip, toggleEditTaskModal
 } from '../../../static/js/handlers';
 import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';
 
-const TaskOptionsModal = ({setEditTaskId, taskId}) => {
-    const {tasks, setTasks, setTasksCopy} = useContext(TasksContext);
+const TaskOptionsModal = ({taskId}) => {
+    const {tasks, setTasks, setTasksCopy, setEditTaskId} = useContext(
+        TasksContext);
+    const editTask = () => {
+        toggleEditTaskModal();
+        setEditTaskId(taskId);
+    }
     return (
         <em
             title='Options'
@@ -23,7 +28,7 @@ const TaskOptionsModal = ({setEditTaskId, taskId}) => {
                 />
                 <em
                     title='Edit'
-                    onClick={() => editTask(taskId, setEditTaskId)}
+                    onClick={editTask}
                     className='edit-task'/>
                 <em
                     title='Delete'

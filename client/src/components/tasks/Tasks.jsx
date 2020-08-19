@@ -3,7 +3,7 @@ import React, {useContext, useState} from 'react';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {PaginationContext} from '../../context/PaginationContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
-import CreateTaskModal from './modals/CreateTaskModal.jsx';
+import {toggleSort} from '../../static/js/handlers.js';
 import Loading from '../loading/Loading.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
@@ -12,7 +12,6 @@ import TaskFilterModal from './modals/TaskFilterModal.jsx';
 const Tasks = () => {
     const {tasksCopy} = useContext(TasksContext);
     const {loading} = useContext(LoadingContext);
-    const [editTaskId, setEditTaskId] = useState('');
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
@@ -37,6 +36,8 @@ const Tasks = () => {
                                 />
                                 <span>
                                 Priority
+                                    <i onClick={toggleSort}
+                                        className='sorted-desc'/>
                                     </span>
                             </th>
                             <th
@@ -46,17 +47,19 @@ const Tasks = () => {
                                 <TaskFilterModal target={'task'}/>
                                 <span>
                                 Task
+                                    <i onClick={toggleSort}
+                                       className='sorted-desc'/>
                                     </span>
                             </th>
                             <th
                                 title='Sort'
                                 className='relative-parent'>
                                 <TaskFilterModal target={'status'}/>
-                                <TaskOptionsModal taskId={task._id}
-                                                  setEditTaskId={setEditTaskId}
-                                />
+                                <TaskOptionsModal taskId={task._id}/>
                                 <span>
                                 Status
+                                    <i onClick={toggleSort}
+                                        className='sorted-desc'/>
                                     </span>
                             </th>
                         </tr>
@@ -77,8 +80,6 @@ const Tasks = () => {
                     </table>
                 )
             )}
-            <CreateTaskModal/>
-            <EditTaskModal editTaskId={editTaskId}/>
         </>
     );
 }

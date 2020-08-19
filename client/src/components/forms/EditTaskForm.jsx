@@ -8,8 +8,9 @@ import {
 } from '../../static/js/handlers.js';
 import {FormikInput} from '../fields/FormikInput.jsx';
 
-export const EditTaskForm = ({editTaskId}) => {
-    const {tasks, setTasks, setTasksCopy} = useContext(TasksContext);
+export const EditTaskForm = () => {
+    const {tasks, setTasks, setTasksCopy, editTaskId} = useContext(
+        TasksContext);
     return (
         <Formik
             initialValues={{priority: '', task: '', status: ''}}
