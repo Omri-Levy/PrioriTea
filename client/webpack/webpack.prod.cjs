@@ -48,6 +48,7 @@ module.exports = {
             },
             {
                 test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -66,6 +67,7 @@ module.exports = {
             },
             {
                 test: /\.(png|ico|svg|eot|otf|ttf|woff|woff2)$/,
+                exclude: /node_modules/,
                 use: {
                     loader: "file-loader",
                     options: {
