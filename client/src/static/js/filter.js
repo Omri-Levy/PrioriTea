@@ -19,7 +19,7 @@ const filterBySearch = (value, tasks, setTasksCopy) => {
 
 const filterByBtn = (Event, tasks, setTasksCopy) => {
     const key = (Event.target.closest('th').getElementsByTagName(
-        'span')[0].innerHTML.toLowerCase());
+        'span')[0].innerText.toLowerCase());
     const value = Event.target.innerText;
     setFilter(key, value);
     const tasksClone = cloneDeep(tasks);

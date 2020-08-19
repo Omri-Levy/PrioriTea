@@ -1,16 +1,17 @@
 import {cloneDeep} from 'lodash';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {PaginationContext} from '../../context/PaginationContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import {toggleSort} from '../../static/js/handlers.js';
+import sortFn from '../../static/js/sortFn.js';
 import Loading from '../loading/Loading.jsx';
-import EditTaskModal from './modals/EditTaskModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 import TaskFilterModal from './modals/TaskFilterModal.jsx';
 
 const Tasks = () => {
-    const {tasksCopy} = useContext(TasksContext);
+    const {tasks, setTasks, tasksCopy, setTasksCopy} =
+        useContext(TasksContext);
     const {loading} = useContext(LoadingContext);
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
     const indexOfLastTask = currentPage * tasksPerPage;
@@ -21,6 +22,13 @@ const Tasks = () => {
     if (loading) {
         return <Loading/>
     }
+
+    const updateSorting = (Event) => {
+        toggleSort(Event);
+        sortFn(tasks, setTasks, setTasksCopy);
+    }
+
+    const {sortBy, orderBy} = JSON.parse(localStorage.getItem('sort'));
 
     return (
         <>
@@ -36,8 +44,13 @@ const Tasks = () => {
                                 />
                                 <span>
                                 Priority
-                                    <i onClick={toggleSort}
-                                        className='sorted-desc'/>
+                                    <i onClick={(Event) => updateSorting(
+                                        Event)}
+                                       className={
+                                           sortBy === 'priority'
+                                           && orderBy === 'asc'
+                                               ? 'sorted-asc' : 'sorted-desc'
+                                       }/>
                                     </span>
                             </th>
                             <th
@@ -47,8 +60,13 @@ const Tasks = () => {
                                 <TaskFilterModal target={'task'}/>
                                 <span>
                                 Task
-                                    <i onClick={toggleSort}
-                                       className='sorted-desc'/>
+                                    <i onClick={(Event) => updateSorting(
+                                        Event)}
+                                       className={
+                                           sortBy === 'task'
+                                           && orderBy === 'asc'
+                                               ? 'sorted-asc' : 'sorted-desc'
+                                       }/>
                                     </span>
                             </th>
                             <th
@@ -58,8 +76,13 @@ const Tasks = () => {
                                 <TaskOptionsModal taskId={task._id}/>
                                 <span>
                                 Status
-                                    <i onClick={toggleSort}
-                                        className='sorted-desc'/>
+                                    <i onClick={(Event) => updateSorting(
+                                        Event)}
+                                       className={
+                                           sortBy === 'status'
+                                           && orderBy === 'asc'
+                                               ? 'sorted-asc' : 'sorted-desc'
+                                       }/>
                                     </span>
                             </th>
                         </tr>

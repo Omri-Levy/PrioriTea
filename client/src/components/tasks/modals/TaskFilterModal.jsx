@@ -54,8 +54,8 @@ const TaskFilterModal = ({target, noTasks}) => {
                         <ul>
                             {[...mySet].map(item => {
                                 return (
-                                    <li onClick={(Event) =>
-                                        filterByBtnWrapper(Event)}
+                                    <li onClick={(Event) => filterByBtnWrapper(
+                                        Event)}
                                         key={item}>
                                         {item}
                                     </li>

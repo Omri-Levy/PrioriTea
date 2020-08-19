@@ -14,7 +14,8 @@ import Pagination from './Pagination.jsx';
 import Tasks from './Tasks.jsx';
 
 const TasksContainer = () => {
-    const {tasks, setTasks, tasksCopy, setTasksCopy} = useContext(TasksContext);
+    const {tasks, setTasks, tasksCopy, setTasksCopy} = useContext(
+        TasksContext);
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
     const {isLoggedIn} = useContext(AuthContext);
     const redirectLink = {redirect: '/signin'};

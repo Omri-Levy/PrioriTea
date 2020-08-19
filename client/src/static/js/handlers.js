@@ -29,10 +29,21 @@ const hideTaskFilterTooltip = (Event) => {
 
 const toggleSort = (Event) => {
     const target = Event.target;
+    const targetTitle = target.parentElement.innerText.toLowerCase();
     target && target.classList.toggle('sorted-asc');
     target && target.classList.toggle('sorted-desc');
+    if (target.className === 'sorted-desc') {
+        localStorage.setItem('sort', JSON.stringify({
+            sortBy: targetTitle,
+            orderBy: 'desc'
+        }))
+    } else {
+        localStorage.setItem('sort', JSON.stringify({
+            sortBy: targetTitle,
+            orderBy: 'asc'
+        }))
+    }
 }
-
 
 const toggleCreateTaskModal = () => {
     const selector = '.create-task-modal-container';

@@ -27,8 +27,7 @@ const TasksProvider = props => {
 
     return (
         <TasksContext.Provider value={{
-            ...tasksObj, setTasks, setTasksCopy,
-            setEditTaskId
+            ...tasksObj, setTasks, setTasksCopy, setEditTaskId
         }}>
             {props.children}
         </TasksContext.Provider>
