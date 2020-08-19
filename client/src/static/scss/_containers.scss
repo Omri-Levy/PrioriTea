@@ -9,6 +9,7 @@
   @include column-flex;
   background-color: rgba(black, 0.75);
   height: 100vh;
+  width: 100vw;
   position: fixed;
   z-index: 1;
   align-items: center;
@@ -21,6 +22,9 @@
   background-color: $secondary-color;
   height: 50vh;
   width: 50vw;
+  &:focus {
+    outline: none;
+  }
 }
 
 .create-task-modal-container {
@@ -103,6 +107,17 @@
   color: set-text-color($bg-color);
   text-align: center;
   position: absolute;
+}
+
+.task-filter-tooltip {
+  max-height: 415px;
+  overflow-y: auto;
+
+  li {
+    border-bottom: 1px solid rgba(darken($bg-color, 10%), 0.3);
+    overflow-wrap: break-word;
+    width: 230px;
+  }
 }
 
 .task-filter-tooltip-container {

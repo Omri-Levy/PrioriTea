@@ -51,6 +51,10 @@ a:focus::after, .paginate-anchor {
   transition: width 0.3s;
 }
 
+a {
+  outline: none;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,

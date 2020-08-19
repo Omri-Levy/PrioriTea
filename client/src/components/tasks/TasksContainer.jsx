@@ -5,7 +5,7 @@ import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import {filterBySearch} from '../../static/js/filter.js';
 import getTasksGet from '../../static/js/requests/getTasksGet.js';
-import {CustomInput} from '../fields/CustomInput.jsx';
+import {FilterSearch} from '../fields/FilterSearch.jsx';
 import Loading from '../loading/Loading.jsx';
 import Pagination from './Pagination.jsx';
 import Tasks from './Tasks.jsx';
@@ -37,8 +37,7 @@ const TasksContainer = () => {
     }
     return (
         <div className='tasks-container'>
-            <CustomInput
-                id='filter-search'
+            <FilterSearch
                 maxLength='80'
                 autoFocus={true}
                 label='Filter'

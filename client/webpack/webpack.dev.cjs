@@ -12,6 +12,7 @@ module.exports = {
         compress: true,
         hot: true
     },
+    devtool: 'source-map',
     entry: ['@babel/polyfill', path.resolve(__dirname,
         '../src/Index.jsx')],
     output: {

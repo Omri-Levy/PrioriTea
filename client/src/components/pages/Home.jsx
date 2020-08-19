@@ -6,13 +6,13 @@ import TasksContainer from '../tasks/TasksContainer.jsx';
 const Home = () => {
 
     return (
-        <div className='body-container'>
+        <main className='body-container'>
             <TasksProvider>
                 <PaginationProvider>
                     <TasksContainer/>
                 </PaginationProvider>
             </TasksProvider>
-        </div>
+        </main>
     );
 }
 

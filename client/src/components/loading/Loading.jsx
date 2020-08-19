@@ -3,11 +3,11 @@ import spinner from './loading.svg';
 
 const Loading = () => {
     return (
-        <div className='body-container'>
+        <main className='body-container'>
             <div className='spinner-container'>
                 <img src={spinner} className='spinner' alt='spinner'/>
             </div>
-        </div>
+        </main>
     );
 }
 

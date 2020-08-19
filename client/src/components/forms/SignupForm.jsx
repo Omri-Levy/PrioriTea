@@ -14,7 +14,7 @@ export const SignupForm = ({history}) => {
         history.push('/signin')
     }
     return (
-        <div className='body-container'>
+        <main className='body-container'>
             <div className='form-container'>
                 {displayEmailExistsMsg && <EmailExists/>}
                 <Formik
@@ -83,6 +83,6 @@ export const SignupForm = ({history}) => {
                     )}
                 </Formik>
             </div>
-        </div>
+        </main>
     );
 }
