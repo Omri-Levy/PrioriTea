@@ -1,4 +1,5 @@
 import React from 'react';
+import NoTasks from '../tasks/NoTasks.jsx';
 
 export const FilterSearch = ({label, ...props}) => {
     return (
@@ -7,7 +8,10 @@ export const FilterSearch = ({label, ...props}) => {
             >
                 {label}
             </label>
-            <input className='primary-input' {...props}/>
+            <input
+                placeholder={NoTasks ? 'Filter Is Unavailable On Draft' :
+                    'Filter'}
+                className='primary-input' {...props}/>
         </section>
     )
 }

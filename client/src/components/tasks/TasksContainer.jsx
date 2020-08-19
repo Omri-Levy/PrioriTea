@@ -52,8 +52,7 @@ const TasksContainer = () => {
                 name='Filter'
                 type='text'
                 autoComplete='on'
-                placeholder={NoTasks ? 'Filter Is Unavailable On Draft' :
-                    'Filter'}
+                placeholder={'Filter'}
                 onChange={(Event) => filterBySearchWrapper(Event)}
             />
             {noTasks() ?
