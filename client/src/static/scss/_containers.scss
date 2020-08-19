@@ -112,13 +112,18 @@
 }
 
 .task-filter-tooltip {
-  max-height: 415px;
+  min-height: 420px;
+  max-height: 420px;
   overflow-y: auto;
+  z-index: 1;
 
   li {
     border-bottom: 1px solid rgba(darken($bg-color, 10%), 0.3);
     overflow-wrap: break-word;
-    width: 230px;
+    width: 260px;
+    &:hover {
+      background-color: darken($bg-color, 10%);
+    }
   }
 }
 
