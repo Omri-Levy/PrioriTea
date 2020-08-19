@@ -51,7 +51,7 @@ const Pagination = ({tasksCopyLength}) => {
                         id='first-page'
                         onClick={() => movePage(1, setCurrentPage)}
                     >
-                        <i className='fas fa-angle-double-left padded'/>First
+                        <i className='first-page'/>First
                     </a>
                 </li>}
                 {pageNumbers.map(number => (
@@ -71,7 +71,7 @@ const Pagination = ({tasksCopyLength}) => {
                         id='last-page'
                         onClick={() => movePage(totalPages, setCurrentPage)}
                     >
-                        Last<i className='fas fa-angle-double-right padded'/>
+                        Last<i className='last-page'/>
                     </a>
                 </li>}
             </ul>

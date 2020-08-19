@@ -46,7 +46,9 @@ const TaskFilterModal = ({target}) => {
                 onMouseLeave={hideTaskFilterTooltip}
             >
                 <div className='relative-parent'>
-                    <div className='task-filter-tooltip hidden'>
+                    <div onMouseLeave={hideTaskFilterTooltip}
+                         id='hidden-filter-modal'
+                         className='task-filter-tooltip hidden'>
                         <ul>
                             {[...mySet].map(item => {
                                 return (

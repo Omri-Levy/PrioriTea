@@ -15,6 +15,7 @@
  */
 
 .fa,
+.header-fas,
 .fas {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -23,6 +24,10 @@
   font-variant: normal;
   text-rendering: auto;
   line-height: 1.6;
+}
+
+.header-fas {
+  line-height: 1.2;
 }
 
 @font-face {
@@ -34,10 +39,26 @@
 }
 
 .fa,
+.header-fas,
 .fas {
   font-family: 'Font Awesome 5 Free', sans-serif;
   font-weight: 900;
 }
+
+.first-page, .last-page {
+  @extend .fas;
+}
+
+.first-page {
+  @extend .fa-angle-double-left;
+  padding: 0 5px 0 0;
+}
+
+.last-page {
+  @extend .fa-angle-double-right;
+  padding: 0 0 0 5px;
+}
+
 
 .fa-slash:before {
   content: '\f715';
@@ -209,10 +230,6 @@
 
 .hidden {
   display: none;
-}
-
-.padded {
-  padding: 0 5px;
 }
 
 .create-task {

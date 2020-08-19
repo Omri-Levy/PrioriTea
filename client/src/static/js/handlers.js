@@ -13,13 +13,17 @@ const hideTaskOptionsTooltip = () => {
 }
 
 const displayTaskFilterTooltip = (Event) => {
-    const parent = Event.target;
-    const target = parent.firstChild.firstChild;
+    let target = Event.target.closest('#hidden-filter-modal');
+    if (!target) {
+        target = Event.target.firstChild.firstChild;
+    }
     target && target.classList.remove('hidden');
 }
 const hideTaskFilterTooltip = (Event) => {
-    const parent = Event.target;
-    const target = parent.firstChild.firstChild;
+    let target = Event.target.closest('#hidden-filter-modal');
+    if (!target) {
+        target = Event.target.firstChild.firstChild;
+    }
     target && target.classList.add('hidden');
 }
 

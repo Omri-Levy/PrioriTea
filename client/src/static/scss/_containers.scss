@@ -22,6 +22,7 @@
   background-color: $secondary-color;
   height: 50vh;
   width: 50vw;
+
   &:focus {
     outline: none;
   }
@@ -107,6 +108,7 @@
   color: set-text-color($bg-color);
   text-align: center;
   position: absolute;
+  padding: 5px;
 }
 
 .task-filter-tooltip {
@@ -121,13 +123,17 @@
 }
 
 .task-filter-tooltip-container {
-  @extend .fas, .fa-filter;
+  @extend .fa-filter;
   left: 5px;
 }
 
 .task-options-tooltip-container {
-  @extend .fas, .fa-ellipsis-v;
+  @extend .fa-ellipsis-v;
   right: 5px;
+}
+
+.task-options-tooltip-container, .task-filter-tooltip-container {
+  @extend .header-fas
 }
 
 .tasks-container li {
