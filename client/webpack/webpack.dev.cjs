@@ -12,8 +12,9 @@ module.exports = {
         compress: true,
         hot: true
     },
+    devtool: 'source-map',
     entry: ['@babel/polyfill', path.resolve(__dirname,
-        '../src/static/js/index.js')],
+        '../src/Index.jsx')],
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].bundle.js',
@@ -36,7 +37,8 @@ module.exports = {
                 use: 'html-loader'
             },
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -54,7 +56,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|ico|svg|eot|ttf|woff|woff2)$/,
+                test: /\.(png|ico|svg|otf|eot|ttf|woff|woff2)$/,
                 exclude: /node_modules/,
                 use: {
                     loader: "file-loader",

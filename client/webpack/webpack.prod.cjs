@@ -10,7 +10,7 @@ const path = require('path'),
 
 module.exports = {
     mode: 'production',
-    entry: path.resolve(__dirname, '../src/static/js/index.js'),
+    entry: path.resolve(__dirname, '../src/Index.jsx'),
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: '[name].[contentHash].bundle.js'
@@ -47,7 +47,8 @@ module.exports = {
                 use: 'html-loader'
             },
             {
-                test: /\.js$/,
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -65,7 +66,8 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(png|ico|svg|eot|ttf|woff|woff2)$/,
+                test: /\.(png|ico|svg|eot|otf|ttf|woff|woff2)$/,
+                exclude: /node_modules/,
                 use: {
                     loader: "file-loader",
                     options: {

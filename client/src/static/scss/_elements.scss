@@ -4,6 +4,7 @@
 * {
   @include reset;
   color: set-text-color($bg-color);
+  font-family: $font-stack
 }
 
 html {
@@ -12,27 +13,25 @@ html {
 
 body {
   background-color: $bg-color;
-  font-family: $font-stack;
   line-height: 1.6;
 }
 
-header {
-  width: 100vw;
+button,
+input[type='button'] {
+  cursor: pointer;
 }
 
-header,
-nav,
-nav ul {
+header {
+  letter-spacing: 3px;
+  background: $primary-color;
   display: flex;
-  @include center-end();
-}
-
-header {
-  @include set-background-color($primary-color);
+  flex-direction: column;
+  justify-content: space-between;
 
   h1 {
+    font-family: $logo-font;
     padding: 15px;
-    font-size: 3rem;
+    font-size: 2rem;
   }
 }
 
@@ -52,6 +51,10 @@ a:focus::after, .paginate-anchor {
   transition: width 0.3s;
 }
 
+a {
+  outline: none;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -61,46 +64,58 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  border: 4px solid $bg-color;
-  caret-color: white;
-  -webkit-text-fill-color: white;
-  -webkit-box-shadow: 0 0 0 1000px $bg-color inset,
-  0 0 0 1000px darken($bg-color, 10%) inset,
-  0 0 0 1000px darken($bg-color, 10%) inset,
-  0 0 0 1000px darken($bg-color, 10%) inset,
-  0 0 0 1000px darken($bg-color, 10%) inset;
+  @include custom-border;
+  caret-color: $primary-caret-color;
+  -webkit-text-fill-color: $secondary-text-color;
+  -webkit-box-shadow: 0 0 0 1000px $primary-text-color inset,
+  0 0 0 1000px darken($primary-text-color, 10%) inset,
+  0 0 0 1000px darken($primary-text-color, 10%) inset,
+  0 0 0 1000px darken($primary-text-color, 10%) inset,
+  0 0 0 1000px darken($primary-text-color, 10%) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
 table {
-  background-color: black;
+  height: 100%;
+}
+
+th:nth-child(2), td:nth-child(2) {
+  border-left: none;
+  border-right: none;
 }
 
 table, tr, th, td {
+  @include global-font-size;
   border-radius: $primary-border-radius;
-  @include global-font;
+}
+
+tr, th, td {
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
 }
 
 th, td {
   text-align: center;
-  padding: 20px;
+  padding: 2px;
 }
 
 th {
   background-color: $primary-color;
-  font-weight: bolder;
   font-size: 1.7rem;
   cursor: pointer;
+  border-left: 1px solid darken($primary-color, 10%);
+  border-right: 1px solid darken($primary-color, 10%);
 }
 
 td {
-  background-color: $secondary-color;
+  background-color: $primary-text-color;
   overflow-wrap: break-word;
+  color: $secondary-text-color;
+  @include custom-border;
 }
 
 em {
   cursor: pointer;
 }
 
-@include link-underline(em, $primary-color);
-@include link-underline(a, $primary-color);
+@include link-underline(em, set-text-color($bg-color));
+@include link-underline(a, set-text-color($bg-color));

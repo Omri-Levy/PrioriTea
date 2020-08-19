@@ -14,7 +14,7 @@ const signupPost = async (data) => {
         );
         console.log(res);
         // dispatchHideEmailExistsMsg();
-        window.location.href = '/signin';
+
     } catch (err) {
         if (err.response.data.message === 'Email already exists.') {
             // dispatchDisplayEmailExistsMsg();
@@ -22,8 +22,8 @@ const signupPost = async (data) => {
         } else {
             console.log('email does not exist');
         }
-            // dispatchHideEmailExistsMsg();
-        }
+        // dispatchHideEmailExistsMsg();
+    }
 }
 
 export default signupPost;

@@ -12,7 +12,7 @@ const getTasks = async (req, res) => {
         res.json(tasks)
     } catch (err) {
         res.json(err);
-        console.log(err);
+        console.error(err);
     }
 }
 

@@ -1,46 +1,52 @@
-const displayTasksTooltip = () => {
-    const tasksTooltip =
-        document.querySelector('.tasks-tooltip');
-    tasksTooltip.classList.remove('hidden');
-}
-const hideTasksTooltip = () => {
-    const tasksTooltip =
-        document.querySelector('.tasks-tooltip');
-    tasksTooltip.classList.add('hidden');
+const displayTaskOptionsTooltip = () => {
+    const selector = '.task-options-tooltip-container'
+    const parent = document.querySelector(selector);
+    const target = parent.firstChild;
+    target && target.classList.remove('hidden');
 }
 
-const displayCreateTaskModal = () => {
-    const createTaskModal =
-        document.querySelector('.create-task-modal-container');
-    createTaskModal.classList.remove('hidden');
-}
-const hideCreateTaskModal = () => {
-    const createTaskModal =
-        document.querySelector('.create-task-modal-container');
-    createTaskModal.classList.add('hidden');
+const hideTaskOptionsTooltip = () => {
+    const selector = '.task-options-tooltip-container'
+    const parent = document.querySelector(selector);
+    const target = parent.firstChild;
+    target && target.classList.add('hidden');
 }
 
-const displayEditTaskModal = () => {
-    const createTaskModal =
-        document.querySelector('.edit-task-modal-container');
-    createTaskModal.classList.remove('hidden');
+const displayTaskFilterTooltip = (Event) => {
+    const parent = Event.target;
+    const target = parent.firstChild.firstChild;
+    target && target.classList.remove('hidden');
 }
-const hideEditTaskModal = () => {
-    const createTaskModal =
-        document.querySelector('.edit-task-modal-container');
-    createTaskModal.classList.add('hidden');
+const hideTaskFilterTooltip = (Event) => {
+    const parent = Event.target;
+    const target = parent.firstChild.firstChild;
+    target && target.classList.add('hidden');
 }
 
-const editTask = (id, setEditTaskId) => {
-    displayEditTaskModal();
-    setEditTaskId(id);
+const toggleCreateTaskModal = () => {
+    const selector = '.create-task-modal-container';
+    const target = document.querySelector(selector);
+
+    target && target.classList.toggle('hidden');
+}
+
+const toggleEditTaskModal = () => {
+    const selector = '.edit-task-modal-container';
+    const target = document.querySelector(selector);
+    target && target.classList.toggle('hidden');
+}
+
+const editTask = (taskId, setEditTaskId) => {
+    toggleEditTaskModal();
+    setEditTaskId(taskId);
 }
 
 export {
-    displayTasksTooltip,
-    hideTasksTooltip,
-    displayCreateTaskModal,
-    hideCreateTaskModal,
-    hideEditTaskModal,
+    displayTaskOptionsTooltip,
+    hideTaskOptionsTooltip,
+    displayTaskFilterTooltip,
+    hideTaskFilterTooltip,
+    toggleCreateTaskModal,
+    toggleEditTaskModal,
     editTask
 }

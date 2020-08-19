@@ -1,8 +1,15 @@
 @function set-text-color($color) {
-  @if (lightness($color) > 70) {
+  @if (lightness($color) > 49) {
     @return #333;
   } @else {
-    @return #fff;
+    @return #EDF5E1;
   }
 }
 
+@function set-clear-filter-color($color) {
+  @if (lightness($color) > 49) {
+    @return #EDF5E1;
+  } @else {
+    @return #333;
+  }
+}
