@@ -15,7 +15,7 @@ const NoTasks = () => {
                     />
                     <span>
                                 Priority
-                                    <i className='sorted-desc'/>
+                                    <i className='sorted-desc draft'/>
                                     </span>
                 </th>
                 <th
@@ -25,7 +25,7 @@ const NoTasks = () => {
                     <TaskFilterModal noTasks={true} target={'task'}/>
                     <span>
                                 Task
-                                    <i className='sorted-desc'/>
+                                    <i className='sorted-desc draft'/>
                                     </span>
                 </th>
                 <th
@@ -35,7 +35,7 @@ const NoTasks = () => {
                     <TaskOptionsModal noTasks={true} taskId='draft'/>
                     <span>
                                 Status
-                                    <i className='sorted-desc'/>
+                                    <i className={'sorted-desc draft'}/>
                                     </span>
                 </th>
             </tr>

@@ -27,20 +27,19 @@ const TaskOptionsModal = ({taskId, noTasks}) => {
                     className='create-task'
                 />
                 <em
-                    title={!noTasks ? 'Edit' :
-                        'Edit Is Unavailable On Draft'}
-                    onClick={!noTasks ? editTask : null}
-                    className={!noTasks ? 'edit-task' :
-                        'edit-task excluded-link'}/>
+                    title={noTasks ? 'Edit Is Unavailable On Draft' : 'Edit'}
+                    onClick={noTasks ? null : editTask}
+                    className={noTasks ? 'edit-task excluded-link draft' :
+                        'edit-task'}/>
                 <em
-                    title={!noTasks ? 'Delete' :
-                        'Delete Is Unavailable On Draft'}
-                    onClick={!noTasks ? () => {
+                    title={noTasks ? 'Delete Is Unavailable On Draft' :
+                        'Delete'}
+                    onClick={noTasks ? null : () => {
                         deleteTaskDelete(taskId, tasks, setTasks, setTasksCopy)
                             .catch(err => console.error(err));
-                    } : null}
-                    className={!noTasks ? 'delete-task' :
-                        'delete-task excluded-link'}
+                    }}
+                    className={noTasks ? 'delete-task excluded-link draft' :
+                        'delete-task'}
                 />
             </div>
         </em>
