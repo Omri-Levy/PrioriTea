@@ -10,7 +10,7 @@ import TaskFilterModal from './modals/TaskFilterModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 
 const Tasks = () => {
-    const {tasks, tasksCopy, setTasksCopy} =
+    const {tasksCopy, setTasksCopy} =
         useContext(TasksContext);
     const {loading} = useContext(LoadingContext);
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
