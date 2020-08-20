@@ -16,20 +16,14 @@
 
 .fa,
 .header-fas,
-.custom-fas,
 .fas {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+  display: inline-block;
   font-style: normal;
   font-variant: normal;
   text-rendering: auto;
   line-height: 1.6;
-}
-
-.fa,
-.header-fas,
-.fas {
-  display: inline-block;
 }
 
 .header-fas {
@@ -46,7 +40,6 @@
 
 .fa,
 .header-fas,
-.custom-fas,
 .fas {
   font-family: 'Font Awesome 5 Free', sans-serif;
   font-weight: 900;
@@ -99,7 +92,7 @@
   content: '\f0b0';
 }
 
-.fa-angle-up:after {
+.fa-angle-up:before {
   content: '\f106';
 }
 
@@ -113,14 +106,9 @@
 }
 
 .sorted-asc, .sorted-desc {
-  @extend .custom-fas;
+  @extend .fas;
+  cursor: pointer;
   padding-left: 1rem;
-
-  &:after {
-    position: absolute;
-    top: 3px;
-    margin-left: 5px;
-  }
 }
 
 .sorted-desc {

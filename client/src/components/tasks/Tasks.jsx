@@ -43,7 +43,7 @@ const Tasks = () => {
         const {sortBy, orderBy} = JSON.parse(localStorage.getItem(
             'sort'));
         return sortBy === header && orderBy === 'asc'
-            ? 'relative-parent sorted-asc' : 'relative-parent sorted-desc'
+            ? 'sorted-asc' : 'sorted-desc'
     }
 
     return (
@@ -53,27 +53,44 @@ const Tasks = () => {
                         <thead>
                         <tr>
                             <th
-                                title='Sort'
-                                className={sortExists('priority')}
-                                onClick={(Event) => updateSorting(Event)}>
-                                <TaskFilterModal target={'priority'}/>
+                                className='relative-parent'
+                            >
+                                <TaskFilterModal target={'priority'}
+                                />
+                                <span>
                                 Priority
+                                    <i title='sort'
+                                       onClick={(Event) => updateSorting(
+                                           Event)}
+                                       className={sortExists(
+                                           'priority')}/>
+                                    </span>
                             </th>
                             <th
-                                title='Sort'
-                                className={sortExists('task')}
-                                onClick={(Event) => updateSorting(Event)}>
+                                className='relative-parent'
+                            >
                                 <TaskFilterModal target={'task'}/>
+                                <span>
                                 Task
+                                    <i title='sort'
+                                       onClick={(Event) => updateSorting(
+                                           Event)}
+                                       className={sortExists(
+                                           'task')}/>
+                                    </span>
                             </th>
                             <th
-                                title='Sort'
-                                className={sortExists('status')}
-                                onClick={(Event) => updateSorting(
-                                    Event)}>
+                                className='relative-parent'>
                                 <TaskFilterModal target={'status'}/>
                                 <TaskOptionsModal taskId={task._id}/>
+                                <span>
                                 Status
+                                    <i title='sort'
+                                       onClick={(Event) => updateSorting(
+                                           Event)}
+                                       className={sortExists(
+                                           'status')}/>
+                                    </span>
                             </th>
                         </tr>
                         </thead>
