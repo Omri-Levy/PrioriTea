@@ -1,13 +1,13 @@
-import {cloneDeep} from 'lodash';
-import React, {useContext} from 'react';
+import {cloneDeep, isNull} from 'lodash';
+import React, {useContext, useEffect} from 'react';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {PaginationContext} from '../../context/PaginationContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import {toggleSort} from '../../static/js/handlers.js';
 import sortFn from '../../static/js/sortFn.js';
 import Loading from '../loading/Loading.jsx';
-import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 import TaskFilterModal from './modals/TaskFilterModal.jsx';
+import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 
 const Tasks = () => {
     const {tasks, setTasks, tasksCopy, setTasksCopy} =
@@ -19,6 +19,17 @@ const Tasks = () => {
     const tasksClone = cloneDeep(tasksCopy);
     let slicedTasksCopy = tasksClone.slice(indexOfFirstTask, indexOfLastTask);
 
+    useEffect(() => {
+        const sortObj = JSON.parse(localStorage.getItem('sort'));
+        const fallbackObj = {
+            sortBy: 'priority',
+            orderBy: 'desc'
+        }
+        if (isNull(sortObj)) {
+            localStorage.setItem('sort', JSON.stringify(fallbackObj));
+        }
+    }, []);
+
     if (loading) {
         return <Loading/>
     }
@@ -28,7 +39,12 @@ const Tasks = () => {
         sortFn(tasks, setTasks, setTasksCopy);
     }
 
-    const {sortBy, orderBy} = JSON.parse(localStorage.getItem('sort'));
+    const sortExists = (header) => {
+        const {sortBy, orderBy} = JSON.parse(localStorage.getItem(
+            'sort'));
+        return sortBy === header && orderBy === 'asc'
+            ? 'sorted-asc' : 'sorted-desc'
+    }
 
     return (
         <>
@@ -46,11 +62,8 @@ const Tasks = () => {
                                 Priority
                                     <i onClick={(Event) => updateSorting(
                                         Event)}
-                                       className={
-                                           sortBy === 'priority'
-                                           && orderBy === 'asc'
-                                               ? 'sorted-asc' : 'sorted-desc'
-                                       }/>
+                                       className={sortExists(
+                                           'priority')}/>
                                     </span>
                             </th>
                             <th
@@ -62,11 +75,8 @@ const Tasks = () => {
                                 Task
                                     <i onClick={(Event) => updateSorting(
                                         Event)}
-                                       className={
-                                           sortBy === 'task'
-                                           && orderBy === 'asc'
-                                               ? 'sorted-asc' : 'sorted-desc'
-                                       }/>
+                                       className={sortExists(
+                                           'task')}/>
                                     </span>
                             </th>
                             <th
@@ -78,11 +88,8 @@ const Tasks = () => {
                                 Status
                                     <i onClick={(Event) => updateSorting(
                                         Event)}
-                                       className={
-                                           sortBy === 'status'
-                                           && orderBy === 'asc'
-                                               ? 'sorted-asc' : 'sorted-desc'
-                                       }/>
+                                       className={sortExists(
+                                           'status')}/>
                                     </span>
                             </th>
                         </tr>

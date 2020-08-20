@@ -1,4 +1,5 @@
-import React, {useReducer, createContext} from 'react';
+import {isNull} from 'lodash';
+import React, {createContext, useReducer} from 'react';
 import tasksReducer from './reducers/tasksReducer.js';
 
 const TasksContext = createContext(undefined);
@@ -10,6 +11,7 @@ const TasksProvider = props => {
         editTaskId: '',
         filter: localStorage.getItem('filter')
     });
+
     const setTasks = data => dispatch({
         type: 'GET_TASKS',
         payload: data
