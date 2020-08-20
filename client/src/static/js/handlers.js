@@ -29,10 +29,10 @@ const hideTaskFilterTooltip = (Event) => {
 
 const toggleSort = (Event) => {
     const target = Event.target;
-    const targetTitle = target.parentElement.innerText.toLowerCase();
+    const targetTitle = target.innerText.toLowerCase();
     target && target.classList.toggle('sorted-asc');
     target && target.classList.toggle('sorted-desc');
-    if (target.className === 'sorted-desc') {
+    if (target.className === 'relative-parent sorted-desc') {
         localStorage.setItem('sort', JSON.stringify({
             sortBy: targetTitle,
             orderBy: 'desc'
