@@ -1,4 +1,4 @@
-const sortFn = (tasks, setTasks, setTasksCopy) => {
+const sortFn = (tasks, setTasks, setTasksCopy, isGet) => {
     const sortedTasks = tasks.sort((a, b) => {
             const {sortBy, orderBy} = JSON.parse(localStorage.getItem(
                 'sort'));
@@ -17,8 +17,12 @@ const sortFn = (tasks, setTasks, setTasksCopy) => {
             }
         }
     );
-    setTasks(sortedTasks);
-    setTasksCopy(sortedTasks);
+    if (isGet) {
+        setTasks(sortedTasks);
+        setTasksCopy(sortedTasks);
+    } else {
+        setTasksCopy(sortedTasks);
+    }
 }
 
 export default sortFn;

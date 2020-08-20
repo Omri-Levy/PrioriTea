@@ -8,7 +8,7 @@ const getTasksGet = async (setTasks, setTasksCopy) => {
     if (res.data.length > 0) {
         await setTasks(res.data);
         await setTasksCopy(res.data);
-        sortFn(res.data, setTasks, setTasksCopy);
+        sortFn(res.data, setTasks, setTasksCopy, true);
         persistFilter(res.data, setTasksCopy);
     }
 }

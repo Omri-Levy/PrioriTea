@@ -10,7 +10,7 @@ import TaskFilterModal from './modals/TaskFilterModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 
 const Tasks = () => {
-    const {tasks, setTasks, tasksCopy, setTasksCopy} =
+    const {tasks, tasksCopy, setTasksCopy} =
         useContext(TasksContext);
     const {loading} = useContext(LoadingContext);
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
@@ -35,7 +35,7 @@ const Tasks = () => {
 
     const updateSorting = (Event) => {
         toggleSort(Event);
-        sortFn(tasks, setTasks, setTasksCopy);
+        sortFn(tasksCopy, _, setTasksCopy, false);
     }
 
     const sortExists = (header) => {
