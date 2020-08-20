@@ -1,4 +1,4 @@
-import {cloneDeep, isNull} from 'lodash';
+import {isNull} from 'lodash';
 import React, {useContext, useEffect} from 'react';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {PaginationContext} from '../../context/PaginationContext.jsx';
@@ -16,8 +16,7 @@ const Tasks = () => {
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-    const tasksClone = cloneDeep(tasksCopy);
-    let slicedTasksCopy = tasksClone.slice(indexOfFirstTask, indexOfLastTask);
+    let slicedTasksCopy = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
 
     useEffect(() => {
         const sortObj = JSON.parse(localStorage.getItem('sort'));

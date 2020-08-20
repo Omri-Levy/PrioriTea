@@ -1,4 +1,3 @@
-import {cloneDeep} from 'lodash';
 import React, {useContext} from 'react';
 import {TasksContext} from '../../../context/TasksContext.jsx';
 import {filterByBtn} from '../../../static/js/filter.js';
@@ -11,8 +10,7 @@ const TaskFilterModal = ({target, noTasks}) => {
     const {tasks, setTasksCopy} = useContext(TasksContext);
     const filterSet = () => {
         const tempArr = [];
-        const tasksClone = cloneDeep(tasks);
-        tasksClone.forEach(item => {
+        tasks.forEach(item => {
             switch (target) {
                 case 'priority':
                     tempArr.push(item.priority);
