@@ -228,6 +228,8 @@
 }
 
 .task-options-tooltip {
+  display: flex;
+  justify-content: space-evenly;
   bottom: 23px;
   right: 6px;
 }
@@ -267,6 +269,10 @@
 
 .edit-task {
   @extend .fas, .fa-edit;
+  &:before {
+    padding: 0;
+    margin: 0 0 0 4px;
+  }
 }
 
 .delete-task {
