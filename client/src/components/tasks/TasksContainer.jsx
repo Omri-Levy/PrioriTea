@@ -2,10 +2,11 @@ import React, {useContext, useEffect} from 'react';
 import {Redirect} from 'react-router-dom';
 import {AuthContext} from '../../context/AuthContext.jsx';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
+import {ModalsContext} from '../../context/ModalsContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import {filterBySearch} from '../../static/js/filter.js';
 import getTasksGet from '../../static/js/requests/getTasksGet.js';
-import {FilterSearch} from '../fields/FilterSearch.jsx';
+import FilterSearch from '../fields/FilterSearch.jsx';
 import Loading from '../loading/Loading.jsx';
 import CreateTaskModal from './modals/CreateTaskModal.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
@@ -19,6 +20,7 @@ const TasksContainer = () => {
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
     const {isLoggedIn} = useContext(AuthContext);
     const redirectLink = {redirect: '/signin'};
+    const {createTaskModalOpen, editTaskModalOpen} = useContext(ModalsContext);
 
     const apiRes = () => {
         setTimeout(() => {
@@ -40,12 +42,12 @@ const TasksContainer = () => {
         filterBySearch(Event.target.value.toLowerCase(), tasks, setTasksCopy);
     }
     const noTasks = () => {
-        return tasks.length === 0 || tasksCopy.length === 0
+        return tasks.length === 0 && tasksCopy.length === 0;
     }
     return (
         <div className='tasks-container'>
-            <CreateTaskModal/>
-            <EditTaskModal/>
+            {createTaskModalOpen ? <CreateTaskModal/> : null}
+            {editTaskModalOpen ? <EditTaskModal/> : null}
             <FilterSearch
                 maxLength='80'
                 autoFocus={true}
@@ -54,13 +56,16 @@ const TasksContainer = () => {
                 type='text'
                 autoComplete='on'
                 placeholder={'Filter'}
+                disabled={noTasks()}
+                title={'Filter Is Unavailable On Draft'}
+                className={noTasks() ? 'primary-input draft' : 'primary-input'}
                 onChange={(Event) => filterBySearchWrapper(Event)}
             />
             {noTasks() ?
                 <NoTasks/>
                 : null}
-            <Tasks/>
-            <Pagination tasksCopyLength={tasksCopy.length}/>
+            {noTasks() ? null : <Tasks/>}
+            <Pagination tasksCopyLength={noTasks() ? 1 : tasksCopy.length}/>
         </div>
     );
 }

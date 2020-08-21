@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-import {toggleEditTaskModal} from '../handlers.js';
-
 const editTaskPatch = async (data, editTaskId, tasks, setTasks,
-                             setTasksCopy) => {
+                             setTasksCopy, callback) => {
     const url = 'http://localhost:4000/api/task/edit_task';
     try {
         const res = (
@@ -16,7 +14,7 @@ const editTaskPatch = async (data, editTaskId, tasks, setTasks,
                 })
         );
         console.log(res);
-        toggleEditTaskModal();
+
         for (let i in tasks) {
             if (tasks.hasOwnProperty(i) && tasks[i]._id === editTaskId
             ) {
@@ -31,6 +29,7 @@ const editTaskPatch = async (data, editTaskId, tasks, setTasks,
         }
         setTasks(tasks);
         setTasksCopy(tasks);
+        callback();
     } catch (err) {
         console.error(err);
     }

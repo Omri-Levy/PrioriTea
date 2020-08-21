@@ -1,7 +1,7 @@
 import {useField} from 'formik';
 import React from 'react';
 
-export const FormikInput = ({label, isRequired, ...props}) => {
+const FormikInput = ({label, isRequired, ...props}) => {
     const [field, meta] = useField(props);
 
     return (
@@ -10,7 +10,7 @@ export const FormikInput = ({label, isRequired, ...props}) => {
                 className={
                     isRequired ? 'form-label required' : 'form-label'
                 }
-                   htmlFor={props.id || props.name}>
+                htmlFor={props.id || props.name}>
                 {label}
             </label>
             <input className='primary-input'  {...field} {...props}/>
@@ -20,3 +20,5 @@ export const FormikInput = ({label, isRequired, ...props}) => {
         </section>
     )
 }
+
+export default FormikInput;

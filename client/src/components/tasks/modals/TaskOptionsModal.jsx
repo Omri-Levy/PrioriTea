@@ -1,16 +1,16 @@
 import React, {useContext} from 'react';
+import {ModalsContext} from '../../../context/ModalsContext.jsx';
 import {TasksContext} from '../../../context/TasksContext.jsx';
-import {
-    toggleCreateTaskModal, displayTaskOptionsTooltip,
-    hideTaskOptionsTooltip, toggleEditTaskModal
-} from '../../../static/js/handlers';
+import {displayTaskOptionsTooltip, hideTaskOptionsTooltip}
+    from '../../../static/js/handlers';
 import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';
 
 const TaskOptionsModal = ({taskId, noTasks}) => {
     const {tasks, setTasks, setTasksCopy, setEditTaskId} = useContext(
         TasksContext);
+    const {openEditTaskModal, openCreateTaskModal} = useContext(ModalsContext);
     const editTask = () => {
-        toggleEditTaskModal();
+        openEditTaskModal();
         setEditTaskId(taskId);
     }
     return (
@@ -23,7 +23,7 @@ const TaskOptionsModal = ({taskId, noTasks}) => {
             <div className='task-options-modal hidden'>
                 <em
                     title='Create'
-                    onClick={toggleCreateTaskModal}
+                    onClick={openCreateTaskModal}
                     className='create-task-btn'
                 />
                 <em
@@ -38,8 +38,9 @@ const TaskOptionsModal = ({taskId, noTasks}) => {
                         deleteTaskDelete(taskId, tasks, setTasks, setTasksCopy)
                             .catch(err => console.error(err));
                     }}
-                    className={noTasks ? 'delete-task excluded-link draft' :
-                        'delete-task-btn'}
+                    className={noTasks
+                        ? 'delete-task-btn excluded-link draft'
+                        : 'delete-task-btn'}
                 />
             </div>
         </em>

@@ -1,8 +1,7 @@
 import axios from 'axios';
-import {toggleCreateTaskModal} from '../handlers.js';
 import getTasksGet from './getTasksGet.js';
 
-const createTaskPost = async (data, setTasks, setTasksCopy) => {
+const createTaskPost = async (data, setTasks, setTasksCopy, callback) => {
     const url = 'http://localhost:4000/api/task/create_task';
     try {
         const res = (
@@ -13,8 +12,8 @@ const createTaskPost = async (data, setTasks, setTasksCopy) => {
                 })
         );
         console.log(res);
-        toggleCreateTaskModal();
         getTasksGet(setTasks, setTasksCopy).catch(err => console.error(err));
+        callback();
     } catch (err) {
         console.error(err);
     }

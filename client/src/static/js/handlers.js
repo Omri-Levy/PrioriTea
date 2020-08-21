@@ -45,24 +45,11 @@ const toggleSort = (Event) => {
     }
 }
 
-const toggleCreateTaskModal = () => {
-    const selector = '.create-task-modal-container';
-    const target = document.querySelector(selector);
-    target && target.classList.toggle('hidden');
-}
-
-const toggleEditTaskModal = () => {
-    const selector = '.edit-task-modal-container';
-    const target = document.querySelector(selector);
-    target && target.classList.toggle('hidden');
-}
 
 export {
     displayTaskOptionsTooltip,
     hideTaskOptionsTooltip,
     displayTaskFilterTooltip,
     hideTaskFilterTooltip,
-    toggleCreateTaskModal,
-    toggleEditTaskModal,
     toggleSort
 }

@@ -3,7 +3,7 @@ import {Form, Formik} from 'formik';
 import React, {useState} from 'react';
 import signupPost from '../../static/js/requests/signupPost.js';
 import EmailExists from '../EmailExists.jsx';
-import {FormikInput} from '../fields/FormikInput.jsx';
+import FormikInput from '../fields/FormikInput.jsx';
 
 export const SignupForm = ({history}) => {
     const [displayEmailExistsMsg, setEmailExistsMsg] = (
