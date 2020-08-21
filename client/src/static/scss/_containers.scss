@@ -103,7 +103,7 @@
   height: 40vh;
 }
 
-.task-options-tooltip-container, .task-filter-tooltip-container {
+.task-options-tooltip-btn, .task-filter-tooltip-btn {
   @extend .excluded-link;
   color: set-text-color($bg-color);
   text-align: center;
@@ -111,7 +111,7 @@
   padding: 5px;
 }
 
-.task-filter-tooltip {
+.task-filter-modal {
   min-height: 420px;
   max-height: 420px;
   overflow-y: auto;
@@ -128,17 +128,17 @@
   }
 }
 
-.task-filter-tooltip-container {
+.task-filter-tooltip-btn {
   @extend .fa-filter;
   left: 5px;
 }
 
-.task-options-tooltip-container {
+.task-options-tooltip-btn {
   @extend .fa-ellipsis-v;
   right: 5px;
 }
 
-.task-options-tooltip-container, .task-filter-tooltip-container {
+.task-options-tooltip-btn, .task-filter-tooltip-btn {
   @extend .header-fas
 }
 

@@ -40,15 +40,15 @@ const TaskFilterModal = ({target, noTasks}) => {
             {filterObj && <em title='Clear Filter' className='clear-filter'
                               onClick={resetFilter}/>}
             <em title={noTasks ? 'Filter Is Unavailable On Draft' : 'Filter'}
-                className={noTasks ? 'task-filter-tooltip-container draft' :
-                    'task-filter-tooltip-container'}
+                className={noTasks ? 'task-filter-tooltip-btn draft' :
+                    'task-filter-tooltip-btn'}
                 onMouseEnter={noTasks ? null : displayTaskFilterTooltip}
                 onMouseLeave={hideTaskFilterTooltip}
             >
                 <div className='relative-parent'>
                     <div onMouseLeave={hideTaskFilterTooltip}
                          id='hidden-filter-modal'
-                         className='task-filter-tooltip hidden'>
+                         className='task-filter-modal hidden'>
                         <ul>
                             {[...mySet].map(item => {
                                 return (

@@ -18,19 +18,19 @@ const TaskOptionsModal = ({taskId, noTasks}) => {
             title='Options'
             onMouseEnter={displayTaskOptionsTooltip}
             onMouseLeave={hideTaskOptionsTooltip}
-            className='task-options-tooltip-container'
+            className='task-options-tooltip-btn'
         >
-            <div className='task-options-tooltip hidden'>
+            <div className='task-options-modal hidden'>
                 <em
                     title='Create'
                     onClick={toggleCreateTaskModal}
-                    className='create-task'
+                    className='create-task-btn'
                 />
                 <em
                     title={noTasks ? 'Edit Is Unavailable On Draft' : 'Edit'}
                     onClick={noTasks ? null : editTask}
-                    className={noTasks ? 'edit-task excluded-link draft' :
-                        'edit-task'}/>
+                    className={noTasks ? 'edit-task-btn excluded-link draft' :
+                        'edit-task-btn'}/>
                 <em
                     title={noTasks ? 'Delete Is Unavailable On Draft' :
                         'Delete'}
@@ -39,7 +39,7 @@ const TaskOptionsModal = ({taskId, noTasks}) => {
                             .catch(err => console.error(err));
                     }}
                     className={noTasks ? 'delete-task excluded-link draft' :
-                        'delete-task'}
+                        'delete-task-btn'}
                 />
             </div>
         </em>

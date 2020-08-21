@@ -218,7 +218,7 @@
   @include center;
 }
 
-.task-options-tooltip, .task-filter-tooltip {
+.task-options-modal, .task-filter-modal {
   position: absolute;
   @include flex-between;
   background-color: $bg-color;
@@ -227,14 +227,14 @@
   @include custom-border;
 }
 
-.task-options-tooltip {
+.task-options-modal {
   display: flex;
   justify-content: space-evenly;
   bottom: 23px;
   right: 6px;
 }
 
-.task-filter-tooltip {
+.task-filter-modal {
   li {
     padding: 0 15px;
     list-style-type: none;
@@ -263,11 +263,11 @@
   display: none;
 }
 
-.create-task {
+.create-task-btn {
   @extend .fas, .fa-plus;
 }
 
-.edit-task {
+.edit-task-btn {
   @extend .fas, .fa-edit;
   &:before {
     padding: 0;
@@ -275,13 +275,13 @@
   }
 }
 
-.delete-task {
+.delete-task-btn {
   @extend .fas, .fa-trash;
 }
 
-.create-task,
-.edit-task,
-.delete-task {
+.create-task-btn,
+.edit-task-btn,
+.delete-task-btn {
   position: initial;
   margin: 10px;
 }
