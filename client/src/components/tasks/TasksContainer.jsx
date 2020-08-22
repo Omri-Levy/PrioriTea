@@ -32,7 +32,7 @@ const TasksContainer = () => {
 
     useEffect(() => {
         startLoading();
-        getTasksGet(setTasks, setTasksCopy).catch(err => console.error(err));
+        // getTasksGet(setTasks, setTasksCopy).catch(err => console.error(err));
         apiRes();
     }, []);
 
@@ -61,7 +61,7 @@ const TasksContainer = () => {
                 autoComplete='on'
                 placeholder={'Filter'}
                 disabled={noTasks()}
-                title={'Filter Is Unavailable On Draft'}
+                title={noTasks() ? 'Filter Is Unavailable On Draft' : null}
                 className={noTasks() ? 'primary-input draft' : 'primary-input'}
                 onChange={(Event) => filterBySearchWrapper(Event)}
             />

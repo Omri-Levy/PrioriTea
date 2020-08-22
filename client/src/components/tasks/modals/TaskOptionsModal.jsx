@@ -27,36 +27,42 @@ const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
         }
     }
     return (
-        <em
-            title='Options'
-            onMouseEnter={displayTaskOptionsTooltip}
-            onMouseLeave={hideTaskOptionsTooltip}
-            className='task-options-tooltip-btn'
-        >
-            <div className='task-options-modal hidden'>
-                <em
-                    title='Create'
-                    onClick={openCreateTaskModal}
-                    className='create-task-btn'
-                />
-                <em
-                    title={invalidFilterOrNoTasks('edit')}
-                    onClick={noTasks || invalidFilter ? null : editTask}
-                    className={noTasks || invalidFilter
-                        ? 'edit-task-btn excluded-link draft'
-                        : 'edit-task-btn'}/>
-                <em
-                    title={invalidFilterOrNoTasks('delete')}
-                    onClick={noTasks || invalidFilter ? null : () => {
-                        deleteTaskDelete(taskId, tasks, setTasks, setTasksCopy)
-                            .catch(err => console.error(err));
-                    }}
-                    className={noTasks || invalidFilter
-                        ? 'delete-task-btn excluded-link draft'
-                        : 'delete-task-btn'}
-                />
-            </div>
-        </em>
+        <>
+            <p className='new-user-hint'>
+                Psst.. Start here!
+            </p>
+            <em
+                title='Options'
+                onMouseEnter={displayTaskOptionsTooltip}
+                onMouseLeave={hideTaskOptionsTooltip}
+                className='task-options-tooltip-btn highlight-me'
+            >
+                <div className='task-options-modal hidden'>
+                    <em
+                        title='Create'
+                        onClick={openCreateTaskModal}
+                        className='create-task-btn'
+                    />
+                    <em
+                        title={invalidFilterOrNoTasks('edit')}
+                        onClick={noTasks || invalidFilter ? null : editTask}
+                        className={noTasks || invalidFilter
+                            ? 'edit-task-btn excluded-link draft'
+                            : 'edit-task-btn'}/>
+                    <em
+                        title={invalidFilterOrNoTasks('delete')}
+                        onClick={noTasks || invalidFilter ? null : () => {
+                            deleteTaskDelete(taskId, tasks, setTasks,
+                                setTasksCopy)
+                                .catch(err => console.error(err));
+                        }}
+                        className={noTasks || invalidFilter
+                            ? 'delete-task-btn excluded-link draft'
+                            : 'delete-task-btn'}
+                    />
+                </div>
+            </em>
+        </>
     );
 }
 

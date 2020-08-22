@@ -38,6 +38,21 @@
   src: url('../webfonts/fa-solid-900.woff2');
 }
 
+.new-user-hint {
+  position: absolute;
+  font-size: 12px;
+  right: -90px;
+  bottom: 0;
+  width: 59px;
+
+  &:before {
+    @extend .fas, .fa-angle-double-left;
+    position: absolute;
+    top: 10px;
+    right: 68px;
+  }
+}
+
 .fa,
 .header-fas,
 .fas {
