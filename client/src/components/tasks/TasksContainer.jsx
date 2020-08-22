@@ -32,7 +32,7 @@ const TasksContainer = () => {
 
     useEffect(() => {
         startLoading();
-        // getTasksGet(setTasks, setTasksCopy).catch(err => console.error(err));
+        getTasksGet(setTasks, setTasksCopy).catch(err => console.error(err));
         apiRes();
     }, []);
 

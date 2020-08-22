@@ -28,9 +28,9 @@ const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
     }
     return (
         <>
-            <p className='new-user-hint'>
+            {noTasks ? <p className='new-user-hint'>
                 Psst.. Start here!
-            </p>
+            </p> : null}
             <em
                 title='Options'
                 onMouseEnter={displayTaskOptionsTooltip}
