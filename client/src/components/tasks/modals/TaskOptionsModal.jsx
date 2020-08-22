@@ -5,13 +5,26 @@ import {displayTaskOptionsTooltip, hideTaskOptionsTooltip}
     from '../../../static/js/handlers';
 import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';
 
-const TaskOptionsModal = ({taskId, noTasks}) => {
+const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
     const {tasks, setTasks, setTasksCopy, setEditTaskId} = useContext(
         TasksContext);
     const {openEditTaskModal, openCreateTaskModal} = useContext(ModalsContext);
     const editTask = () => {
         openEditTaskModal();
         setEditTaskId(taskId);
+    }
+    const invalidFilterOrNoTasks = (action) => {
+        if (noTasks) {
+            return action === 'edit'
+                ? 'Edit Is Unavailable On Draft'
+                : 'Delete Is Unavailable On Draft'
+        } else if (invalidFilter) {
+            const editMessage = 'Edit Is Unavailable With Invalid Filter'
+            const deleteMessage = 'Delete Is Unavailable With Invalid Filter'
+            return action === 'edit' ? editMessage : deleteMessage
+        } else {
+            return action === 'edit' ? 'Edit' : 'Delete'
+        }
     }
     return (
         <em
@@ -27,18 +40,18 @@ const TaskOptionsModal = ({taskId, noTasks}) => {
                     className='create-task-btn'
                 />
                 <em
-                    title={noTasks ? 'Edit Is Unavailable On Draft' : 'Edit'}
-                    onClick={noTasks ? null : editTask}
-                    className={noTasks ? 'edit-task-btn excluded-link draft' :
-                        'edit-task-btn'}/>
+                    title={invalidFilterOrNoTasks('edit')}
+                    onClick={noTasks || invalidFilter ? null : editTask}
+                    className={noTasks || invalidFilter
+                        ? 'edit-task-btn excluded-link draft'
+                        : 'edit-task-btn'}/>
                 <em
-                    title={noTasks ? 'Delete Is Unavailable On Draft' :
-                        'Delete'}
-                    onClick={noTasks ? null : () => {
+                    title={invalidFilterOrNoTasks('delete')}
+                    onClick={noTasks || invalidFilter ? null : () => {
                         deleteTaskDelete(taskId, tasks, setTasks, setTasksCopy)
                             .catch(err => console.error(err));
                     }}
-                    className={noTasks
+                    className={noTasks || invalidFilter
                         ? 'delete-task-btn excluded-link draft'
                         : 'delete-task-btn'}
                 />

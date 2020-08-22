@@ -43,13 +43,13 @@ const NoTasks = () => {
             <tbody>
             <tr>
                 <td className='priority'>
-                    Draft
+                    No Available Tasks
                 </td>
                 <td className='task'>
-                    Draft
+                    No Available Tasks
                 </td>
                 <td className='status'>
-                    Draft
+                    No Available Tasks
                 </td>
             </tr>
             </tbody>

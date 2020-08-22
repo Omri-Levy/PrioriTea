@@ -8,6 +8,7 @@ import {filterBySearch} from '../../static/js/filter.js';
 import getTasksGet from '../../static/js/requests/getTasksGet.js';
 import FilterSearch from '../fields/FilterSearch.jsx';
 import Loading from '../loading/Loading.jsx';
+import InvalidFilter from './InvalidFilter.jsx';
 import CreateTaskModal from './modals/CreateTaskModal.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
 import NoTasks from './NoTasks.jsx';
@@ -20,7 +21,8 @@ const TasksContainer = () => {
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
     const {isLoggedIn} = useContext(AuthContext);
     const redirectLink = {redirect: '/signin'};
-    const {createTaskModalOpen, editTaskModalOpen} = useContext(ModalsContext);
+    const {createTaskModalOpen, editTaskModalOpen} =
+        useContext(ModalsContext);
 
     const apiRes = () => {
         setTimeout(() => {
@@ -34,7 +36,6 @@ const TasksContainer = () => {
         apiRes();
     }, []);
 
-
     if (!isLoggedIn) return <Redirect to={redirectLink}/>;
 
     if (loading) return <Loading/>
@@ -43,6 +44,9 @@ const TasksContainer = () => {
     }
     const noTasks = () => {
         return tasks.length === 0 && tasksCopy.length === 0;
+    }
+    const noTasksCopy = () => {
+        return tasksCopy.length === 0 && tasks.length !== 0;
     }
     return (
         <div className='tasks-container'>
@@ -64,8 +68,12 @@ const TasksContainer = () => {
             {noTasks() ?
                 <NoTasks/>
                 : null}
+            {noTasksCopy() ?
+                <InvalidFilter/>
+                : null}
             {noTasks() ? null : <Tasks/>}
-            <Pagination tasksCopyLength={noTasks() ? 1 : tasksCopy.length}/>
+            <Pagination tasksCopyLength={noTasks() || noTasksCopy()
+                ? 1 : tasksCopy.length}/>
         </div>
     );
 }

@@ -58,7 +58,7 @@ const Tasks = () => {
                                 />
                                 <span>
                                 Priority
-                                    <i title='sort'
+                                    <i title='Sort'
                                        onClick={(Event) => updateSorting(
                                            Event)}
                                        className={sortExists(
@@ -71,7 +71,7 @@ const Tasks = () => {
                                 <TaskFilterModal target={'task'}/>
                                 <span>
                                 Task
-                                    <i title='sort'
+                                    <i title='Sort'
                                        onClick={(Event) => updateSorting(
                                            Event)}
                                        className={sortExists(
@@ -84,7 +84,7 @@ const Tasks = () => {
                                 <TaskOptionsModal taskId={task._id}/>
                                 <span>
                                 Status
-                                    <i title='sort'
+                                    <i title='Sort'
                                        onClick={(Event) => updateSorting(
                                            Event)}
                                        className={sortExists(
