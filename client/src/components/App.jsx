@@ -3,7 +3,6 @@ import {AuthProvider} from '../context/AuthContext.jsx';
 import {LoadingProvider} from '../context/LoadingContext.jsx';
 import Routes from './Routes.jsx';
 
-
 const App = () => {
     return (
         <AuthProvider>

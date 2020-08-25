@@ -1,5 +1,4 @@
-import {isNull} from 'lodash';
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {PaginationContext} from '../../context/PaginationContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
@@ -10,24 +9,12 @@ import TaskFilterModal from './modals/TaskFilterModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 
 const Tasks = () => {
-    const {tasksCopy, setTasksCopy} =
-        useContext(TasksContext);
+    const {tasksCopy, setTasksCopy, sort} = useContext(TasksContext);
     const {loading} = useContext(LoadingContext);
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
     let slicedTasksCopy = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
-
-    useEffect(() => {
-        const sortObj = JSON.parse(localStorage.getItem('sort'));
-        const fallbackObj = {
-            sortBy: 'priority',
-            orderBy: 'desc'
-        }
-        if (isNull(sortObj)) {
-            localStorage.setItem('sort', JSON.stringify(fallbackObj));
-        }
-    }, []);
 
     if (loading) {
         return <Loading/>
@@ -35,12 +22,12 @@ const Tasks = () => {
 
     const updateSorting = (Event) => {
         toggleSort(Event);
-        sortFn(tasksCopy, _, setTasksCopy, false);
+        sortFn(tasksCopy, null, setTasksCopy, false);
     }
 
     const sortExists = (header) => {
-        const {sortBy, orderBy} = JSON.parse(localStorage.getItem(
-            'sort'));
+        const {sortBy, orderBy} = JSON.parse(localStorage.getItem('sort')
+        );
         return sortBy === header && orderBy === 'asc'
             ? 'sorted-asc' : 'sorted-desc'
     }

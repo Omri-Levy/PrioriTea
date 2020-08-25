@@ -1,19 +1,19 @@
 {
-  "name": "learnmongodb",
+  "name": "prioritea",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon --exec babel-node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "argon2": "^0.27.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "joi": "^17.1.1",
     "joi-password-complexity": "^4.2.0",
@@ -24,7 +24,10 @@
     "node-core-lib": "^0.11.11"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
     "nodemon": "^2.0.4"
   }
 }

@@ -3,8 +3,7 @@ import {PaginationContext} from '../../context/PaginationContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import movePage from '../../static/js/movePage.js';
 
-const Pagination = ({tasksCopyLength}) => {
-
+const Pagination = () => {
     const pageNumbers = [];
     const maxPages = 5;
     const {currentPage, setCurrentPage} = useContext(PaginationContext);
@@ -16,9 +15,8 @@ const Pagination = ({tasksCopyLength}) => {
         PaginationContext);
 
     useEffect(() => {
-        setTotalPages(Math.round(tasksCopyLength / tasksPerPage));
+        setTotalPages(Math.round(tasksCopy.length / tasksPerPage));
     }, [tasks, tasksCopy]);
-
 
     if (maxLeft < 1) {
         maxLeft = 1
@@ -41,7 +39,6 @@ const Pagination = ({tasksCopyLength}) => {
     const isCurrentPage = (number) => {
         return currentPage === number ? 'current-page' : 'page-btn'
     }
-
     return (
         <nav>
             <ul>
@@ -65,7 +62,7 @@ const Pagination = ({tasksCopyLength}) => {
                         </a>
                     </li>
                 ))}
-                {maxRight !== tasksCopyLength &&
+                {maxRight !== tasksCopy.length &&
                 <li>
                     <a
                         id='last-page'

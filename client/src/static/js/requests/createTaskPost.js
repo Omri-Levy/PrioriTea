@@ -9,6 +9,8 @@ const createTaskPost = async (data, setTasks, setTasksCopy, callback) => {
                 .post(url, {
                     priority: data.priority,
                     task: data.task,
+                }, {
+                    withCredentials: true
                 })
         );
         console.log(res);

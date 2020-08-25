@@ -11,6 +11,8 @@ const editTaskPatch = async (data, editTaskId, tasks, setTasks,
                     priority: data.priority,
                     task: data.task,
                     status: data.status
+                }, {
+                    withCredentials: true
                 })
         );
         console.log(res);

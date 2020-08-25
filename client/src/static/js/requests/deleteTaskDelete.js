@@ -3,7 +3,10 @@ import axios from 'axios';
 const deleteTaskDelete = async (taskId, tasks, setTasks, setTasksCopy) => {
     try {
         const url = 'http://localhost:4000/api/task/delete_task';
-        const res = await axios.delete(url, {data: {_id: taskId}});
+        const res = await axios.delete(url, {
+            data: {_id: taskId},
+            withCredentials: true
+        });
         console.log(res);
         const updatedTasks = tasks.filter(task => task._id !== taskId);
         setTasks(updatedTasks);

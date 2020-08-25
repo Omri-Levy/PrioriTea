@@ -5,7 +5,6 @@ import {TasksProvider} from '../../context/TasksContext.jsx';
 import TasksContainer from '../tasks/TasksContainer.jsx';
 
 const Home = () => {
-
     return (
         <main className='body-container'>
             <TasksProvider>

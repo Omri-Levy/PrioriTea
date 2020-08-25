@@ -3,6 +3,7 @@ import {Redirect} from 'react-router-dom';
 import {AuthContext} from '../../context/AuthContext.jsx';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {ModalsContext} from '../../context/ModalsContext.jsx';
+import {PaginationContext} from '../../context/PaginationContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import {filterBySearch} from '../../static/js/filter.js';
 import getTasksGet from '../../static/js/requests/getTasksGet.js';
@@ -12,15 +13,15 @@ import InvalidFilter from './InvalidFilter.jsx';
 import CreateTaskModal from './modals/CreateTaskModal.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
 import NoTasks from './NoTasks.jsx';
+import OnePager from './OnePager.jsx';
 import Pagination from './Pagination.jsx';
 import Tasks from './Tasks.jsx';
 
 const TasksContainer = () => {
-    const {tasks, setTasks, tasksCopy, setTasksCopy} = useContext(
-        TasksContext);
+    const {tasks, setTasks, tasksCopy, setTasksCopy, sort} =
+        useContext(TasksContext);
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
-    const {isLoggedIn} = useContext(AuthContext);
-    const redirectLink = {redirect: '/signin'};
+    const {setTotalPages} = useContext(PaginationContext);
     const {createTaskModalOpen, editTaskModalOpen} =
         useContext(ModalsContext);
 
@@ -32,11 +33,10 @@ const TasksContainer = () => {
 
     useEffect(() => {
         startLoading();
-        getTasksGet(setTasks, setTasksCopy).catch(err => console.error(err));
+        getTasksGet(setTasks, setTasksCopy, sort)
+            .catch(err => console.error(err));
         apiRes();
     }, []);
-
-    if (!isLoggedIn) return <Redirect to={redirectLink}/>;
 
     if (loading) return <Loading/>
     const filterBySearchWrapper = (Event) => {
@@ -72,8 +72,7 @@ const TasksContainer = () => {
                 <InvalidFilter/>
                 : null}
             {noTasks() ? null : <Tasks/>}
-            <Pagination tasksCopyLength={noTasks() || noTasksCopy()
-                ? 1 : tasksCopy.length}/>
+            {noTasks() || noTasksCopy() ? <OnePager/> : <Pagination/>}
         </div>
     );
 }

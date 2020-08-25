@@ -1,4 +1,3 @@
-import {isNull} from 'lodash';
 import React, {createContext, useReducer} from 'react';
 import tasksReducer from './reducers/tasksReducer.js';
 
@@ -26,6 +25,8 @@ const TasksProvider = props => {
         type: 'SET_EDIT_TASK_ID',
         payload: data
     });
+
+    const setSort = data => dispatch({type: 'SET_SORT', payload: data});
 
     return (
         <TasksContext.Provider value={{

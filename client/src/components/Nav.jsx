@@ -1,10 +1,18 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {NavLink} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
+import setLoginPost from '../static/js/requests/setLoginPost.js';
+import signoutPost from '../static/js/requests/signoutPost.js';
 
 const Nav = () => {
-    const {isLoggedIn} = useContext(AuthContext);
-
+    const {isLoggedIn, signin, signout} = useContext(AuthContext);
+    const persistLogin = async () => {
+        const res = await setLoginPost();
+        res.data ? signin() : signout();
+    }
+    useEffect(() => {
+        persistLogin().catch(err => console.error(err));
+    }, []);
     return (
         <nav className='main-nav'>
             <h1 className='m-1'>PRIORITEA</h1>
@@ -37,7 +45,12 @@ const Nav = () => {
                 <li>
                     <NavLink
                         activeClassName='current-link'
-                        to='/signout'>
+                        onClick={async () => {
+                            await signoutPost();
+                            const res = await setLoginPost();
+                            res && res.data ? signin() : signout();
+                        }}
+                        to='/signin'>
                         SIGNOUT
                     </NavLink>
                 </li>}
