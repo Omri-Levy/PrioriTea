@@ -21,7 +21,6 @@ const TasksContainer = () => {
     const {tasks, setTasks, tasksCopy, setTasksCopy, sort} =
         useContext(TasksContext);
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
-    const {setTotalPages} = useContext(PaginationContext);
     const {createTaskModalOpen, editTaskModalOpen} =
         useContext(ModalsContext);
 
@@ -65,13 +64,8 @@ const TasksContainer = () => {
                 className={noTasks() ? 'primary-input draft' : 'primary-input'}
                 onChange={(Event) => filterBySearchWrapper(Event)}
             />
-            {noTasks() ?
-                <NoTasks/>
-                : null}
-            {noTasksCopy() ?
-                <InvalidFilter/>
-                : null}
-            {noTasks() ? null : <Tasks/>}
+            {noTasksCopy() && <InvalidFilter/>}
+            {noTasks() && !noTasksCopy() ? <NoTasks/> : <Tasks/>}
             {noTasks() || noTasksCopy() ? <OnePager/> : <Pagination/>}
         </div>
     );

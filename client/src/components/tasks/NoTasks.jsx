@@ -7,35 +7,30 @@ const NoTasks = () => {
         <table>
             <thead>
             <tr>
-                <th
-                    title='Sorting Is Unavailable On Draft'
-                    className='relative-parent'
-                >
+                <th className='relative-parent'>
                     <TaskFilterModal noTasks={true} target={'priority'}
                     />
                     <span>
                                 Priority
-                                    <i className='sorted-desc draft'/>
+                                    <i title='Sorting Is Unavailable On Draft'
+                                       className='sorted-desc draft'/>
                                     </span>
                 </th>
-                <th
-                    title='Sorting Is Unavailable On Draft'
-                    className='relative-parent'
-                >
+                <th className='relative-parent'>
                     <TaskFilterModal noTasks={true} target={'task'}/>
                     <span>
                                 Task
-                                    <i className='sorted-desc draft'/>
+                                    <i title='Sorting Is Unavailable On Draft'
+                                       className='sorted-desc draft'/>
                                     </span>
                 </th>
-                <th
-                    title='Sorting Is Unavailable On Draft'
-                    className='relative-parent'>
+                <th className='relative-parent'>
                     <TaskFilterModal noTasks={true} target={'status'}/>
                     <TaskOptionsModal noTasks={true} taskId='draft'/>
                     <span>
                                 Status
-                                    <i className={'sorted-desc draft'}/>
+                                    <i title='Sorting Is Unavailable On Draft'
+                                       className={'sorted-desc draft'}/>
                                     </span>
                 </th>
             </tr>
