@@ -3,6 +3,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import 'dotenv/config';
+import getCurrentUser from './js/getCurrentUser.js';
 import setLogin from './js/setLogin.js';
 import auth from './routes/auth.js';
 import task from './routes/task.js';
@@ -25,6 +26,7 @@ const corsOriginPort = process.env.CORS_ORIGIN_PORT || 8080;
     app.use('/api/user', auth);
     app.use('/api/task', task);
     app.post('/api/auth', setLogin);
+    app.post('/api/get_current_user', getCurrentUser);
     app.use('/api/user/signin', cookieParser());
 
     //connect to db

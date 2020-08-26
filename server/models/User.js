@@ -23,7 +23,6 @@ const UserSchema = Schema({
             max: 1024,
             required: true
         },
-
     },
     {
         timestamps: true

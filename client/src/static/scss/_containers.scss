@@ -39,6 +39,7 @@
 
 .create-task-modal-content {
   @extend .modal-content;
+  width: 39vw;
 }
 
 .edit-task-modal-container {
@@ -47,6 +48,7 @@
 
 .edit-task-modal-content {
   @extend .modal-content;
+  width: 39vw;
 }
 
 .form-container {
