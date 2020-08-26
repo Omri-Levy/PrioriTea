@@ -151,6 +151,7 @@
 .main-nav {
   background-color: $theme-dark-gray;
   @include flex-between;
+  width: 100%;
 
   ul {
     display: flex;

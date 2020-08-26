@@ -25,6 +25,7 @@ header {
   letter-spacing: 3px;
   background: $primary-color;
   display: flex;
+  width: 100vw;
   flex-direction: column;
   justify-content: space-between;
 
@@ -73,6 +74,13 @@ select:-webkit-autofill:focus {
   0 0 0 1000px darken($primary-text-color, 10%) inset,
   0 0 0 1000px darken($primary-text-color, 10%) inset;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+#root {
+  @include column-flex;
+  width: 100vw;
+  height: 100vh;
+  flex-grow: 1;
 }
 
 table {

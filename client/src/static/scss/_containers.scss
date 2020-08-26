@@ -64,6 +64,7 @@
 
 .body-container {
   @include column-flex;
+  flex-grow: 1;
   align-items: center;
 }
 

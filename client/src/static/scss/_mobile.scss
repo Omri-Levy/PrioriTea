@@ -1,9 +1,17 @@
 @import 'variables';
+@import 'mixins';
+
+/* The tasks container is out of space (788px max) */
+@media only screen and (max-width: 788px) {
+  .body-container {
+    overflow-x: auto;
+  }
+}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-  body {
-    background-color: blue;
+  .body-container {
+    color: lime;
   }
 }
 
