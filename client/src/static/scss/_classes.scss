@@ -148,26 +148,6 @@
   @include custom-border;
 }
 
-.main-nav {
-  background-color: $theme-dark-gray;
-  @include flex-between;
-  width: 100%;
-
-  ul {
-    display: flex;
-
-    li {
-      list-style-type: none;
-      padding: 15px;
-      @include global-font-size();
-
-      a {
-        color: set-text-color($bg-color);
-      }
-    }
-  }
-}
-
 .priority, .task, .status {
   min-width: 260px;
   max-width: 260px;
@@ -176,6 +156,17 @@
 .required:before, .error:before {
   content: '*';
   color: $required-color;
+}
+
+.burger {
+  display: none;
+
+  div {
+    width: 25px;
+    height: 3px;
+    background-color: set-text-color($bg-color);
+    margin: 5px 10px 5px 5px;
+  }
 }
 
 .error {

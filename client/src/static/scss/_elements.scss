@@ -22,18 +22,52 @@ input[type='button'] {
 }
 
 header {
+  position: sticky;
   letter-spacing: 3px;
   background: $primary-color;
   display: flex;
-  width: 100vw;
-  flex-direction: column;
+  align-items: center;
   justify-content: space-between;
+
+  nav {
+    background-color: $theme-component;
+
+    ul {
+      display: flex;
+      @media only screen and (max-width: 600px) {
+        position: absolute;
+        top: 8vh;
+        height: 92vh;
+        right: 0;
+        background-color: $bg-color;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        z-index: 2;
+        //transform: translateX(100%);
+      }
+
+      li {
+        list-style-type: none;
+        padding: 15px;
+        @include global-font-size();
+
+        a {
+          color: set-text-color($bg-color);
+        }
+      }
+    }
+  }
 
   h1 {
     font-family: $logo-font;
     padding: 15px;
     font-size: 2rem;
   }
+}
+
+th, {
+  z-index: 0;
 }
 
 em {

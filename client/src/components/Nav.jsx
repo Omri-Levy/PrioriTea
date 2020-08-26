@@ -14,8 +14,7 @@ const Nav = () => {
         persistLogin().catch(err => console.error(err));
     }, []);
     return (
-        <nav className='main-nav'>
-            <h1 className='m-1'>PRIORITEA</h1>
+        <nav>
             <ul>
                 {isLoggedIn &&
                 <li>
@@ -63,6 +62,11 @@ const Nav = () => {
                     </NavLink>
                 </li>}
             </ul>
+            <div className='burger'>
+                <div className='line1'/>
+                <div className='line2'/>
+                <div className='line3'/>
+            </div>
         </nav>
     );
 }

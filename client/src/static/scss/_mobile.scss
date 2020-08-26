@@ -11,7 +11,10 @@
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
   .body-container {
-    color: lime;
+    background-color: black;
+  }
+  .burger {
+    display: block;
   }
 }
 
