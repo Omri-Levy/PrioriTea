@@ -275,10 +275,10 @@
   @extend .excluded-link;
   color: set-clear-filter-color($bg-color);
   text-align: center;
-  position: absolute;
   z-index: 1;
-  left: 2px;
-  bottom: 3px;
+  position: absolute;
+  margin-left: -2rem;
+  margin-top: -3px;
   transform: rotate(-5deg);
 }
 

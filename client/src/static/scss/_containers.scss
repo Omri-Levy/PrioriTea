@@ -138,7 +138,7 @@
 
 .task-filter-tooltip-btn {
   @extend .fa-filter;
-  left: 5px;
+  position: relative;
   float: left;
 }
 
