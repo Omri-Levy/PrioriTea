@@ -1,12 +1,23 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ModalsContext} from '../../context/ModalsContext.jsx';
 import TaskFilterModal from './modals/TaskFilterModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 
 const NoTasks = () => {
     const {openCreateTaskModal} = useContext(ModalsContext);
+    const [counter, setCounter] = useState(JSON.parse(
+        localStorage.getItem('counter') || 0));
+
     useEffect(() => {
-        openCreateTaskModal();
+        setCounter(JSON.parse(localStorage.getItem('counter')));
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('counter', JSON.stringify(1));
+    }, [counter]);
+
+    useEffect(() => {
+        counter === 0 && openCreateTaskModal();
     }, []);
 
     return (

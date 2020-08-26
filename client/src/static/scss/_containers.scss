@@ -12,7 +12,7 @@
   width: 100vw;
   position: fixed;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   @include reset-position;
 }
 
@@ -27,7 +27,6 @@
   margin: 11% auto;
   @include center;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
-
   &:focus {
     outline: none;
   }
@@ -40,6 +39,10 @@
 .create-task-modal-content {
   @extend .modal-content;
   width: 39vw;
+  @media only screen and (max-width: 768px) {
+    width: 99vw;
+    margin: auto;
+  }
 }
 
 .edit-task-modal-container {
@@ -49,17 +52,25 @@
 .edit-task-modal-content {
   @extend .modal-content;
   width: 39vw;
+  @media only screen and (max-width: 768px) {
+    width: 99vw;
+    margin: auto;
+  }
 }
 
 .form-container {
   width: 30vw;
   padding: 2px;
-  min-width: 182px;
+  min-width: 270px;
   max-width: 1700px;
   margin: 7% auto;
   @include center;
   background-color: darken($bg-color, 10%);
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+  @media only screen and (max-width: 768px) {
+    width: 99vw;
+    margin: auto;
+  }
 }
 
 .body-container {
