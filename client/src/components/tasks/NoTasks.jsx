@@ -1,13 +1,19 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
+import {ModalsContext} from '../../context/ModalsContext.jsx';
 import TaskFilterModal from './modals/TaskFilterModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 
 const NoTasks = () => {
+    const {openCreateTaskModal} = useContext(ModalsContext);
+    useEffect(() => {
+        openCreateTaskModal();
+    }, []);
+
     return (
         <table>
             <thead>
             <tr>
-                <th className='relative-parent'>
+                <th>
                     <TaskFilterModal noTasks={true} target={'priority'}
                     />
                     <span>
@@ -16,7 +22,7 @@ const NoTasks = () => {
                                        className='sorted-desc draft'/>
                                     </span>
                 </th>
-                <th className='relative-parent'>
+                <th>
                     <TaskFilterModal noTasks={true} target={'task'}/>
                     <span>
                                 Task
@@ -24,7 +30,7 @@ const NoTasks = () => {
                                        className='sorted-desc draft'/>
                                     </span>
                 </th>
-                <th className='relative-parent'>
+                <th>
                     <TaskFilterModal noTasks={true} target={'status'}/>
                     <TaskOptionsModal noTasks={true} taskId='draft'/>
                     <span>

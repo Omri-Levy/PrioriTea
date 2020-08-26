@@ -38,7 +38,7 @@ const Tasks = () => {
                     <table key={task._id}>
                         <thead>
                         <tr>
-                            <th className='relative-parent'>
+                            <th>
                                 <TaskFilterModal target={'priority'}
                                 />
                                 <span>
@@ -50,7 +50,7 @@ const Tasks = () => {
                                            'priority')}/>
                                     </span>
                             </th>
-                            <th className='relative-parent'>
+                            <th>
                                 <TaskFilterModal target={'task'}/>
                                 <span>
                                 Task
@@ -61,7 +61,7 @@ const Tasks = () => {
                                            'task')}/>
                                     </span>
                             </th>
-                            <th className='relative-parent'>
+                            <th>
                                 <TaskFilterModal target={'status'}/>
                                 <TaskOptionsModal taskId={task._id}/>
                                 <span>

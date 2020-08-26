@@ -28,15 +28,12 @@ const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
     }
     return (
         <>
-            {noTasks ? <p className='new-user-hint'>
-                Psst.. Start here!
-            </p> : null}
             <em
                 title='Options'
                 onMouseEnter={displayTaskOptionsTooltip}
                 onMouseLeave={hideTaskOptionsTooltip}
-                className='task-options-tooltip-btn highlight-me'
-            >
+                className={
+                    'task-options-tooltip-btn highlight-me'}>
                 <div className='task-options-modal hidden'>
                     <em
                         title='Create'

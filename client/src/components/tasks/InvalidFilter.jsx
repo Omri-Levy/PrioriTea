@@ -9,7 +9,7 @@ const InvalidFilter = () => {
             <table>
                 <thead>
                 <tr>
-                    <th className='relative-parent'>
+                    <th>
                         <TaskFilterModal target={'priority'}
                         />
                         <span>
@@ -18,7 +18,7 @@ const InvalidFilter = () => {
                                        className='sorted-desc draft'/>
                                     </span>
                     </th>
-                    <th className='relative-parent'>
+                    <th>
                         <TaskFilterModal target={'task'}/>
                         <span>
                                 Task
@@ -26,7 +26,7 @@ const InvalidFilter = () => {
                                        className='sorted-desc draft'/>
                                     </span>
                     </th>
-                    <th className='relative-parent'>
+                    <th>
                         <TaskFilterModal target={'status'}/>
                         <TaskOptionsModal invalidFilter={true}
                                           taskId={'invalid-filter'}/>

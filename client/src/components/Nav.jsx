@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
 import setLoginPost from '../static/js/requests/setLoginPost.js';
 import signoutPost from '../static/js/requests/signoutPost.js';
+import slideNav from '../static/js/slideNav.js';
 
 const Nav = () => {
     const {isLoggedIn, signin, signout} = useContext(AuthContext);
@@ -17,7 +18,7 @@ const Nav = () => {
         <nav>
             <ul>
                 {isLoggedIn &&
-                <li>
+                <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
                         exact to='/'>
@@ -25,7 +26,7 @@ const Nav = () => {
                     </NavLink>
                 </li>}
                 {isLoggedIn &&
-                <li>
+                <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
                         to='/profile'>
@@ -33,7 +34,7 @@ const Nav = () => {
                     </NavLink>
                 </li>}
                 {!isLoggedIn &&
-                <li>
+                <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
                         to='/signin'>
@@ -41,7 +42,7 @@ const Nav = () => {
                     </NavLink>
                 </li>}
                 {isLoggedIn &&
-                <li>
+                <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
                         onClick={async () => {
@@ -54,7 +55,7 @@ const Nav = () => {
                     </NavLink>
                 </li>}
                 {!isLoggedIn &&
-                <li>
+                <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
                         to='/signup'>
@@ -62,7 +63,7 @@ const Nav = () => {
                     </NavLink>
                 </li>}
             </ul>
-            <div className='burger'>
+            <div onClick={slideNav} className='burger'>
                 <div className='line1'/>
                 <div className='line2'/>
                 <div className='line3'/>

@@ -11,8 +11,8 @@
   height: 100vh;
   width: 100vw;
   position: fixed;
-  z-index: 2;
   align-items: center;
+  z-index: 1;
   @include reset-position;
 }
 
@@ -115,7 +115,6 @@
   @extend .excluded-link;
   color: set-text-color($bg-color);
   text-align: center;
-  position: absolute;
   padding: 5px;
 }
 
@@ -123,7 +122,8 @@
   min-height: 420px;
   max-height: 420px;
   overflow-y: auto;
-  z-index: 1;
+  margin-left: 5px;
+  position: absolute;
 
   li {
     border-bottom: 1px solid rgba(darken($bg-color, 10%), 0.3);
@@ -139,11 +139,13 @@
 .task-filter-tooltip-btn {
   @extend .fa-filter;
   left: 5px;
+  float: left;
 }
 
 .task-options-tooltip-btn {
   @extend .fa-ellipsis-v;
   right: 5px;
+  float: right;
 }
 
 .task-options-tooltip-btn, .task-filter-tooltip-btn {
