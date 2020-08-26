@@ -1,9 +1,6 @@
 import React, {useContext, useEffect} from 'react';
-import {Redirect} from 'react-router-dom';
-import {AuthContext} from '../../context/AuthContext.jsx';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {ModalsContext} from '../../context/ModalsContext.jsx';
-import {PaginationContext} from '../../context/PaginationContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import {filterBySearch} from '../../static/js/filter.js';
 import getTasksGet from '../../static/js/requests/getTasksGet.js';

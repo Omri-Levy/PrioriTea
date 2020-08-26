@@ -21,6 +21,10 @@ const TaskSchema = Schema({
             min: 1,
             max: 80,
             default: 'Standby'
+        },
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: 'Users'
         }
     },
     {

@@ -1,5 +1,6 @@
 import Task from '../models/Task.js';
 import taskValidation from '../validation/taskValidation.js';
+import {verify as verifyJwt} from 'jsonwebtoken';
 
 /**
  * @path /api/task/get_tasks
@@ -8,7 +9,10 @@ import taskValidation from '../validation/taskValidation.js';
  */
 const getTasks = async (req, res) => {
     try {
-        const tasks = await Task.find({});
+        const authorization = req.headers['cookie']
+        const token = authorization.split('mid=')[1]
+        const verified = verifyJwt(token, process.env.SECRET_ACCESS_TOKEN);
+        const tasks = await Task.find({owner: verified.id});
         res.json(tasks)
     } catch (err) {
         res.json(err);
@@ -24,11 +28,14 @@ const getTasks = async (req, res) => {
 const createTask = async (req, res) => {
     const {error} = await taskValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-
+    const authorization = req.headers['cookie'];
+    const token = authorization.split('mid=')[1];
+    const verified = verifyJwt(token, process.env.SECRET_ACCESS_TOKEN);
     const newTask = new Task({
         priority: req.body.priority,
         task: req.body.task,
-        status: req.body.status
+        status: req.body.status,
+        owner: verified.id
     });
 
     try {
