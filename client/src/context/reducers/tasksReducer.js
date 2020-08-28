@@ -18,6 +18,6 @@ const tasksReducer = (state, action) => {
         default:
             return [];
     }
-}
+};
 
 export default tasksReducer;

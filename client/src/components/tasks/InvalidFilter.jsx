@@ -4,14 +4,14 @@ import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 
 const InvalidFilter = () => {
     const titleMessage = 'Sorting Is Unavailable With Invalid Filter';
+
     return (
         <>
             <table>
                 <thead>
                 <tr>
                     <th>
-                        <TaskFilterModal target={'priority'}
-                        />
+                        <TaskFilterModal target={'priority'}/>
                         <span>
                                 Priority
                                     <i title={titleMessage}
@@ -28,8 +28,8 @@ const InvalidFilter = () => {
                     </th>
                     <th>
                         <TaskFilterModal target={'status'}/>
-                        <TaskOptionsModal invalidFilter={true}
-                                          taskId={'invalid-filter'}/>
+                        <TaskOptionsModal invalidFilter={true} taskId={
+                            'invalid-filter'}/>
                         <span>
                                 Status
                                     <i title={titleMessage}
@@ -40,20 +40,14 @@ const InvalidFilter = () => {
                 </thead>
                 <tbody>
                 <tr>
-                    <td className='priority'>
-                        Invalid Filter
-                    </td>
-                    <td className='task'>
-                        Invalid Filter
-                    </td>
-                    <td className='status'>
-                        Invalid Filter
-                    </td>
+                    <td className='priority'>Invalid Filter</td>
+                    <td className='task'>Invalid Filter</td>
+                    <td className='status'>Invalid Filter</td>
                 </tr>
                 </tbody>
             </table>
         </>
     );
-}
+};
 
 export default InvalidFilter;

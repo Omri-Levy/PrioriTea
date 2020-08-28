@@ -18,7 +18,7 @@ const FormikInput = ({label, isRequired, ...props}) => {
                 <div className='error'>{meta.error}</div>
             ) : null}
         </section>
-    )
-}
+    );
+};
 
 export default FormikInput;

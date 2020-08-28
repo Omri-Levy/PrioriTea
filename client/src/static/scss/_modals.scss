@@ -1,0 +1,100 @@
+@import 'mixins';
+
+.modal-container {
+  @include column-flex;
+  background-color: rgba(black, 0.75);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  align-items: center;
+  z-index: 2;
+  @include reset-position;
+}
+
+.modal-content {
+  border-radius: $primary-border-radius;
+  position: relative;
+  background-color: darken($bg-color, 10%);
+  width: 30vw;
+  padding: 2px;
+  min-width: 182px;
+  max-width: 1700px;
+  margin: 11% auto;
+  @include center;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.create-task-modal-container {
+  @extend .modal-container;
+}
+
+.create-task-modal-content {
+  @extend .modal-content;
+  width: 39vw;
+  @media only screen and (max-width: 768px) {
+    width: 99vw;
+    margin: auto;
+  };
+}
+
+.edit-task-modal-container {
+  @extend .modal-container;
+}
+
+.edit-task-modal-content {
+  @extend .modal-content;
+  width: 39vw;
+  @media only screen and (max-width: 768px) {
+    width: 99vw;
+    margin: auto;
+  }
+}
+
+.task-options-modal, .task-filter-modal {
+  @include flex-between;
+  background-color: $bg-color;
+  border-radius: $primary-border-radius;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+  @include custom-border;
+}
+
+.task-options-modal {
+  position: relative;
+  margin-top: -6rem;
+  margin-left: -9.5rem;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.task-filter-modal {
+  li {
+    padding: 0 15px;
+    list-style-type: none;
+  }
+}
+
+.task-filter-modal {
+  min-height: 420px;
+  max-height: 420px;
+  overflow-y: auto;
+  margin-left: 5px;
+  position: absolute;
+
+  li {
+    border-bottom: 1px solid rgba(darken($bg-color, 10%), 0.3);
+    overflow-wrap: break-word;
+    width: 260px;
+
+    &:hover {
+      background-color: darken($bg-color, 10%);
+    }
+  }
+}
+
+.hidden {
+  display: none;
+}

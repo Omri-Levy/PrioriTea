@@ -5,7 +5,7 @@ import signupPost from '../../static/js/requests/signupPost.js';
 import EmailExists from '../EmailExists.jsx';
 import FormikInput from '../fields/FormikInput.jsx';
 
-export const SignupForm = ({history}) => {
+const SignupForm = ({history}) => {
     const [displayEmailExistsMsg, setEmailExistsMsg] = (
         useState(false)
     );
@@ -85,4 +85,7 @@ export const SignupForm = ({history}) => {
             </div>
         </main>
     );
-}
+};
+
+export default SignupForm;
+

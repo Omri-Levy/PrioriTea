@@ -7,7 +7,7 @@ import signinPost from '../../static/js/requests/signinPost.js';
 import EmailExists from '../EmailExists.jsx';
 import FormikInput from '../fields/FormikInput.jsx';
 
-export const SigninForm = ({history}) => {
+const SigninForm = ({history}) => {
     const [displayEmailExistsMsg, setEmailExistsMsg] = useState(
         false);
     const {signin, signout} = useContext(AuthContext);
@@ -70,4 +70,6 @@ export const SigninForm = ({history}) => {
             </div>
         </main>
     );
-}
+};
+
+export default SigninForm;

@@ -17,6 +17,6 @@ const paginationReducer = (state, action) => {
             }
 
     }
-}
+};
 
 export default paginationReducer;

@@ -16,6 +16,6 @@ const Home = () => {
             </TasksProvider>
         </main>
     );
-}
+};
 
 export default Home;

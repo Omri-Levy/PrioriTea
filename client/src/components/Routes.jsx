@@ -10,13 +10,16 @@ import Signup from './pages/Signup.jsx';
 
 const Routes = () => {
     const {isLoggedIn, signin, signout} = useContext(AuthContext);
+
     const persistLogin = async () => {
         const res = await setLoginPost();
         res.data ? signin() : signout();
-    }
+    };
+
     useEffect(() => {
         persistLogin().catch(err => console.error(err));
     }, []);
+
     return (
         <Router>
             <Header/>
@@ -40,6 +43,6 @@ const Routes = () => {
             </Switch>
         </Router>
     );
-}
+};
 
 export default Routes;

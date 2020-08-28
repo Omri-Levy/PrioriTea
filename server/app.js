@@ -2,23 +2,17 @@ import cookieParser from 'cookie-parser';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import 'dotenv/config';
+import 'dotenv/config.js';
 import getCurrentUser from './js/getCurrentUser.js';
 import setLogin from './js/setLogin.js';
 import auth from './routes/auth.js';
 import task from './routes/task.js';
 
 const app = express();
-const serverHost = process.env.SERVER_HOST || 'localhost';
-const serverPort = process.env.SERVER_PORT || 4000;
-const corsOriginHost = process.env.CORS_ORIGIN_HOST || 'localhost';
-const corsOriginPort = process.env.CORS_ORIGIN_PORT || 8080;
+const serverPort = process.env.SERVER_PORT;
 
 (async () => {
-    app.use(cors({
-        origin: `http://${corsOriginHost}:${corsOriginPort}`,
-        credentials: true
-    }));
+    app.use(cors({origin: process.env.CORS_ORIGIN, credentials: true}));
     app.use(express.urlencoded({extended: true}));
     app.use(express.json());
 
@@ -32,8 +26,7 @@ const corsOriginPort = process.env.CORS_ORIGIN_PORT || 8080;
     //connect to db
     await mongoose.connect(process.env.DB_URI,
         {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
+            useNewUrlParser: true, useUnifiedTopology: true,
             useFindAndModify: false,
             useCreateIndex: true
         },
@@ -41,6 +34,6 @@ const corsOriginPort = process.env.CORS_ORIGIN_PORT || 8080;
         .catch(err => console.error(err));
 
 //webserver
-    app.listen(serverPort, serverHost,
-        () => console.log(`Listening on port ${serverPort}`));
+    app.listen(serverPort, () => console.log(
+        `Listening on port ${serverPort}`));
 })();

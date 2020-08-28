@@ -16,6 +16,6 @@ const EmailExists = () => {
             </div>
         </div>
     );
-}
+};
 
 export default EmailExists;

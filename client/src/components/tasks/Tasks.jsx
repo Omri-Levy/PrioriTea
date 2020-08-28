@@ -9,28 +9,27 @@ import TaskFilterModal from './modals/TaskFilterModal.jsx';
 import TaskOptionsModal from './modals/TaskOptionsModal.jsx';
 
 const Tasks = () => {
-    const {tasksCopy, setTasksCopy, sort} = useContext(TasksContext);
+    const {tasksCopy, setTasksCopy} = useContext(TasksContext);
     const {loading} = useContext(LoadingContext);
     const {currentPage, tasksPerPage} = useContext(PaginationContext);
     const indexOfLastTask = currentPage * tasksPerPage;
     const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+
     let slicedTasksCopy = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
 
-    if (loading) {
-        return <Loading/>
-    }
+    if (loading) return <Loading/>;
 
     const updateSorting = (Event) => {
         toggleSort(Event);
         sortFn(tasksCopy, null, setTasksCopy, false);
-    }
+    };
 
     const sortExists = (header) => {
-        const {sortBy, orderBy} = JSON.parse(localStorage.getItem('sort')
-        );
-        return sortBy === header && orderBy === 'asc'
-            ? 'sorted-asc' : 'sorted-desc'
-    }
+        const {sortBy, orderBy} = JSON.parse(localStorage.getItem('sort'))
+        ;
+        return sortBy === header && orderBy === 'asc' ? 'sorted-asc' :
+            'sorted-desc'
+    };
 
     return (
         <>
@@ -41,51 +40,41 @@ const Tasks = () => {
                             <th>
                                 <TaskFilterModal target={'priority'}
                                 />
-                                <span>
-                                Priority
-                                    <i title='Sort'
-                                       onClick={(Event) => updateSorting(
-                                           Event)}
-                                       className={sortExists(
-                                           'priority')}/>
+                                <span>Priority
+                                    <i title='Sort' onClick={(Event) => {
+                                        updateSorting(Event);
+                                    }}
+                                       className={sortExists('priority'
+                                       )}/>
                                     </span>
                             </th>
                             <th>
                                 <TaskFilterModal target={'task'}/>
-                                <span>
-                                Task
-                                    <i title='Sort'
-                                       onClick={(Event) => updateSorting(
-                                           Event)}
-                                       className={sortExists(
-                                           'task')}/>
+                                <span>Task
+                                    <i title='Sort' onClick={(Event) => {
+                                        updateSorting(Event);
+                                    }}
+                                       className={sortExists('task')}/>
                                     </span>
                             </th>
                             <th>
                                 <TaskFilterModal target={'status'}/>
                                 <TaskOptionsModal taskId={task._id}/>
-                                <span>
-                                Status
-                                    <i title='Sort'
-                                       onClick={(Event) => updateSorting(
-                                           Event)}
-                                       className={sortExists(
-                                           'status')}/>
+                                <span>Status
+                                    <i title='Sort' onClick={(Event) => {
+                                        updateSorting(Event);
+                                    }}
+                                       className={sortExists('status')}
+                                    />
                                     </span>
                             </th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td className='priority'>
-                                {task.priority}
-                            </td>
-                            <td className='task'>
-                                {task.task}
-                            </td>
-                            <td className='status'>
-                                {task.status}
-                            </td>
+                            <td className='priority'>{task.priority}</td>
+                            <td className='task'>{task.task}</td>
+                            <td className='status'>{task.status}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -93,6 +82,6 @@ const Tasks = () => {
             )}
         </>
     );
-}
+};
 
 export default Tasks;

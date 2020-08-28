@@ -3,13 +3,8 @@ import passwordComplexity from 'joi-password-complexity';
 
 const signupValidation = (data) => {
     const complexityOptions = {
-        min: 8,
-        max: 256,
-        lowerCase: 1,
-        upperCase: 1,
-        numeric: 1,
-        symbol: 1,
-        requirementCount: 4,
+        min: 8, max: 256, lowerCase: 1, upperCase: 1, numeric: 1, symbol: 1,
+        requirementCount: 4
     }
 
     const signupSchema = Joi.object({
@@ -19,6 +14,7 @@ const signupValidation = (data) => {
         passwordConfirmation: Joi.any().valid(Joi.ref('password'))
             .required()
     });
+
     return signupSchema.validate(data);
 };
 

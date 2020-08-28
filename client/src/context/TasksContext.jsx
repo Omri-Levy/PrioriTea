@@ -11,10 +11,7 @@ const TasksProvider = props => {
         filter: localStorage.getItem('filter')
     });
 
-    const setTasks = data => dispatch({
-        type: 'GET_TASKS',
-        payload: data
-    });
+    const setTasks = data => dispatch({type: 'GET_TASKS', payload: data});
 
     const setTasksCopy = data => dispatch({
         type: 'SET_TASKS_COPY',
@@ -26,15 +23,14 @@ const TasksProvider = props => {
         payload: data
     });
 
-    const setSort = data => dispatch({type: 'SET_SORT', payload: data});
-
     return (
         <TasksContext.Provider value={{
-            ...tasksObj, setTasks, setTasksCopy, setEditTaskId
+            ...tasksObj, setTasks, setTasksCopy,
+            setEditTaskId
         }}>
             {props.children}
         </TasksContext.Provider>
     );
-}
+};
 
 export {TasksProvider, TasksContext};

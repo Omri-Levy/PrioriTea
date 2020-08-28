@@ -11,6 +11,6 @@ const App = () => {
             </LoadingProvider>
         </AuthProvider>
     );
-}
+};
 
 export default App;

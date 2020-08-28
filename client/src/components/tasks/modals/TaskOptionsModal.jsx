@@ -9,23 +9,25 @@ const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
     const {tasks, setTasks, setTasksCopy, setEditTaskId} = useContext(
         TasksContext);
     const {openEditTaskModal, openCreateTaskModal} = useContext(ModalsContext);
+
     const editTask = () => {
         openEditTaskModal();
         setEditTaskId(taskId);
     }
+
     const invalidFilterOrNoTasks = (action) => {
         if (noTasks) {
-            return action === 'edit'
-                ? 'Edit Is Unavailable On Draft'
+            return action === 'edit' ? 'Edit Is Unavailable On Draft'
                 : 'Delete Is Unavailable On Draft'
         } else if (invalidFilter) {
-            const editMessage = 'Edit Is Unavailable With Invalid Filter'
-            const deleteMessage = 'Delete Is Unavailable With Invalid Filter'
-            return action === 'edit' ? editMessage : deleteMessage
+            const editMessage = 'Edit Is Unavailable With Invalid Filter';
+            const deleteMessage = 'Delete Is Unavailable With Invalid Filter';
+            return action === 'edit' ? editMessage : deleteMessage;
         } else {
-            return action === 'edit' ? 'Edit' : 'Delete'
+            return action === 'edit' ? 'Edit' : 'Delete';
         }
-    }
+    };
+
     return (
         <>
             <em
@@ -61,6 +63,6 @@ const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
             </em>
         </>
     );
-}
+};
 
 export default TaskOptionsModal;

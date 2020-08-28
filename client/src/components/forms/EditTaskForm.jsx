@@ -6,10 +6,11 @@ import React, {useContext} from 'react';
 import editTaskPatch from '../../static/js/requests/editTaskPatch.js';
 import FormikInput from '../fields/FormikInput.jsx';
 
-export const EditTaskForm = () => {
+const EditTaskForm = () => {
     const {tasks, setTasks, setTasksCopy, editTaskId} = useContext(
         TasksContext);
     const {closeEditTaskModal} = useContext(ModalsContext);
+
     return (
         <Formik
             initialValues={{priority: '', task: '', status: ''}}
@@ -58,4 +59,7 @@ export const EditTaskForm = () => {
             )}
         </Formik>
     );
-}
+};
+
+export default EditTaskForm;
+

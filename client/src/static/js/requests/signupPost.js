@@ -2,19 +2,15 @@ import axios from 'axios';
 
 const signupPost = async (data) => {
     const url = 'http://localhost:4000/api/user/signup';
-    try {
-        const res = (
-            await axios
-                .post(url, {
-                    email: data.email,
-                    fullName: data.fullName,
-                    password: data.password,
-                    passwordConfirmation: data.passwordConfirmation
-                })
-        );
-        console.log(res);
-        // dispatchHideEmailExistsMsg();
 
+    try {
+        await axios.post(url, {
+            email: data.email, fullName: data.fullName,
+            password: data.password,
+            passwordConfirmation: data.passwordConfirmation
+        });
+
+        // dispatchHideEmailExistsMsg();
     } catch (err) {
         if (err.response.data.message === 'Email already exists.') {
             // dispatchDisplayEmailExistsMsg();

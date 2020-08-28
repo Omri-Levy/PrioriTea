@@ -1,13 +1,12 @@
 import React, {useContext} from 'react';
 import {TasksContext} from '../../../context/TasksContext.jsx';
 import {filterByBtn} from '../../../static/js/filter.js';
-import {
-    displayTaskFilterTooltip,
-    hideTaskFilterTooltip
-} from '../../../static/js/handlers.js';
+import {displayTaskFilterTooltip, hideTaskFilterTooltip}
+    from '../../../static/js/handlers.js';
 
 const TaskFilterModal = ({target, noTasks}) => {
     const {tasks, setTasksCopy} = useContext(TasksContext);
+
     const filterSet = () => {
         const tempArr = [];
         tasks.forEach(item => {
@@ -23,18 +22,18 @@ const TaskFilterModal = ({target, noTasks}) => {
                     break;
             }
         });
-        return new Set(tempArr)
-    }
-
+        return new Set(tempArr);
+    };
     const mySet = filterSet();
     const filterByBtnWrapper = (Event) => {
         filterByBtn(Event, tasks, setTasksCopy);
-    }
+    };
     const filterObj = localStorage.getItem('filter');
     const resetFilter = () => {
         localStorage.removeItem('filter');
         setTasksCopy(tasks);
-    }
+    };
+
     return (
         <>
             <em title={noTasks ? 'Filter Is Unavailable On Draft' : 'Filter'}
@@ -42,8 +41,7 @@ const TaskFilterModal = ({target, noTasks}) => {
                     ? 'task-filter-tooltip-btn draft'
                     : 'task-filter-tooltip-btn'}
                 onMouseEnter={noTasks ? null : displayTaskFilterTooltip}
-                onMouseLeave={hideTaskFilterTooltip}
-            >
+                onMouseLeave={hideTaskFilterTooltip}>
                 {filterObj && <em title='Clear Filter' className='clear-filter'
                                   onClick={resetFilter}/>}
                 <div>
@@ -66,6 +64,6 @@ const TaskFilterModal = ({target, noTasks}) => {
             </em>
         </>
     );
-}
+};
 
 export default TaskFilterModal;

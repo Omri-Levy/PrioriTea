@@ -6,9 +6,10 @@ import React, {useContext} from 'react';
 import createTaskPost from '../../static/js/requests/createTaskPost.js';
 import FormikInput from '../fields/FormikInput.jsx';
 
-export const CreateTaskForm = () => {
+const CreateTaskForm = () => {
     const {setTasks, setTasksCopy} = useContext(TasksContext);
     const {closeCreateTaskModal} = useContext(ModalsContext);
+
     return (
         <Formik
             initialValues={{
@@ -61,4 +62,6 @@ export const CreateTaskForm = () => {
             )}
         </Formik>
     );
-}
+};
+
+export default CreateTaskForm;

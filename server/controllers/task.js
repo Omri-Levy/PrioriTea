@@ -1,6 +1,8 @@
 import Task from '../models/Task.js';
 import taskValidation from '../validation/taskValidation.js';
-import {verify as verifyJwt} from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
+
+const {verify: verifyJwt} = jwt;
 
 /**
  * @path /api/task/get_tasks
@@ -9,16 +11,17 @@ import {verify as verifyJwt} from 'jsonwebtoken';
  */
 const getTasks = async (req, res) => {
     try {
-        const authorization = req.headers['cookie']
-        const token = authorization.split('mid=')[1]
+        const authorization = req.headers['cookie'];
+        const token = authorization.split('mid=')[1];
         const verified = verifyJwt(token, process.env.SECRET_ACCESS_TOKEN);
         const tasks = await Task.find({owner: verified.id});
-        res.json(tasks)
+
+        res.json(tasks);
     } catch (err) {
         res.json(err);
         console.error(err);
     }
-}
+};
 
 /**
  * @path /api/task/create_task
@@ -27,10 +30,14 @@ const getTasks = async (req, res) => {
  */
 const createTask = async (req, res) => {
     const {error} = await taskValidation(req.body);
+
     if (error) return res.status(400).send(error.details[0].message);
+
     const authorization = req.headers['cookie'];
     const token = authorization.split('mid=')[1];
+
     const verified = verifyJwt(token, process.env.SECRET_ACCESS_TOKEN);
+
     const newTask = new Task({
         priority: req.body.priority,
         task: req.body.task,
@@ -40,6 +47,7 @@ const createTask = async (req, res) => {
 
     try {
         const savedTask = await newTask.save();
+
         res.json({task: savedTask._id});
     } catch (err) {
         res.json({message: err});
@@ -55,17 +63,15 @@ const createTask = async (req, res) => {
 const editTask = async (req, res) => {
     try {
         const oldTask = await Task.findById(req.body._id);
-        const updatedTask = await Task.updateOne(
-            {_id: req.body._id},
-            {
-                $set: {
-                    priority: req.body.priority ? req.body.priority :
-                        oldTask.priority,
-                    task: req.body.task ? req.body.task : oldTask.task,
-                    status: req.body.status ? req.body.status :
-                        oldTask.status
-                }
-            });
+        const updatedTask = await Task.updateOne({_id: req.body._id}, {
+            $set: {
+                priority: req.body.priority ? req.body.priority :
+                    oldTask.priority,
+                task: req.body.task ? req.body.task : oldTask.task,
+                status: req.body.status ? req.body.status :
+                    oldTask.status
+            }
+        });
         res.json(updatedTask);
     } catch (err) {
         res.json({message: err});
@@ -79,17 +85,12 @@ const editTask = async (req, res) => {
  */
 const deleteTask = async (req, res) => {
     try {
-        const deletedTask = await Task.deleteOne(
-            {_id: req.body._id});
+        const deletedTask = await Task.deleteOne({_id: req.body._id});
+
         res.json(deletedTask);
     } catch (err) {
         res.json({message: err});
     }
 }
 
-export {
-    getTasks,
-    createTask,
-    editTask,
-    deleteTask
-};
+export {getTasks, createTask, editTask, deleteTask};

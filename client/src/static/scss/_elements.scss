@@ -19,21 +19,15 @@ body {
   }
 }
 
-button,
-input[type='button'] {
-  cursor: pointer;
-}
-
 header {
   position: sticky;
   letter-spacing: 3px;
-  background: $primary-color;
-  display: flex;
+  background-color: $bg-color;
+  @include flex-between;
   align-items: center;
-  justify-content: space-between;
 
   nav {
-    background-color: $theme-component;
+    background-color: $bg-color;
 
     ul {
       display: flex;
@@ -56,7 +50,7 @@ header {
       li {
         list-style-type: none;
         padding: 15px;
-        @include global-font-size();
+        font-size: $secondary-font-size;
 
         a {
           color: set-text-color($bg-color);
@@ -66,7 +60,7 @@ header {
   }
 
   h1 {
-    font-family: $logo-font;
+    font-family: $font-stack;
     padding: 15px;
     font-size: 2rem;
   }
@@ -105,18 +99,11 @@ select:-webkit-autofill:focus {
   caret-color: $primary-caret-color;
   -webkit-text-fill-color: $secondary-text-color;
   -webkit-box-shadow: 0 0 0 1000px $primary-text-color inset,
-  0 0 0 1000px darken($primary-text-color, 10%) inset,
-  0 0 0 1000px darken($primary-text-color, 10%) inset,
-  0 0 0 1000px darken($primary-text-color, 10%) inset,
-  0 0 0 1000px darken($primary-text-color, 10%) inset;
+  0 0 0 1000px darken($secondary-bg-color, 10%) inset,
+  0 0 0 1000px darken($secondary-bg-color, 10%) inset,
+  0 0 0 1000px darken($secondary-bg-color, 10%) inset,
+  0 0 0 1000px darken($secondary-bg-color, 10%) inset;
   transition: background-color 5000s ease-in-out 0s;
-}
-
-#root {
-  @include column-flex;
-  width: 100vw;
-  height: 100vh;
-  flex-grow: 1;
 }
 
 table {
@@ -129,7 +116,7 @@ th:nth-child(2), td:nth-child(2) {
 }
 
 table, tr, th, td {
-  @include global-font-size;
+  font-size: $secondary-font-size;
   border-radius: $primary-border-radius;
 }
 
@@ -143,10 +130,10 @@ th, td {
 }
 
 th {
-  background-color: $primary-color;
+  background-color: $bg-color;
   font-size: 1.7rem;
-  border-left: 1px solid darken($primary-color, 10%);
-  border-right: 1px solid darken($primary-color, 10%);
+  border-left: 1px solid darken($bg-color, 10%);
+  border-right: 1px solid darken($bg-color, 10%);
 }
 
 td {

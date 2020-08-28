@@ -1,5 +1,5 @@
 import React from 'react';
-import {EditTaskForm} from '../../forms/EditTaskForm.jsx';
+import EditTaskForm from '../../forms/EditTaskForm.jsx';
 
 const EditTaskModal = () => {
     return (
@@ -9,6 +9,6 @@ const EditTaskModal = () => {
             </div>
         </div>
     );
-}
+};
 
 export default EditTaskModal;

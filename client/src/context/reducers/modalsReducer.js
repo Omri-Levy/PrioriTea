@@ -26,6 +26,6 @@ const modalsReducer = (state, action) => {
                 editTaskModalOpen: false
             };
     }
-}
+};
 
 export default modalsReducer;

@@ -3,29 +3,30 @@ const displayTaskOptionsTooltip = () => {
     const parent = document.querySelector(selector);
     const target = parent.firstChild;
     target && target.classList.remove('hidden');
-}
+};
 
 const hideTaskOptionsTooltip = () => {
     const selector = '.task-options-tooltip-btn'
     const parent = document.querySelector(selector);
     const target = parent.firstChild;
     target && target.classList.add('hidden');
-}
+};
 
 const displayTaskFilterTooltip = (Event) => {
     let target = Event.target.closest('#hidden-filter-modal');
-    if (!target) {
+    if (!target && Event.target.firstChild) {
         target = Event.target.firstChild.firstChild;
     }
     target && target.classList.remove('hidden');
-}
+};
+
 const hideTaskFilterTooltip = (Event) => {
     let target = Event.target.closest('#hidden-filter-modal');
-    if (!target) {
+    if (!target && Event.target.firstChild) {
         target = Event.target.firstChild.firstChild;
     }
     target && target.classList.add('hidden');
-}
+};
 
 const toggleSort = (Event) => {
     const target = Event.target;
@@ -36,20 +37,17 @@ const toggleSort = (Event) => {
         localStorage.setItem('sort', JSON.stringify({
             sortBy: targetTitle,
             orderBy: 'desc'
-        }))
+        }));
     } else {
         localStorage.setItem('sort', JSON.stringify({
             sortBy: targetTitle,
             orderBy: 'asc'
-        }))
+        }));
     }
-}
+};
 
 
 export {
-    displayTaskOptionsTooltip,
-    hideTaskOptionsTooltip,
-    displayTaskFilterTooltip,
-    hideTaskFilterTooltip,
-    toggleSort
-}
+    displayTaskOptionsTooltip, hideTaskOptionsTooltip, displayTaskFilterTooltip
+    , hideTaskFilterTooltip, toggleSort
+};

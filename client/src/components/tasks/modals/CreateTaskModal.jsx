@@ -1,5 +1,5 @@
 import React from 'react';
-import {CreateTaskForm} from '../../forms/CreateTaskForm.jsx';
+import CreateTaskForm from '../../forms/CreateTaskForm.jsx';
 
 const CreateTaskModal = () => {
     return (
@@ -9,6 +9,6 @@ const CreateTaskModal = () => {
             </div>
         </div>
     );
-}
+};
 
 export default CreateTaskModal;

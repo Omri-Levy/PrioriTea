@@ -15,57 +15,52 @@ import Pagination from './Pagination.jsx';
 import Tasks from './Tasks.jsx';
 
 const TasksContainer = () => {
-    const {tasks, setTasks, tasksCopy, setTasksCopy, sort} =
-        useContext(TasksContext);
+    const {tasks, setTasks, tasksCopy, setTasksCopy, sort} = useContext(
+        TasksContext);
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
-    const {createTaskModalOpen, editTaskModalOpen} =
-        useContext(ModalsContext);
-
-    const apiRes = () => {
-        setTimeout(() => {
-            stopLoading();
-        }, 120);
-    };
+    const {createTaskModalOpen, editTaskModalOpen} = useContext(ModalsContext);
 
     useEffect(() => {
         startLoading();
-        getTasksGet(setTasks, setTasksCopy, sort)
-            .catch(err => console.error(err));
-        apiRes();
+        getTasksGet(setTasks, setTasksCopy, sort).catch(err => console.error(
+            err));
+        stopLoading();
     }, []);
 
-    if (loading) return <Loading/>
+    if (loading) return <Loading/>;
+
     const filterBySearchWrapper = (Event) => {
         filterBySearch(Event.target.value.toLowerCase(), tasks, setTasksCopy);
-    }
+    };
+
     const noTasks = () => {
         return tasks.length === 0 && tasksCopy.length === 0;
     }
+
     const noTasksCopy = () => {
         return tasksCopy.length === 0 && tasks.length !== 0;
-    }
+    };
+
     return (
         <div className='tasks-container'>
-            {createTaskModalOpen ? <CreateTaskModal/> : null}
-            {editTaskModalOpen ? <EditTaskModal/> : null}
-            <FilterSearch
-                maxLength='80'
-                autoFocus={true}
-                label='Filter'
-                name='Filter'
-                type='text'
-                autoComplete='on'
-                placeholder={'Filter'}
-                disabled={noTasks()}
-                title={noTasks() ? 'Filter Is Unavailable On Draft' : null}
-                className={noTasks() ? 'primary-input draft' : 'primary-input'}
-                onChange={(Event) => filterBySearchWrapper(Event)}
-            />
+            {createTaskModalOpen && <CreateTaskModal/>}
+            {editTaskModalOpen && <EditTaskModal/>}
+            <FilterSearch maxLength='80' autoFocus={true} label='Filter'
+                          name='Filter'
+                          type='text'
+                          autoComplete='on'
+                          placeholder={'Filter'}
+                          disabled={noTasks()}
+                          title={noTasks()
+                              ? 'Filter Is Unavailable On Draft' : null}
+                          className={noTasks() ? 'primary-input draft' :
+                              'primary-input'}
+                          onChange={(Event) => filterBySearchWrapper(Event)}/>
             {noTasksCopy() && <InvalidFilter/>}
             {noTasks() && !noTasksCopy() ? <NoTasks/> : <Tasks/>}
             {noTasks() || noTasksCopy() ? <OnePager/> : <Pagination/>}
         </div>
     );
-}
+};
 
 export default TasksContainer;

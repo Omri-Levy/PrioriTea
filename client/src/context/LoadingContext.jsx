@@ -11,12 +11,10 @@ const LoadingProvider = props => {
     const stopLoading = () => dispatch({type: 'STOP_LOADING'});
 
     return (
-        <LoadingContext.Provider value={{
-            loading, startLoading, stopLoading
-        }}>
+        <LoadingContext.Provider value={{loading, startLoading, stopLoading}}>
             {props.children}
         </LoadingContext.Provider>
     );
-}
+};
 
 export {LoadingContext, LoadingProvider};

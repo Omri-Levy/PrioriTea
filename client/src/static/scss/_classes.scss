@@ -3,107 +3,8 @@
 @import 'keyframes';
 
 .form-label,
-.error,
-.primary-input,
-.primary-btn {
-  @include global-font-size;
-}
-
-/*!
- * Font Awesome Free 5.14.0 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
-
-.fa,
-.header-fas,
-.fas {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  line-height: 1.6;
-}
-
-.header-fas {
-  line-height: 1.2;
-}
-
-@font-face {
-  font-family: 'Font Awesome 5 Free';
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url('../webfonts/fa-solid-900.woff2');
-}
-
-.fa,
-.header-fas,
-.fas {
-  font-family: 'Font Awesome 5 Free', sans-serif;
-  font-weight: 900;
-}
-
-.first-page, .last-page {
-  @extend .fas;
-}
-
-.first-page {
-  @extend .fa-angle-double-left;
-  padding-right: 5px;
-}
-
-.last-page {
-  @extend .fa-angle-double-right;
-  padding-left: 5px;
-}
-
-
-.fa-slash:before {
-  content: '\f715';
-}
-
-.fa-trash:before {
-  content: '\f1f8';
-}
-
-.fa-plus:before {
-  content: '\f067';
-}
-
-.fa-edit:before {
-  content: '\f044';
-}
-
-.fa-ellipsis-v:before {
-  content: '\f142';
-}
-
-.fa-angle-double-left:before {
-  content: '\f100';
-}
-
-.fa-angle-double-right:before {
-  content: '\f101';
-}
-
-.fa-filter:before {
-  content: '\f0b0';
-}
-
-.fa-angle-up:before {
-  content: '\f106';
-}
-
-.fa-angle-down:after {
-  content: '\f107';
-}
-
-.sorted-asc, .sorted-desc {
-  @extend .fas;
-  cursor: pointer;
-  padding-left: 1rem;
+.error {
+  font-size: $secondary-font-size;
 }
 
 .draft {
@@ -111,27 +12,15 @@
   cursor: not-allowed;
 }
 
-.sorted-desc {
-  @extend .fa-angle-down
-}
-
-.sorted-asc {
-  @extend .fa-angle-up
-}
-
 .form-label {
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
   padding-left: 10px;
-  background-color: $primary-color;
+  background-color: $bg-color;
   @include custom-border;
   display: flex;
   border-radius: $primary-border-radius;
 }
 
-.primary-input,
-.primary-btn {
-  @include custom-border;
-}
 
 .priority, .task, .status {
   min-width: 260px;
@@ -143,79 +32,12 @@
   color: $required-color;
 }
 
-.burger {
-  display: none;
-  @media only screen and (max-width: 768px) {
-    display: block;
-    cursor: pointer;
-  }
-
-  div {
-    width: 25px;
-    height: 3px;
-    background-color: set-text-color($bg-color);
-    margin: 5px 10px 5px 5px;
-    transition: all 0.3s ease;
-  }
-
-}
-
-.toggle .line1 {
-  transform: rotate(-45deg) translate(-1px, 5px);
-}
-
-.toggle .line2 {
-  display: none;
-}
-
-.toggle .line3 {
-  transform: rotate(45deg) translate(-1px, -5px);
-}
-
-.burger-active {
-  transform: translateX(0);
-  transition: transform 0.5s ease-in;
-
-  li {
-    animation: animate-link 1s ease-in;
-  }
-}
-
-.animate-link {
-  animation: animate-link 3s ease forwards 3s;
-}
-
-@media only screen and (max-width: 788px) {
-  .body-container {
-    overflow-x: auto;
-  }
-}
-
 .error {
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
   @include error-box;
   border-radius: $primary-border-radius;
   padding-left: 10px;
   font-size: 14px;
-}
-
-.primary-input,
-.primary-btn {
-  height: 55px;
-  width: 100%;
-  outline: none;
-}
-
-.primary-btn {
-  border-radius: $primary-border-radius;
-  background-color: $primary-btn-color;
-}
-
-.primary-input {
-  border-radius: $primary-border-radius;
-  background-color: $primary-text-color;
-  padding-left: 10px;
-  color: $secondary-text-color;
 }
 
 .required-fields-msg {
@@ -247,29 +69,6 @@
   @include center;
 }
 
-.task-options-modal, .task-filter-modal {
-  @include flex-between;
-  background-color: $bg-color;
-  border-radius: $primary-border-radius;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
-  @include custom-border;
-}
-
-.task-options-modal {
-  position: relative;
-  margin-top: -6rem;
-  margin-left: -9.5rem;
-  display: flex;
-  justify-content: space-evenly;
-}
-
-.task-filter-modal {
-  li {
-    padding: 0 15px;
-    list-style-type: none;
-  }
-}
-
 .clear-filter {
   @extend .fas, .fa-slash;
   @extend .excluded-link;
@@ -286,34 +85,6 @@
   .spinner {
     animation: loading infinite 20s;
   }
-}
-
-.hidden {
-  display: none;
-}
-
-.create-task-btn {
-  @extend .fas, .fa-plus;
-}
-
-.edit-task-btn {
-  @extend .fas, .fa-edit;
-
-  &:before {
-    padding: 0;
-    margin: 0 0 0 4px;
-  }
-}
-
-.delete-task-btn {
-  @extend .fas, .fa-trash;
-}
-
-.create-task-btn,
-.edit-task-btn,
-.delete-task-btn {
-  position: initial;
-  margin: 10px;
 }
 
 .current-link::after {

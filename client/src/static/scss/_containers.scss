@@ -1,61 +1,15 @@
 @import 'variables';
 @import 'mixins';
 
+#root {
+  @include column-flex;
+  width: 100vw;
+  height: 100vh;
+  flex-grow: 1;
+}
+
 .container {
   @include column-flex;
-}
-
-.modal-container {
-  @include column-flex;
-  background-color: rgba(black, 0.75);
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  align-items: center;
-  z-index: 2;
-  @include reset-position;
-}
-
-.modal-content {
-  border-radius: $primary-border-radius;
-  position: relative;
-  background-color: darken($bg-color, 10%);
-  width: 30vw;
-  padding: 2px;
-  min-width: 182px;
-  max-width: 1700px;
-  margin: 11% auto;
-  @include center;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
-  &:focus {
-    outline: none;
-  }
-}
-
-.create-task-modal-container {
-  @extend .modal-container;
-}
-
-.create-task-modal-content {
-  @extend .modal-content;
-  width: 39vw;
-  @media only screen and (max-width: 768px) {
-    width: 99vw;
-    margin: auto;
-  }
-}
-
-.edit-task-modal-container {
-  @extend .modal-container;
-}
-
-.edit-task-modal-content {
-  @extend .modal-content;
-  width: 39vw;
-  @media only screen and (max-width: 768px) {
-    width: 99vw;
-    margin: auto;
-  }
 }
 
 .form-container {
@@ -87,7 +41,7 @@
     box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
     display: flex;
     justify-content: center;
-    background-color: $primary-color;
+    background-color: $bg-color;
     @include custom-border;
     margin-top: 1px;
     border-radius: $primary-border-radius;
@@ -105,7 +59,7 @@
 
         a {
           cursor: pointer;
-          @include global-font-size;
+          font-size: $secondary-font-size;
         }
       }
     }
@@ -122,47 +76,12 @@
   height: 40vh;
 }
 
-.task-options-tooltip-btn, .task-filter-tooltip-btn {
-  @extend .excluded-link;
-  color: set-text-color($bg-color);
-  text-align: center;
-  padding: 5px;
-}
-
-.task-filter-modal {
-  min-height: 420px;
-  max-height: 420px;
-  overflow-y: auto;
-  margin-left: 5px;
-  position: absolute;
-
-  li {
-    border-bottom: 1px solid rgba(darken($bg-color, 10%), 0.3);
-    overflow-wrap: break-word;
-    width: 260px;
-
-    &:hover {
-      background-color: darken($bg-color, 10%);
-    }
-  }
-}
-
-.task-filter-tooltip-btn {
-  @extend .fa-filter;
-  position: relative;
-  float: left;
-}
-
-.task-options-tooltip-btn {
-  @extend .fa-ellipsis-v;
-  right: 5px;
-  float: right;
-}
-
-.task-options-tooltip-btn, .task-filter-tooltip-btn {
-  @extend .header-fas
-}
-
 .tasks-container li {
   background-color: $primary-btn-color;
+}
+
+@media only screen and (max-width: 788px) {
+  .body-container {
+    overflow-x: auto;
+  }
 }

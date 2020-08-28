@@ -25,12 +25,12 @@ const ModalsProvider = props => {
 
     return (
         <ModalsContext.Provider value={{
-            ...modalsObj, openCreateTaskModal, closeCreateTaskModal,
-            openEditTaskModal, closeEditTaskModal
+            ...modalsObj, openCreateTaskModal,
+            closeCreateTaskModal, openEditTaskModal, closeEditTaskModal
         }}>
             {props.children}
         </ModalsContext.Provider>
     );
-}
+};
 
 export {ModalsContext, ModalsProvider};

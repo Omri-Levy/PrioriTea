@@ -14,6 +14,6 @@ const AuthProvider = props => {
             {props.children}
         </AuthContext.Provider>
     );
-}
+};
 
 export {AuthContext, AuthProvider};

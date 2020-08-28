@@ -7,13 +7,16 @@ import slideNav from '../static/js/slideNav.js';
 
 const Nav = () => {
     const {isLoggedIn, signin, signout} = useContext(AuthContext);
+
     const persistLogin = async () => {
         const res = await setLoginPost();
         res.data ? signin() : signout();
-    }
+    };
+
     useEffect(() => {
         persistLogin().catch(err => console.error(err));
     }, []);
+
     return (
         <nav>
             <ul>
@@ -70,6 +73,6 @@ const Nav = () => {
             </div>
         </nav>
     );
-}
+};
 
 export default Nav;

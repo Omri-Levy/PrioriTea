@@ -19,7 +19,7 @@ const findAllUsers = async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
-}
+};
 
 /**
  @path /api/user/:id
@@ -33,7 +33,7 @@ const findUserById = async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
-}
+};
 
 /**
  @path /api/user/signup
@@ -64,7 +64,7 @@ const signupUser = async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
-}
+};
 
 /**
  @path /api/user/signin
@@ -72,16 +72,20 @@ const signupUser = async (req, res) => {
  @desc signin an existing user from mongodb
  */
 const signinUser = async (req, res) => {
+    const invalidCredentialsMsg = (
+        'Email or password are wrong - please try again.');
     const {error} = signinValidation(req.body);
+
     if (error) return res.status(400).send(error.details[0].message);
 
     const user = await User.findOne({email: req.body.email});
 
-    if (!user) return res.status(400).send(
-        'Email or password are wrong - please try again.');
+    if (!user) return res.status(400).send(invalidCredentialsMsg);
+
     const validPass = await verify(user.password, req.body.password);
-    if (!validPass) return res.status(400).send(
-        'Email or password are wrong - please try again.');
+
+    if (!validPass) return res.status(400).send(invalidCredentialsMsg);
+
     try {
         sendAccessToken(res, createAccessToken(user));
         return res.status(200).send({success: true});
@@ -128,7 +132,7 @@ const updateUser = async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
-}
+};
 
 /**
  * @path /api/user/:id
@@ -147,11 +151,6 @@ const deleteUser = async (req, res) => {
 }
 
 export {
-    findAllUsers,
-    findUserById,
-    signupUser,
-    signinUser,
-    signoutUser,
-    updateUser,
-    deleteUser
+    findAllUsers, findUserById, signupUser, signinUser, signoutUser,
+    updateUser, deleteUser
 };

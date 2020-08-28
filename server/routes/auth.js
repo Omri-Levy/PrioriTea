@@ -1,12 +1,7 @@
 import express from 'express';
 import {
-    deleteUser,
-    findAllUsers,
-    findUserById,
-    signinUser,
-    signupUser,
-    signoutUser,
-    updateUser
+    deleteUser, findAllUsers, findUserById, signinUser, signupUser,
+    signoutUser, updateUser
 } from '../controllers/auth.js';
 
 const auth = express.Router();

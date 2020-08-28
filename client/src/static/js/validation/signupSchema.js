@@ -9,26 +9,34 @@ const passComplexityMsg = (
     ' special case character'
 );
 
+const emailMinCharsMsg = 'Email must include a minimum of 7 characters.';
+const emailMaxCharsMsg = 'Email must include a maximum of 320 characters.';
+const emailRequiredMsg = 'Email is a required field.';
+const emailValidMsg = 'Email must be valid.';
+
+const fullNameMinCharsMsg = 'Full name must include a minimum of 4 characters.'
+;
+const fullNameMaxCharsMsg = (
+    'Full name must include a maximum of 70 characters.');
+const fullNameRequiredMsg = 'Full name is a required field.';
+
+const passwordRequiredMsg = 'Password is a required field.';
+const passwordMustMatchMsg = 'Passwords must match';
+
 const signupSchema = Yup.object({
     email: Yup.string()
-        .min(7,
-            'Email must include a minimum of 7 characters.')
-        .max(
-            320,
-            'Email must include of a maximum of 320 characters.')
-        .email('Email must be valid.')
-        .required('Email is  a required field.'),
-    fullName: Yup.string()
-        .min(4,
-            'Full name must include a minimum of 4 characters.')
-        .max(70,
-            'Full name must include a maximum of 70 characters.')
-        .required('Full name is a required field.'),
+        .min(7, emailMinCharsMsg).max(320, emailMaxCharsMsg).email(
+            emailValidMsg).required(emailRequiredMsg),
+
+    fullName: Yup.string().min(4, fullNameMinCharsMsg).max(70,
+        fullNameMaxCharsMsg).required(fullNameRequiredMsg),
+
     password: Yup.string()
         .matches(passComplexityRegex, passComplexityMsg)
-        .required('Password is a required field.'),
-    passwordConfirmation: Yup.string()
-        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required(passwordRequiredMsg),
+
+    passwordConfirmation: Yup.string().oneOf([Yup.ref('password'), null],
+        passwordMustMatchMsg)
 });
 
 export default signupSchema;

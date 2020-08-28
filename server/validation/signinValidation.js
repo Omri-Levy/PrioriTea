@@ -5,6 +5,7 @@ const signinValidation = (data) => {
         email: Joi.string().required(),
         password: Joi.string().required()
     });
+
     return signinSchema.validate(data);
 };
 

@@ -8,7 +8,8 @@ const FilterSearch = ({label, ...props}) => {
             </label>
             <input {...props}/>
         </section>
-    )
-}
+    );
+};
 
 export default FilterSearch;
+
