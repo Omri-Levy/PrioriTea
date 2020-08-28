@@ -1,20 +1,17 @@
 import {AuthContext} from '../../context/AuthContext.jsx';
-import setLoginPost from '../../static/js/requests/setLoginPost.js';
+import setSignedInPost from '../../static/js/requests/setSignedInPost.js';
 import signinSchema from '../../static/js/validation/signinSchema.js';
 import {Form, Formik} from 'formik';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import signinPost from '../../static/js/requests/signinPost.js';
-import EmailExists from '../EmailExists.jsx';
 import FormikInput from '../fields/FormikInput.jsx';
 
 const SigninForm = ({history}) => {
-    const [displayEmailExistsMsg, setEmailExistsMsg] = useState(
-        false);
     const {signin, signout} = useContext(AuthContext);
 
     const signinFn = async (data) => {
         await signinPost(data);
-        const res = await setLoginPost();
+        const res = await setSignedInPost();
         res && res.data ? signin() : signout();
         history.push('/');
     }
@@ -22,7 +19,6 @@ const SigninForm = ({history}) => {
     return (
         <main className='body-container'>
             <div className='form-container'>
-                {displayEmailExistsMsg && <EmailExists/>}
                 <Formik
                     initialValues={{
                         email: '',

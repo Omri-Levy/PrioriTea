@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const setLoginPost = async () => {
+const setSignedInPost = async () => {
     const url = 'http://localhost:4000/api/auth';
 
     try {
@@ -11,4 +11,4 @@ const setLoginPost = async () => {
     }
 };
 
-export default setLoginPost;
+export default setSignedInPost;

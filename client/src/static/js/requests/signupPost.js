@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const signupPost = async (data) => {
+const signupPost = async (data, history, setDisplayEmailExistsMsg) => {
     const url = 'http://localhost:4000/api/user/signup';
 
     try {
@@ -9,16 +9,13 @@ const signupPost = async (data) => {
             password: data.password,
             passwordConfirmation: data.passwordConfirmation
         });
-
-        // dispatchHideEmailExistsMsg();
+        setDisplayEmailExistsMsg(false);
+        history.push('/signin')
     } catch (err) {
+        console.error(err);
         if (err.response.data.message === 'Email already exists.') {
-            // dispatchDisplayEmailExistsMsg();
-            console.log('email already exists');
-        } else {
-            console.log('email does not exist');
+            setDisplayEmailExistsMsg(true);
         }
-        // dispatchHideEmailExistsMsg();
     }
 }
 

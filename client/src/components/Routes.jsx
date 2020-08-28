@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
-import setLoginPost from '../static/js/requests/setLoginPost.js';
+import setSignedInPost from '../static/js/requests/setSignedInPost.js';
 import Header from './Header.jsx';
 import Home from './pages/Home.jsx';
 import Profile from './pages/Profile.jsx';
@@ -9,10 +9,10 @@ import Signin from './pages/Signin.jsx';
 import Signup from './pages/Signup.jsx';
 
 const Routes = () => {
-    const {isLoggedIn, signin, signout} = useContext(AuthContext);
+    const {isSignedIn, signin, signout} = useContext(AuthContext);
 
     const persistLogin = async () => {
-        const res = await setLoginPost();
+        const res = await setSignedInPost();
         res.data ? signin() : signout();
     };
 
@@ -24,19 +24,19 @@ const Routes = () => {
         <Router>
             <Header/>
             <Switch>
-                {isLoggedIn &&
+                {isSignedIn &&
                 <Route exact path='/'
                        component={Home}/>
                 }
-                {isLoggedIn &&
+                {isSignedIn &&
                 <Route exact path='/profile'
                        component={Profile}/>
                 }
-                {!isLoggedIn &&
+                {!isSignedIn &&
                 < Route exact path='/signin'
                         component={Signin}/>
                 }
-                {!isLoggedIn &&
+                {!isSignedIn &&
                 < Route exact path='/signup'
                         component={Signup}/>
                 }

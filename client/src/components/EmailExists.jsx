@@ -1,7 +1,10 @@
 import {Link} from 'react-router-dom';
-import React from 'react';
+import React, {useContext} from 'react';
+import {AuthContext} from '../context/AuthContext.jsx';
 
 const EmailExists = () => {
+    const {setDisplayEmailExistsMsg} = useContext(AuthContext);
+
     return (
         <div className='email-exists'>
             <div className='email-exists-content'>
@@ -9,7 +12,7 @@ const EmailExists = () => {
                 <Link
                     to='/signin'
                     className='signin-link'
-                    onClick={() => console.log('dispatchHideEmailExistsMsg')}
+                    onClick={() => setDisplayEmailExistsMsg(false)}
                 >
                     <em>Signin</em>
                 </Link>

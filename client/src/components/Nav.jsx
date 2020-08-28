@@ -1,15 +1,15 @@
 import React, {useContext, useEffect} from 'react';
 import {NavLink} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
-import setLoginPost from '../static/js/requests/setLoginPost.js';
+import setSignedInPost from '../static/js/requests/setSignedInPost.js';
 import signoutPost from '../static/js/requests/signoutPost.js';
 import slideNav from '../static/js/slideNav.js';
 
 const Nav = () => {
-    const {isLoggedIn, signin, signout} = useContext(AuthContext);
+    const {isSignedIn, signin, signout} = useContext(AuthContext);
 
     const persistLogin = async () => {
-        const res = await setLoginPost();
+        const res = await setSignedInPost();
         res.data ? signin() : signout();
     };
 
@@ -20,7 +20,7 @@ const Nav = () => {
     return (
         <nav>
             <ul>
-                {isLoggedIn &&
+                {isSignedIn &&
                 <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
@@ -28,7 +28,7 @@ const Nav = () => {
                         HOME
                     </NavLink>
                 </li>}
-                {isLoggedIn &&
+                {isSignedIn &&
                 <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
@@ -36,7 +36,7 @@ const Nav = () => {
                         PROFILE
                     </NavLink>
                 </li>}
-                {!isLoggedIn &&
+                {!isSignedIn &&
                 <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
@@ -44,20 +44,20 @@ const Nav = () => {
                         SIGNIN
                     </NavLink>
                 </li>}
-                {isLoggedIn &&
+                {isSignedIn &&
                 <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
                         onClick={async () => {
                             await signoutPost();
-                            const res = await setLoginPost();
+                            const res = await setSignedInPost();
                             res && res.data ? signin() : signout();
                         }}
                         to='/signin'>
                         SIGNOUT
                     </NavLink>
                 </li>}
-                {!isLoggedIn &&
+                {!isSignedIn &&
                 <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
