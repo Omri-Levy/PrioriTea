@@ -15,15 +15,34 @@
 .form-container {
   width: 30vw;
   padding: 2px;
-  min-width: 270px;
   max-width: 1700px;
   margin: 7% auto;
   @include center;
   background-color: darken($bg-color, 10%);
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
-  @media only screen and (max-width: 768px) {
+  /* Extra small devices (phones, 600px and down) */
+  @media only screen and (max-width: 600px) {
     width: 99vw;
-    margin: auto;
+  }
+
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    width: 89vw;
+  }
+
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    width: 79vw;
+  }
+
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    width: 59vw;
+  }
+
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    width: 30vw;
   }
 }
 
@@ -31,6 +50,9 @@
   @include column-flex;
   flex-grow: 1;
   align-items: center;
+  @media only screen and (max-width: 788px) {
+      overflow-x: auto;
+  }
 }
 
 .tasks-container {
@@ -78,10 +100,4 @@
 
 .tasks-container li {
   background-color: $primary-btn-color;
-}
-
-@media only screen and (max-width: 788px) {
-  .body-container {
-    overflow-x: auto;
-  }
 }

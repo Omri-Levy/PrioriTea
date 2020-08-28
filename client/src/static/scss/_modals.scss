@@ -22,6 +22,33 @@
   margin: 11% auto;
   @include center;
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+  /* Extra small devices (phones, 600px and down) */
+  @media only screen and (max-width: 600px) {
+    width: 99vw;
+    margin: 30% auto;
+  }
+
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    width: 89vw;
+  }
+
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    width: 79vw;
+    margin: 16% auto;
+  }
+
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    width: 59vw;
+  }
+
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    width: 30vw;
+    margin: 11% auto;
+  }
 
   &:focus {
     outline: none;
@@ -34,11 +61,6 @@
 
 .create-task-modal-content {
   @extend .modal-content;
-  width: 39vw;
-  @media only screen and (max-width: 768px) {
-    width: 99vw;
-    margin: auto;
-  };
 }
 
 .edit-task-modal-container {
@@ -47,11 +69,6 @@
 
 .edit-task-modal-content {
   @extend .modal-content;
-  width: 39vw;
-  @media only screen and (max-width: 768px) {
-    width: 99vw;
-    margin: auto;
-  }
 }
 
 .task-options-modal, .task-filter-modal {
