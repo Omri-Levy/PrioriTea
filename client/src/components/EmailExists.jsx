@@ -14,7 +14,6 @@ const EmailExists = () => {
 
     useEffect(() => {
         window.addEventListener('resize', ifMsgFits);
-        console.log(window.innerWidth)
     }, []);
 
 
