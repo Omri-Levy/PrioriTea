@@ -1,14 +1,14 @@
 import React from 'react';
-import {EditTaskForm} from '../../forms/EditTaskForm.jsx';
+import EditTaskForm from '../../forms/EditTaskForm.jsx';
 
-const EditTaskModal = ({editTaskId}) => {
+const EditTaskModal = () => {
     return (
-        <div className='edit-task-modal-container hidden'>
+        <div className='edit-task-modal-container'>
             <div className='edit-task-modal-content'>
-                <EditTaskForm editTaskId={editTaskId}/>
+                <EditTaskForm/>
             </div>
         </div>
     );
-}
+};
 
 export default EditTaskModal;

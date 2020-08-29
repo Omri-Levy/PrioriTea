@@ -5,10 +5,6 @@
   border: 1px solid $primary-border-color;
 }
 
-@mixin global-font-size() {
-  font-size: 1.7rem;
-}
-
 @mixin column-flex() {
   display: flex;
   flex-direction: column;
@@ -35,23 +31,8 @@
   margin: 0;
 }
 
-@mixin info-box() {
-  background: $primary-color;
-  @include custom-border;
-}
-
-@mixin success-box() {
-  background: $success-box;
-  @include custom-border;
-}
-
-@mixin warning-box() {
-  background: $warning-box;
-  @include custom-border;
-}
-
 @mixin error-box() {
-  background: $error-box;
+  background-color: $error-box-bg;
   color: $secondary-text-color;
   @include custom-border;
 }

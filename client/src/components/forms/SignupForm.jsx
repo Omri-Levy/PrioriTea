@@ -1,18 +1,20 @@
+import {AuthContext} from '../../context/AuthContext.jsx';
 import signupSchema from '../../static/js/validation/signupSchema.js';
 import {Form, Formik} from 'formik';
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import signupPost from '../../static/js/requests/signupPost.js';
 import EmailExists from '../EmailExists.jsx';
-import {FormikInput} from '../fields/FormikInput.jsx';
+import FormikInput from '../fields/FormikInput.jsx';
 
-export const SignupForm = ({history}) => {
-    const [displayEmailExistsMsg, setEmailExistsMsg] = (
-        useState(false)
-    );
+const SignupForm = ({history}) => {
+    const {displayEmailExistsMsg, setDisplayEmailExistsMsg} = useContext(
+        AuthContext);
+
     const signup = (data) => {
-        signupPost(data).catch(err => console.error(err));
-        history.push('/signin')
-    }
+        signupPost(data, history, setDisplayEmailExistsMsg)
+            .catch(err => console.error(err));
+    };
+
     return (
         <main className='body-container'>
             <div className='form-container'>
@@ -85,4 +87,7 @@ export const SignupForm = ({history}) => {
             </div>
         </main>
     );
-}
+};
+
+export default SignupForm;
+

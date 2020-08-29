@@ -1,21 +1,39 @@
 import {Link} from 'react-router-dom';
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {AuthContext} from '../context/AuthContext.jsx';
 
 const EmailExists = () => {
+    const {setDisplayEmailExistsMsg} = useContext(AuthContext);
+    const [msgFits, setMsgFits] = useState(true);
+
+    const ifMsgFits = () => {
+        if (window.innerWidth < 399) {
+            setMsgFits(false);
+        }
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', ifMsgFits);
+    }, []);
+
+
     return (
         <div className='email-exists'>
             <div className='email-exists-content'>
-                Email already exists - navigate to
+                {msgFits
+                    ? <>Email already exists - navigate to</>
+                    : <>Email already exists</>}
+                {msgFits &&
                 <Link
                     to='/signin'
                     className='signin-link'
-                    onClick={() => console.log('dispatchHideEmailExistsMsg')}
+                    onClick={() => setDisplayEmailExistsMsg(false)}
                 >
                     <em>Signin</em>
-                </Link>
+                </Link>}
             </div>
         </div>
     );
-}
+};
 
 export default EmailExists;

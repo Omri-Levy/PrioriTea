@@ -1,15 +1,15 @@
+import {ModalsContext} from '../../context/ModalsContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import createTaskSchema from '../../static/js/validation/createTaskSchema';
 import {Form, Formik} from 'formik';
 import React, {useContext} from 'react';
 import createTaskPost from '../../static/js/requests/createTaskPost.js';
-import {
-    toggleCreateTaskModal
-} from '../../static/js/handlers.js';
-import {FormikInput} from '../fields/FormikInput.jsx';
+import FormikInput from '../fields/FormikInput.jsx';
 
-export const CreateTaskForm = () => {
+const CreateTaskForm = () => {
     const {setTasks, setTasksCopy} = useContext(TasksContext);
+    const {closeCreateTaskModal} = useContext(ModalsContext);
+
     return (
         <Formik
             initialValues={{
@@ -18,7 +18,8 @@ export const CreateTaskForm = () => {
                 status: ''
             }}
             validationSchema={createTaskSchema}
-            onSubmit={(data) => createTaskPost(data, setTasks, setTasksCopy)}
+            onSubmit={(data) => createTaskPost(data, setTasks, setTasksCopy,
+                closeCreateTaskModal)}
         >
             {() => (
                 <Form className='create-task-form'>
@@ -52,8 +53,8 @@ export const CreateTaskForm = () => {
                         Create
                     </button>
                     <button
+                        onClick={closeCreateTaskModal}
                         type='button'
-                        onClick={toggleCreateTaskModal}
                         className='primary-btn'>
                         Cancel
                     </button>
@@ -61,4 +62,6 @@ export const CreateTaskForm = () => {
             )}
         </Formik>
     );
-}
+};
+
+export default CreateTaskForm;

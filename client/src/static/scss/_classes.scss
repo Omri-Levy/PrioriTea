@@ -3,106 +3,24 @@
 @import 'keyframes';
 
 .form-label,
-.error,
-.primary-input,
-.primary-btn {
-  @include global-font-size;
+.error {
+  font-size: $secondary-font-size;
 }
 
-/*!
- * Font Awesome Free 5.14.0 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
-
-.fa,
-.fas {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  line-height: 1.6;
-}
-
-@font-face {
-  font-family: 'Font Awesome 5 Free';
-  font-style: normal;
-  font-weight: 900;
-  font-display: block;
-  src: url('../webfonts/fa-solid-900.woff2');
-}
-
-.fa,
-.fas {
-  font-family: 'Font Awesome 5 Free', sans-serif;
-  font-weight: 900;
-}
-
-.fa-slash:before {
-  content: '\f715';
-}
-
-.fa-trash:before {
-  content: '\f1f8';
-}
-
-.fa-plus:before {
-  content: '\f067';
-}
-
-.fa-edit:before {
-  content: '\f044';
-}
-
-.fa-ellipsis-v:before {
-  content: '\f142';
-}
-
-.fa-angle-double-left:before {
-  content: '\f100';
-}
-
-.fa-angle-double-right:before {
-  content: '\f101';
-}
-
-.fa-filter:before {
-  content: '\f0b0';
+.draft {
+  color: #808080;
+  cursor: not-allowed;
 }
 
 .form-label {
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
   padding-left: 10px;
-  background-color: $primary-color;
+  background-color: $bg-color;
   @include custom-border;
   display: flex;
   border-radius: $primary-border-radius;
 }
 
-.primary-input,
-.primary-btn {
-  @include custom-border;
-}
-
-.main-nav {
-  background-color: $theme-dark-gray;
-  @include flex-between;
-
-  ul {
-    display: flex;
-
-    li {
-      list-style-type: none;
-      padding: 15px;
-      @include global-font-size();
-
-      a {
-        color: set-text-color($bg-color);
-      }
-    }
-  }
-}
 
 .priority, .task, .status {
   min-width: 260px;
@@ -122,25 +40,6 @@
   font-size: 14px;
 }
 
-.primary-input,
-.primary-btn {
-  height: 55px;
-  width: 100%;
-  outline: none;
-}
-
-.primary-btn {
-  border-radius: $primary-border-radius;
-  background-color: $primary-btn-color;
-}
-
-.primary-input {
-  border-radius: $primary-border-radius;
-  background-color: $primary-text-color;
-  padding-left: 10px;
-  color: $secondary-text-color;
-}
-
 .required-fields-msg {
   background-color: $bg-color;
   margin-bottom: 1px;
@@ -156,6 +55,7 @@
 
 .email-exists {
   display: flex;
+  height: 50px;
   width: 100%;
   @include center;
   @include error-box;
@@ -165,29 +65,26 @@
 }
 
 .email-exists-content {
+  margin-right: 50px;
+  color: $secondary-text-color;
   display: flex;
   position: relative;
   @include center;
-}
+  /* Covers most cases where the email already exists message doesn't fit
+  (mobile, 768px and down) */
+  @media only screen and (max-width: 399px) {
+    margin-right: 0;
+  }
 
-.task-options-tooltip, .task-filter-tooltip {
-  position: absolute;
-  @include flex-between;
-  background-color: $bg-color;
-  border-radius: $primary-border-radius;
-  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
-  @include custom-border;
-}
+  em {
+    position: absolute;
+    color: $secondary-text-color;
+    padding-left: 5px;
+    top: 0;
 
-.task-options-tooltip {
-  bottom: 23px;
-  right: 6px;
-}
-
-.task-filter-tooltip {
-  li {
-    padding: 0 15px;
-    list-style-type: none;
+    &:after {
+      background-color: $bg-color;
+    }
   }
 }
 
@@ -196,9 +93,11 @@
   @extend .excluded-link;
   color: set-clear-filter-color($bg-color);
   text-align: center;
-  position: absolute;
   z-index: 1;
-  left: 0;
+  position: absolute;
+  margin-left: -2rem;
+  margin-top: -3px;
+  transform: rotate(-5deg);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -206,39 +105,6 @@
     animation: loading infinite 20s;
   }
 }
-
-.hidden {
-  display: none;
-}
-
-.padded {
-  padding: 0 5px;
-}
-
-.create-task {
-  @extend .fas, .fa-plus;
-}
-
-.edit-task {
-  @extend .fas, .fa-edit;
-}
-
-.delete-task {
-  @extend .fas, .fa-trash;
-}
-
-.create-task,
-.edit-task,
-.delete-task {
-  position: initial;
-  margin: 10px;
-}
-
-
-.relative-parent {
-  position: relative;
-}
-
 
 .current-link::after {
   content: '';

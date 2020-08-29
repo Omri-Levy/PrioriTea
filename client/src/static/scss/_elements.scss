@@ -14,29 +14,60 @@ html {
 body {
   background-color: $bg-color;
   line-height: 1.6;
-}
-
-button,
-input[type='button'] {
-  cursor: pointer;
-}
-
-header {
-  letter-spacing: 3px;
-  background: $primary-color;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  h1 {
-    font-family: $logo-font;
-    padding: 15px;
-    font-size: 2rem;
+  @media only screen and (max-width: 768px) {
+    overflow-x: hidden;
   }
 }
 
+header {
+  position: sticky;
+  letter-spacing: 3px;
+  background-color: $bg-color;
+  @include flex-between;
+  align-items: center;
+
+  nav {
+    background-color: $bg-color;
+
+    ul {
+      display: flex;
+      @media only screen and (max-width: 768px) {
+        position: absolute;
+        right: 0;
+        top: 8vh;
+        height: 92vh;
+        background-color: $bg-color;
+        flex-direction: column;
+        align-items: center;
+        width: 50vw;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+      }
+      @media only screen and (max-width: 300px) {
+        width: 70vw;
+      }
+
+      li {
+        list-style-type: none;
+        padding: 15px;
+        font-size: $secondary-font-size;
+
+        a {
+          color: set-text-color($bg-color);
+        }
+      }
+    }
+  }
+
+  h1 {
+    font-family: $font-stack;
+    padding: 15px;
+    font-size: 2rem;
+  }
+
+}
+
 em {
-  position: absolute;
   font-style: normal;
 }
 
@@ -68,10 +99,10 @@ select:-webkit-autofill:focus {
   caret-color: $primary-caret-color;
   -webkit-text-fill-color: $secondary-text-color;
   -webkit-box-shadow: 0 0 0 1000px $primary-text-color inset,
-  0 0 0 1000px darken($primary-text-color, 10%) inset,
-  0 0 0 1000px darken($primary-text-color, 10%) inset,
-  0 0 0 1000px darken($primary-text-color, 10%) inset,
-  0 0 0 1000px darken($primary-text-color, 10%) inset;
+  0 0 0 1000px darken($secondary-bg-color, 10%) inset,
+  0 0 0 1000px darken($secondary-bg-color, 10%) inset,
+  0 0 0 1000px darken($secondary-bg-color, 10%) inset,
+  0 0 0 1000px darken($secondary-bg-color, 10%) inset;
   transition: background-color 5000s ease-in-out 0s;
 }
 
@@ -85,7 +116,7 @@ th:nth-child(2), td:nth-child(2) {
 }
 
 table, tr, th, td {
-  @include global-font-size;
+  font-size: $secondary-font-size;
   border-radius: $primary-border-radius;
 }
 
@@ -99,11 +130,10 @@ th, td {
 }
 
 th {
-  background-color: $primary-color;
+  background-color: $bg-color;
   font-size: 1.7rem;
-  cursor: pointer;
-  border-left: 1px solid darken($primary-color, 10%);
-  border-right: 1px solid darken($primary-color, 10%);
+  border-left: 1px solid darken($bg-color, 10%);
+  border-right: 1px solid darken($bg-color, 10%);
 }
 
 td {

@@ -9,6 +9,6 @@ const Loading = () => {
             </div>
         </main>
     );
-}
+};
 
 export default Loading;

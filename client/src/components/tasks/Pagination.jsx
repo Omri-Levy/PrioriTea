@@ -3,22 +3,21 @@ import {PaginationContext} from '../../context/PaginationContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import movePage from '../../static/js/movePage.js';
 
-const Pagination = ({tasksCopyLength}) => {
-
+const Pagination = () => {
+    const {
+        totalPages, setTotalPages, tasksPerPage, currentPage,
+        setCurrentPage
+    } = useContext(PaginationContext);
+    const {tasks, tasksCopy} = useContext(TasksContext);
     const pageNumbers = [];
     const maxPages = 5;
-    const {currentPage, setCurrentPage} = useContext(PaginationContext);
-    const {tasks, tasksCopy} = useContext(TasksContext);
 
     let maxLeft = (currentPage - Math.floor(maxPages / 2));
     let maxRight = (currentPage + Math.floor(maxPages / 2));
-    const {totalPages, setTotalPages, tasksPerPage} = useContext(
-        PaginationContext);
 
     useEffect(() => {
-        setTotalPages(Math.round(tasksCopyLength / tasksPerPage));
+        setTotalPages(Math.round(tasksCopy.length / tasksPerPage));
     }, [tasks, tasksCopy]);
-
 
     if (maxLeft < 1) {
         maxLeft = 1
@@ -26,21 +25,18 @@ const Pagination = ({tasksCopyLength}) => {
     }
 
     if (maxRight > totalPages) {
-        maxLeft = totalPages - (maxPages - 1)
+        maxLeft = totalPages - (maxPages - 1);
 
-        if (maxLeft < 1) {
-            maxLeft = 1
-        }
-        maxRight = totalPages
+        if (maxLeft < 1) maxLeft = 1;
+
+        maxRight = totalPages;
     }
 
-    for (let page = maxLeft; page <= maxRight; page++) {
-        pageNumbers.push(page)
-    }
+    for (let page = maxLeft; page <= maxRight; page++) pageNumbers.push(page);
 
     const isCurrentPage = (number) => {
-        return currentPage === number ? 'current-page' : 'page-btn'
-    }
+        return currentPage === number ? 'current-page' : 'page-btn';
+    };
 
     return (
         <nav>
@@ -51,7 +47,7 @@ const Pagination = ({tasksCopyLength}) => {
                         id='first-page'
                         onClick={() => movePage(1, setCurrentPage)}
                     >
-                        <i className='fas fa-angle-double-left padded'/>First
+                        <i className='first-page'/>First
                     </a>
                 </li>}
                 {pageNumbers.map(number => (
@@ -65,18 +61,18 @@ const Pagination = ({tasksCopyLength}) => {
                         </a>
                     </li>
                 ))}
-                {maxRight !== tasksCopyLength &&
+                {maxRight !== tasksCopy.length &&
                 <li>
                     <a
                         id='last-page'
                         onClick={() => movePage(totalPages, setCurrentPage)}
                     >
-                        Last<i className='fas fa-angle-double-right padded'/>
+                        Last<i className='last-page'/>
                     </a>
                 </li>}
             </ul>
         </nav>
     );
-}
+};
 
 export default Pagination;

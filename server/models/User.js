@@ -23,10 +23,6 @@ const UserSchema = Schema({
             max: 1024,
             required: true
         },
-        isConfirmed: {
-            type: Boolean,
-            default: false
-        }
     },
     {
         timestamps: true

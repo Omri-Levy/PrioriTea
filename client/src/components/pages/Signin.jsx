@@ -1,11 +1,10 @@
-import React, {useContext} from 'react';
-import {Redirect} from 'react-router-dom';
-import {AuthContext} from '../../context/AuthContext.jsx';
+import React from 'react';
+import SigninForm from '../forms/SigninForm.jsx';
 
-const Signin = () => {
-    const {signin} = useContext(AuthContext);
-    signin();
-    return <Redirect to={{redirect: '/'}}/>;
-}
+const Signin = ({history}) => {
+    return (
+        <SigninForm history={history}/>
+    );
+};
 
 export default Signin;

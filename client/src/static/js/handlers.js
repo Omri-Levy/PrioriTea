@@ -1,52 +1,53 @@
 const displayTaskOptionsTooltip = () => {
-    const selector = '.task-options-tooltip-container'
+    const selector = '.task-options-tooltip-btn'
     const parent = document.querySelector(selector);
     const target = parent.firstChild;
     target && target.classList.remove('hidden');
-}
+};
 
 const hideTaskOptionsTooltip = () => {
-    const selector = '.task-options-tooltip-container'
+    const selector = '.task-options-tooltip-btn'
     const parent = document.querySelector(selector);
     const target = parent.firstChild;
     target && target.classList.add('hidden');
-}
+};
 
 const displayTaskFilterTooltip = (Event) => {
-    const parent = Event.target;
-    const target = parent.firstChild.firstChild;
+    let target = Event.target.closest('#hidden-filter-modal');
+    if (!target && Event.target.firstChild) {
+        target = Event.target.firstChild.firstChild;
+    }
     target && target.classList.remove('hidden');
-}
+};
+
 const hideTaskFilterTooltip = (Event) => {
-    const parent = Event.target;
-    const target = parent.firstChild.firstChild;
+    let target = Event.target.closest('#hidden-filter-modal');
+    if (!target && Event.target.firstChild) {
+        target = Event.target.firstChild.firstChild;
+    }
     target && target.classList.add('hidden');
-}
+};
 
-const toggleCreateTaskModal = () => {
-    const selector = '.create-task-modal-container';
-    const target = document.querySelector(selector);
+const toggleSort = (Event) => {
+    const target = Event.target;
+    const targetTitle = target.parentElement.innerText.toLowerCase();
+    target && target.classList.toggle('sorted-asc');
+    target && target.classList.toggle('sorted-desc');
+    if (target.className === 'sorted-desc') {
+        localStorage.setItem('sort', JSON.stringify({
+            sortBy: targetTitle,
+            orderBy: 'desc'
+        }));
+    } else {
+        localStorage.setItem('sort', JSON.stringify({
+            sortBy: targetTitle,
+            orderBy: 'asc'
+        }));
+    }
+};
 
-    target && target.classList.toggle('hidden');
-}
-
-const toggleEditTaskModal = () => {
-    const selector = '.edit-task-modal-container';
-    const target = document.querySelector(selector);
-    target && target.classList.toggle('hidden');
-}
-
-const editTask = (taskId, setEditTaskId) => {
-    toggleEditTaskModal();
-    setEditTaskId(taskId);
-}
 
 export {
-    displayTaskOptionsTooltip,
-    hideTaskOptionsTooltip,
-    displayTaskFilterTooltip,
-    hideTaskFilterTooltip,
-    toggleCreateTaskModal,
-    toggleEditTaskModal,
-    editTask
-}
+    displayTaskOptionsTooltip, hideTaskOptionsTooltip, displayTaskFilterTooltip
+    , hideTaskFilterTooltip, toggleSort
+};

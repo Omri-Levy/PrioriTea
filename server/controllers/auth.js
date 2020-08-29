@@ -1,10 +1,11 @@
+import createAccessToken from '../js/createAccessToken.js';
+import sendAccessToken from '../js/sendAccessToken.js';
 import User from '../models/User.js';
 import signupValidation from '../validation/signupValidation.js';
 import signinValidation from '../validation/signinValidation.js';
-import {createAccessToken, createRefreshToken} from '../js/createTokens.js';
-import bcryptjs from 'bcryptjs';
+import argon2 from 'argon2';
 
-const {hash, compare} = bcryptjs;
+const {hash, verify} = argon2;
 
 /**
  @path /api/user/
@@ -18,7 +19,7 @@ const findAllUsers = async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
-}
+};
 
 /**
  @path /api/user/:id
@@ -32,7 +33,7 @@ const findUserById = async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
-}
+};
 
 /**
  @path /api/user/signup
@@ -43,18 +44,13 @@ const signupUser = async (req, res) => {
     const {error} = signupValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    const emailExists = await User.findOne({
-        email: req.body.email
-    })
+    const emailExists = await User.findOne({email: req.body.email});
 
-    if (emailExists) {
-        return res.status(400)
-            .json({
-                message: 'Email already exists.'
-            });
-    }
+    if (emailExists) return res.status(400).json({
+        message: 'Email already exists.'
+    });
 
-    const hashedPassword = await hash(req.body.password, 10);
+    const hashedPassword = await hash(req.body.password);
 
     const newUser = new User({
         email: req.body.email,
@@ -68,8 +64,7 @@ const signupUser = async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
-
-}
+};
 
 /**
  @path /api/user/signin
@@ -77,26 +72,42 @@ const signupUser = async (req, res) => {
  @desc signin an existing user from mongodb
  */
 const signinUser = async (req, res) => {
+    const invalidCredentialsMsg = (
+        'Email or password are wrong - please try again.');
     const {error} = signinValidation(req.body);
+
     if (error) return res.status(400).send(error.details[0].message);
 
     const user = await User.findOne({email: req.body.email});
 
-    if (!user) return res.status(400)
-        .send('Email or password are wrong - please try again.');
-    const validPass = await compare(req.body.password, user.password);
-    if (!validPass) return res.status(400)
-        .send('Email or password are wrong - please try again.');
-    res.cookie('jid',
-        createRefreshToken(user),
-        {
-            httpOnly: true,
-            path: '/refresh_token'
-        })
-    return {
-        accessToken: createAccessToken(user)
+    if (!user) return res.status(400).send(invalidCredentialsMsg);
+
+    const validPass = await verify(user.password, req.body.password);
+
+    if (!validPass) return res.status(400).send(invalidCredentialsMsg);
+
+    try {
+        sendAccessToken(res, createAccessToken(user));
+        return res.status(200).send({success: true});
+    } catch (err) {
+        console.log(err);
     }
-}
+};
+
+/**
+ @path /api/user/signout
+ @request post
+ @desc signout an existing user from mongodb
+ */
+const signoutUser = async (req, res) => {
+    try {
+        sendAccessToken(res, '');
+        return res.status(200).send({success: true});
+    } catch (err) {
+        console.log(err);
+        return res.status(400).send({success: false});
+    }
+};
 
 /**
  * @path /api/user/:id
@@ -121,7 +132,7 @@ const updateUser = async (req, res) => {
     } catch (err) {
         res.json({message: err});
     }
-}
+};
 
 /**
  * @path /api/user/:id
@@ -140,11 +151,6 @@ const deleteUser = async (req, res) => {
 }
 
 export {
-    findAllUsers,
-    findUserById,
-    signupUser,
-    signinUser,
-    updateUser,
-    deleteUser
+    findAllUsers, findUserById, signupUser, signinUser, signoutUser,
+    updateUser, deleteUser
 };
-

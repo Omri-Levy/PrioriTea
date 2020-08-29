@@ -1,11 +1,26 @@
-import React from 'react';
+import React, {useState} from 'react';
+import getCurrentUserPost
+    from '../../static/js/requests/getCurrentUserPost.js';
 
 const Profile = () => {
+    const [currentEmail, setCurrentEmail] = useState('');
+    const [currentFullName, setCurrentFullName] = useState('');
+
+    getCurrentUserPost(setCurrentEmail, setCurrentFullName)
+        .catch(err => console.error(err));
+
     return (
-        <div>
-            <h1>Profile</h1>
-        </div>
+        <main className='body-container'>
+            <div className='form-container'>
+                <div className='form-label'>
+                    Email: {currentEmail}
+                </div>
+                <div className='form-label'>
+                    Full Name: {currentFullName}
+                </div>
+            </div>
+        </main>
     );
-}
+};
 
 export default Profile;

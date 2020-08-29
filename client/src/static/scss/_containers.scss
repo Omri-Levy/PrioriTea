@@ -1,62 +1,58 @@
 @import 'variables';
 @import 'mixins';
 
+#root {
+  @include column-flex;
+  width: 100vw;
+  height: 100vh;
+  flex-grow: 1;
+}
+
 .container {
   @include column-flex;
-}
-
-.modal-container {
-  @include column-flex;
-  background-color: rgba(black, 0.75);
-  height: 100vh;
-  width: 100vw;
-  position: fixed;
-  z-index: 1;
-  align-items: center;
-  @include reset-position;
-}
-
-.modal-content {
-  position: relative;
-  margin: auto;
-  background-color: $secondary-color;
-  height: 50vh;
-  width: 50vw;
-  &:focus {
-    outline: none;
-  }
-}
-
-.create-task-modal-container {
-  @extend .modal-container
-}
-
-.create-task-modal-content {
-  @extend .modal-content
-}
-
-.edit-task-modal-container {
-  @extend .modal-container
-}
-
-.edit-task-modal-content {
-  @extend .modal-content
 }
 
 .form-container {
   width: 30vw;
   padding: 2px;
-  min-width: 182px;
   max-width: 1700px;
   margin: 7% auto;
   @include center;
   background-color: darken($bg-color, 10%);
   box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
+  /* Extra small devices (phones, 600px and down) */
+  @media only screen and (max-width: 600px) {
+    width: 99vw;
+  }
+
+  /* Small devices (portrait tablets and large phones, 600px and up) */
+  @media only screen and (min-width: 600px) {
+    width: 89vw;
+  }
+
+  /* Medium devices (landscape tablets, 768px and up) */
+  @media only screen and (min-width: 768px) {
+    width: 79vw;
+  }
+
+  /* Large devices (laptops/desktops, 992px and up) */
+  @media only screen and (min-width: 992px) {
+    width: 59vw;
+  }
+
+  /* Extra large devices (large laptops and desktops, 1200px and up) */
+  @media only screen and (min-width: 1200px) {
+    width: 30vw;
+  }
 }
 
 .body-container {
   @include column-flex;
+  flex-grow: 1;
   align-items: center;
+  @media only screen and (max-width: 788px) {
+      overflow-x: auto;
+  }
 }
 
 .tasks-container {
@@ -67,7 +63,7 @@
     box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.3);
     display: flex;
     justify-content: center;
-    background-color: $primary-color;
+    background-color: $bg-color;
     @include custom-border;
     margin-top: 1px;
     border-radius: $primary-border-radius;
@@ -85,7 +81,7 @@
 
         a {
           cursor: pointer;
-          @include global-font-size;
+          font-size: $secondary-font-size;
         }
       }
     }
@@ -100,34 +96,6 @@
   margin: auto;
   width: 40vw;
   height: 40vh;
-}
-
-.task-options-tooltip-container, .task-filter-tooltip-container {
-  @extend .excluded-link;
-  color: set-text-color($bg-color);
-  text-align: center;
-  position: absolute;
-}
-
-.task-filter-tooltip {
-  max-height: 415px;
-  overflow-y: auto;
-
-  li {
-    border-bottom: 1px solid rgba(darken($bg-color, 10%), 0.3);
-    overflow-wrap: break-word;
-    width: 230px;
-  }
-}
-
-.task-filter-tooltip-container {
-  @extend .fas, .fa-filter;
-  left: 5px;
-}
-
-.task-options-tooltip-container {
-  @extend .fas, .fa-ellipsis-v;
-  right: 5px;
 }
 
 .tasks-container li {

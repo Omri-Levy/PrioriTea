@@ -1,18 +1,15 @@
-import {cloneDeep} from 'lodash';
 import React, {useContext} from 'react';
 import {TasksContext} from '../../../context/TasksContext.jsx';
 import {filterByBtn} from '../../../static/js/filter.js';
-import {
-    displayTaskFilterTooltip,
-    hideTaskFilterTooltip
-} from '../../../static/js/handlers.js';
+import {displayTaskFilterTooltip, hideTaskFilterTooltip}
+    from '../../../static/js/handlers.js';
 
-const TaskFilterModal = ({target}) => {
+const TaskFilterModal = ({target, noTasks}) => {
     const {tasks, setTasksCopy} = useContext(TasksContext);
+
     const filterSet = () => {
         const tempArr = [];
-        const tasksClone = cloneDeep(tasks);
-        tasksClone.forEach(item => {
+        tasks.forEach(item => {
             switch (target) {
                 case 'priority':
                     tempArr.push(item.priority);
@@ -25,33 +22,37 @@ const TaskFilterModal = ({target}) => {
                     break;
             }
         });
-        return new Set(tempArr)
-    }
-
+        return new Set(tempArr);
+    };
     const mySet = filterSet();
     const filterByBtnWrapper = (Event) => {
         filterByBtn(Event, tasks, setTasksCopy);
-    }
+    };
     const filterObj = localStorage.getItem('filter');
     const resetFilter = () => {
         localStorage.removeItem('filter');
         setTasksCopy(tasks);
-    }
+    };
+
     return (
         <>
-            {filterObj && <em title='Clear Filter' className='clear-filter'
-                              onClick={resetFilter}/>}
-            <em title='Filter' className='task-filter-tooltip-container'
-                onMouseEnter={displayTaskFilterTooltip}
-                onMouseLeave={hideTaskFilterTooltip}
-            >
-                <div className='relative-parent'>
-                    <div className='task-filter-tooltip hidden'>
+            <em title={noTasks ? 'Filter Is Unavailable On Draft' : 'Filter'}
+                className={noTasks
+                    ? 'task-filter-tooltip-btn draft'
+                    : 'task-filter-tooltip-btn'}
+                onMouseEnter={noTasks ? null : displayTaskFilterTooltip}
+                onMouseLeave={hideTaskFilterTooltip}>
+                {filterObj && <em title='Clear Filter' className='clear-filter'
+                                  onClick={resetFilter}/>}
+                <div>
+                    <div onMouseLeave={hideTaskFilterTooltip}
+                         id='hidden-filter-modal'
+                         className='task-filter-modal hidden'>
                         <ul>
                             {[...mySet].map(item => {
                                 return (
-                                    <li onClick={(Event) =>
-                                        filterByBtnWrapper(Event)}
+                                    <li onClick={(Event) => filterByBtnWrapper(
+                                        Event)}
                                         key={item}>
                                         {item}
                                     </li>
@@ -63,6 +64,6 @@ const TaskFilterModal = ({target}) => {
             </em>
         </>
     );
-}
+};
 
 export default TaskFilterModal;

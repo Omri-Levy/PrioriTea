@@ -37,10 +37,11 @@ const PaginationProvider = props => {
     useEffect(() => {
         if (paginationObj.totalPages < paginationObj.currentPage &&
             paginationObj.totalPages !== 0) {
-            setCurrentPage(paginationObj.totalPages)
+            setCurrentPage(paginationObj.totalPages);
         }
-        localStorage.setItem('currentPage',
-            JSON.stringify(paginationObj.currentPage));
+
+        localStorage.setItem('currentPage', JSON.stringify(paginationObj
+            .currentPage));
     }, [paginationObj.currentPage, paginationObj.totalPages]);
 
     return (
@@ -50,6 +51,6 @@ const PaginationProvider = props => {
             {props.children}
         </PaginationContext.Provider>
     );
-}
+};
 
 export {PaginationContext, PaginationProvider};

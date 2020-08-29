@@ -7,6 +7,6 @@ const loadingReducer = (state, action) => {
         default:
             return false;
     }
-}
+};
 
 export default loadingReducer;

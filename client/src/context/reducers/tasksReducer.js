@@ -10,9 +10,14 @@ const tasksReducer = (state, action) => {
                 ...state,
                 tasksCopy: [...action.payload]
             };
+        case 'SET_EDIT_TASK_ID':
+            return {
+                ...state,
+                editTaskId: action.payload
+            }
         default:
             return [];
     }
-}
+};
 
 export default tasksReducer;
