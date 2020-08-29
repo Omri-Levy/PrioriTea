@@ -25,8 +25,11 @@ const Tasks = () => {
     };
 
     const sortExists = (header) => {
-        const {sortBy, orderBy} = JSON.parse(localStorage.getItem('sort'))
-        ;
+        const {sortBy, orderBy} = JSON.parse(localStorage.getItem(
+            'sort')) || {
+            sortBy: 'priority',
+            orderBy: 'asc'
+        };
         return sortBy === header && orderBy === 'asc' ? 'sorted-asc' :
             'sorted-desc'
     };
