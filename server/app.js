@@ -8,10 +8,10 @@ import setLogin from './js/setLogin.js';
 import auth from './routes/auth.js';
 import task from './routes/task.js';
 
-const app = express();
-const serverPort = process.env.SERVER_PORT;
-
 (async () => {
+    const app = express();
+
+    app.set('proxy', 1);
     app.use(cors({origin: process.env.CORS_ORIGIN, credentials: true}));
     app.use(express.urlencoded({extended: true}));
     app.use(express.json());
@@ -24,7 +24,7 @@ const serverPort = process.env.SERVER_PORT;
     app.use('/api/user/signin', cookieParser());
 
     //connect to db
-    await mongoose.connect(process.env.DB_URI,
+    await mongoose.connect(process.env.DATABASE_URL,
         {
             useNewUrlParser: true, useUnifiedTopology: true,
             useFindAndModify: false,
@@ -33,7 +33,7 @@ const serverPort = process.env.SERVER_PORT;
         () => console.log('connected to db'))
         .catch(err => console.error(err));
 
-//webserver
-    app.listen(serverPort, () => console.log(
-        `Listening on port ${serverPort}`));
+    //webserver
+    app.listen(parseInt(process.env.PORT), () => console.log(
+        `Listening on port ${process.env.PORT}`));
 })();
