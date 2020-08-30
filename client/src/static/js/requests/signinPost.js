@@ -8,6 +8,11 @@ const signinPost = async (data) => {
         await axios.post(url, {
             email: data.email,
             password: data.password
+        }, {
+            withCredentials: true,
+            headers: {
+                'Access-Control-Allow-Origin': 'https://prioritea.net'
+            }
         });
 
     } catch (err) {
