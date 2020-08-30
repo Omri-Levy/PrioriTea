@@ -8,8 +8,6 @@ const signinPost = async (data) => {
         await axios.post(url, {
             email: data.email,
             password: data.password
-        }, {
-            withCredentials: true
         });
 
     } catch (err) {
