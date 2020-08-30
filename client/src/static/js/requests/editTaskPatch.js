@@ -2,13 +2,9 @@ import axios from 'axios';
 
 const editTaskPatch = async (data, editTaskId, tasks, setTasks, setTasksCopy,
                              callback) => {
-    let url;
 
-    if (process.env.NODE_ENV === 'production') {
-        url = `${process.env.REACT_APP_API_PROD}/task/edit_task`;
-    } else {
-        url = `${process.env.REACT_APP_API_DEV}/task/edit_task`;
-    }
+    const url = `${process.env.REACT_APP_API}/task/edit_task`;
+
 
     try {
         await axios.patch(url, {

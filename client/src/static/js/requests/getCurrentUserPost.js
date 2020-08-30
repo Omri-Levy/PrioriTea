@@ -1,13 +1,8 @@
 import axios from 'axios';
 
 const getCurrentUserPost = async (setCurrentEmail, setCurrentFullName) => {
-    let url;
 
-    if (process.env.NODE_ENV === 'production') {
-        url = `${process.env.REACT_APP_API_PROD}/get_current_user`;
-    } else {
-        url = `${process.env.REACT_APP_API_DEV}/get_current_user`;
-    }
+    const url = `${process.env.REACT_APP_API}/get_current_user`;
 
     try {
         const res = await axios.post(url, {}, {

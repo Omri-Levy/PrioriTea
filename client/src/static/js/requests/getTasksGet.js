@@ -3,13 +3,8 @@ import {persistFilter} from '../filter.js';
 import sortFn from '../sortFn.js';
 
 const getTasksGet = async (setTasks, setTasksCopy, sort) => {
-    let url;
 
-    if (process.env.NODE_ENV === 'production') {
-        url = `${process.env.REACT_APP_API_PROD}/task/get_tasks`;
-    } else {
-        url = `${process.env.REACT_APP_API_DEV}/task/get_tasks`;
-    }
+    const url = `${process.env.REACT_APP_API}/task/get_tasks`;
 
     try {
         const res = await axios.get(url, {withCredentials: true});

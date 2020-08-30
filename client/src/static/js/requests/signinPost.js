@@ -1,13 +1,8 @@
 import axios from 'axios';
 
 const signinPost = async (data) => {
-    let url;
 
-    if (process.env.NODE_ENV === 'production') {
-        url = `${process.env.REACT_APP_API_PROD}/user/signin`;
-    } else {
-        url = `${process.env.REACT_APP_API_DEV}/user/signin`;
-    }
+    const url = `${process.env.REACT_APP_API}/user/signin`;
 
     try {
         await axios.post(url, {

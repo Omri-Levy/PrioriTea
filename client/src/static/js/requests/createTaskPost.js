@@ -2,13 +2,8 @@ import axios from 'axios';
 import getTasksGet from './getTasksGet.js';
 
 const createTaskPost = async (data, setTasks, setTasksCopy, callback) => {
-    let url;
 
-    if (process.env.NODE_ENV === 'production') {
-        url = `${process.env.REACT_APP_API_PROD}/task/create_task`;
-    } else {
-        url = `${process.env.REACT_APP_API_DEV}/task/create_task`;
-    }
+    const url = `${process.env.REACT_APP_API}/task/create_task`;
 
     try {
         await axios.post(url, {
