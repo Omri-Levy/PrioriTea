@@ -3,12 +3,12 @@ import axios from 'axios';
 const signupPost = async (data, history, setDisplayEmailExistsMsg) => {
     let url;
 
-    // if (process.env.NODE_ENV === 'production') {
-    //     url = `${process.env.REACT_APP_API_PROD}/user/signup`;
-    // } else {
-    //     url = `${process.env.REACT_APP_API_DEV}/user/signup`;
-    // }
-    url = `${process.env.REACT_APP_API_PROD}/user/signup`;
+    if (process.env.NODE_ENV === 'production') {
+        url = `${process.env.REACT_APP_API_PROD}/user/signup`;
+    } else {
+        url = `${process.env.REACT_APP_API_DEV}/user/signup`;
+    }
+
     try {
         await axios.post(url, {
             email: data.email, fullName: data.fullName,
