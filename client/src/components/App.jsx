@@ -4,6 +4,7 @@ import {LoadingProvider} from '../context/LoadingContext.jsx';
 import Routes from './Routes.jsx';
 
 const App = () => {
+
     return (
         <AuthProvider>
             <LoadingProvider>
