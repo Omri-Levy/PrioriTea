@@ -9,9 +9,12 @@ const signinPost = async (data) => {
             email: data.email,
             password: data.password
         }, {
+            mode: 'cors',
             withCredentials: true,
+            credentials: 'same-origin',
             headers: {
-                'Access-Control-Allow-Origin': 'https://prioritea.net'
+                'Access-Control-Allow-Origin': 'https://prioritea.net',
+                'Content-Type': 'application/json'
             }
         });
 
