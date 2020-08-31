@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:14-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -17,6 +17,6 @@ COPY .env.production .env
 
 ENV NODE_ENV production
 
-EXPOSE 8081
-CMD [ "node", "app.js" ]
+EXPOSE 3000
+CMD [ "node", "server.js" ]
 USER node
