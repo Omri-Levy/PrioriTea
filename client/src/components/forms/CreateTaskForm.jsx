@@ -22,8 +22,12 @@ const CreateTaskForm = () => {
             validationSchema={createTaskSchema}
             onSubmit={async (data) => {
                 startLoading();
-                await createTaskPost(data, setTasks, setTasksCopy,
-                    closeCreateTaskModal);
+                try {
+                    await createTaskPost(data, setTasks, setTasksCopy,
+                        closeCreateTaskModal);
+                } catch (err) {
+                    console.error(err);
+                }
                 stopLoading();
             }}
         >

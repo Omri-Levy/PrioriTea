@@ -11,19 +11,6 @@ const SigninForm = ({history}) => {
     const {signin, signout} = useContext(AuthContext);
     const {startLoading, stopLoading, loading} = useContext(LoadingContext);
 
-    const signinFn = async (data) => {
-        try {
-            startLoading();
-            await signinPost(data);
-            const res = await setSignedInPost();
-            stopLoading(false);
-            res && res.data ? signin() : signout();
-            history.push('/');
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
     return (
         <main className='body-container'>
             <div className='form-container'>
@@ -35,7 +22,16 @@ const SigninForm = ({history}) => {
                         passwordConfirmation: '',
                     }}
                     validationSchema={signinSchema}
-                    onSubmit={(data) => signinFn(data)}
+                    onSubmit={async (data) => {
+                        startLoading();
+                        try {
+                            await signinPost(data, history, setSignedInPost,
+                                signin, signout);
+                        } catch (err) {
+                            console.error(err);
+                        }
+                        stopLoading();
+                    }}
                 >
                     {() => (
                         <Form className='signin-form'>

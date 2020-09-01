@@ -26,8 +26,12 @@ const SignupForm = ({history}) => {
                     validationSchema={signupSchema}
                     onSubmit={async (data) => {
                         startLoading();
-                        await signupPost(data, history,
-                            setDisplayEmailExistsMsg);
+                        try {
+                            await signupPost(data, history,
+                                setDisplayEmailExistsMsg);
+                        } catch (err) {
+                            console.error(err);
+                        }
                         stopLoading();
                     }}
                 >

@@ -20,8 +20,12 @@ const EditTaskForm = () => {
             validationSchema={editTaskSchema}
             onSubmit={async (data) => {
                 startLoading();
-                await editTaskPatch(data, editTaskId, tasks,
-                    setTasks, setTasksCopy, closeEditTaskModal);
+                try {
+                    await editTaskPatch(data, editTaskId, tasks,
+                        setTasks, setTasksCopy, closeEditTaskModal);
+                } catch (err) {
+                    console.error(err);
+                }
                 stopLoading();
             }}>
             {() => (
