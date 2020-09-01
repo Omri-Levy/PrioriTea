@@ -1,8 +1,8 @@
 {
   "name": "prioritea",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "MERN CRUD",
+  "main": "server.js",
   "scripts": {
     "build": "babel server.js -d build && babel src -d build/src",
     "start": "nodemon --exec babel-node server.js",
@@ -28,8 +28,9 @@
     "mongoose": "^5.9.25",
     "morgan": "^1.10.0",
     "node": "^14.5.0",
-    "node-core-lib": "^0.11.11",
-    "nodemon": "^2.0.4"
+    "node-core-lib": "^0.11.11"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }

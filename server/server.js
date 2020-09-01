@@ -7,7 +7,7 @@ import getCurrentUser from './src/js/getCurrentUser.js';
 import setLogin from './src/js/setLogin.js';
 import auth from './src/routes/auth.js';
 import task from './src/routes/task.js';
-import morgan from 'morgan';
+// import morgan from 'morgan';
 
 (async () => {
     try {
@@ -17,7 +17,7 @@ import morgan from 'morgan';
         app.use(cors({origin: process.env.CORS_ORIGIN, credentials: true}));
         app.use(express.urlencoded({extended: true}));
         app.use(express.json());
-        app.use(morgan('combined'));
+        // app.use(morgan('combined'));
 
         //route middlewares
         app.use('/api/user', auth);
