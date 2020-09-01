@@ -8,14 +8,14 @@ import slideNav from '../static/js/slideNav.js';
 const Nav = () => {
     const {isSignedIn, signin, signout} = useContext(AuthContext);
 
-    const persistLogin = async () => {
-        const res = await setSignedInPost();
-        res.data ? signin() : signout();
-    };
-
     useEffect(() => {
+        const persistLogin = async () => {
+            const res = await setSignedInPost();
+            res.data ? signin() : signout();
+        };
+
         persistLogin().catch(err => console.error(err));
-    }, []);
+    }, [signin, signout]);
 
     return (
         <nav>

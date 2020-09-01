@@ -53,8 +53,8 @@ const Pagination = () => {
                     </button>
                 </li>}
                 {pageNumbers.map(number => (
-                    <li>
-                        <button key={number} id={'page-' + number}
+                    <li key={number}>
+                        <button id={'page-' + number}
                                 className={isCurrentPage(number)}
                                 onClick={() => movePage(number, setCurrentPage
                                 )}

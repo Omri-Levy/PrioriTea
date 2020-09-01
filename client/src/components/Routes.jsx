@@ -11,14 +11,13 @@ import Signup from './pages/Signup.jsx';
 const Routes = () => {
     const {isSignedIn, signin, signout} = useContext(AuthContext);
 
-    const persistLogin = async () => {
-        const res = await setSignedInPost();
-        res.data ? signin() : signout();
-    };
-
     useEffect(() => {
+        const persistLogin = async () => {
+            const res = await setSignedInPost();
+            res.data ? signin() : signout();
+        };
         persistLogin().catch(err => console.error(err));
-    }, []);
+    }, [signin, signout]);
 
     return (
         <Router>
