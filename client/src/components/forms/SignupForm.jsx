@@ -1,4 +1,5 @@
 import {AuthContext} from '../../context/AuthContext.jsx';
+import {LoadingContext} from '../../context/LoadingContext.jsx';
 import signupSchema from '../../static/js/validation/signupSchema.js';
 import {Form, Formik} from 'formik';
 import React, {useContext} from 'react';
@@ -9,10 +10,13 @@ import FormikInput from '../fields/FormikInput.jsx';
 const SignupForm = ({history}) => {
     const {displayEmailExistsMsg, setDisplayEmailExistsMsg} = useContext(
         AuthContext);
+    const {startLoading, stopLoading, loading} = useContext(LoadingContext);
 
     const signup = (data) => {
+        startLoading();
         signupPost(data, history, setDisplayEmailExistsMsg)
             .catch(err => console.error(err));
+        stopLoading();
     };
 
     return (
@@ -77,9 +81,12 @@ const SignupForm = ({history}) => {
                                 placeholder='Confirm Password'
                             />
                             <button
+                                disabled={loading}
                                 type='submit'
                                 className='primary-btn'>
-                                Signup
+                                {loading
+                                    ? <i className='fas fa-spinner fa-spin'/>
+                                    : <p>Signup</p>}
                             </button>
                         </Form>
                     )}

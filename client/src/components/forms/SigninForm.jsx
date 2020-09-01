@@ -1,4 +1,5 @@
 import {AuthContext} from '../../context/AuthContext.jsx';
+import {LoadingContext} from '../../context/LoadingContext.jsx';
 import setSignedInPost from '../../static/js/requests/setSignedInPost.js';
 import signinSchema from '../../static/js/validation/signinSchema.js';
 import {Form, Formik} from 'formik';
@@ -8,12 +9,19 @@ import FormikInput from '../fields/FormikInput.jsx';
 
 const SigninForm = ({history}) => {
     const {signin, signout} = useContext(AuthContext);
+    const {startLoading, stopLoading, loading} = useContext(LoadingContext);
 
     const signinFn = async (data) => {
-        await signinPost(data);
-        const res = await setSignedInPost();
-        res && res.data ? signin() : signout();
-        history.push('/');
+        try {
+            startLoading();
+            await signinPost(data);
+            const res = await setSignedInPost();
+            stopLoading(false);
+            res && res.data ? signin() : signout();
+            history.push('/');
+        } catch (err) {
+            console.error(err);
+        }
     }
 
     return (
@@ -56,9 +64,12 @@ const SigninForm = ({history}) => {
                                 placeholder='Password'
                             />
                             <button
+                                disabled={loading}
                                 type='submit'
                                 className='primary-btn'>
-                                Signin
+                                {loading
+                                    ? <i className='fas fa-spinner fa-spin'/>
+                                    : <p>Signin</p>}
                             </button>
                         </Form>
                     )}

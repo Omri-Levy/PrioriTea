@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const signoutPost = async () => {
 
-    const url = `${process.env.REACT_APP_API_DEV}/user/signout`;
+    const url = `${process.env.REACT_APP_API}/user/signout`;
 
 
     try {

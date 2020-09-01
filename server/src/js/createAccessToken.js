@@ -1,6 +1,4 @@
-import * as jwt from 'jsonwebtoken';
-
-const {sign} = jwt;
+import {sign} from 'jsonwebtoken';
 
 const createAccessToken = (user) => {
     return sign({

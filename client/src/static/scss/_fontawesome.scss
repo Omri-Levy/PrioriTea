@@ -48,6 +48,15 @@
   padding-left: 5px;
 }
 
+.fa-spinner:before {
+  content: '\f110';
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fa-spin {
+    animation: loading 1s linear infinite;
+  }
+}
 
 .fa-slash:before {
   content: '\f715';

@@ -1,3 +1,4 @@
+import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {ModalsContext} from '../../context/ModalsContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import createTaskSchema from '../../static/js/validation/createTaskSchema';
@@ -9,6 +10,7 @@ import FormikInput from '../fields/FormikInput.jsx';
 const CreateTaskForm = () => {
     const {setTasks, setTasksCopy} = useContext(TasksContext);
     const {closeCreateTaskModal} = useContext(ModalsContext);
+    const {startLoading, stopLoading, loading} = useContext(LoadingContext);
 
     return (
         <Formik
@@ -18,8 +20,12 @@ const CreateTaskForm = () => {
                 status: ''
             }}
             validationSchema={createTaskSchema}
-            onSubmit={(data) => createTaskPost(data, setTasks, setTasksCopy,
-                closeCreateTaskModal)}
+            onSubmit={async (data) => {
+                startLoading();
+                await createTaskPost(data, setTasks, setTasksCopy,
+                    closeCreateTaskModal);
+                stopLoading();
+            }}
         >
             {() => (
                 <Form className='create-task-form'>
@@ -48,9 +54,12 @@ const CreateTaskForm = () => {
                         placeholder='Task'
                     />
                     <button
+                        disabled={loading}
                         type='submit'
                         className='primary-btn'>
-                        Create
+                        {loading
+                            ? <i className='fas fa-spinner fa-spin'/>
+                            : <p>Create</p>}
                     </button>
                     <button
                         onClick={closeCreateTaskModal}

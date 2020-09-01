@@ -3,14 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "start": "nodemon --exec babel-node server.js"
+    "build": "babel server.js -d build && babel src -d build/src",
+    "start": "nodemon --exec babel-node server.js",
+    "test": "node build/server.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
     "argon2": "^0.27.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
@@ -23,13 +28,8 @@
     "mongoose": "^5.9.25",
     "morgan": "^1.10.0",
     "node": "^14.5.0",
-    "node-core-lib": "^0.11.11"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.10.5",
-    "@babel/core": "^7.11.4",
-    "@babel/node": "^7.10.5",
-    "@babel/preset-env": "^7.11.0",
+    "node-core-lib": "^0.11.11",
     "nodemon": "^2.0.4"
-  }
+  },
+  "devDependencies": {}
 }

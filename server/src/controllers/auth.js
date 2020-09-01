@@ -3,9 +3,7 @@ import sendAccessToken from '../js/sendAccessToken.js';
 import User from '../models/User.js';
 import signupValidation from '../validation/signupValidation.js';
 import signinValidation from '../validation/signinValidation.js';
-import argon2 from 'argon2';
-
-const {hash, verify} = argon2;
+import {hash, verify} from 'argon2';
 
 /**
  @path /api/user/
@@ -72,24 +70,23 @@ const signupUser = async (req, res) => {
  @desc signin an existing user from mongodb
  */
 const signinUser = async (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin',
+        'https://prioritea.net');
+    res.setHeader('Access-Control-Allow-Headers',
+        'Set-Cookie, Access-Control-Allow-Origin');
     const invalidCredentialsMsg = (
         'Email or password are wrong - please try again.');
     const {error} = signinValidation(req.body);
-
     if (error) return res.status(400).send(error.details[0].message);
-
     const user = await User.findOne({email: req.body.email});
-
     if (!user) return res.status(400).send(invalidCredentialsMsg);
-
     const validPass = await verify(user.password, req.body.password);
-
     if (!validPass) return res.status(400).send(invalidCredentialsMsg);
-
     try {
         sendAccessToken(res, createAccessToken(user));
         return res.status(200).send({success: true});
     } catch (err) {
+        res.status(400).send(err);
         console.log(err);
     }
 };

@@ -1,8 +1,6 @@
 import Task from '../models/Task.js';
 import taskValidation from '../validation/taskValidation.js';
-import * as jwt from 'jsonwebtoken';
-
-const {verify: verifyJwt} = jwt;
+import {verify as verifyJwt} from 'jsonwebtoken';
 
 /**
  * @path /api/task/get_tasks

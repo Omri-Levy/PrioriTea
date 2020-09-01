@@ -1,6 +1,4 @@
-import * as jwt from 'jsonwebtoken';
-
-const {verify} = jwt;
+import {verify} from 'jsonwebtoken';
 
 const setLogin = async (req, res, next) => {
     try {

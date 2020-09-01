@@ -1,6 +1,6 @@
-import * as jwt from 'jsonwebtoken';
-
-const {verify} = jwt;
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+import {verify} from 'jsonwebtoken';
 
 const getCurrentUser = async (req, res, next) => {
     try {
