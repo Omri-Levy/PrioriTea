@@ -4,7 +4,7 @@ import sortFn from '../sortFn.js';
 
 const getTasksGet = async (setTasks, setTasksCopy, sort) => {
 
-    const url = `${process.env.REACT_APP_API}/task/get_tasks`;
+    const url = `${process.env.REACT_APP_API_TASK}/get_tasks`;
 
     try {
         const res = await axios.get(url, {withCredentials: true});

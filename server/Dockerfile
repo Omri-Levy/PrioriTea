@@ -12,14 +12,12 @@ COPY yarn.lock ./
 RUN yarn
 
 # Bundle app source
-COPY . .
+COPY build .
 
 COPY .env.production .env
 
-RUN yarn build
-
 ENV NODE_ENV production
 
-EXPOSE 8080
-CMD [ "node", "build/server.js" ]
+EXPOSE 3000
+CMD [ "node", "server.js" ]
 USER node

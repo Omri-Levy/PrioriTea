@@ -71,7 +71,7 @@ const signupUser = async (req, res) => {
  */
 const signinUser = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin',
-        'https://prioritea.net');
+        process.env.CORS_ORIGIN);
     res.setHeader('Access-Control-Allow-Headers',
         'Set-Cookie, Access-Control-Allow-Origin');
     const invalidCredentialsMsg = (

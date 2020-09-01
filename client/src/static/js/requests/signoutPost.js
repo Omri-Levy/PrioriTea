@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const signoutPost = async () => {
 
-    const url = `${process.env.REACT_APP_API}/user/signout`;
+    const url = `${process.env.REACT_APP_API_USER}/signout`;
 
     try {
         await axios.post(url, {}, {withCredentials: true});

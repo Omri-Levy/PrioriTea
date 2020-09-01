@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const signinPost = async (data, history, setSignedInPost, signin, signout) => {
 
-    const url = `${process.env.REACT_APP_API}/user/signin`;
+    const url = `${process.env.REACT_APP_API_USER}/signin`;
 
     try {
         await axios.post(url, {

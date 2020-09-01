@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const signupPost = async (data, history, setDisplayEmailExistsMsg) => {
 
-    const url = `${process.env.REACT_APP_API}`;
+    const url = `${process.env.REACT_APP_API_USER}/signup`;
 
     try {
         await axios.post(url, {

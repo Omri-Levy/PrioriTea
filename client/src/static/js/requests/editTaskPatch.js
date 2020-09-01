@@ -3,7 +3,7 @@ import axios from 'axios';
 const editTaskPatch = async (data, editTaskId, tasks, setTasks, setTasksCopy,
                              callback) => {
 
-    const url = `${process.env.REACT_APP_API}/task/edit_task`;
+    const url = `${process.env.REACT_APP_API_TASK}/edit_task`;
 
 
     try {

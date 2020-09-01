@@ -35,7 +35,8 @@ const Pagination = () => {
     for (let page = maxLeft; page <= maxRight; page++) pageNumbers.push(page);
 
     const isCurrentPage = (number) => {
-        return currentPage === number ? 'current-page' : 'page-btn';
+        return currentPage === number
+            ? 'current-page pagination-btn' : 'page-btn pagination-btn';
     };
 
     return (
@@ -43,32 +44,34 @@ const Pagination = () => {
             <ul>
                 {currentPage >= 4 && totalPages > 5 &&
                 <li>
-                    <a
+                    <button
                         id='first-page'
+                        className='pagination-btn'
                         onClick={() => movePage(1, setCurrentPage)}
                     >
                         <i className='first-page'/>First
-                    </a>
+                    </button>
                 </li>}
                 {pageNumbers.map(number => (
-                    <li key={number}>
-                        <a
-                            id={'page-' + number}
-                            className={isCurrentPage(number)}
-                            onClick={() => movePage(number, setCurrentPage)}
+                    <li>
+                        <button key={number} id={'page-' + number}
+                                className={isCurrentPage(number)}
+                                onClick={() => movePage(number, setCurrentPage
+                                )}
                         >
                             {number}
-                        </a>
+                        </button>
                     </li>
                 ))}
                 {maxRight !== tasksCopy.length &&
                 <li>
-                    <a
+                    <button
+                        className='pagination-btn'
                         id='last-page'
                         onClick={() => movePage(totalPages, setCurrentPage)}
                     >
                         Last<i className='last-page'/>
-                    </a>
+                    </button>
                 </li>}
             </ul>
         </nav>

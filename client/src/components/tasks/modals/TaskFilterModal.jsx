@@ -20,6 +20,8 @@ const TaskFilterModal = ({target, noTasks}) => {
                 case 'status':
                     tempArr.push(item.status);
                     break;
+                default:
+                    return false;
             }
         });
         return new Set(tempArr);

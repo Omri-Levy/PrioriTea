@@ -16,7 +16,7 @@ const tasksReducer = (state, action) => {
                 editTaskId: action.payload
             }
         default:
-            return [];
+            return state;
     }
 };
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const deleteTaskDelete = async (taskId, tasks, setTasks, setTasksCopy) => {
 
-    const url = `${process.env.REACT_APP_API}/task/delete_task`;
+    const url = `${process.env.REACT_APP_API_TASK}/delete_task`;
 
     try {
         await axios.delete(url, {
