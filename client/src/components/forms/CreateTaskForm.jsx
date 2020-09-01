@@ -60,16 +60,20 @@ const CreateTaskForm = () => {
                     <button
                         disabled={loading}
                         type='submit'
-                        className='primary-btn'>
+                        className='primary-btn excluded-link'>
                         {loading
                             ? <i className='fas fa-spinner fa-spin'/>
-                            : <p>Create</p>}
+                            : <p className='custom-span link-underline'>
+                                Create
+                        </p>}
                     </button>
                     <button
                         onClick={closeCreateTaskModal}
                         type='button'
                         className='primary-btn'>
-                        Cancel
+                        <p className='custom-span link-underline'>
+                            Cancel
+                        </p>
                     </button>
                 </Form>
             )}

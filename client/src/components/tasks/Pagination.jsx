@@ -36,7 +36,7 @@ const Pagination = () => {
 
     const isCurrentPage = (number) => {
         return currentPage === number
-            ? 'current-page pagination-btn' : 'page-btn pagination-btn';
+            ? 'current-page pagination-btn' : 'pagination-btn link-underline';
     };
 
     return (
@@ -46,7 +46,7 @@ const Pagination = () => {
                 <li>
                     <button
                         id='first-page'
-                        className='pagination-btn'
+                        className='pagination-btn link-underline'
                         onClick={() => movePage(1, setCurrentPage)}
                     >
                         <i className='first-page'/>First
@@ -66,7 +66,7 @@ const Pagination = () => {
                 {maxRight !== tasksCopy.length &&
                 <li>
                     <button
-                        className='pagination-btn'
+                        className='pagination-btn link-underline'
                         id='last-page'
                         onClick={() => movePage(totalPages, setCurrentPage)}
                     >

@@ -65,7 +65,8 @@ const SigninForm = ({history}) => {
                                 className='primary-btn'>
                                 {loading
                                     ? <i className='fas fa-spinner fa-spin'/>
-                                    : <p>Signin</p>}
+                                    : <p className='custom-span link-underline'
+                                    >Signin</p>}
                             </button>
                         </Form>
                     )}

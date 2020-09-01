@@ -79,6 +79,7 @@ input[type='button'] {
 }
 
 .pagination-btn {
+  outline: none;
   background-color: transparent;
   border: none;
   font-size: $primary-font-size;

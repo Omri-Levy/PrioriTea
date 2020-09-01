@@ -61,12 +61,14 @@ const EditTaskForm = () => {
                         className='primary-btn'>
                         {loading
                             ? <i className='fas fa-spinner fa-spin'/>
-                            : <p>Edit</p>}
+                            : <p className='custom-span link-underline'>
+                                Edit
+                            </p>}
                     </button>
                     <button type='button'
                             onClick={closeEditTaskModal}
                             className='primary-btn'>
-                        Cancel
+                        <p className='custom-span link-underline'>Cancel</p>
                     </button>
                 </Form>
             )}

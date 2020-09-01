@@ -149,4 +149,3 @@ em {
 
 @include link-underline(em, set-text-color($bg-color));
 @include link-underline(a, set-text-color($bg-color));
-@include link-underline(button, set-text-color($bg-color));

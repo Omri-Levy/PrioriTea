@@ -137,3 +137,21 @@
     width: initial;
   }
 }
+
+.link-underline::after {
+  content: '';
+  display: block;
+  width: 0;
+  transition: width 0.3s;
+  height: 2px;
+  background-color: set-text-color($bg-color);
+}
+
+.link-underline:hover::after {
+  width: 100%;
+  transition: width 0.3s;
+}
+
+.custom-span {
+  display: inline-block;
+}
