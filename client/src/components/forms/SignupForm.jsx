@@ -12,13 +12,6 @@ const SignupForm = ({history}) => {
         AuthContext);
     const {startLoading, stopLoading, loading} = useContext(LoadingContext);
 
-    const signup = (data) => {
-        startLoading();
-        signupPost(data, history, setDisplayEmailExistsMsg)
-            .catch(err => console.error(err));
-        stopLoading();
-    };
-
     return (
         <main className='body-container'>
             <div className='form-container'>
@@ -31,7 +24,12 @@ const SignupForm = ({history}) => {
                         passwordConfirmation: '',
                     }}
                     validationSchema={signupSchema}
-                    onSubmit={(data) => signup(data)}
+                    onSubmit={async (data) => {
+                        startLoading();
+                        await signupPost(data, history,
+                            setDisplayEmailExistsMsg);
+                        stopLoading();
+                    }}
                 >
                     {() => (
                         <Form className='signup-form'>

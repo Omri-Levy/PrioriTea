@@ -1,0 +1,3 @@
+/api/* https://api.prioritea.net/:splat 200
+/* /index.html
+

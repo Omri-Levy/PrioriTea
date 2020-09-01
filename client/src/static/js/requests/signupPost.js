@@ -2,8 +2,7 @@ import axios from 'axios';
 
 const signupPost = async (data, history, setDisplayEmailExistsMsg) => {
 
-    const url = `${process.env.REACT_APP_API}/user/signup`;
-
+    const url = `${process.env.REACT_APP_API}`;
 
     try {
         await axios.post(url, {
@@ -12,7 +11,7 @@ const signupPost = async (data, history, setDisplayEmailExistsMsg) => {
             passwordConfirmation: data.passwordConfirmation
         });
         setDisplayEmailExistsMsg(false);
-        history.push('/signin')
+        history.push('/signin');
     } catch (err) {
         console.error(err);
         if (err.response.data.message === 'Email already exists.') {
