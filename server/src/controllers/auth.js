@@ -70,10 +70,6 @@ const signupUser = async (req, res) => {
  @desc signin an existing user from mongodb
  */
 const signinUser = async (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin',
-        process.env.CORS_ORIGIN);
-    res.setHeader('Access-Control-Allow-Headers',
-        'Set-Cookie, Access-Control-Allow-Origin');
     const invalidCredentialsMsg = (
         'Email or password are wrong - please try again.');
     const {error} = signinValidation(req.body);
