@@ -1,17 +1,20 @@
-import React from 'react';
-import {AuthProvider} from '../context/AuthContext.jsx';
-import {LoadingProvider} from '../context/LoadingContext.jsx';
+import React, {useContext, useEffect} from 'react';
+import {AuthContext} from '../context/AuthContext.jsx';
+import setIsSignedInPost from '../static/js/requests/setSignedInPost.js';
 import Routes from './Routes.jsx';
 
-const App = () => {
+const App = ({history}) => {
+    const {signin, signout} = useContext(AuthContext);
 
-    return (
-        <AuthProvider>
-            <LoadingProvider>
-                <Routes/>
-            </LoadingProvider>
-        </AuthProvider>
-    );
+    useEffect(() => {
+        const persistSignin = async () => {
+            await setIsSignedInPost(signin, signout, history);
+        }
+
+        persistSignin().catch(err => console.error(err));
+    }, [signin, signout, history]);
+
+    return <Routes/>;
 };
 
 export default App;

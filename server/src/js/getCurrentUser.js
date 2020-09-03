@@ -6,13 +6,16 @@ const getCurrentUser = async (req, res, next) => {
     try {
         const authorization = req.headers['cookie'];
         const token = authorization.split('mid=')[1];
-
         const verified = verify(token, process.env.SECRET_ACCESS_TOKEN);
 
-        res.send({email: verified.email, fullName: verified.fullName});
+        res.json({email: verified.email, fullName: verified.fullName});
     } catch (err) {
-        console.error(err);
-        res.send({success: false});
+        if (req.headers['cookie'] === undefined) {
+            console.error('unauthorized');
+        } else {
+            console.error(err);
+        }
+        res.json({success: false});
     }
     next();
 };

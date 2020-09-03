@@ -1,11 +1,12 @@
-import axios from 'axios';
-
 const signoutPost = async () => {
-
     const url = `${process.env.REACT_APP_API_USER}/signout`;
+    const options = {
+        method: 'POST',
+        credentials: 'include'
+    };
 
     try {
-        await axios.post(url, {}, {withCredentials: true});
+        await fetch(url, options);
     } catch (err) {
         console.log(err);
     }

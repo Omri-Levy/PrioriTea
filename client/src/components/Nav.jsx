@@ -1,21 +1,11 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import {NavLink} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
-import setSignedInPost from '../static/js/requests/setSignedInPost.js';
 import signoutPost from '../static/js/requests/signoutPost.js';
 import slideNav from '../static/js/slideNav.js';
 
 const Nav = () => {
-    const {isSignedIn, signin, signout} = useContext(AuthContext);
-
-    useEffect(() => {
-        const persistLogin = async () => {
-            const res = await setSignedInPost();
-            res.data ? signin() : signout();
-        };
-
-        persistLogin().catch(err => console.error(err));
-    }, [signin, signout]);
+    const {isSignedIn, signout} = useContext(AuthContext);
 
     return (
         <nav>
@@ -50,8 +40,7 @@ const Nav = () => {
                         activeClassName='current-link'
                         onClick={async () => {
                             await signoutPost();
-                            const res = await setSignedInPost();
-                            res && res.data ? signin() : signout();
+                            signout();
                         }}
                         to='/signin'>
                         SIGNOUT

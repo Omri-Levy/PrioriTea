@@ -1,6 +1,7 @@
 import getTasksGet from './getTasksGet.js';
 
-const createTaskPost = async (data, setTasks, setTasksCopy, callback) => {
+const createTaskPost = async (data, setTasks, setTasksCopy,
+                              closeCreateTaskModal) => {
     const url = `${process.env.REACT_APP_API_TASK}/create_task`;
     const options = {
         method: 'POST',
@@ -12,12 +13,12 @@ const createTaskPost = async (data, setTasks, setTasksCopy, callback) => {
             task: data.task
         }),
         credentials: 'include'
-    }
+    };
 
     try {
         await fetch(url, options);
         await getTasksGet(setTasks, setTasksCopy);
-        callback();
+        closeCreateTaskModal();
     } catch (err) {
         console.error(err);
     }

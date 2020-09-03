@@ -1,4 +1,5 @@
 import React, {useContext} from 'react';
+import {LoadingContext} from '../../../context/LoadingContext.jsx';
 import {ModalsContext} from '../../../context/ModalsContext.jsx';
 import {TasksContext} from '../../../context/TasksContext.jsx';
 import {displayTaskOptionsTooltip, hideTaskOptionsTooltip}
@@ -6,9 +7,10 @@ import {displayTaskOptionsTooltip, hideTaskOptionsTooltip}
 import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';
 
 const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
-    const {tasks, setTasks, setTasksCopy, setEditTaskId} = useContext(
+    const {setTasks, setTasksCopy, setEditTaskId, sort} = useContext(
         TasksContext);
     const {openEditTaskModal, openCreateTaskModal} = useContext(ModalsContext);
+    const {startLoading, stopLoading} = useContext(LoadingContext);
 
     const editTask = () => {
         openEditTaskModal();
@@ -50,11 +52,14 @@ const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
                             : 'edit-task-btn'}/>
                     <em
                         title={invalidFilterOrNoTasks('delete')}
-                        onClick={noTasks || invalidFilter ? null : () => {
-                            deleteTaskDelete(taskId, tasks, setTasks,
-                                setTasksCopy)
-                                .catch(err => console.error(err));
-                        }}
+                        onClick={noTasks || invalidFilter ? null
+                            : async () => {
+                            startLoading();
+                                await deleteTaskDelete(taskId, setTasks,
+                                    setTasksCopy, sort);
+                                stopLoading();
+                            }
+                        }
                         className={noTasks || invalidFilter
                             ? 'delete-task-btn excluded-link draft'
                             : 'delete-task-btn'}

@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import 'dotenv/config.js';
 import getCurrentUser from './src/js/getCurrentUser.js';
-import setLogin from './src/js/setLogin.js';
+import setIsSignedIn from './src/js/setIsSignedIn.js';
 import auth from './src/routes/auth.js';
 import task from './src/routes/task.js';
 // import morgan from 'morgan';
@@ -24,10 +24,10 @@ import task from './src/routes/task.js';
         app.use('/api/task', task);
         app.use('/api/user/signin', cookieParser());
         app.post('/api/get_current_user', getCurrentUser);
-        app.post('/api/auth', setLogin);
+        app.post('/api/auth', setIsSignedIn);
 
         //connect to db
-        await mongoose.connect(process.env.DATABASE_URL,
+        await mongoose.connect(process.env.MONGO_URI,
             {
                 useNewUrlParser: true, useUnifiedTopology: true,
                 useFindAndModify: false,
