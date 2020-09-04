@@ -1,4 +1,4 @@
-const setSignedInPost = async (signin, signout, history = null) => {
+const setIsSignedInPost = async (signin, signout, history = null) => {
     const url = `${process.env.REACT_APP_API}/auth`;
     const options = {
         method: 'POST',
@@ -22,4 +22,4 @@ const setSignedInPost = async (signin, signout, history = null) => {
     }
 };
 
-export default setSignedInPost;
+export default setIsSignedInPost;

@@ -1,4 +1,4 @@
-import setIsSignedInPost from './setSignedInPost.js';
+import setIsSignedInPost from './setIsSignedInPost.js';
 
 const signinPost = async (data, history, signin, signout, setError) => {
     const url = `${process.env.REACT_APP_API_USER}/signin`;

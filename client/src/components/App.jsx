@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {AuthContext} from '../context/AuthContext.jsx';
-import setIsSignedInPost from '../static/js/requests/setSignedInPost.js';
+import setIsSignedInPost from '../static/js/requests/setIsSignedInPost.js';
 import Routes from './Routes.jsx';
 
 const App = () => {

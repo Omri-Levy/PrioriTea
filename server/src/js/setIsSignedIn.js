@@ -1,5 +1,6 @@
 import {verify} from 'jsonwebtoken';
 import User from '../models/User.js';
+import sendAccessToken from './sendAccessToken.js';
 
 const setIsSignedIn = async (req, res, next) => {
     try {
@@ -11,7 +12,7 @@ const setIsSignedIn = async (req, res, next) => {
         if (user) {
             res.json({isSignedIn: true})
         } else {
-            res.clearCookie('mid');
+            sendAccessToken(res, '');
             res.json({isSignedIn: false});
         }
     } catch (err) {

@@ -100,7 +100,7 @@ const signinUser = async (req, res) => {
  */
 const signoutUser = async (req, res) => {
     try {
-        res.clearCookie('mid');
+        sendAccessToken(res, '');
         return res.status(200).json({success: true});
     } catch (err) {
         console.error(err);
