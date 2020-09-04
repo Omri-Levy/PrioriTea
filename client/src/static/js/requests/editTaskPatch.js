@@ -1,7 +1,7 @@
 import getTasksGet from './getTasksGet.js';
 
 const editTaskPatch = async (data, editTaskId, tasks, setTasks, setTasksCopy,
-                             closeEditTaskModal, sort) => {
+                             closeEditTaskModal) => {
     const url = `${process.env.REACT_APP_API_TASK}/edit_task`;
     const options = {
         method: 'PATCH',
@@ -19,7 +19,7 @@ const editTaskPatch = async (data, editTaskId, tasks, setTasks, setTasksCopy,
 
     try {
         await fetch(url, options);
-        await getTasksGet(setTasks, setTasksCopy, sort);
+        await getTasksGet(setTasks, setTasksCopy);
         closeEditTaskModal();
 
     } catch (err) {

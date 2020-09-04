@@ -1,7 +1,7 @@
 import {persistFilter} from '../filter.js';
 import sortFn from '../sortFn.js';
 
-const getTasksGet = async (setTasks, setTasksCopy, sort) => {
+const getTasksGet = async (setTasks, setTasksCopy) => {
     const url = `${process.env.REACT_APP_API_TASK}/get_tasks`;
     const options = {
         method: 'GET',
@@ -17,7 +17,7 @@ const getTasksGet = async (setTasks, setTasksCopy, sort) => {
             await setTasks(data);
             await setTasksCopy(data);
 
-            sortFn(data, setTasks, setTasksCopy, isGet, sort);
+            sortFn(data, setTasks, setTasksCopy, isGet);
             persistFilter(data, setTasksCopy);
         }
     } catch (err) {

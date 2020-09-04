@@ -1,6 +1,6 @@
 import getTasksGet from './getTasksGet.js';
 
-const deleteTaskDelete = async (taskId, setTasks, setTasksCopy, sort) => {
+const deleteTaskDelete = async (taskId, setTasks, setTasksCopy) => {
 
     const url = `${process.env.REACT_APP_API_TASK}/delete_task`;
     const options = {
@@ -14,7 +14,7 @@ const deleteTaskDelete = async (taskId, setTasks, setTasksCopy, sort) => {
 
     try {
         await fetch(url, options);
-        await getTasksGet(setTasks, setTasksCopy, sort);
+        await getTasksGet(setTasks, setTasksCopy);
     } catch (err) {
         console.error(err);
     }

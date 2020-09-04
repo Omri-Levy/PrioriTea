@@ -7,7 +7,7 @@ import {displayTaskOptionsTooltip, hideTaskOptionsTooltip}
 import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';
 
 const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
-    const {setTasks, setTasksCopy, setEditTaskId, sort} = useContext(
+    const {setTasks, setTasksCopy, setEditTaskId} = useContext(
         TasksContext);
     const {openEditTaskModal, openCreateTaskModal} = useContext(ModalsContext);
     const {startLoading, stopLoading} = useContext(LoadingContext);
@@ -56,7 +56,7 @@ const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
                             : async () => {
                             startLoading();
                                 await deleteTaskDelete(taskId, setTasks,
-                                    setTasksCopy, sort);
+                                    setTasksCopy);
                                 stopLoading();
                             }
                         }

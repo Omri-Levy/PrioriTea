@@ -8,7 +8,7 @@ import editTaskPatch from '../../static/js/requests/editTaskPatch.js';
 import FormikInput from '../fields/FormikInput.jsx';
 
 const EditTaskForm = () => {
-    const {tasks, setTasks, setTasksCopy, editTaskId, sort} = useContext(
+    const {tasks, setTasks, setTasksCopy, editTaskId} = useContext(
         TasksContext);
     const {closeEditTaskModal} = useContext(ModalsContext);
     const {startLoading, stopLoading, loading} = useContext(LoadingContext);
@@ -22,7 +22,7 @@ const EditTaskForm = () => {
                 startLoading();
                 try {
                     await editTaskPatch(data, editTaskId, tasks,
-                        setTasks, setTasksCopy, closeEditTaskModal, sort);
+                        setTasks, setTasksCopy, closeEditTaskModal);
                 } catch (err) {
                     console.error(err);
                 }
