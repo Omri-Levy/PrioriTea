@@ -1,4 +1,4 @@
-const setSignedInPost = async (signin, signout, history) => {
+const setSignedInPost = async (signin, signout, history = null) => {
     const url = `${process.env.REACT_APP_API}/auth`;
     const options = {
         method: 'POST',
@@ -12,10 +12,10 @@ const setSignedInPost = async (signin, signout, history) => {
         const data = await (await fetch(url, options)).json();
         if (data && data.isSignedIn) {
             signin();
-            history.push('/');
+            history && history.push('/');
         } else {
             signout();
-            history.push('/signin');
+            history && history.push('/signin');
         }
     } catch (err) {
         console.log(err);

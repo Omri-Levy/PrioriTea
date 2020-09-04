@@ -7,7 +7,7 @@ import getCurrentUser from './src/js/getCurrentUser.js';
 import setIsSignedIn from './src/js/setIsSignedIn.js';
 import auth from './src/routes/auth.js';
 import task from './src/routes/task.js';
-// import morgan from 'morgan';
+import morgan from 'morgan';
 
 (async () => {
     try {
@@ -17,7 +17,7 @@ import task from './src/routes/task.js';
         app.use(cors({origin: process.env.CORS_ORIGIN, credentials: true}));
         app.use(express.urlencoded({extended: true}));
         app.use(express.json());
-        // app.use(morgan('combined'));
+        app.use(morgan('combined'));
 
         //route middlewares
         app.use('/api/user', auth);
@@ -27,7 +27,7 @@ import task from './src/routes/task.js';
         app.post('/api/auth', setIsSignedIn);
 
         //connect to db
-        await mongoose.connect(process.env.MONGO_URI,
+        await mongoose.connect(process.env.MONGO_URL,
             {
                 useNewUrlParser: true, useUnifiedTopology: true,
                 useFindAndModify: false,

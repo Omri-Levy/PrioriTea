@@ -3,16 +3,16 @@ import {AuthContext} from '../context/AuthContext.jsx';
 import setIsSignedInPost from '../static/js/requests/setSignedInPost.js';
 import Routes from './Routes.jsx';
 
-const App = ({history}) => {
+const App = () => {
     const {signin, signout} = useContext(AuthContext);
 
     useEffect(() => {
         const persistSignin = async () => {
-            await setIsSignedInPost(signin, signout, history);
+            await setIsSignedInPost(signin, signout);
         }
 
         persistSignin().catch(err => console.error(err));
-    }, [signin, signout, history]);
+    }, [signin, signout]);
 
     return <Routes/>;
 };

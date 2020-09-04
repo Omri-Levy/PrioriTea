@@ -6,7 +6,7 @@ const sendAccessToken = (res, token) => {
         path: '/',
         secure: process.env.NODE_ENV === 'production',
         expires: new Date(Date.now() + 1000 * 60 * 60 * 9),
-        domain: process.env.NODE_ENV === 'production' ? '.prioritea.net' :
+        domain: process.env.NODE_ENV === 'production' ? '.prioritea.cc' :
             undefined
     });
 };

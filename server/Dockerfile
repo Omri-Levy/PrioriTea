@@ -1,16 +1,20 @@
-FROM node:14-alpine AS builder
+FROM node:14
+
 WORKDIR /usr/src/app
+
 COPY package.json ./
+
 COPY yarn.lock ./
-RUN yarn install --production
-COPY build .
+
+RUN yarn
+
+COPY . .
 COPY .env.production .env
+
+RUN yarn build
+
 ENV NODE_ENV production
 
-FROM node:14-alpine
-WORKDIR /app
-COPY --from=builder /usr/src/app /app/
-
-EXPOSE 3000
-CMD [ "node", "server.js" ]
+EXPOSE 8080
+CMD [ "node", "build/server.js" ]
 USER node
