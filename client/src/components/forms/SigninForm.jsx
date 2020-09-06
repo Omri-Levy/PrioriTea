@@ -1,20 +1,15 @@
 import {AuthContext} from '../../context/AuthContext.jsx';
-import setSignedInPost from '../../static/js/requests/setSignedInPost.js';
+import {LoadingContext} from '../../context/LoadingContext.jsx';
 import signinSchema from '../../static/js/validation/signinSchema.js';
 import {Form, Formik} from 'formik';
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import signinPost from '../../static/js/requests/signinPost.js';
 import FormikInput from '../fields/FormikInput.jsx';
 
 const SigninForm = ({history}) => {
     const {signin, signout} = useContext(AuthContext);
-
-    const signinFn = async (data) => {
-        await signinPost(data);
-        const res = await setSignedInPost();
-        res && res.data ? signin() : signout();
-        history.push('/');
-    }
+    const {startLoading, stopLoading, loading} = useContext(LoadingContext);
+    const [error, setError] = useState(null);
 
     return (
         <main className='body-container'>
@@ -27,13 +22,23 @@ const SigninForm = ({history}) => {
                         passwordConfirmation: '',
                     }}
                     validationSchema={signinSchema}
-                    onSubmit={(data) => signinFn(data)}
+                    onSubmit={async (data) => {
+                        startLoading();
+                        await signinPost(data, history, signin, signout,
+                            setError);
+                        stopLoading();
+                    }}
                 >
                     {() => (
                         <Form className='signin-form'>
                             <p className='required-fields-msg'>
                                 Indicates required fields
                             </p>
+                            {error &&
+                            <div className='error'>
+                                {error}
+                            </div>
+                            }
                             <FormikInput
                                 maxLength='320'
                                 autoFocus={true}
@@ -56,9 +61,13 @@ const SigninForm = ({history}) => {
                                 placeholder='Password'
                             />
                             <button
+                                disabled={loading}
                                 type='submit'
                                 className='primary-btn'>
-                                Signin
+                                {loading
+                                    ? <i className='fas fa-spinner fa-spin'/>
+                                    : <p className='custom-span link-underline'
+                                    >Signin</p>}
                             </button>
                         </Form>
                     )}

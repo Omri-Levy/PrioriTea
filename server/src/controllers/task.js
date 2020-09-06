@@ -1,8 +1,6 @@
 import Task from '../models/Task.js';
 import taskValidation from '../validation/taskValidation.js';
-import * as jwt from 'jsonwebtoken';
-
-const {verify: verifyJwt} = jwt;
+import {verify as verifyJwt} from 'jsonwebtoken';
 
 /**
  * @path /api/task/get_tasks
@@ -29,6 +27,7 @@ const getTasks = async (req, res) => {
  * @desc adds a new task to mongodb using parameters sent from the user
  */
 const createTask = async (req, res) => {
+    console.log(req.body);
     const {error} = await taskValidation(req.body);
 
     if (error) return res.status(400).send(error.details[0].message);
@@ -37,11 +36,9 @@ const createTask = async (req, res) => {
     const token = authorization.split('mid=')[1];
 
     const verified = verifyJwt(token, process.env.SECRET_ACCESS_TOKEN);
-
     const newTask = new Task({
         priority: req.body.priority,
         task: req.body.task,
-        status: req.body.status,
         owner: verified.id
     });
 

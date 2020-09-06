@@ -1,21 +1,27 @@
-import axios from 'axios';
-
 const signupPost = async (data, history, setDisplayEmailExistsMsg) => {
-    const url = 'http://localhost:4000/api/user/signup';
-
-    try {
-        await axios.post(url, {
+    const url = `${process.env.REACT_APP_API_USER}/signup`;
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
             email: data.email, fullName: data.fullName,
             password: data.password,
             passwordConfirmation: data.passwordConfirmation
-        });
-        setDisplayEmailExistsMsg(false);
-        history.push('/signin')
+        })
+    };
+
+    try {
+        const res = await (await fetch(url, options)).json();
+        if (res.message === 'Email already exists.') {
+            setDisplayEmailExistsMsg(true);
+        } else {
+            setDisplayEmailExistsMsg(false);
+            history.push('/signin');
+        }
     } catch (err) {
         console.error(err);
-        if (err.response.data.message === 'Email already exists.') {
-            setDisplayEmailExistsMsg(true);
-        }
     }
 }
 

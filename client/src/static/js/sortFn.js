@@ -1,7 +1,11 @@
 const sortFn = (tasks, setTasks, setTasksCopy, isGet) => {
     const sortedTasks = tasks.sort((a, b) => {
-        const {sortBy, orderBy} = JSON.parse(localStorage.getItem('sort'))
-        ;
+        let sortObj = JSON.parse(localStorage.getItem('sort'));
+        if (!sortObj) sortObj = {
+            sortBy: 'priority',
+            orderBy: 'asc'
+        }
+        const {sortBy, orderBy} = sortObj;
         if (isNaN(a[sortBy] - b[sortBy])) {
             if (orderBy === 'desc') {
                 return a[sortBy] > b[sortBy] ? 1 : -1;

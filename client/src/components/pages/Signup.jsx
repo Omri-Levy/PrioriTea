@@ -3,7 +3,7 @@ import SignupForm from '../forms/SignupForm.jsx';
 
 const Signup = ({history}) => {
     return (
-            <SignupForm history={history}/>
+        <SignupForm history={history}/>
     );
 };
 

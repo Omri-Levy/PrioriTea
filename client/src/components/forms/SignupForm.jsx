@@ -1,4 +1,5 @@
 import {AuthContext} from '../../context/AuthContext.jsx';
+import {LoadingContext} from '../../context/LoadingContext.jsx';
 import signupSchema from '../../static/js/validation/signupSchema.js';
 import {Form, Formik} from 'formik';
 import React, {useContext} from 'react';
@@ -9,11 +10,7 @@ import FormikInput from '../fields/FormikInput.jsx';
 const SignupForm = ({history}) => {
     const {displayEmailExistsMsg, setDisplayEmailExistsMsg} = useContext(
         AuthContext);
-
-    const signup = (data) => {
-        signupPost(data, history, setDisplayEmailExistsMsg)
-            .catch(err => console.error(err));
-    };
+    const {startLoading, stopLoading, loading} = useContext(LoadingContext);
 
     return (
         <main className='body-container'>
@@ -27,7 +24,16 @@ const SignupForm = ({history}) => {
                         passwordConfirmation: '',
                     }}
                     validationSchema={signupSchema}
-                    onSubmit={(data) => signup(data)}
+                    onSubmit={async (data) => {
+                        startLoading();
+                        try {
+                            await signupPost(data, history,
+                                setDisplayEmailExistsMsg);
+                        } catch (err) {
+                            console.error(err);
+                        }
+                        stopLoading();
+                    }}
                 >
                     {() => (
                         <Form className='signup-form'>
@@ -77,9 +83,13 @@ const SignupForm = ({history}) => {
                                 placeholder='Confirm Password'
                             />
                             <button
+                                disabled={loading}
                                 type='submit'
                                 className='primary-btn'>
-                                Signup
+                                {loading
+                                    ? <i className='fas fa-spinner fa-spin'/>
+                                    : <p className='custom-span link-underline'
+                                    >Signup</p>}
                             </button>
                         </Form>
                     )}

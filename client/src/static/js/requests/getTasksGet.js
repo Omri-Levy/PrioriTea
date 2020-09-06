@@ -1,18 +1,27 @@
-import axios from 'axios';
 import {persistFilter} from '../filter.js';
 import sortFn from '../sortFn.js';
 
-const getTasksGet = async (setTasks, setTasksCopy, sort) => {
-    const url = 'http://localhost:4000/api/task/get_tasks';
+const getTasksGet = async (setTasks, setTasksCopy) => {
+    const url = `${process.env.REACT_APP_API_TASK}/get_tasks`;
+    const options = {
+        method: 'GET',
+        credentials: 'include'
+    };
 
-    const res = await axios.get(url, {withCredentials: true});
+    try {
+        const data = await (await fetch(url, options)).json();
 
-    if (res.data.length > 0) {
-        await setTasks(res.data);
-        await setTasksCopy(res.data);
+        if (data.length > 0) {
+            const isGet = true;
 
-        sortFn(res.data, setTasks, setTasksCopy, true, sort);
-        persistFilter(res.data, setTasksCopy);
+            await setTasks(data);
+            await setTasksCopy(data);
+
+            sortFn(data, setTasks, setTasksCopy, isGet);
+            persistFilter(data, setTasksCopy);
+        }
+    } catch (err) {
+        console.error(err);
     }
 };
 

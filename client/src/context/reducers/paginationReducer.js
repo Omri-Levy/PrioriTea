@@ -15,6 +15,8 @@ const paginationReducer = (state, action) => {
                 ...state,
                 totalPages: action.payload
             }
+        default:
+            return state;
 
     }
 };

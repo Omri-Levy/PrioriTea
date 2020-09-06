@@ -20,13 +20,18 @@ const Tasks = () => {
     if (loading) return <Loading/>;
 
     const updateSorting = (Event) => {
+        const isGet = false;
+
         toggleSort(Event);
-        sortFn(tasksCopy, null, setTasksCopy, false);
+        sortFn(tasksCopy, null, setTasksCopy, isGet);
     };
 
     const sortExists = (header) => {
-        const {sortBy, orderBy} = JSON.parse(localStorage.getItem('sort'))
-        ;
+        const {sortBy, orderBy} = JSON.parse(localStorage.getItem(
+            'sort')) || {
+            sortBy: 'priority',
+            orderBy: 'desc'
+        };
         return sortBy === header && orderBy === 'asc' ? 'sorted-asc' :
             'sorted-desc'
     };

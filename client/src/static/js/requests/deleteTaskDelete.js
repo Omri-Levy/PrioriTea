@@ -1,19 +1,20 @@
-import axios from 'axios';
+import getTasksGet from './getTasksGet.js';
 
-const deleteTaskDelete = async (taskId, tasks, setTasks, setTasksCopy) => {
+const deleteTaskDelete = async (taskId, setTasks, setTasksCopy) => {
+
+    const url = `${process.env.REACT_APP_API_TASK}/delete_task`;
+    const options = {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({_id: taskId}),
+        credentials: 'include'
+    };
+
     try {
-        const url = 'http://localhost:4000/api/task/delete_task';
-
-        await axios.delete(url, {
-            data: {_id: taskId},
-            withCredentials: true
-        });
-
-        const updatedTasks = tasks.filter(task => task._id !== taskId);
-
-        setTasks(updatedTasks);
-        setTasksCopy(updatedTasks);
-
+        await fetch(url, options);
+        await getTasksGet(setTasks, setTasksCopy);
     } catch (err) {
         console.error(err);
     }

@@ -5,7 +5,10 @@ const OnePager = () => {
         <nav>
             <ul>
                 <li>
-                    <a id={'page-1'} className='current-page'>1</a>
+                    <button id={'page-1'}
+                            className='current-page pagination-btn'>
+                        1
+                    </button>
                 </li>
             </ul>
         </nav>

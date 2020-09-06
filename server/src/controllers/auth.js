@@ -3,9 +3,7 @@ import sendAccessToken from '../js/sendAccessToken.js';
 import User from '../models/User.js';
 import signupValidation from '../validation/signupValidation.js';
 import signinValidation from '../validation/signinValidation.js';
-import argon2 from 'argon2';
-
-const {hash, verify} = argon2;
+import {hash, verify} from 'argon2';
 
 /**
  @path /api/user/
@@ -17,6 +15,7 @@ const findAllUsers = async (req, res) => {
         const users = await User.find();
         res.json(users);
     } catch (err) {
+        console.error(err);
         res.json({message: err});
     }
 };
@@ -31,6 +30,7 @@ const findUserById = async (req, res) => {
         const getUser = await User.findById(req.params.id);
         res.json(getUser);
     } catch (err) {
+        console.error(err);
         res.json({message: err});
     }
 };
@@ -42,7 +42,8 @@ const findUserById = async (req, res) => {
  */
 const signupUser = async (req, res) => {
     const {error} = signupValidation(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) return res.status(400).json(
+        {message: error.details[0].message});
 
     const emailExists = await User.findOne({email: req.body.email});
 
@@ -62,6 +63,7 @@ const signupUser = async (req, res) => {
         const savedUser = await newUser.save();
         res.json({user: savedUser._id});
     } catch (err) {
+        console.error(err);
         res.json({message: err});
     }
 };
@@ -75,22 +77,19 @@ const signinUser = async (req, res) => {
     const invalidCredentialsMsg = (
         'Email or password are wrong - please try again.');
     const {error} = signinValidation(req.body);
-
-    if (error) return res.status(400).send(error.details[0].message);
-
+    if (error) return res.status(400).json({message: error.details[0].message}
+    );
     const user = await User.findOne({email: req.body.email});
-
-    if (!user) return res.status(400).send(invalidCredentialsMsg);
-
+    if (!user) return res.status(400).json({message: invalidCredentialsMsg});
     const validPass = await verify(user.password, req.body.password);
-
-    if (!validPass) return res.status(400).send(invalidCredentialsMsg);
-
+    if (!validPass) return res.status(400).json(
+        {message: invalidCredentialsMsg});
     try {
         sendAccessToken(res, createAccessToken(user));
-        return res.status(200).send({success: true});
+        return res.status(200).json({success: true});
     } catch (err) {
-        console.log(err);
+        console.error(err);
+        res.status(400).json({message: err});
     }
 };
 
@@ -102,10 +101,10 @@ const signinUser = async (req, res) => {
 const signoutUser = async (req, res) => {
     try {
         sendAccessToken(res, '');
-        return res.status(200).send({success: true});
+        return res.status(200).json({success: true});
     } catch (err) {
-        console.log(err);
-        return res.status(400).send({success: false});
+        console.error(err);
+        return res.status(400).json({success: false});
     }
 };
 
@@ -128,8 +127,9 @@ const updateUser = async (req, res) => {
                         oldUser.password
                 }
             });
-        res.json(updatedUser);
+        res.json({updatedUser});
     } catch (err) {
+        console.error(err);
         res.json({message: err});
     }
 };
@@ -141,11 +141,10 @@ const updateUser = async (req, res) => {
  */
 const deleteUser = async (req, res) => {
     try {
-        const deletedUser = await User.deleteOne({
-            _id: req.params.id
-        });
-        res.json(deletedUser);
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
+        res.json({deletedUser});
     } catch (err) {
+        console.error(err);
         res.json({message: err});
     }
 }

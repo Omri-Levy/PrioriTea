@@ -1,3 +1,4 @@
+import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {ModalsContext} from '../../context/ModalsContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
 import createTaskSchema from '../../static/js/validation/createTaskSchema';
@@ -9,6 +10,7 @@ import FormikInput from '../fields/FormikInput.jsx';
 const CreateTaskForm = () => {
     const {setTasks, setTasksCopy} = useContext(TasksContext);
     const {closeCreateTaskModal} = useContext(ModalsContext);
+    const {startLoading, stopLoading, loading} = useContext(LoadingContext);
 
     return (
         <Formik
@@ -18,8 +20,16 @@ const CreateTaskForm = () => {
                 status: ''
             }}
             validationSchema={createTaskSchema}
-            onSubmit={(data) => createTaskPost(data, setTasks, setTasksCopy,
-                closeCreateTaskModal)}
+            onSubmit={async (data) => {
+                startLoading();
+                try {
+                    await createTaskPost(data, setTasks, setTasksCopy,
+                        closeCreateTaskModal);
+                } catch (err) {
+                    console.error(err);
+                }
+                stopLoading();
+            }}
         >
             {() => (
                 <Form className='create-task-form'>
@@ -48,15 +58,22 @@ const CreateTaskForm = () => {
                         placeholder='Task'
                     />
                     <button
+                        disabled={loading}
                         type='submit'
-                        className='primary-btn'>
-                        Create
+                        className='primary-btn excluded-link'>
+                        {loading
+                            ? <i className='fas fa-spinner fa-spin'/>
+                            : <p className='custom-span link-underline'>
+                                Create
+                        </p>}
                     </button>
                     <button
                         onClick={closeCreateTaskModal}
                         type='button'
                         className='primary-btn'>
-                        Cancel
+                        <p className='custom-span link-underline'>
+                            Cancel
+                        </p>
                     </button>
                 </Form>
             )}

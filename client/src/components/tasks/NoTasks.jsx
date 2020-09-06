@@ -18,7 +18,7 @@ const NoTasks = () => {
 
     useEffect(() => {
         counter === 0 && openCreateTaskModal();
-    }, []);
+    }, [counter, openCreateTaskModal]);
 
     return (
         <table>

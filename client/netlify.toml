@@ -1,0 +1,2 @@
+[context.production]
+  environment = { REACT_APP_API_USER = "https://api.prioritea.cc/api/user", REACT_APP_API_TASK = "https://api.prioritea.cc/api/task", REACT_APP_API = "https://api.prioritea.cc/api" }

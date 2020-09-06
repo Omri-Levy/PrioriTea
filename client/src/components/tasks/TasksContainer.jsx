@@ -15,14 +15,14 @@ import Pagination from './Pagination.jsx';
 import Tasks from './Tasks.jsx';
 
 const TasksContainer = () => {
-    const {tasks, setTasks, tasksCopy, setTasksCopy, sort} = useContext(
+    const {tasks, setTasks, tasksCopy, setTasksCopy} = useContext(
         TasksContext);
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
     const {createTaskModalOpen, editTaskModalOpen} = useContext(ModalsContext);
 
     useEffect(() => {
         startLoading();
-        getTasksGet(setTasks, setTasksCopy, sort).catch(err => console.error(
+        getTasksGet(setTasks, setTasksCopy).catch(err => console.error(
             err));
         stopLoading();
     }, []);

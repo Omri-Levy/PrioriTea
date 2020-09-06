@@ -1,19 +1,30 @@
-import axios from 'axios';
+import setIsSignedInPost from './setIsSignedInPost.js';
 
-const signinPost = async (data) => {
-    const url = 'http://localhost:4000/api/user/signin';
-
-    try {
-        await axios.post(url, {
+const signinPost = async (data, history, signin, signout, setError) => {
+    const url = `${process.env.REACT_APP_API_USER}/signin`;
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
             email: data.email,
             password: data.password
-        }, {
-            withCredentials: true
-        });
+        }),
+        credentials: 'include'
+    };
 
+    try {
+        const res = await (await fetch(url, options)).json();
+        if (res.message ===
+            'Email or password are wrong - please try again.') {
+            setError(res.message);
+        }
+        await setIsSignedInPost(signin, signout, history);
     } catch (err) {
         console.log(err);
     }
 };
 
 export default signinPost;
+
