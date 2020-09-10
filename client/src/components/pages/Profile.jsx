@@ -1,13 +1,29 @@
-import React, {useState} from 'react';
-import getCurrentUserPost
-    from '../../static/js/requests/getCurrentUserPost.js';
+import React, {useEffect, useState} from 'react';
+import fetchFn from '../../static/js/requests/fetchFn.js';
 
 const Profile = () => {
     const [currentEmail, setCurrentEmail] = useState('');
     const [currentFullName, setCurrentFullName] = useState('');
+    const getCurrentUserUrl = `${process.env.REACT_APP_API}/get_current_user`;
 
-    getCurrentUserPost(setCurrentEmail, setCurrentFullName)
-        .catch(err => console.error(err));
+    useEffect(() => {
+        const getCurrentUserOptions = {
+            method: 'POST',
+            credentials: 'include'
+        };
+
+        const fetchCurrentUser = async () => {
+            const {data} = await fetchFn(getCurrentUserUrl,
+                getCurrentUserOptions);
+
+            setCurrentEmail(data.email);
+            setCurrentFullName(data.fullName);
+        }
+
+        fetchCurrentUser().catch(err => console.error(err));
+
+    }, []);
+
 
     return (
         <main className='body-container'>

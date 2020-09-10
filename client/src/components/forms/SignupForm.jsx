@@ -1,9 +1,9 @@
 import {AuthContext} from '../../context/AuthContext.jsx';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
+import fetchFn from '../../static/js/requests/fetchFn.js';
 import signupSchema from '../../static/js/validation/signupSchema.js';
 import {Form, Formik} from 'formik';
 import React, {useContext} from 'react';
-import signupPost from '../../static/js/requests/signupPost.js';
 import EmailExists from '../EmailExists.jsx';
 import FormikInput from '../fields/FormikInput.jsx';
 
@@ -11,6 +11,7 @@ const SignupForm = ({history}) => {
     const {displayEmailExistsMsg, setDisplayEmailExistsMsg} = useContext(
         AuthContext);
     const {startLoading, stopLoading, loading} = useContext(LoadingContext);
+    const signupUrl = `${process.env.REACT_APP_API_USER}/signup`;
 
     return (
         <main className='body-container'>
@@ -25,14 +26,42 @@ const SignupForm = ({history}) => {
                     }}
                     validationSchema={signupSchema}
                     onSubmit={async (data) => {
+
                         startLoading();
+
+                        const signupOptions = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                email: data.email,
+                                fullName: data.fullName,
+                                password: data.password,
+                                passwordConfirmation: data.passwordConfirmation
+                            })
+                        };
+
                         try {
-                            await signupPost(data, history,
-                                setDisplayEmailExistsMsg);
+
+                            const {res, data: resData} = await fetchFn(
+                                signupUrl, signupOptions);
+
+                            if (resData.message === 'Email already exists.') {
+                                setDisplayEmailExistsMsg(true);
+                            }
+
+                            if (res.status === 200) {
+                                setDisplayEmailExistsMsg(false);
+                                history.push('/signin');
+                            }
+
                         } catch (err) {
                             console.error(err);
                         }
+
                         stopLoading();
+
                     }}
                 >
                     {() => (

@@ -1,11 +1,36 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {NavLink} from 'react-router-dom';
 import {AuthContext} from '../context/AuthContext.jsx';
-import signoutPost from '../static/js/requests/signoutPost.js';
+import fetchFn from '../static/js/requests/fetchFn.js';
 import slideNav from '../static/js/slideNav.js';
 
 const Nav = () => {
-    const {isSignedIn, signout} = useContext(AuthContext);
+    const {isSignedIn, signout, signin} = useContext(AuthContext);
+    const getCurrentUserUrl = `${process.env.REACT_APP_API}/get_current_user`;
+    const signoutUrl = `${process.env.REACT_APP_API_USER}/signout`;
+
+    useEffect(() => {
+        const getCurrentUserOptions = {
+            method: 'POST',
+            credentials: 'include'
+        };
+
+        const fetchCurrentUser = async () => {
+            const {data} = await fetchFn(getCurrentUserUrl,
+                getCurrentUserOptions);
+            const currentPageIsSignin = window.location.pathname === '/signin';
+            const currentPageIsRoot = window.location.pathname === '/';
+
+            if (data && data.email) return signin();
+
+            if (!currentPageIsSignin && currentPageIsRoot) {
+                window.location.href = '/signin';
+            }
+
+        }
+
+        fetchCurrentUser().catch(err => console.error(err));
+    }, [signin]);
 
     return (
         <nav>
@@ -39,8 +64,19 @@ const Nav = () => {
                     <NavLink
                         activeClassName='current-link'
                         onClick={async () => {
-                            await signoutPost();
+
+                            const signoutOptions = {
+                                method: 'POST',
+                                credentials: 'include'
+                            };
+                            try {
+                                await fetchFn(signoutUrl, signoutOptions);
+                            } catch (err) {
+                                console.error(err);
+                            }
+
                             signout();
+
                         }}
                         to='/signin'>
                         SIGNOUT
