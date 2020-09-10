@@ -14,10 +14,10 @@ const getTasks = async (req, res) => {
         const verified = verifyJwt(token, process.env.SECRET_ACCESS_TOKEN);
         const tasks = await Task.find({owner: verified.id});
 
-        res.json(tasks);
+        return res.status(200).json(tasks);
     } catch (err) {
-        res.json(err);
         console.error(err);
+        return res.status(400).json(err);
     }
 };
 
@@ -45,9 +45,9 @@ const createTask = async (req, res) => {
     try {
         const savedTask = await newTask.save();
 
-        res.json({task: savedTask._id});
+        return res.status(200).json({task: savedTask._id});
     } catch (err) {
-        res.json({message: err});
+        return res.status(400).json({message: err});
     }
 
 }
@@ -69,9 +69,10 @@ const editTask = async (req, res) => {
                     oldTask.status
             }
         });
-        res.json(updatedTask);
+
+        return res.status(200).json(updatedTask);
     } catch (err) {
-        res.json({message: err});
+        return res.status(400).json({message: err});
     }
 }
 
@@ -84,9 +85,9 @@ const deleteTask = async (req, res) => {
     try {
         const deletedTask = await Task.deleteOne({_id: req.body._id});
 
-        res.json(deletedTask);
+        return res.status(200).json(deletedTask);
     } catch (err) {
-        res.json({message: err});
+        return res.status(400).json({message: err});
     }
 }
 

@@ -1,16 +1,20 @@
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {ModalsContext} from '../../context/ModalsContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
+import {persistFilter} from '../../static/js/filter.js';
+import fetchFn from '../../static/js/requests/fetchFn.js';
+import sortFn from '../../static/js/sortFn.js';
 import createTaskSchema from '../../static/js/validation/createTaskSchema';
 import {Form, Formik} from 'formik';
 import React, {useContext} from 'react';
-import createTaskPost from '../../static/js/requests/createTaskPost.js';
 import FormikInput from '../fields/FormikInput.jsx';
 
 const CreateTaskForm = () => {
     const {setTasks, setTasksCopy} = useContext(TasksContext);
     const {closeCreateTaskModal} = useContext(ModalsContext);
     const {startLoading, stopLoading, loading} = useContext(LoadingContext);
+    const createTaskUrl = `${process.env.REACT_APP_API_TASK}/create_task`;
+    const getTasksUrl = `${process.env.REACT_APP_API_TASK}/get_tasks`;
 
     return (
         <Formik
@@ -21,13 +25,45 @@ const CreateTaskForm = () => {
             }}
             validationSchema={createTaskSchema}
             onSubmit={async (data) => {
+
                 startLoading();
+
+                const createTaskOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        priority: data.priority,
+                        task: data.task
+                    }),
+                    credentials: 'include'
+                };
+
+                const getTasksOptions = {
+                    method: 'GET',
+                    credentials: 'include'
+                };
+
                 try {
-                    await createTaskPost(data, setTasks, setTasksCopy,
-                        closeCreateTaskModal);
+
+                    await fetchFn(createTaskUrl, createTaskOptions);
+
+                    closeCreateTaskModal();
+
+                    const {data: resData} = await fetchFn(getTasksUrl
+                        , getTasksOptions);
+
+                    const filteredData = persistFilter(resData);
+                    const sortedData = sortFn(filteredData);
+
+                    setTasks(sortedData);
+                    setTasksCopy(sortedData);
+
                 } catch (err) {
                     console.error(err);
                 }
+
                 stopLoading();
             }}
         >
@@ -65,7 +101,7 @@ const CreateTaskForm = () => {
                             ? <i className='fas fa-spinner fa-spin'/>
                             : <p className='custom-span link-underline'>
                                 Create
-                        </p>}
+                            </p>}
                     </button>
                     <button
                         onClick={closeCreateTaskModal}

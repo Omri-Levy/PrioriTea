@@ -20,10 +20,13 @@ const Tasks = () => {
     if (loading) return <Loading/>;
 
     const updateSorting = (Event) => {
-        const isGet = false;
 
         toggleSort(Event);
-        sortFn(tasksCopy, null, setTasksCopy, isGet);
+
+        const sortedData = sortFn(tasksCopy);
+
+        setTasksCopy(sortedData);
+
     };
 
     const sortExists = (header) => {

@@ -3,20 +3,29 @@ import "regenerator-runtime/runtime";
 import {verify} from 'jsonwebtoken';
 
 const getCurrentUser = async (req, res, next) => {
-    try {
-        const authorization = req.headers['cookie'];
-        const token = authorization.split('mid=')[1];
-        const verified = verify(token, process.env.SECRET_ACCESS_TOKEN);
+    const authorization = req.headers['cookie'];
 
-        res.json({email: verified.email, fullName: verified.fullName});
-    } catch (err) {
-        if (req.headers['cookie'] === undefined) {
-            console.error('unauthorized');
-        } else {
-            console.error(err);
-        }
-        res.json({success: false});
+    if (!authorization) {
+        console.error('unauthorized');
+        return res.status(400).json({success: false});
     }
+
+    const token = authorization.split('mid=')[1];
+
+    if (!token) {
+        console.error('unauthorized');
+        return res.status(400).json({success: false});
+    }
+
+    const verified = verify(token, process.env.SECRET_ACCESS_TOKEN);
+
+    if (!verified) {
+        console.error('unauthorized');
+        return res.status(400).json({success: false});
+    }
+
+    res.json({email: verified.email, fullName: verified.fullName});
+
     next();
 };
 

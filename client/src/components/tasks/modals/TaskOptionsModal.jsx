@@ -2,15 +2,19 @@ import React, {useContext} from 'react';
 import {LoadingContext} from '../../../context/LoadingContext.jsx';
 import {ModalsContext} from '../../../context/ModalsContext.jsx';
 import {TasksContext} from '../../../context/TasksContext.jsx';
+import {persistFilter} from '../../../static/js/filter.js';
 import {displayTaskOptionsTooltip, hideTaskOptionsTooltip}
     from '../../../static/js/handlers';
-import deleteTaskDelete from '../../../static/js/requests/deleteTaskDelete';
+import fetchFn from '../../../static/js/requests/fetchFn.js';
+import sortFn from '../../../static/js/sortFn.js';
 
 const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
     const {setTasks, setTasksCopy, setEditTaskId} = useContext(
         TasksContext);
     const {openEditTaskModal, openCreateTaskModal} = useContext(ModalsContext);
     const {startLoading, stopLoading} = useContext(LoadingContext);
+    const deleteTaskUrl = `${process.env.REACT_APP_API_TASK}/delete_task`;
+    const getTasksUrl = `${process.env.REACT_APP_API_TASK}/get_tasks`;
 
     const editTask = () => {
         openEditTaskModal();
@@ -54,9 +58,40 @@ const TaskOptionsModal = ({taskId, noTasks, invalidFilter}) => {
                         title={invalidFilterOrNoTasks('delete')}
                         onClick={noTasks || invalidFilter ? null
                             : async () => {
-                            startLoading();
-                                await deleteTaskDelete(taskId, setTasks,
-                                    setTasksCopy);
+                                startLoading();
+
+                                const deleteTaskOptions = {
+                                    method: 'DELETE',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({_id: taskId}),
+                                    credentials: 'include'
+                                };
+
+                                const getTasksOptions = {
+                                    method: 'GET',
+                                    credentials: 'include'
+                                };
+
+                                try {
+                                    await fetchFn(deleteTaskUrl,
+                                        deleteTaskOptions);
+
+                                    const {data: resData} = await fetchFn(
+                                        getTasksUrl, getTasksOptions);
+
+                                    const filteredData = persistFilter(resData
+                                    );
+                                    const sortedData = sortFn(filteredData);
+
+                                    setTasks(sortedData);
+                                    setTasksCopy(sortedData);
+
+                                } catch (err) {
+                                    console.error(err);
+                                }
+
                                 stopLoading();
                             }
                         }

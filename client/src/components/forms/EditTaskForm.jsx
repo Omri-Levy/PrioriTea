@@ -1,32 +1,70 @@
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {ModalsContext} from '../../context/ModalsContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
+import {persistFilter} from '../../static/js/filter.js';
+import fetchFn from '../../static/js/requests/fetchFn.js';
+import sortFn from '../../static/js/sortFn.js';
 import editTaskSchema from '../../static/js/validation/editTaskSchema.js';
 import {Form, Formik} from 'formik';
 import React, {useContext} from 'react';
-import editTaskPatch from '../../static/js/requests/editTaskPatch.js';
 import FormikInput from '../fields/FormikInput.jsx';
 
 const EditTaskForm = () => {
-    const {tasks, setTasks, setTasksCopy, editTaskId} = useContext(
+    const {setTasks, setTasksCopy, editTaskId} = useContext(
         TasksContext);
     const {closeEditTaskModal} = useContext(ModalsContext);
     const {startLoading, stopLoading, loading} = useContext(LoadingContext);
-
+    const getTasksUrl = `${process.env.REACT_APP_API_TASK}/get_tasks`;
+    const editTaskUrl = `${process.env.REACT_APP_API_TASK}/edit_task`;
 
     return (
         <Formik
             initialValues={{priority: '', task: '', status: ''}}
             validationSchema={editTaskSchema}
             onSubmit={async (data) => {
+
                 startLoading();
+
+                const getTasksOptions = {
+                    method: 'GET',
+                    credentials: 'include'
+                };
+
+                const editTaskOptions = {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        _id: editTaskId,
+                        priority: data.priority,
+                        task: data.task,
+                        status: data.status
+                    }),
+                    credentials: 'include'
+                };
+
                 try {
-                    await editTaskPatch(data, editTaskId, tasks,
-                        setTasks, setTasksCopy, closeEditTaskModal);
+
+                    await fetchFn(editTaskUrl, editTaskOptions);
+
+                    closeEditTaskModal();
+
+                    const {data: resData} = await fetchFn(getTasksUrl
+                        , getTasksOptions);
+
+                    const filteredData = persistFilter(resData);
+                    const sortedData = sortFn(filteredData);
+
+                    setTasks(sortedData);
+                    setTasksCopy(sortedData);
+
                 } catch (err) {
                     console.error(err);
                 }
+
                 stopLoading();
+
             }}>
             {() => (
                 <Form className='edit-task-form'>

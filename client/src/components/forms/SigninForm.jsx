@@ -1,15 +1,17 @@
 import {AuthContext} from '../../context/AuthContext.jsx';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
+import fetchFn from '../../static/js/requests/fetchFn.js';
 import signinSchema from '../../static/js/validation/signinSchema.js';
 import {Form, Formik} from 'formik';
 import React, {useContext, useState} from 'react';
-import signinPost from '../../static/js/requests/signinPost.js';
 import FormikInput from '../fields/FormikInput.jsx';
 
 const SigninForm = ({history}) => {
     const {signin, signout} = useContext(AuthContext);
     const {startLoading, stopLoading, loading} = useContext(LoadingContext);
     const [error, setError] = useState(null);
+    const signinUrl = `${process.env.REACT_APP_API_USER}/signin`;
+    const setIsSignedInUrl = `${process.env.REACT_APP_API}/auth`;
 
     return (
         <main className='body-container'>
@@ -23,10 +25,56 @@ const SigninForm = ({history}) => {
                     }}
                     validationSchema={signinSchema}
                     onSubmit={async (data) => {
+
                         startLoading();
-                        await signinPost(data, history, signin, signout,
-                            setError);
+
+                        const signinOptions = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                email: data.email,
+                                password: data.password
+                            }),
+                            credentials: 'include'
+                        };
+
+                        const setIsSignedInOptions = {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            credentials: 'include'
+                        };
+
+                        try {
+                            const {data: signinData} = await fetchFn(signinUrl,
+                                signinOptions);
+                            console.log(signinData)
+                            if (signinData.message &&
+                                signinData.message.includes(
+                                    'Email or password are wrong')) {
+                                setError(signinData.message);
+                            }
+
+                            const {data: setIsSignedInData} = await fetchFn(
+                                setIsSignedInUrl, setIsSignedInOptions);
+
+                            if (setIsSignedInData &&
+                                setIsSignedInData.isSignedIn) {
+                                signin();
+                                history.push('/');
+                            } else {
+                                signout();
+                                history.push('/signin');
+                            }
+
+                        } catch (err) {
+                            console.error(err);
+                        }
                         stopLoading();
+
                     }}
                 >
                     {() => (

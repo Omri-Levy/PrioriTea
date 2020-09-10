@@ -13,10 +13,10 @@ import {hash, verify} from 'argon2';
 const findAllUsers = async (req, res) => {
     try {
         const users = await User.find();
-        res.json(users);
+        return res.status(200).json(users);
     } catch (err) {
         console.error(err);
-        res.json({message: err});
+        return res.status(400).json({message: err});
     }
 };
 
@@ -28,10 +28,10 @@ const findAllUsers = async (req, res) => {
 const findUserById = async (req, res) => {
     try {
         const getUser = await User.findById(req.params.id);
-        res.json(getUser);
+        return res.status(200).json(getUser);
     } catch (err) {
         console.error(err);
-        res.json({message: err});
+        return res.status(400).json({message: err});
     }
 };
 
@@ -61,10 +61,10 @@ const signupUser = async (req, res) => {
 
     try {
         const savedUser = await newUser.save();
-        res.json({user: savedUser._id});
+        return res.status(200).json({user: savedUser._id});
     } catch (err) {
         console.error(err);
-        res.json({message: err});
+        return res.status(400).json({message: err});
     }
 };
 
@@ -77,19 +77,24 @@ const signinUser = async (req, res) => {
     const invalidCredentialsMsg = (
         'Email or password are wrong - please try again.');
     const {error} = signinValidation(req.body);
+
     if (error) return res.status(400).json({message: error.details[0].message}
     );
+
     const user = await User.findOne({email: req.body.email});
     if (!user) return res.status(400).json({message: invalidCredentialsMsg});
+
     const validPass = await verify(user.password, req.body.password);
-    if (!validPass) return res.status(400).json(
-        {message: invalidCredentialsMsg});
+    if (!validPass) return res.status(400).json({
+        message: invalidCredentialsMsg
+    });
+
     try {
         sendAccessToken(res, createAccessToken(user));
         return res.status(200).json({success: true});
     } catch (err) {
         console.error(err);
-        res.status(400).json({message: err});
+        return res.status(400).json({message: err});
     }
 };
 
@@ -127,10 +132,10 @@ const updateUser = async (req, res) => {
                         oldUser.password
                 }
             });
-        res.json({updatedUser});
+        return res.status(200).json({updatedUser});
     } catch (err) {
         console.error(err);
-        res.json({message: err});
+        return res.status(400).json({message: err});
     }
 };
 
@@ -142,10 +147,10 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     try {
         const deletedUser = await User.findByIdAndDelete(req.params.id);
-        res.json({deletedUser});
+        return res.status(200).json({deletedUser});
     } catch (err) {
         console.error(err);
-        res.json({message: err});
+        return res.status(400).json({message: err});
     }
 }
 

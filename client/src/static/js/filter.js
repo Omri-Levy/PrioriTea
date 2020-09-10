@@ -31,13 +31,16 @@ const setFilter = (key, value) => {
     localStorage.setItem('filter', JSON.stringify(filterObj));
 };
 
-const persistFilter = (tasks, setTasksCopy) => {
+const persistFilter = (data) => {
     const filterObj = JSON.parse(localStorage.getItem('filter'));
 
     if (filterObj) {
         const {key, value} = filterObj;
-        const filteredTasks = tasks.filter(task => task[key] === value);
-        setTasksCopy(filteredTasks);
+
+        return data.filter(task => task[key] === value);
+
+    } else {
+        return data;
     }
 };
 
