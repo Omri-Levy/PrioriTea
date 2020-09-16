@@ -5,9 +5,9 @@ import fetchFn from '../static/js/requests/fetchFn.js';
 import slideNav from '../static/js/slideNav.js';
 
 const Nav = () => {
-    const {isSignedIn, signout, signin} = useContext(AuthContext);
+    const {isSignedIn, signOut, signIn} = useContext(AuthContext);
     const getCurrentUserUrl = `${process.env.REACT_APP_API}/get_current_user`;
-    const signoutUrl = `${process.env.REACT_APP_API_USER}/signout`;
+    const signOutUrl = `${process.env.REACT_APP_API_USER}/sign_out`;
 
     useEffect(() => {
         const getCurrentUserOptions = {
@@ -18,19 +18,20 @@ const Nav = () => {
         const fetchCurrentUser = async () => {
             const {data} = await fetchFn(getCurrentUserUrl,
                 getCurrentUserOptions);
-            const currentPageIsSignin = window.location.pathname === '/signin';
+            const currentPageIsSignin = (
+                window.location.pathname === '/sign_in');
             const currentPageIsRoot = window.location.pathname === '/';
 
-            if (data && data.email) return signin();
+            if (data && data.email) return signIn();
 
             if (!currentPageIsSignin && currentPageIsRoot) {
-                window.location.href = '/signin';
+                window.location.href = '/sign_in';
             }
 
-        }
+        };
 
         fetchCurrentUser().catch(err => console.error(err));
-    }, [signin]);
+    }, [signIn]);
 
     return (
         <nav>
@@ -55,8 +56,8 @@ const Nav = () => {
                 <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
-                        to='/signin'>
-                        SIGNIN
+                        to='/sign_in'>
+                        SIGN IN
                     </NavLink>
                 </li>}
                 {isSignedIn &&
@@ -65,29 +66,29 @@ const Nav = () => {
                         activeClassName='current-link'
                         onClick={async () => {
 
-                            const signoutOptions = {
+                            const signOutOptions = {
                                 method: 'POST',
                                 credentials: 'include'
                             };
                             try {
-                                await fetchFn(signoutUrl, signoutOptions);
+                                await fetchFn(signOutUrl, signOutOptions);
                             } catch (err) {
                                 console.error(err);
                             }
 
-                            signout();
+                            signOut();
 
                         }}
-                        to='/signin'>
-                        SIGNOUT
+                        to='/sign_in'>
+                        SIGN OUT
                     </NavLink>
                 </li>}
                 {!isSignedIn &&
                 <li className='nav-link'>
                     <NavLink
                         activeClassName='current-link'
-                        to='/signup'>
-                        SIGNUP
+                        to='/sign_up'>
+                        SIGN UP
                     </NavLink>
                 </li>}
             </ul>

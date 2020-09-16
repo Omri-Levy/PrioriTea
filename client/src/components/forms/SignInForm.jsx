@@ -1,16 +1,16 @@
 import {AuthContext} from '../../context/AuthContext.jsx';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import fetchFn from '../../static/js/requests/fetchFn.js';
-import signinSchema from '../../static/js/validation/signinSchema.js';
+import signInSchema from '../../static/js/validation/signInSchema.js';
 import {Form, Formik} from 'formik';
 import React, {useContext, useState} from 'react';
 import FormikInput from '../fields/FormikInput.jsx';
 
-const SigninForm = ({history}) => {
-    const {signin, signout} = useContext(AuthContext);
+const SignInForm = ({history}) => {
+    const {signIn, signOut} = useContext(AuthContext);
     const {startLoading, stopLoading, loading} = useContext(LoadingContext);
     const [error, setError] = useState(null);
-    const signinUrl = `${process.env.REACT_APP_API_USER}/signin`;
+    const signInUrl = `${process.env.REACT_APP_API_USER}/sign_in`;
     const setIsSignedInUrl = `${process.env.REACT_APP_API}/auth`;
 
     return (
@@ -23,12 +23,12 @@ const SigninForm = ({history}) => {
                         password: '',
                         passwordConfirmation: '',
                     }}
-                    validationSchema={signinSchema}
+                    validationSchema={signInSchema}
                     onSubmit={async (data) => {
 
                         startLoading();
 
-                        const signinOptions = {
+                        const signInOptions = {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -49,13 +49,13 @@ const SigninForm = ({history}) => {
                         };
 
                         try {
-                            const {data: signinData} = await fetchFn(signinUrl,
-                                signinOptions);
-                            console.log(signinData)
-                            if (signinData.message &&
-                                signinData.message.includes(
+                            const {data: signInData} = await fetchFn(signInUrl,
+                                signInOptions);
+                            console.log(signInData)
+                            if (signInData.message &&
+                                signInData.message.includes(
                                     'Email or password are wrong')) {
-                                setError(signinData.message);
+                                setError(signInData.message);
                             }
 
                             const {data: setIsSignedInData} = await fetchFn(
@@ -63,11 +63,11 @@ const SigninForm = ({history}) => {
 
                             if (setIsSignedInData &&
                                 setIsSignedInData.isSignedIn) {
-                                signin();
+                                signIn();
                                 history.push('/');
                             } else {
-                                signout();
-                                history.push('/signin');
+                                signOut();
+                                history.push('/sign_in');
                             }
 
                         } catch (err) {
@@ -78,7 +78,7 @@ const SigninForm = ({history}) => {
                     }}
                 >
                     {() => (
-                        <Form className='signin-form'>
+                        <Form className='sign-in-form'>
                             <p className='required-fields-msg'>
                                 Indicates required fields
                             </p>
@@ -125,4 +125,4 @@ const SigninForm = ({history}) => {
     );
 };
 
-export default SigninForm;
+export default SignInForm;

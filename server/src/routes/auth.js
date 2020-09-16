@@ -1,7 +1,7 @@
 import express from 'express';
 import {
-    deleteUser, findAllUsers, findUserById, signinUser, signupUser,
-    signoutUser, updateUser
+    deleteUser, findAllUsers, findUserById, signInUser, signUpUser,
+    signOutUser, updateUser
 } from '../controllers/auth.js';
 
 const auth = express.Router();
@@ -13,13 +13,13 @@ auth.get('/', (req, res) => findAllUsers(req, res));
 auth.get('/:id', (req, res) => findUserById(req, res));
 
 //add a new user to mongodb
-auth.post('/signup', (req, res) => signupUser(req, res));
+auth.post('/sign_up', (req, res) => signUpUser(req, res));
 
-//signin an existing user from mongodb
-auth.post('/signin', (req, res) => signinUser(req, res));
+//sign in an existing user from mongodb
+auth.post('/sign_in', (req, res) => signInUser(req, res));
 
-//signin an existing user from mongodb
-auth.post('/signout', (req, res) => signoutUser(req, res));
+//sign in an existing user from mongodb
+auth.post('/sign_out', (req, res) => signOutUser(req, res));
 
 //update an existing user from mongodb by id
 auth.patch('/:id', (req, res) => updateUser(req, res));

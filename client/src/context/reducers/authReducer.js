@@ -1,8 +1,8 @@
 const authReducer = (state, action) => {
     switch (action.type) {
-        case 'SIGNIN':
+        case 'SIGN_IN':
             return true;
-        case 'SIGNOUT':
+        case 'SIGN_OUT':
             return false;
         default:
             return false;

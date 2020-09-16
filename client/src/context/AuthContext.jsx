@@ -8,12 +8,12 @@ const AuthProvider = props => {
     const [displayEmailExistsMsg, setDisplayEmailExistsMsg] = useState(
         false);
 
-    const signin = () => dispatch({type: 'SIGNIN'});
-    const signout = () => dispatch({type: 'SIGNOUT'});
+    const signIn = () => dispatch({type: 'SIGN_IN'});
+    const signOut = () => dispatch({type: 'SIGN_OUT'});
 
     return (
         <AuthContext.Provider value={{
-            isSignedIn, signin, signout,
+            isSignedIn, signIn, signOut,
             displayEmailExistsMsg, setDisplayEmailExistsMsg
         }}>
             {props.children}

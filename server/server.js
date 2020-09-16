@@ -22,7 +22,7 @@ import morgan from 'morgan';
         //route middlewares
         app.use('/api/user', auth);
         app.use('/api/task', task);
-        app.use('/api/user/signin', cookieParser());
+        app.use('/api/user/sign_in', cookieParser());
         app.post('/api/get_current_user', getCurrentUser);
         app.post('/api/auth', setIsSignedIn);
 

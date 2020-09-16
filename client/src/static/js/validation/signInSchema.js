@@ -5,9 +5,9 @@ const emailRequiredMsg = 'Email is a required field.';
 
 const passwordRequiredMsg = 'Password is a required field.';
 
-const signinSchema = Yup.object({
+const signInSchema = Yup.object({
     email: Yup.string().email(emailValidMsg).required(emailRequiredMsg),
     password: Yup.string().required(passwordRequiredMsg)
 });
 
-export default signinSchema;
+export default signInSchema;

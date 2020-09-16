@@ -25,8 +25,8 @@ const EmailExists = () => {
                     : <>Email already exists</>}
                 {msgFits &&
                 <Link
-                    to='/signin'
-                    className='signin-link'
+                    to='/sign_in'
+                    className='sign-in-link'
                     onClick={() => setDisplayEmailExistsMsg(false)}
                 >
                     <em>Signin</em>

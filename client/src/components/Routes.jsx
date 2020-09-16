@@ -4,8 +4,8 @@ import {AuthContext} from '../context/AuthContext.jsx';
 import Header from './Header.jsx';
 import Home from './pages/Home.jsx';
 import Profile from './pages/Profile.jsx';
-import Signin from './pages/Signin.jsx';
-import Signup from './pages/Signup.jsx';
+import SignIn from './pages/SignIn.jsx';
+import SignUp from './pages/SignUp.jsx';
 
 const Routes = () => {
     const {isSignedIn} = useContext(AuthContext);
@@ -23,12 +23,12 @@ const Routes = () => {
                        component={Profile}/>
                 }
                 {!isSignedIn &&
-                < Route exact path='/signin'
-                        component={Signin}/>
+                < Route exact path='/sign_in'
+                        component={SignIn}/>
                 }
                 {!isSignedIn &&
-                < Route exact path='/signup'
-                        component={Signup}/>
+                < Route exact path='/sign_up'
+                        component={SignUp}/>
                 }
             </Switch>
         </Router>

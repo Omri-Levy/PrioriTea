@@ -1,17 +1,17 @@
 import {AuthContext} from '../../context/AuthContext.jsx';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import fetchFn from '../../static/js/requests/fetchFn.js';
-import signupSchema from '../../static/js/validation/signupSchema.js';
+import signUpSchema from '../../static/js/validation/signUpSchema.js';
 import {Form, Formik} from 'formik';
 import React, {useContext} from 'react';
 import EmailExists from '../EmailExists.jsx';
 import FormikInput from '../fields/FormikInput.jsx';
 
-const SignupForm = ({history}) => {
+const SignUpForm = ({history}) => {
     const {displayEmailExistsMsg, setDisplayEmailExistsMsg} = useContext(
         AuthContext);
     const {startLoading, stopLoading, loading} = useContext(LoadingContext);
-    const signupUrl = `${process.env.REACT_APP_API_USER}/signup`;
+    const signUpUrl = `${process.env.REACT_APP_API_USER}/sign_up`;
 
     return (
         <main className='body-container'>
@@ -24,12 +24,12 @@ const SignupForm = ({history}) => {
                         password: '',
                         passwordConfirmation: '',
                     }}
-                    validationSchema={signupSchema}
+                    validationSchema={signUpSchema}
                     onSubmit={async (data) => {
 
                         startLoading();
 
-                        const signupOptions = {
+                        const signUpOptions = {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ const SignupForm = ({history}) => {
                         try {
 
                             const {res, data: resData} = await fetchFn(
-                                signupUrl, signupOptions);
+                                signUpUrl, signUpOptions);
 
                             if (resData.message === 'Email already exists.') {
                                 setDisplayEmailExistsMsg(true);
@@ -53,7 +53,7 @@ const SignupForm = ({history}) => {
 
                             if (res.status === 200) {
                                 setDisplayEmailExistsMsg(false);
-                                history.push('/signin');
+                                history.push('/sign_in');
                             }
 
                         } catch (err) {
@@ -65,7 +65,7 @@ const SignupForm = ({history}) => {
                     }}
                 >
                     {() => (
-                        <Form className='signup-form'>
+                        <Form className='sign-up-form'>
                             <p className='required-fields-msg'>
                                 Indicates required fields
                             </p>
@@ -128,5 +128,5 @@ const SignupForm = ({history}) => {
     );
 };
 
-export default SignupForm;
+export default SignUpForm;
 

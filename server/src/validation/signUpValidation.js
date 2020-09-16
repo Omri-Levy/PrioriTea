@@ -1,13 +1,13 @@
 import Joi from 'joi';
 import passwordComplexity from 'joi-password-complexity';
 
-const signupValidation = (data) => {
+const signUpValidation = (data) => {
     const complexityOptions = {
         min: 8, max: 256, lowerCase: 1, upperCase: 1, numeric: 1, symbol: 1,
         requirementCount: 4
     }
 
-    const signupSchema = Joi.object({
+    const signUpSchema = Joi.object({
         email: Joi.string().min(7).max(320).email().required(),
         fullName: Joi.string().min(4).max(70).required(),
         password: passwordComplexity(complexityOptions).required(),
@@ -15,7 +15,7 @@ const signupValidation = (data) => {
             .required()
     });
 
-    return signupSchema.validate(data);
+    return signUpSchema.validate(data);
 };
 
-export default signupValidation;
+export default signUpValidation;

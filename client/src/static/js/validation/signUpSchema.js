@@ -23,7 +23,7 @@ const fullNameRequiredMsg = 'Full name is a required field.';
 const passwordRequiredMsg = 'Password is a required field.';
 const passwordMustMatchMsg = 'Passwords must match';
 
-const signupSchema = Yup.object({
+const signUpSchema = Yup.object({
     email: Yup.string()
         .min(7, emailMinCharsMsg).max(320, emailMaxCharsMsg).email(
             emailValidMsg).required(emailRequiredMsg),
@@ -39,4 +39,4 @@ const signupSchema = Yup.object({
         passwordMustMatchMsg)
 });
 
-export default signupSchema;
+export default signUpSchema;

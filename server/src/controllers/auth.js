@@ -1,8 +1,8 @@
 import createAccessToken from '../js/createAccessToken.js';
 import sendAccessToken from '../js/sendAccessToken.js';
 import User from '../models/User.js';
-import signupValidation from '../validation/signupValidation.js';
-import signinValidation from '../validation/signinValidation.js';
+import signUpValidation from '../validation/signUpValidation.js';
+import signInValidation from '../validation/signInValidation.js';
 import {hash, verify} from 'argon2';
 
 /**
@@ -36,12 +36,12 @@ const findUserById = async (req, res) => {
 };
 
 /**
- @path /api/user/signup
+ @path /api/user/sign_up
  @request post
  @desc add a new user to mongodb
  */
-const signupUser = async (req, res) => {
-    const {error} = signupValidation(req.body);
+const signUpUser = async (req, res) => {
+    const {error} = signUpValidation(req.body);
     if (error) return res.status(400).json(
         {message: error.details[0].message});
 
@@ -69,14 +69,14 @@ const signupUser = async (req, res) => {
 };
 
 /**
- @path /api/user/signin
+ @path /api/user/sign_in
  @request post
- @desc signin an existing user from mongodb
+ @desc sign in an existing user from mongodb
  */
-const signinUser = async (req, res) => {
+const signInUser = async (req, res) => {
     const invalidCredentialsMsg = (
         'Email or password are wrong - please try again.');
-    const {error} = signinValidation(req.body);
+    const {error} = signInValidation(req.body);
 
     if (error) return res.status(400).json({message: error.details[0].message}
     );
@@ -99,11 +99,11 @@ const signinUser = async (req, res) => {
 };
 
 /**
- @path /api/user/signout
+ @path /api/user/sign_out
  @request post
- @desc signout an existing user from mongodb
+ @desc sign out an existing user from mongodb
  */
-const signoutUser = async (req, res) => {
+const signOutUser = async (req, res) => {
     try {
         sendAccessToken(res, '');
         return res.status(200).json({success: true});
@@ -155,6 +155,6 @@ const deleteUser = async (req, res) => {
 }
 
 export {
-    findAllUsers, findUserById, signupUser, signinUser, signoutUser,
+    findAllUsers, findUserById, signUpUser, signInUser, signOutUser,
     updateUser, deleteUser
 };
