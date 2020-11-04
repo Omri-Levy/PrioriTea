@@ -25,6 +25,10 @@
 .priority, .task, .status {
   min-width: 260px;
   max-width: 260px;
+  @media screen and (max-width: 768px) {
+    min-width: 100%;
+    height: 110px;
+  }
 }
 
 .required:before, .error:before {
@@ -154,4 +158,8 @@
 
 .custom-span {
   display: inline-block;
+}
+
+.responsive-section {
+  margin: 0 3px;
 }

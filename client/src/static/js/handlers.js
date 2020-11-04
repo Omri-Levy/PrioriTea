@@ -1,12 +1,12 @@
 const displayTaskOptionsTooltip = () => {
-    const selector = '.task-options-tooltip-btn'
+    const selector = '.task-options-tooltip-btn';
     const parent = document.querySelector(selector);
     const target = parent.firstChild;
     target && target.classList.remove('hidden');
 };
 
 const hideTaskOptionsTooltip = () => {
-    const selector = '.task-options-tooltip-btn'
+    const selector = '.task-options-tooltip-btn';
     const parent = document.querySelector(selector);
     const target = parent.firstChild;
     target && target.classList.add('hidden');
@@ -45,7 +45,6 @@ const toggleSort = (Event) => {
         }));
     }
 };
-
 
 export {
     displayTaskOptionsTooltip, hideTaskOptionsTooltip, displayTaskFilterTooltip

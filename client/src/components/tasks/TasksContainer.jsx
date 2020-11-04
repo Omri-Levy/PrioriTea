@@ -1,6 +1,4 @@
-import React, {useContext, useEffect} from 'react';
-import {Redirect} from 'react-router-dom';
-import {AuthContext} from '../../context/AuthContext.jsx';
+import React, {useContext, useEffect, useState} from 'react';
 import {LoadingContext} from '../../context/LoadingContext.jsx';
 import {ModalsContext} from '../../context/ModalsContext.jsx';
 import {TasksContext} from '../../context/TasksContext.jsx';
@@ -10,6 +8,9 @@ import sortFn from '../../static/js/sortFn.js';
 import FilterSearch from '../fields/FilterSearch.jsx';
 import Loading from '../loading/Loading.jsx';
 import InvalidFilter from './InvalidFilter.jsx';
+import MobileNoTasks from './MobileNoTasks.jsx';
+import MobilePagination from './MobilePagination.jsx';
+import MobileTasks from './MobileTasks.jsx';
 import CreateTaskModal from './modals/CreateTaskModal.jsx';
 import EditTaskModal from './modals/EditTaskModal.jsx';
 import NoTasks from './NoTasks.jsx';
@@ -22,6 +23,31 @@ const TasksContainer = () => {
         TasksContext);
     const {loading, startLoading, stopLoading} = useContext(LoadingContext);
     const {createTaskModalOpen, editTaskModalOpen} = useContext(ModalsContext);
+    const [screenSize, setScreenSize] = useState(window.innerWidth);
+
+    const responsivePagination = () => {
+        if (screenSize <= 768) {
+            return <MobilePagination/>;
+        } else {
+            return <Pagination/>;
+        }
+    };
+
+    const responsiveTasks = () => {
+        if (screenSize <= 768) {
+            return <MobileTasks/>;
+        } else {
+            return <Tasks/>;
+        }
+    };
+
+    const responsiveNoTasks = () => {
+        if (screenSize <= 768) {
+            return <MobileNoTasks/>;
+        } else {
+            return <NoTasks/>;
+        }
+    };
 
     useEffect(() => {
 
@@ -49,6 +75,13 @@ const TasksContainer = () => {
 
     }, []);
 
+    useEffect(() => {
+        window.addEventListener('resize', () => {
+            setScreenSize(window.innerWidth);
+        });
+    }, []);
+
+
     if (loading) return <Loading/>;
 
     const filterBySearchWrapper = (Event) => {
@@ -57,7 +90,7 @@ const TasksContainer = () => {
 
     const noTasks = () => {
         return tasks.length === 0 && tasksCopy.length === 0;
-    }
+    };
 
     const noTasksCopy = () => {
         return tasksCopy.length === 0 && tasks.length !== 0;
@@ -79,8 +112,9 @@ const TasksContainer = () => {
                               'primary-input'}
                           onChange={(Event) => filterBySearchWrapper(Event)}/>
             {noTasksCopy() && <InvalidFilter/>}
-            {noTasks() && !noTasksCopy() ? <NoTasks/> : <Tasks/>}
-            {noTasks() || noTasksCopy() ? <OnePager/> : <Pagination/>}
+            {noTasks() && !noTasksCopy() ? responsiveNoTasks() :
+                responsiveTasks()}
+            {noTasks() || noTasksCopy() ? <OnePager/> : responsivePagination()}
         </div>
     );
 };

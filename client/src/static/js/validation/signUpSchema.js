@@ -9,7 +9,7 @@ const passComplexityMsg = (
     ' special case character'
 );
 
-const emailMinCharsMsg = 'Email must include a minimum of 7 characters.';
+const emailMinCharsMsg = 'Email must include a minimum of 6 characters.';
 const emailMaxCharsMsg = 'Email must include a maximum of 320 characters.';
 const emailRequiredMsg = 'Email is a required field.';
 const emailValidMsg = 'Email must be valid.';

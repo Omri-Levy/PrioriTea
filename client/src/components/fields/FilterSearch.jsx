@@ -2,7 +2,7 @@ import React from 'react';
 
 const FilterSearch = ({label, ...props}) => {
     return (
-        <section>
+        <section className={'responsive-section'}>
             <label className='form-label' htmlFor={props.id || props.name}>
                 {label}
             </label>
