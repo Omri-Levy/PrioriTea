@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react';
-import { loadingReducer } from './loadingReducer.js';
+import { loadingReducer } from './loading-reducer.js';
 
 export const LoadingContext = createContext(undefined);
 
