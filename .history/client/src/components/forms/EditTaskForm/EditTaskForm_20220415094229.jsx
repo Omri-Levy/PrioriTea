@@ -1,53 +1,51 @@
-import { LoadingContext } from '../../../context/LoadingContext.jsx';
-import { ModalsContext } from '../../../context/ModalsContext.jsx';
-import { TasksContext } from '../../../context/TasksContext.jsx';
-import { persistFilter } from '../../../static/js/filter/filter.js';
-import fetchFn from '../../../static/js/requests/fetch-fn/fetch-fn.js';
-import sortFn from '../../../static/js/sort-fn/sort-fn.js';
-import createTaskSchema from '../../../static/js/validation/create-task-schema/create-task-schema';
+import { LoadingContext, ModalsContext, TasksContext } from '../../../context';
+import {
+	persistFilter,
+	fetchFn,
+	sortFn,
+	editTasksSchema,
+} from '../../../static/js';
 import { Form, Formik } from 'formik';
 import React, { useContext } from 'react';
-import FormikInput from '../../fields/FormikInput.jsx';
+import { FormikInput } from '../../../components';
 
-export const CreateTaskForm = () => {
-	const { setTasks, setTasksCopy } = useContext(TasksContext);
-	const { closeCreateTaskModal } = useContext(ModalsContext);
+export const EditTaskForm = () => {
+	const { setTasks, setTasksCopy, editTaskId } = useContext(TasksContext);
+	const { closeEditTaskModal } = useContext(ModalsContext);
 	const { startLoading, stopLoading, loading } = useContext(LoadingContext);
-	const createTaskUrl = `${process.env.REACT_APP_API_TASK}/create_task`;
 	const getTasksUrl = `${process.env.REACT_APP_API_TASK}/get_tasks`;
-	//
+	const editTaskUrl = `${process.env.REACT_APP_API_TASK}/edit_task`;
+
 	return (
 		<Formik
-			initialValues={{
-				priority: '',
-				task: '',
-				status: '',
-			}}
-			validationSchema={createTaskSchema}
+			initialValues={{ priority: '', task: '', status: '' }}
+			validationSchema={editTaskSchema}
 			onSubmit={async (data) => {
 				startLoading();
-
-				const createTaskOptions = {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json',
-					},
-					body: JSON.stringify({
-						priority: data.priority,
-						task: data.task,
-					}),
-					credentials: 'include',
-				};
 
 				const getTasksOptions = {
 					method: 'GET',
 					credentials: 'include',
 				};
 
-				try {
-					await fetchFn(createTaskUrl, createTaskOptions);
+				const editTaskOptions = {
+					method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						_id: editTaskId,
+						priority: data.priority,
+						task: data.task,
+						status: data.status,
+					}),
+					credentials: 'include',
+				};
 
-					closeCreateTaskModal();
+				try {
+					await fetchFn(editTaskUrl, editTaskOptions);
+
+					closeEditTaskModal();
 
 					const { data: resData } = await fetchFn(
 						getTasksUrl,
@@ -67,18 +65,13 @@ export const CreateTaskForm = () => {
 			}}
 		>
 			{() => (
-				<Form className="create-task-form">
-					<p className="required-fields-msg">
-						Indicates required fields
-					</p>
+				<Form className="edit-task-form">
 					<FormikInput
 						maxLength="80"
 						autoFocus={true}
 						label="Priority"
 						name="priority"
 						type="text"
-						required
-						isRequired={true}
 						autoComplete="on"
 						placeholder="Priority"
 					/>
@@ -87,25 +80,31 @@ export const CreateTaskForm = () => {
 						label="Task"
 						name="task"
 						type="text"
-						required
-						isRequired={true}
 						autoComplete="on"
 						placeholder="Task"
+					/>
+					<FormikInput
+						maxLength="80"
+						label="Status"
+						name="status"
+						type="text"
+						autoComplete="on"
+						placeholder="Status"
 					/>
 					<button
 						disabled={loading}
 						type="submit"
-						className="primary-btn excluded-link"
+						className="primary-btn"
 					>
 						{loading ? (
 							<i className="fas fa-spinner fa-spin" />
 						) : (
-							<p className="custom-span link-underline">Create</p>
+							<p className="custom-span link-underline">Edit</p>
 						)}
 					</button>
 					<button
-						onClick={closeCreateTaskModal}
 						type="button"
+						onClick={closeEditTaskModal}
 						className="primary-btn"
 					>
 						<p className="custom-span link-underline">Cancel</p>
