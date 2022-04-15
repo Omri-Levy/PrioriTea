@@ -16,5 +16,5 @@ RUN yarn build
 ENV NODE_ENV production
 
 EXPOSE 8080
-CMD [ "node", "build/server.js" ]
+CMD [ "node", "build/src/server.js" ]
 USER node

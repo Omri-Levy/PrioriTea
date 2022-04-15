@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './static/scss/index.scss';
-import {AuthProvider} from './context/AuthContext.jsx';
-import {LoadingProvider} from './context/LoadingContext.jsx';
+import { LoadingProvider, AuthProvider } from './context';
 import * as serviceWorker from './serviceWorker.js';
-import App from './components/App.jsx';
+import { App } from './components';
 
 ReactDOM.render(
-    <AuthProvider>
-        <LoadingProvider>
-            <App/>
-        </LoadingProvider>
-    </AuthProvider>,
-    document.getElementById('root'));
+	<AuthProvider>
+		<LoadingProvider>
+			<App />
+		</LoadingProvider>
+	</AuthProvider>,
+	document.getElementById('root'),
+);
 
 serviceWorker.register();
