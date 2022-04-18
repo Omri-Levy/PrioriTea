@@ -1,4 +1,4 @@
-import { TaskModel } from './task.model.js';
+import { TaskModel } from './task.model';
 import { validateTask } from './validation';
 import { verify as verifyJwt } from 'jsonwebtoken';
 
