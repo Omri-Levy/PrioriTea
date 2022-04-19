@@ -1,24 +1,22 @@
+import { prisma } from '../../prisma';
 import { RequestHandler } from 'express';
 import { getErrorMessage } from '../../error-utils';
-import { UserModel } from '../../user';
 import { getUser } from '../../utils';
 import { sendAccessToken } from '../utils';
 
 export const setIsSignedIn: RequestHandler = async (_req, res) => {
 	try {
 		const { id } = getUser(res)!;
-		const user = await UserModel.findById(id).exec();
+		const user = await prisma.user.findUnique({ where: { id } });
 
 		if (user) {
 			return res.status(200).send({
 				success: true,
-				isSignedIn: true,
 			});
 		} else {
 			sendAccessToken(res, '');
 			return res.status(401).send({
 				success: false,
-				isSignedIn: false,
 				message: 'unauthorized',
 			});
 		}

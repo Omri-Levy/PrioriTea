@@ -1,32 +1,25 @@
-import { getErrorMessage } from '../error-utils';
+import { prisma } from '../prisma';
 import { RequestHandler } from 'express';
-import { UserModel } from './user.model';
+import { getErrorMessage } from '../error-utils';
 
 /**
  * @path /api/user/:id
  * @request patch
- * @desc update an existing user from mongodb
+ * @desc update an existing user from db
  */
 export const updateUser: RequestHandler = async (req, res) => {
 	try {
-		const oldUser = await UserModel.findById(req.params.id).exec();
-		const updatedUser = await UserModel.updateOne(
-			{ _id: req.params.id },
-			{
-				$set: {
-					email: req.body.email ? req.body.email : oldUser.email,
-					fullName: req.body.fullName
-						? req.body.fullName
-						: oldUser.fullName,
-					password: req.body.password
-						? req.body.password
-						: oldUser.password,
-				},
+		const user = await prisma.user.update({
+			where: { id: req.params.id },
+			data: {
+				email: req.body.email,
+				fullName: req.body.fullName,
+				password: req.body.password,
 			},
-		).exec();
+		});
 		return res.status(200).send({
 			success: true,
-			updatedUser,
+			user,
 		});
 	} catch (err) {
 		const message = getErrorMessage(err);
@@ -39,16 +32,18 @@ export const updateUser: RequestHandler = async (req, res) => {
 /**
  * @path /api/user/:id
  * @request delete
- * @desc delete an existing user from mongodb
+ * @desc delete an existing user from db
  */
 export const deleteUser: RequestHandler = async (req, res) => {
 	try {
-		const deletedUser = await UserModel.findByIdAndDelete(
-			req.params.id,
-		).exec();
+		const user = await prisma.user.delete({
+			where: {
+				id: req.params.id,
+			},
+		});
 		return res.status(200).send({
 			success: true,
-			deletedUser,
+			user,
 		});
 	} catch (err) {
 		const message = getErrorMessage(err);
@@ -62,11 +57,12 @@ export const deleteUser: RequestHandler = async (req, res) => {
 /**
  @path /api/user/
  @request get
- @desc get all users from mongodb
+ @desc get all users from db
  */
 export const findAllUsers: RequestHandler = async (_req, res) => {
 	try {
-		const users = await UserModel.find().exec();
+		const users = await prisma.user.findMany();
+
 		return res.status(200).json(users);
 	} catch (err) {
 		const message = getErrorMessage(err);
@@ -80,12 +76,17 @@ export const findAllUsers: RequestHandler = async (_req, res) => {
 /**
  @path /api/user/:id
  @request get
- @desc get a user by id from mongodb
+ @desc get a user by id from db
  */
 export const findUserById: RequestHandler = async (req, res) => {
 	try {
-		const getUser = await UserModel.findById(req.params.id).exec();
-		return res.status(200).json(getUser);
+		const user = await prisma.user.findUnique({
+			where: {
+				id: req.params.id,
+			},
+		});
+
+		return res.status(200).send({ user });
 	} catch (err) {
 		const message = getErrorMessage(err);
 

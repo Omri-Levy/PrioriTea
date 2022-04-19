@@ -1,19 +1,25 @@
-import { RequestHandler } from 'express';
+import { Prisma } from '@prisma/client';
+import { RequestHandler, Response } from 'express';
 import { getErrorMessage } from '../error-utils';
-import { TaskModel } from './task.model';
+import { prisma } from '../prisma';
 import { validateTask } from './validation';
+
+export const getUserId = function (res: Response): string | undefined {
+	return res.locals.user.id;
+};
 
 /**
  * @path /api/task/get_tasks
  * @request get
- * @desc sends back all existing tasks from mongodb
+ * @desc sends back all existing tasks from db
  */
 const getTasks: RequestHandler = async (_req, res) => {
 	try {
-		const owner = res.locals.user.id;
-		const tasks = await TaskModel.find({ owner }).exec();
+		const tasks = await prisma.task.findMany({
+			where: { userId: getUserId(res) },
+		});
 
-		return res.status(200).json(tasks);
+		return res.status(200).send({ tasks });
 	} catch (err) {
 		const message = getErrorMessage(err);
 
@@ -25,13 +31,13 @@ const getTasks: RequestHandler = async (_req, res) => {
 
 const getTask: RequestHandler = async (req, res) => {
 	try {
-		const owner = res.locals.user.id;
-		const task = await TaskModel.find({
-			owner,
-			_id: req.params.id,
-		}).exec();
+		const task = await prisma.task.findUnique({
+			where: {
+				id: req.params.id as string,
+			},
+		});
 
-		return res.status(200).json(task);
+		return res.status(200).send({ task });
 	} catch (err) {
 		const message = getErrorMessage(err);
 
@@ -44,28 +50,29 @@ const getTask: RequestHandler = async (req, res) => {
 /**
  * @path /api/task/create_task
  * @request post
- * @desc adds a new task to mongodb using parameters sent from the user
+ * @desc adds a new task to db using parameters sent from the user
  */
 const createTask: RequestHandler = async (req, res) => {
-	console.log(req.body);
 	const { error } = await validateTask(req.body);
 
-	if (error)
-		return res
-			.status(400)
-			.send({ success: false, message: error.details[0]?.message });
-
-	const owner = res.locals.user.id;
-	const newTask = new TaskModel({
-		priority: req.body.priority,
-		task: req.body.task,
-		owner,
-	});
-
 	try {
-		const savedTask = await newTask.save();
+		if (error)
+			return res.status(400).send({
+				success: false,
+				message: error.details[0]?.message,
+			});
 
-		return res.status(200).send({ success: true, task: savedTask._id });
+		const task = await prisma.task.create({
+			data: {
+				description: req.body.description,
+				status: req.body.status,
+				User: {
+					connect: { id: getUserId(res) },
+				},
+			},
+		});
+
+		return res.status(200).send({ success: true, task });
 	} catch (err) {
 		const message = getErrorMessage(err);
 
@@ -78,25 +85,20 @@ const createTask: RequestHandler = async (req, res) => {
 /**
  * @path /api/task/edit_task
  * @request patch
- * @desc updates an existing task from mongodb using an id sent from the user
+ * @desc updates an existing task from db using an id sent from the user
  */
 const editTask: RequestHandler = async (req, res) => {
 	try {
-		const oldTask = await TaskModel.findById(req.body._id).exec();
-		const updatedTask = await TaskModel.updateOne(
-			{ _id: req.body._id },
-			{
-				$set: {
-					priority: req.body.priority
-						? req.body.priority
-						: oldTask.priority,
-					task: req.body.task ? req.body.task : oldTask.task,
-					status: req.body.status ? req.body.status : oldTask.status,
-				},
+		const task = await prisma.task.update({
+			where: { id: req.body.id },
+			data: {
+				priority: req.body.priority,
+				description: req.body.description,
+				status: req.body.status,
 			},
-		).exec();
+		});
 
-		return res.status(200).json(updatedTask);
+		return res.status(200).send({ task });
 	} catch (err) {
 		const message = getErrorMessage(err);
 
@@ -109,15 +111,17 @@ const editTask: RequestHandler = async (req, res) => {
 /**
  * @path /api/task/delete_task
  * @request delete
- * @desc deletes an existing task from mongodb using an id sent from the user
+ * @desc deletes an existing task from db using an id sent from the user
  */
 const deleteTask: RequestHandler = async (req, res) => {
 	try {
-		const deletedTask = await TaskModel.deleteOne({
-			_id: req.body._id,
-		}).exec();
+		const task = await prisma.task.delete({
+			where: {
+				id: req.body.id,
+			},
+		});
 
-		return res.status(200).json(deletedTask);
+		return res.status(200).send({ task });
 	} catch (err) {
 		const message = getErrorMessage(err);
 

@@ -1,47 +1,45 @@
-import { RequestHandler } from 'express';
-import { createAccessToken, sendAccessToken } from './utils';
-import { UserModel } from '../user';
-import { validateSignIn, validateSignUp } from './validation';
 import { hash, verify } from 'argon2';
+import { RequestHandler } from 'express';
 import { getErrorMessage } from '../error-utils';
+import { prisma } from '../prisma';
+import { createAccessToken, sendAccessToken } from './utils';
 
 /**
  @path /api/user/sign_up
  @request post
- @desc add a new user to mongodb
+ @desc add a new user to db
  */
 export const signUp: RequestHandler = async (req, res) => {
-	const { error } = validateSignUp(req.body);
-	if (error)
-		return res
-			.status(400)
-			.send({ success: false, message: error.details[0]?.message });
-
-	const emailExists = await UserModel.findOne({
-		email: req.body.email,
-	}).exec();
-
-	if (emailExists)
-		return res.status(400).send({
-			success: false,
-			message: 'Email already exists.',
-		});
-
-	const hashedPassword = await hash(req.body.password);
-
-	const newUser = new UserModel({
-		email: req.body.email,
-		fullName: req.body.fullName,
-		password: hashedPassword,
-	});
-
 	try {
-		const savedUser = await newUser.save();
-		return res.status(200).send({ success: true, user: savedUser._id });
+		// const errors = await validate({
+		// 	email: req.body.email,
+		// 	fullName: req.body.fullName,
+		// 	password: req.body.password,
+		// });
+		const errors = '';
+
+		if (
+			errors.length > 0 ||
+			req.body.password !== req.body.passwordConfirmation
+		) {
+			throw new Error('Validation failed');
+		}
+
+		const user = await prisma.user.create({
+			data: {
+				email: req.body.email,
+				fullName: req.body.fullName,
+				password: await hash(req.body.password),
+			},
+		});
+		console.log(user);
+
+		return res.status(200).send({ success: true });
 	} catch (err) {
 		const message = getErrorMessage(err);
 
 		console.error(err);
+
 		return res.status(400).send({ success: false, message });
 	}
 };
@@ -49,19 +47,15 @@ export const signUp: RequestHandler = async (req, res) => {
 /**
  @path /api/user/sign-in
  @request post
- @desc sign in an existing user from mongodb
+ @desc sign in an existing user from db
  */
 export const signIn: RequestHandler = async (req, res) => {
 	const invalidCredentialsMsg =
 		'Email or password are wrong - please try again.';
-	const { error } = validateSignIn(req.body);
 
-	if (error)
-		return res
-			.status(400)
-			.send({ success: false, message: error.details[0]?.message });
-
-	const user = await UserModel.findOne({ email: req.body.email }).exec();
+	const user = await prisma.user.findUnique({
+		where: { email: req.body.email },
+	});
 
 	if (!user)
 		return res.status(400).send({
@@ -71,6 +65,7 @@ export const signIn: RequestHandler = async (req, res) => {
 
 	try {
 		const validPass = await verify(user.password, req.body.password);
+
 		if (!validPass)
 			return res.status(400).send({
 				success: false,
@@ -84,6 +79,7 @@ export const signIn: RequestHandler = async (req, res) => {
 		const message = getErrorMessage(err);
 
 		console.error(err);
+
 		return res.status(400).send({ success: false, message });
 	}
 };
@@ -91,11 +87,12 @@ export const signIn: RequestHandler = async (req, res) => {
 /**
  @path /api/user/sign_out
  @request post
- @desc sign out an existing user from mongodb
+ @desc sign out an existing user from db
  */
 export const signOut: RequestHandler = async (_req, res) => {
 	try {
 		sendAccessToken(res, '');
+
 		return res.status(200).send({ success: true });
 	} catch (err) {
 		const message = getErrorMessage(err);
