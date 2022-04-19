@@ -18,14 +18,13 @@ export const updateUser: RequestHandler = async (req, res) => {
 			},
 		});
 		return res.status(200).send({
-			success: true,
 			user,
 		});
 	} catch (err) {
 		const message = getErrorMessage(err);
 
 		console.error(err);
-		return res.status(400).send({ success: false, message });
+		return res.status(400).send({ message });
 	}
 };
 
@@ -42,7 +41,6 @@ export const deleteUser: RequestHandler = async (req, res) => {
 			},
 		});
 		return res.status(200).send({
-			success: true,
 			user,
 		});
 	} catch (err) {
@@ -50,7 +48,7 @@ export const deleteUser: RequestHandler = async (req, res) => {
 
 		console.error(err);
 
-		return res.status(400).send({ success: false, message });
+		return res.status(400).send({ message });
 	}
 };
 
@@ -69,7 +67,7 @@ export const findAllUsers: RequestHandler = async (_req, res) => {
 
 		console.error(err);
 
-		return res.status(400).send({ success: false, message });
+		return res.status(400).send({ message });
 	}
 };
 
@@ -93,7 +91,6 @@ export const findUserById: RequestHandler = async (req, res) => {
 		console.error(err);
 
 		return res.status(400).send({
-			success: false,
 			message,
 		});
 	}

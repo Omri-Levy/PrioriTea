@@ -6,18 +6,14 @@ export const isAuth: RequestHandler = async function (req, res, next) {
 
 	if (!authorization) {
 		console.error('unauthorized');
-		return res
-			.status(401)
-			.send({ message: 'unauthorized', success: false });
+		return res.status(401).send({ message: 'unauthorized' });
 	}
 
 	const token = authorization.split('mid=')[1];
 
 	if (!token) {
 		console.error('unauthorized');
-		return res
-			.status(401)
-			.send({ message: 'unauthorized', success: false });
+		return res.status(401).send({ message: 'unauthorized' });
 	}
 
 	try {
@@ -26,8 +22,6 @@ export const isAuth: RequestHandler = async function (req, res, next) {
 		return next();
 	} catch (err) {
 		console.error(err);
-		return res
-			.status(401)
-			.send({ message: 'unauthorized', success: false });
+		return res.status(401).send({ message: 'unauthorized' });
 	}
 };

@@ -1,7 +1,7 @@
+import { taskSchema } from './tasks.validation';
 import { RequestHandler, Response } from 'express';
 import { getErrorMessage } from '../error-utils';
 import { prisma } from '../db/prisma';
-import { validateTask } from './validation';
 
 export const getUserId = function (res: Response): string | undefined {
 	return res.locals.user.id;
@@ -24,7 +24,7 @@ const getTasks: RequestHandler = async (_req, res) => {
 
 		console.error(err);
 
-		return res.status(400).send({ success: false, message });
+		return res.status(400).send({ message });
 	}
 };
 
@@ -42,7 +42,7 @@ const getTask: RequestHandler = async (req, res) => {
 
 		console.error(err);
 
-		return res.status(400).send({ success: false, message });
+		return res.status(400).send({ message });
 	}
 };
 
@@ -52,16 +52,19 @@ const getTask: RequestHandler = async (req, res) => {
  * @desc adds a new task to db using parameters sent from the user
  */
 const createTask: RequestHandler = async (req, res) => {
-	const { error } = await validateTask(req.body);
-
 	try {
-		if (error)
-			return res.status(400).send({
-				success: false,
-				message: error.details[0]?.message,
+		taskSchema
+			.pick({
+				priority: true,
+				description: true,
+				status: true,
+			})
+			.parse({
+				priority: req.body.priority,
+				description: req.body.description,
+				status: req.body.status,
 			});
-
-		const task = await prisma.task.create({
+		await prisma.task.create({
 			data: {
 				priority: req.body.priority,
 				description: req.body.description,
@@ -71,14 +74,17 @@ const createTask: RequestHandler = async (req, res) => {
 				},
 			},
 		});
+		const tasks = await prisma.task.findMany({
+			where: { userId: getUserId(res) },
+		});
 
-		return res.status(200).send({ success: true, task });
+		return res.status(200).send({ tasks });
 	} catch (err) {
 		const message = getErrorMessage(err);
 
 		console.error(err);
 
-		return res.status(400).send({ success: false, message });
+		return res.status(400).send({ message });
 	}
 };
 
@@ -89,22 +95,37 @@ const createTask: RequestHandler = async (req, res) => {
  */
 const editTask: RequestHandler = async (req, res) => {
 	try {
-		const task = await prisma.task.update({
-			where: { id: req.body.id },
+		taskSchema
+			.pick({
+				priority: true,
+				description: true,
+				status: true,
+			})
+			.partial()
+			.parse({
+				priority: req.body.priority,
+				description: req.body.description,
+				status: req.body.status,
+			});
+		await prisma.task.update({
+			where: { id: req.params.id },
 			data: {
 				priority: req.body.priority,
 				description: req.body.description,
 				status: req.body.status,
 			},
 		});
+		const tasks = await prisma.task.findMany({
+			where: { userId: getUserId(res) },
+		});
 
-		return res.status(200).send({ task });
+		return res.status(200).send({ tasks });
 	} catch (err) {
 		const message = getErrorMessage(err);
 
 		console.error(err);
 
-		return res.status(400).send({ success: false, message });
+		return res.status(400).send({ message });
 	}
 };
 
@@ -115,19 +136,22 @@ const editTask: RequestHandler = async (req, res) => {
  */
 const deleteTask: RequestHandler = async (req, res) => {
 	try {
-		const task = await prisma.task.delete({
+		await prisma.task.delete({
 			where: {
-				id: req.body.id,
+				id: req.params.id,
 			},
 		});
+		const tasks = await prisma.task.findMany({
+			where: { userId: getUserId(res) },
+		});
 
-		return res.status(200).send({ task });
+		return res.status(200).send({ tasks });
 	} catch (err) {
 		const message = getErrorMessage(err);
 
 		console.error(err);
 
-		return res.status(400).send({ success: false, message });
+		return res.status(400).send({ message });
 	}
 };
 

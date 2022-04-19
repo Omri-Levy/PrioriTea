@@ -10,13 +10,10 @@ export const setIsSignedIn: RequestHandler = async (_req, res) => {
 		const user = await prisma.user.findUnique({ where: { id } });
 
 		if (user) {
-			return res.status(200).send({
-				success: true,
-			});
+			return res.status(200).send({});
 		} else {
 			sendAccessToken(res, '');
 			return res.status(401).send({
-				success: false,
 				message: 'unauthorized',
 			});
 		}
@@ -25,6 +22,6 @@ export const setIsSignedIn: RequestHandler = async (_req, res) => {
 
 		console.error(err);
 
-		return res.status(500).send({ message, success: false });
+		return res.status(500).send({ message });
 	}
 };

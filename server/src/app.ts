@@ -1,22 +1,30 @@
-import cookieParser from 'cookie-parser';
-import express from 'express';
+// For the error-handler middleware.
+import 'express-async-errors';
 import cors from 'cors';
-import { setIsSignedIn, getCurrentUser } from './auth';
+import express, { json, urlencoded } from 'express';
+import helmet from 'helmet';
 import { auth } from './auth';
-import { task } from './task';
-import morgan from 'morgan';
+import { NotFoundError } from './errors/not-found-error';
+import { errorHandler } from './middleware/error-handler';
+import { morganMiddleware } from './middleware/morgan';
+import { tasks } from './tasks';
 
 export const app = express();
 
 app.set('trust proxy', 1);
 app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(morgan('combined'));
+app.use(urlencoded({ extended: true }));
+app.use(json());
+app.use(morganMiddleware);
+app.use(helmet());
 
-//route middlewares
+// routes
 app.use('/api/auth', auth);
-app.use('/api/task', task);
-app.use('/api/auth/sign-in', cookieParser());
-app.post('/api/get-current-user', getCurrentUser);
-app.post('/api/auth', setIsSignedIn);
+app.use('/api/tasks', tasks);
+
+// catches 404 response error/non-existent route
+app.all(`*`, () => {
+	throw new NotFoundError(`Route`);
+});
+
+app.use(errorHandler);

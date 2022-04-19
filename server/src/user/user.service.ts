@@ -1,4 +1,5 @@
 import express from 'express';
+import { Method, restful } from '../middleware/restful';
 import {
 	findAllUsers,
 	findUserById,
@@ -19,3 +20,5 @@ user.patch('/:id', updateUser);
 
 //delete an existing user from db by id
 user.delete('/:id', deleteUser);
+
+user.all('*', restful([Method.GET, Method.PATCH, Method.DELETE]));

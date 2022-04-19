@@ -6,7 +6,6 @@ export const getCurrentUser: RequestHandler = async (_req, res) => {
 		const user = res.locals;
 
 		return res.status(200).send({
-			success: true,
 			user: {
 				email: user.email,
 				fullName: user.fullName,
@@ -17,6 +16,6 @@ export const getCurrentUser: RequestHandler = async (_req, res) => {
 
 		console.error(err);
 
-		return res.status(500).send({ success: false, message });
+		return res.status(500).send({ message });
 	}
 };
