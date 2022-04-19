@@ -1,4 +1,4 @@
-import Joi from 'joi';
+import { z } from 'zod';
 
 interface SignIn {
 	email: string;
@@ -6,10 +6,10 @@ interface SignIn {
 }
 
 export const validateSignIn = (signIn: SignIn) => {
-	const signInSchema = Joi.object({
-		email: Joi.string().required(),
-		password: Joi.string().required(),
+	const signInSchema = z.object({
+		email: z.string().required(),
+		password: z.string().required(),
 	});
 
-	return signInSchema.validate(signIn);
+	return signInSchema.parse(signIn);
 };
