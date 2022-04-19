@@ -1,7 +1,7 @@
 import { hash, verify } from 'argon2';
 import { RequestHandler } from 'express';
 import { getErrorMessage } from '../error-utils';
-import { prisma } from '../prisma';
+import { prisma } from '../db/prisma';
 import { createAccessToken, sendAccessToken } from './utils';
 
 /**

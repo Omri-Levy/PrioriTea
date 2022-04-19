@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import { app } from './app';
-import { prisma } from './prisma';
+import { prisma } from './db/prisma';
 
 if (!process.env.DATABASE_URL) {
 	throw new Error('process.env.DATABASE_URL is undefined');

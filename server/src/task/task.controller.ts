@@ -1,7 +1,6 @@
-import { Prisma } from '@prisma/client';
 import { RequestHandler, Response } from 'express';
 import { getErrorMessage } from '../error-utils';
-import { prisma } from '../prisma';
+import { prisma } from '../db/prisma';
 import { validateTask } from './validation';
 
 export const getUserId = function (res: Response): string | undefined {
@@ -64,6 +63,7 @@ const createTask: RequestHandler = async (req, res) => {
 
 		const task = await prisma.task.create({
 			data: {
+				priority: req.body.priority,
 				description: req.body.description,
 				status: req.body.status,
 				User: {

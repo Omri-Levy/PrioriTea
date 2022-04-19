@@ -1,4 +1,4 @@
-import { prisma } from '../prisma';
+import { prisma } from '../db/prisma';
 import { RequestHandler } from 'express';
 import { getErrorMessage } from '../error-utils';
 
