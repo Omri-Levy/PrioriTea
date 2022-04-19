@@ -1,15 +1,21 @@
 import express from 'express';
+import {
+	findAllUsers,
+	findUserById,
+	updateUser,
+	deleteUser,
+} from './user.controller';
 
 export const user = express.Router();
 
 //find all existing users from mongodb
-user.get('/', (req, res) => findAllUsers(req, res));
+user.get('/', findAllUsers);
 
 //find an existing user from mongodb by id
-user.get('/:id', (req, res) => findUserById(req, res));
+user.get('/:id', findUserById);
 
 //update an existing user from mongodb by id
-user.patch('/:id', (req, res) => updateUser(req, res));
+user.patch('/:id', updateUser);
 
 //delete an existing user from mongodb by id
-user.delete('/:id', (req, res) => deleteUser(req, res));
+user.delete('/:id', deleteUser);

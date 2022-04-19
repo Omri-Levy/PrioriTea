@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 const model = mongoose.model;
 
-const UserSchema = Schema(
+const UserSchema = new Schema(
 	{
 		email: {
 			type: String,

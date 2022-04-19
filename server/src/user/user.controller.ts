@@ -7,7 +7,7 @@ import { UserModel } from './user.model';
  */
 export const updateUser = async (req, res) => {
 	try {
-		const oldUser = await UserModel.findById(req.params.id);
+		const oldUser = await UserModel.findById(req.params.id).exec();
 		const updatedUser = await UserModel.updateOne(
 			{ _id: req.params.id },
 			{
@@ -21,7 +21,7 @@ export const updateUser = async (req, res) => {
 						: oldUser.password,
 				},
 			},
-		);
+		).exec();
 		return res.status(200).json({
 			success: true,
 			updatedUser,
@@ -39,7 +39,9 @@ export const updateUser = async (req, res) => {
  */
 export const deleteUser = async (req, res) => {
 	try {
-		const deletedUser = await UserModel.findByIdAndDelete(req.params.id);
+		const deletedUser = await UserModel.findByIdAndDelete(
+			req.params.id,
+		).exec();
 		return res.status(200).json({
 			success: true,
 			deletedUser,
@@ -57,7 +59,7 @@ export const deleteUser = async (req, res) => {
  */
 export const findAllUsers = async (req, res) => {
 	try {
-		const users = await UserModel.find();
+		const users = await UserModel.find().exec();
 		return res.status(200).json(users);
 	} catch (err) {
 		console.error(err);
@@ -72,7 +74,7 @@ export const findAllUsers = async (req, res) => {
  */
 export const findUserById = async (req, res) => {
 	try {
-		const getUser = await UserModel.findById(req.params.id);
+		const getUser = await UserModel.findById(req.params.id).exec();
 		return res.status(200).json(getUser);
 	} catch (err) {
 		console.error(err);

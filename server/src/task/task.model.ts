@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 const model = mongoose.model;
 
-const TaskSchema = Schema(
+const TaskSchema = new Schema(
 	{
 		priority: {
 			type: String,
