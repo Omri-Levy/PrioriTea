@@ -1,6 +1,4 @@
-import 'core-js/stable';
 import { RequestHandler } from 'express';
-import 'regenerator-runtime/runtime';
 import { getErrorMessage } from '../../error-utils';
 
 export const getCurrentUser: RequestHandler = async (_req, res) => {
