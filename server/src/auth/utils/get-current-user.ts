@@ -1,48 +1,24 @@
 import 'core-js/stable';
+import { RequestHandler } from 'express';
 import 'regenerator-runtime/runtime';
-import { verify } from 'jsonwebtoken';
+import { getErrorMessage } from '../../error-utils';
 
-export const getCurrentUser = async (req, res, next) => {
-	const authorization = req.headers['cookie'];
-
-	if (!authorization) {
-		console.error('unauthorized');
-		return res
-			.status(401)
-			.json({ success: false, message: 'unauthorized' });
-	}
-
-	const token = authorization.split('mid=')[1];
-
-	if (!token) {
-		console.error('unauthorized');
-
-		return res
-			.status(401)
-			.json({ success: false, message: 'unauthorized' });
-	}
-
+export const getCurrentUser: RequestHandler = async (_req, res) => {
 	try {
-		const verified = await verify(token, process.env.SECRET_ACCESS_TOKEN);
+		const user = res.locals;
 
-		if (!verified) {
-			console.error('unauthorized');
-
-			return res
-				.status(401)
-				.json({ success: false, message: 'unauthorized' });
-		}
-
-		res.json({
+		return res.status(200).send({
 			success: true,
-			email: verified.email,
-			fullName: verified.fullName,
+			user: {
+				email: user.email,
+				fullName: user.fullName,
+			},
 		});
 	} catch (err) {
+		const message = getErrorMessage(err);
+
 		console.error(err);
 
-		return res.status(500).json({ success: false, message: err.message });
+		return res.status(500).send({ success: false, message });
 	}
-
-	next();
 };

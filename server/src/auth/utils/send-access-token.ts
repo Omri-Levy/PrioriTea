@@ -1,4 +1,6 @@
-export const sendAccessToken = (res, token) => {
+import { Response } from 'express';
+
+export const sendAccessToken = (res: Response, token: string) => {
 	res.cookie('mid', token, {
 		maxAge: 1000 * 60 * 60 * 9,
 		httpOnly: true,

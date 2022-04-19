@@ -1,3 +1,5 @@
+import { getErrorMessage } from '../error-utils';
+import { RequestHandler } from 'express';
 import { UserModel } from './user.model';
 
 /**
@@ -5,7 +7,7 @@ import { UserModel } from './user.model';
  * @request patch
  * @desc update an existing user from mongodb
  */
-export const updateUser = async (req, res) => {
+export const updateUser: RequestHandler = async (req, res) => {
 	try {
 		const oldUser = await UserModel.findById(req.params.id).exec();
 		const updatedUser = await UserModel.updateOne(
@@ -22,13 +24,15 @@ export const updateUser = async (req, res) => {
 				},
 			},
 		).exec();
-		return res.status(200).json({
+		return res.status(200).send({
 			success: true,
 			updatedUser,
 		});
 	} catch (err) {
+		const message = getErrorMessage(err);
+
 		console.error(err);
-		return res.status(400).json({ success: false, message: err.message });
+		return res.status(400).send({ success: false, message });
 	}
 };
 
@@ -37,18 +41,21 @@ export const updateUser = async (req, res) => {
  * @request delete
  * @desc delete an existing user from mongodb
  */
-export const deleteUser = async (req, res) => {
+export const deleteUser: RequestHandler = async (req, res) => {
 	try {
 		const deletedUser = await UserModel.findByIdAndDelete(
 			req.params.id,
 		).exec();
-		return res.status(200).json({
+		return res.status(200).send({
 			success: true,
 			deletedUser,
 		});
 	} catch (err) {
+		const message = getErrorMessage(err);
+
 		console.error(err);
-		return res.status(400).json({ success: false, message: err.message });
+
+		return res.status(400).send({ success: false, message });
 	}
 };
 
@@ -57,13 +64,16 @@ export const deleteUser = async (req, res) => {
  @request get
  @desc get all users from mongodb
  */
-export const findAllUsers = async (req, res) => {
+export const findAllUsers: RequestHandler = async (_req, res) => {
 	try {
 		const users = await UserModel.find().exec();
 		return res.status(200).json(users);
 	} catch (err) {
+		const message = getErrorMessage(err);
+
 		console.error(err);
-		return res.status(400).json({ success: false, message: err.message });
+
+		return res.status(400).send({ success: false, message });
 	}
 };
 
@@ -72,15 +82,18 @@ export const findAllUsers = async (req, res) => {
  @request get
  @desc get a user by id from mongodb
  */
-export const findUserById = async (req, res) => {
+export const findUserById: RequestHandler = async (req, res) => {
 	try {
 		const getUser = await UserModel.findById(req.params.id).exec();
 		return res.status(200).json(getUser);
 	} catch (err) {
+		const message = getErrorMessage(err);
+
 		console.error(err);
-		return res.status(400).json({
+
+		return res.status(400).send({
 			success: false,
-			message: err.message,
+			message,
 		});
 	}
 };

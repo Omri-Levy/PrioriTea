@@ -1,7 +1,12 @@
 import Joi from 'joi';
 import passwordComplexity from 'joi-password-complexity';
-
-export const validateSignUp = (data) => {
+interface SignUp {
+	email: string;
+	fullName: string;
+	password: string;
+	passwordConfirmation: string;
+}
+export const validateSignUp = (signUp: SignUp) => {
 	const complexityOptions = {
 		min: 8,
 		max: 256,
@@ -19,5 +24,5 @@ export const validateSignUp = (data) => {
 		passwordConfirmation: Joi.any().valid(Joi.ref('password')).required(),
 	});
 
-	return signUpSchema.validate(data);
+	return signUpSchema.validate(signUp);
 };

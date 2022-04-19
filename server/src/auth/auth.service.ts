@@ -4,10 +4,10 @@ import { signIn, signOut, signUp } from './auth.controller';
 export const auth = express.Router();
 
 //add a new user to mongodb
-auth.post('/sign-up', (req, res) => signUp(req, res));
+auth.post('/sign-up', signUp);
 
 //sign in an existing user from mongodb
-auth.post('/sign-in', (req, res) => signIn(req, res));
+auth.post('/sign-in', signIn);
 
 //sign in an existing user from mongodb
-auth.post('/sign-out', (req, res) => signOut(req, res));
+auth.post('/sign-out', signOut);

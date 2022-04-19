@@ -1,49 +1,32 @@
-import { verify } from 'jsonwebtoken';
+import { RequestHandler } from 'express';
+import { getErrorMessage } from '../../error-utils';
 import { UserModel } from '../../user';
+import { getUser } from '../../utils';
 import { sendAccessToken } from '../utils';
 
-export const setIsSignedIn = async (req, res) => {
-	const authorization = req.headers['cookie'];
-
-	if (!authorization) {
-		console.error('unauthorized');
-		return res.status(401).json({
-			success: false,
-			isSignedIn: false,
-			message: 'unauthorized',
-		});
-	}
-
-	const token = authorization.split('mid=')[1];
-
-	if (!token) {
-		console.error('unauthorized');
-		return res.status(401).json({
-			success: false,
-			isSignedIn: false,
-			message: 'unauthorized',
-		});
-	}
+export const setIsSignedIn: RequestHandler = async (_req, res) => {
 	try {
-		const { id } = await verify(token, process.env.SECRET_ACCESS_TOKEN);
-		const user = await UserModel.findById(id);
+		const { id } = getUser(res)!;
+		const user = await UserModel.findById(id).exec();
 
 		if (user) {
-			return res.status(200).json({
+			return res.status(200).send({
 				success: true,
 				isSignedIn: true,
 			});
 		} else {
 			sendAccessToken(res, '');
-			return res.status(401).json({
+			return res.status(401).send({
 				success: false,
 				isSignedIn: false,
 				message: 'unauthorized',
 			});
 		}
 	} catch (err) {
+		const message = getErrorMessage(err);
+
 		console.error(err);
 
-		return res.status(500).json({ message: err.message, success: false });
+		return res.status(500).send({ message, success: false });
 	}
 };

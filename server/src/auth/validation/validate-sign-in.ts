@@ -1,10 +1,15 @@
 import Joi from 'joi';
 
-export const validateSignIn = (data) => {
+interface SignIn {
+	email: string;
+	password: string;
+}
+
+export const validateSignIn = (signIn: SignIn) => {
 	const signInSchema = Joi.object({
 		email: Joi.string().required(),
 		password: Joi.string().required(),
 	});
 
-	return signInSchema.validate(data);
+	return signInSchema.validate(signIn);
 };

@@ -1,46 +1,43 @@
+import { RequestHandler } from 'express';
+import { getErrorMessage } from '../error-utils';
 import { TaskModel } from './task.model';
 import { validateTask } from './validation';
-import { verify as verifyJwt } from 'jsonwebtoken';
 
 /**
  * @path /api/task/get_tasks
  * @request get
  * @desc sends back all existing tasks from mongodb
  */
-const getTasks = async (req, res) => {
+const getTasks: RequestHandler = async (_req, res) => {
 	try {
-		const authorization = req.headers['cookie'];
-		const token = authorization.split('mid=')[1];
-		const verified = await verifyJwt(
-			token,
-			process.env.SECRET_ACCESS_TOKEN,
-		);
-		const tasks = await TaskModel.find({ owner: verified.id });
+		const owner = res.locals.user.id;
+		const tasks = await TaskModel.find({ owner }).exec();
 
 		return res.status(200).json(tasks);
 	} catch (err) {
+		const message = getErrorMessage(err);
+
 		console.error(err);
-		return res.status(400).json({ success: false, message: err.message });
+
+		return res.status(400).send({ success: false, message });
 	}
 };
 
-const getTask = async (req, res) => {
+const getTask: RequestHandler = async (req, res) => {
 	try {
-		const authorization = req.headers['cookie'];
-		const token = authorization.split('mid=')[1];
-		const verified = await verifyJwt(
-			token,
-			process.env.SECRET_ACCESS_TOKEN,
-		);
+		const owner = res.locals.user.id;
 		const task = await TaskModel.find({
-			owner: verified.id,
+			owner,
 			_id: req.params.id,
-		});
+		}).exec();
 
 		return res.status(200).json(task);
 	} catch (err) {
+		const message = getErrorMessage(err);
+
 		console.error(err);
-		return res.status(400).json({ success: false, message: err.message });
+
+		return res.status(400).send({ success: false, message });
 	}
 };
 
@@ -49,31 +46,32 @@ const getTask = async (req, res) => {
  * @request post
  * @desc adds a new task to mongodb using parameters sent from the user
  */
-const createTask = async (req, res) => {
+const createTask: RequestHandler = async (req, res) => {
 	console.log(req.body);
 	const { error } = await validateTask(req.body);
 
 	if (error)
 		return res
 			.status(400)
-			.json({ success: false, message: error.details[0].message });
+			.send({ success: false, message: error.details[0]?.message });
 
-	const authorization = req.headers['cookie'];
-	const token = authorization.split('mid=')[1];
-
-	const verified = await verifyJwt(token, process.env.SECRET_ACCESS_TOKEN);
+	const owner = res.locals.user.id;
 	const newTask = new TaskModel({
 		priority: req.body.priority,
 		task: req.body.task,
-		owner: verified.id,
+		owner,
 	});
 
 	try {
 		const savedTask = await newTask.save();
 
-		return res.status(200).json({ success: true, task: savedTask._id });
+		return res.status(200).send({ success: true, task: savedTask._id });
 	} catch (err) {
-		return res.status(400).json({ success: false, message: err.message });
+		const message = getErrorMessage(err);
+
+		console.error(err);
+
+		return res.status(400).send({ success: false, message });
 	}
 };
 
@@ -82,9 +80,9 @@ const createTask = async (req, res) => {
  * @request patch
  * @desc updates an existing task from mongodb using an id sent from the user
  */
-const editTask = async (req, res) => {
+const editTask: RequestHandler = async (req, res) => {
 	try {
-		const oldTask = await TaskModel.findById(req.body._id);
+		const oldTask = await TaskModel.findById(req.body._id).exec();
 		const updatedTask = await TaskModel.updateOne(
 			{ _id: req.body._id },
 			{
@@ -96,11 +94,15 @@ const editTask = async (req, res) => {
 					status: req.body.status ? req.body.status : oldTask.status,
 				},
 			},
-		);
+		).exec();
 
 		return res.status(200).json(updatedTask);
 	} catch (err) {
-		return res.status(400).json({ success: false, message: err.message });
+		const message = getErrorMessage(err);
+
+		console.error(err);
+
+		return res.status(400).send({ success: false, message });
 	}
 };
 
@@ -109,13 +111,19 @@ const editTask = async (req, res) => {
  * @request delete
  * @desc deletes an existing task from mongodb using an id sent from the user
  */
-const deleteTask = async (req, res) => {
+const deleteTask: RequestHandler = async (req, res) => {
 	try {
-		const deletedTask = await TaskModel.deleteOne({ _id: req.body._id });
+		const deletedTask = await TaskModel.deleteOne({
+			_id: req.body._id,
+		}).exec();
 
 		return res.status(200).json(deletedTask);
 	} catch (err) {
-		return res.status(400).json({ success: false, message: err.message });
+		const message = getErrorMessage(err);
+
+		console.error(err);
+
+		return res.status(400).send({ success: false, message });
 	}
 };
 
