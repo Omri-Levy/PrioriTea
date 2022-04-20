@@ -13,9 +13,7 @@ if (!process.env.PORT) {
 (async () => {
 	try {
 		//webserver
-		app.listen(process.env.PORT, () =>
-			console.log(`Listening on port ${process.env.PORT}`),
-		);
+		app.listen();
 	} catch (err) {
 		console.error(err);
 	} finally {

@@ -1,30 +1,24 @@
-// For the error-handler middleware.
-import 'express-async-errors';
 import cors from 'cors';
-import express, { json, urlencoded } from 'express';
+import { json, urlencoded } from 'express';
+// For the error-router middleware.
+import 'express-async-errors';
 import helmet from 'helmet';
-import { auth } from './auth';
-import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middleware/error-handler';
 import { morganMiddleware } from './middleware/morgan';
-import { tasks } from './tasks';
+import { Server } from './Server';
+import { UserController } from './user/user.controller';
 
-export const app = express();
+const app = new Server(process.env.PORT!);
 
-app.set('trust proxy', 1);
-app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
-app.use(urlencoded({ extended: true }));
-app.use(json());
-app.use(morganMiddleware);
-app.use(helmet());
+app.config({ setting: 'trust proxy', val: 1 })
+	.registerMiddleware(
+		cors({ origin: process.env.CORS_ORIGIN, credentials: true }),
+		urlencoded({ extended: true }),
+		json(),
+		morganMiddleware,
+		helmet(),
+	)
+	.registerControllers(new UserController())
+	.registerMiddleware(errorHandler);
 
-// routes
-app.use('/api/auth', auth);
-app.use('/api/tasks', tasks);
-
-// catches 404 response error/non-existent route
-app.all(`*`, () => {
-	throw new NotFoundError(`Route`);
-});
-
-app.use(errorHandler);
+export { app };

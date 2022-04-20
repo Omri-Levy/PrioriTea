@@ -7,6 +7,7 @@ export enum Method {
 	PUT = 'PUT',
 	DELETE = 'DELETE',
 	PATCH = 'PATCH',
+	ALL = 'ALL',
 }
 
 //
