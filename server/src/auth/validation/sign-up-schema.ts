@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { userSchema } from '../../user/user.validation';
+import { userSchema } from '../../users/users.validation';
 import { sharedSchema } from './shared-schema';
 
 export const signUpSchema = sharedSchema

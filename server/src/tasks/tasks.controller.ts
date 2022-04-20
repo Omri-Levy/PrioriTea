@@ -2,6 +2,7 @@ import { taskSchema } from './tasks.validation';
 import { RequestHandler, Response } from 'express';
 import { getErrorMessage } from '../error-utils';
 import { prisma } from '../db/prisma';
+import { logger } from '..';
 
 export const getUserId = function (res: Response): string | undefined {
 	return res.locals.user.id;
@@ -22,7 +23,7 @@ const getTasks: RequestHandler = async (_req, res) => {
 	} catch (err) {
 		const message = getErrorMessage(err);
 
-		console.error(err);
+		logger.error(err);
 
 		return res.status(400).send({ message });
 	}
@@ -40,7 +41,7 @@ const getTask: RequestHandler = async (req, res) => {
 	} catch (err) {
 		const message = getErrorMessage(err);
 
-		console.error(err);
+		logger.error(err);
 
 		return res.status(400).send({ message });
 	}
@@ -82,7 +83,7 @@ const createTask: RequestHandler = async (req, res) => {
 	} catch (err) {
 		const message = getErrorMessage(err);
 
-		console.error(err);
+		logger.error(err);
 
 		return res.status(400).send({ message });
 	}
@@ -123,7 +124,7 @@ const editTask: RequestHandler = async (req, res) => {
 	} catch (err) {
 		const message = getErrorMessage(err);
 
-		console.error(err);
+		logger.error(err);
 
 		return res.status(400).send({ message });
 	}
@@ -149,7 +150,7 @@ const deleteTask: RequestHandler = async (req, res) => {
 	} catch (err) {
 		const message = getErrorMessage(err);
 
-		console.error(err);
+		logger.error(err);
 
 		return res.status(400).send({ message });
 	}

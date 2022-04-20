@@ -1,6 +1,6 @@
-import {CustomError} from './custom-error';
+import { CustomError } from './custom-error';
 
-class NotFoundError extends CustomError {
+export class NotFoundError extends CustomError {
 	statusCode = 404;
 
 	constructor(public item: string) {
@@ -10,8 +10,6 @@ class NotFoundError extends CustomError {
 	}
 
 	serializeErrors() {
-		return [{message: `${this.item} not found.`}];
+		return [{ message: `${this.item} not found.` }];
 	}
 }
-
-export {NotFoundError};

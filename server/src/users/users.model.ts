@@ -1,4 +1,6 @@
+import { InjectService } from '..';
 import { prisma } from '../db/prisma';
+
 export interface IUserModel {
 	getUserById(id: string): void;
 	getAllUsers(): void;
@@ -10,11 +12,21 @@ export interface IUserModel {
 	): void;
 	deleteUserById(id: string): void;
 }
+
+@InjectService()
 export class UserModel implements IUserModel {
 	public async getUserById(id: string) {
 		return prisma.user.findUnique({
 			where: {
 				id,
+			},
+		});
+	}
+
+	public async getUserByEmail(email: string) {
+		return prisma.user.findUnique({
+			where: {
+				email,
 			},
 		});
 	}

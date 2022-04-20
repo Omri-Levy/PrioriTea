@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
-import { Controller, Route } from '../Controller';
-import { Method, restful } from '../middleware/restful';
-import { UserService } from './';
+import {
+	All, Controller, Delete, Get, InjectService, Method, Patch, restful, UserService
+} from '../';
 
 export interface IUserController {
 	getUser(req: Request, res: Response): void;
@@ -10,34 +10,18 @@ export interface IUserController {
 	deleteUser(req: Request, res: Response): void;
 	methodNotAllowed(req: Request, res: Response, next: NextFunction): void;
 }
-export class UserController extends Controller implements IUserController {
-	protected _path = '/users';
-	protected routes: Array<Route> = [
-		{ method: Method.GET, path: '/', handler: this.getUsers.bind(this) },
-		{ method: Method.GET, path: '/:id', handler: this.getUser.bind(this) },
-		{
-			method: Method.PATCH,
-			path: '/:id',
-			handler: this.updateUser.bind(this),
-		},
-		{
-			method: Method.DELETE,
-			path: '/:id',
-			handler: this.deleteUser.bind(this),
-		},
-		{
-			method: Method.ALL,
-			path: '*',
-			handler: this.methodNotAllowed,
-		},
-	];
-	protected service = new UserService();
+
+@Controller('/users')
+@InjectService()
+export class UserController implements IUserController {
+	constructor(private service: UserService) {}
 
 	/**
 	 *	@path /api/users/:id
 	 *	@request get
 	 *	@desc get a user by id from db
 	 */
+	@Get('/:id')
 	public async getUser(req: Request, res: Response) {
 		return this.service.getUser(req, res);
 	}
@@ -47,6 +31,7 @@ export class UserController extends Controller implements IUserController {
 	 * @request get
 	 * @desc get all users from db
 	 */
+	@Get('/')
 	public async getUsers(req: Request, res: Response) {
 		return this.service.getUsers(req, res);
 	}
@@ -56,6 +41,7 @@ export class UserController extends Controller implements IUserController {
 	 * @request patch
 	 * @desc update an existing user from db
 	 */
+	@Patch('/:id')
 	public async updateUser(req: Request, res: Response) {
 		this.service.updateUser(req, res);
 	}
@@ -65,10 +51,12 @@ export class UserController extends Controller implements IUserController {
 	 * @request delete
 	 * @desc delete an existing user from db
 	 */
+	@Delete('/:id')
 	public async deleteUser(req: Request, res: Response) {
 		this.service.deleteUser(req, res);
 	}
 
+	@All('*')
 	public methodNotAllowed(req: Request, res: Response, next: NextFunction) {
 		return restful([Method.GET, Method.PATCH, Method.DELETE])(
 			req,

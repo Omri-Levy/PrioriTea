@@ -1,13 +1,13 @@
 import express from 'express';
-import {
-	getTasks,
-	getTask,
-	editTask,
-	deleteTask,
-	createTask,
-} from './tasks.controller';
+import { Method, restful } from '../';
 import { isAuth } from '../auth';
-import { Method, restful } from '../middleware/restful';
+import {
+	createTask,
+	deleteTask,
+	editTask,
+	getTask,
+	getTasks,
+} from './tasks.controller';
 
 export const tasks = express.Router();
 

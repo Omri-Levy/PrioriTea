@@ -1,6 +1,6 @@
-import {CustomError} from './custom-error';
+import { CustomError } from './custom-error';
 
-class UnauthorizedError extends CustomError {
+export class UnauthorizedError extends CustomError {
 	statusCode = 401;
 
 	constructor() {
@@ -10,8 +10,6 @@ class UnauthorizedError extends CustomError {
 	}
 
 	serializeErrors() {
-		return [{message: `Unauthorized.`}];
+		return [{ message: `Unauthorized.` }];
 	}
 }
-
-export {UnauthorizedError};

@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import { User } from '../../utils';
+import { SECRET_ACCESS_TOKEN, User } from '../../';
 
 export const createAccessToken = (user: User) => {
 	return sign(
@@ -8,7 +8,7 @@ export const createAccessToken = (user: User) => {
 			email: user.email,
 			fullName: user.fullName,
 		},
-		process.env.SECRET_ACCESS_TOKEN!,
+		SECRET_ACCESS_TOKEN,
 		{ expiresIn: '9h' },
 	);
 };

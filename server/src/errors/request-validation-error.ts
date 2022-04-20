@@ -1,7 +1,7 @@
 import { ZodError } from 'zod';
 import { CustomError } from './custom-error';
 
-class RequestValidationError extends CustomError {
+export class RequestValidationError extends CustomError {
 	statusCode = 400;
 
 	constructor(public error: ZodError) {
@@ -19,5 +19,3 @@ class RequestValidationError extends CustomError {
 		});
 	}
 }
-
-export { RequestValidationError };

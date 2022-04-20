@@ -1,5 +1,6 @@
 import { Prisma } from '@prisma/client';
 import { hash } from 'argon2';
+import { logger } from '..';
 import { prisma } from '../db/prisma';
 
 (async function () {
@@ -74,19 +75,19 @@ import { prisma } from '../db/prisma';
 	];
 
 	async function main() {
-		console.log(`Start seeding ...`);
+		logger.info(`Start seeding ...`);
 		for (const u of userData) {
 			const user = await prisma.user.create({
 				data: u,
 			});
-			console.log(`Created user with id: ${user.id}`);
+			logger.info(`Created user with id: ${user.id}`);
 		}
-		console.log(`Seeding finished.`);
+		logger.info(`Seeding finished.`);
 	}
 
 	main()
 		.catch((e) => {
-			console.error(e);
+			logger.error(e);
 			process.exit(1);
 		})
 		.finally(async () => {

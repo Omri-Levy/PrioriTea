@@ -1,14 +1,5 @@
 import { RequestHandler } from 'express';
-import { MethodNotAllowed } from '../errors/method-not-allowed';
-
-export enum Method {
-	GET = 'GET',
-	POST = 'POST',
-	PUT = 'PUT',
-	DELETE = 'DELETE',
-	PATCH = 'PATCH',
-	ALL = 'ALL',
-}
+import { Method, MethodNotAllowed } from '../';
 
 //
 // This shortcut function responses with HTTP 405
@@ -41,7 +32,8 @@ export enum Method {
 //     [2] Express.js request method
 //     https://expressjs.com/en/guide/routing.html
 //
-const restful = function (methods: Array<Method>) {
+
+export const restful = function (methods: Array<Method>) {
 	return function (req, res, next) {
 		const { method } = req; // [2]
 
@@ -54,5 +46,3 @@ const restful = function (methods: Array<Method>) {
 		}
 	} as RequestHandler;
 };
-
-export { restful };

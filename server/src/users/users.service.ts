@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { UserModel } from '.';
+import { InjectService, logger } from '..';
 import { getErrorMessage } from '../error-utils';
 export interface IUserService {
 	getUser(req: Request, res: Response): void;
@@ -7,8 +8,10 @@ export interface IUserService {
 	updateUser(req: Request, res: Response): void;
 	deleteUser(req: Request, res: Response): void;
 }
+
+@InjectService()
 export class UserService implements IUserService {
-	model = new UserModel();
+	constructor(private readonly model: UserModel) {}
 
 	/**
 	 *	@path /api/user/:id
@@ -23,7 +26,7 @@ export class UserService implements IUserService {
 		} catch (err) {
 			const message = getErrorMessage(err);
 
-			console.error(err);
+			logger.error(err);
 
 			return res.status(400).send({
 				message,
@@ -44,7 +47,7 @@ export class UserService implements IUserService {
 		} catch (err) {
 			const message = getErrorMessage(err);
 
-			console.error(err);
+			logger.error(err);
 
 			return res.status(400).send({ message });
 		}
@@ -70,7 +73,8 @@ export class UserService implements IUserService {
 		} catch (err) {
 			const message = getErrorMessage(err);
 
-			console.error(err);
+			logger.error(err);
+
 			return res.status(400).send({ message });
 		}
 	}
@@ -90,7 +94,7 @@ export class UserService implements IUserService {
 		} catch (err) {
 			const message = getErrorMessage(err);
 
-			console.error(err);
+			logger.error(err);
 
 			return res.status(400).send({ message });
 		}

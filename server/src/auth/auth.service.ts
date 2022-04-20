@@ -1,22 +1,127 @@
-import { getCurrentUser, setIsSignedIn } from './utils';
-import cookieParser from 'cookie-parser';
-import express from 'express';
-import { signIn, signOut, signUp } from './auth.controller';
-import { Method, restful } from '../middleware/restful';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { hash, verify } from 'argon2';
+import { Request, RequestHandler, Response } from 'express';
+import { z } from 'zod';
+import {
+	prisma,
+	getUser,
+	signUpSchema,
+	createAccessToken,
+	sendAccessToken,
+	BadRequestError,
+	RequestValidationError,
+} from '../';
 
-export const auth = express.Router();
+interface IAuthService {
+	signUp: RequestHandler;
+	signIn: RequestHandler;
+	signOut: RequestHandler;
+	setIsSignedIn: RequestHandler;
+	getCurrentUser: RequestHandler;
+}
 
-//add a new user to db
-auth.post('/sign-up', signUp);
+export class AuthService implements IAuthService {
+	async signUp(req: Request, res: Response) {
+		try {
+			signUpSchema.parse({
+				email: req.body.email,
+				fullName: req.body.fullName,
+				password: req.body.password,
+				passwordConfirmation: req.body.passwordConfirmation,
+			});
 
-//sign in an existing user from db
-auth.post('/sign-in', cookieParser(), signIn);
+			await prisma.user.create({
+				data: {
+					email: req.body.email,
+					fullName: req.body.fullName,
+					password: await hash(req.body.password),
+				},
+			});
 
-//sign in an existing user from db
-auth.post('/sign-out', signOut);
+			return res.status(201).send();
+		} catch (err) {
+			if (err instanceof z.ZodError) {
+				throw new RequestValidationError(err);
+			}
 
-auth.get('/current-user', getCurrentUser);
+			if (
+				err instanceof PrismaClientKnownRequestError &&
+				err.code === 'P2002' &&
+				(err.meta as { target: Array<string> })?.target.includes(
+					'email',
+				)
+			) {
+				throw new BadRequestError('Email already in use');
+			}
 
-auth.post('/set-is-signed-in', setIsSignedIn);
+			throw err;
+		}
+	}
+	async signIn(req: Request, res: Response) {
+		try {
+			const invalidCredentialsMsg =
+				'Email or password are wrong - please try again.';
 
-auth.all('*', restful([Method.GET, Method.POST]));
+			const user = await prisma.user.findUnique({
+				where: { email: req.body.email },
+			});
+
+			if (!user) {
+				throw new BadRequestError(invalidCredentialsMsg);
+			}
+
+			const validPass = await verify(user.password, req.body.password);
+
+			if (!validPass) {
+				throw new BadRequestError(invalidCredentialsMsg);
+			}
+
+			sendAccessToken(res, createAccessToken(user));
+
+			return res.status(200).send({});
+		} catch (err) {
+			throw err;
+		}
+	}
+
+	signOut(_req: Request, res: Response) {
+		sendAccessToken(res, '');
+
+		return res.status(200).send({});
+	}
+
+	async setIsSignedIn(_req: Request, res: Response) {
+		try {
+			const user = getUser(res)!;
+
+			if (!user) {
+				sendAccessToken(res, '');
+
+				return res.status(401).send({
+					message: 'unauthorized',
+				});
+			}
+
+			return res.status(200).send({});
+		} catch (err) {
+			throw err;
+		}
+	}
+
+	getCurrentUser(_req: Request, res: Response) {
+		try {
+			const user = getUser(res);
+
+			return res.status(200).send({
+				user: user
+					? {
+							email: user.email,
+							fullName: user.fullName,
+					  }
+					: null,
+			});
+		} catch (err) {
+			throw err;
+		}
+	}
+}
