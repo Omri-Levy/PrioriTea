@@ -1,27 +1,65 @@
-import express from 'express';
-import { isAuth, Method, restful } from '../';
-import {
-	createTask,
-	deleteTask,
-	editTask,
-	getTask,
-	getTasks,
-} from './tasks.controller';
+import { Request, Response } from 'express';
+import { InjectService } from '..';
+import { getUserId } from './getUserId';
+import { TaskModel } from './';
+import { CreatedResponse } from '../auth/CreatedResponse';
+import { SuccessResponse } from '../auth/SuccessResponse';
 
-export const tasks = express.Router();
+export interface ITaskService {
+	createTask(req: Request, res: Response): void;
+	getTasks(req: Request, res: Response): void;
+	getTask(req: Request, res: Response): void;
+	updateTask(req: Request, res: Response): void;
+	deleteTask(req: Request, res: Response): void;
+}
 
-//sends back all existing tasks from db
-tasks.get('/', isAuth, getTasks);
+@InjectService()
+export class TaskService implements ITaskService {
+	constructor(private model: TaskModel) {}
 
-tasks.get('/:id', isAuth, getTask);
+	async createTask(req: Request, res: Response) {
+		this.model.createTask(
+			getUserId(res)!,
+			req.body.priority,
+			req.body.description,
+			req.body.status,
+		);
 
-//adds a new task to db using parameters sent from the user
-tasks.post('/', isAuth, createTask);
+		const tasks = await this.model.getAllTasksByUserId(getUserId(res)!);
 
-//updates an existing task from db using an id sent from the user
-tasks.patch('/:id', isAuth, editTask);
+		return new CreatedResponse(res, { data: { tasks } });
+	}
 
-//deletes an existing task from db using an id sent from the user
-tasks.delete('/:id', isAuth, deleteTask);
+	async getTasks(_req: Request, res: Response) {
+		this.model.getAllTasksByUserId(getUserId(res)!);
 
-tasks.all('*', restful([Method.GET, Method.POST, Method.PATCH, Method.DELETE]));
+		const tasks = await this.model.getAllTasksByUserId(getUserId(res)!);
+
+		return new SuccessResponse(res, { data: { tasks } });
+	}
+
+	async getTask(req: Request, res: Response) {
+		this.model.getTaskById(req.params.id!);
+
+		const tasks = await this.model.getAllTasksByUserId(getUserId(res)!);
+
+		return new SuccessResponse(res, { data: { tasks } });
+	}
+
+	async updateTask(req: Request, res: Response) {
+		this.model.updateTaskById(
+			req.params.id!,
+			req.body.priority,
+			req.body.description,
+			req.body.status,
+		);
+
+		const tasks = await this.model.getAllTasksByUserId(getUserId(res)!);
+
+		return new SuccessResponse(res, { data: { tasks } });
+	}
+
+	async deleteTask(req: Request, _res: Response) {
+		return this.model.deleteTaskById(req.params.id!);
+	}
+}

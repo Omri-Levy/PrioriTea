@@ -41,7 +41,7 @@ export class AuthService implements IAuthService {
 				req.body.password,
 			);
 
-			return new CreatedResponse(res, { test: 'testing' });
+			return new CreatedResponse(res);
 		} catch (err) {
 			if (err instanceof z.ZodError) {
 				throw new RequestValidationError(err);
@@ -109,12 +109,14 @@ export class AuthService implements IAuthService {
 			const user = getUser(res);
 
 			return new SuccessResponse(res, {
-				user: user
-					? {
-							email: user.email,
-							fullName: user.fullName,
-					  }
-					: null,
+				data: {
+					user: user
+						? {
+								email: user.email,
+								fullName: user.fullName,
+						  }
+						: null,
+				},
 			});
 		} catch (err) {
 			throw err;

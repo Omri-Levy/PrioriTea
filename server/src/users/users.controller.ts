@@ -12,8 +12,8 @@ import {
 import { UserService } from './';
 
 export interface IUserController {
-	getUser(req: Request, res: Response): void;
 	getUsers(req: Request, res: Response): void;
+	getUser(req: Request, res: Response): void;
 	updateUser(req: Request, res: Response): void;
 	deleteUser(req: Request, res: Response): void;
 	methodNotAllowed(req: Request, res: Response, next: NextFunction): void;
@@ -25,16 +25,6 @@ export class UserController implements IUserController {
 	constructor(private service: UserService) {}
 
 	/**
-	 *	@path /api/users/:id
-	 *	@request get
-	 *	@desc get a user by id from db
-	 */
-	@Get('/:id')
-	public async getUser(req: Request, res: Response) {
-		return this.service.getUser(req, res);
-	}
-
-	/**
 	 * @path /api/users/
 	 * @request get
 	 * @desc get all users from db
@@ -42,6 +32,16 @@ export class UserController implements IUserController {
 	@Get('/')
 	public async getUsers(req: Request, res: Response) {
 		return this.service.getUsers(req, res);
+	}
+
+	/**
+	 *	@path /api/users/:id
+	 *	@request get
+	 *	@desc get a user by id from db
+	 */
+	@Get('/:id')
+	public async getUser(req: Request, res: Response) {
+		return this.service.getUser(req, res);
 	}
 
 	/**

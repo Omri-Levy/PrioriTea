@@ -43,6 +43,7 @@ import {
 	JwtUtils,
 	isAuth,
 } from './auth';
+import { TaskModel, TaskService, TaskController, taskSchema } from './tasks';
 
 export {
 	// Env
@@ -90,6 +91,7 @@ export {
 	// Validation
 	signUpSchema,
 	signInSchema,
+	taskSchema,
 	// Jwt
 	JwtUtils,
 	// argon2
@@ -100,6 +102,9 @@ export {
 	UserController,
 	AuthService,
 	AuthController,
+	TaskModel,
+	TaskService,
+	TaskController,
 	// Core
 	router,
 	Server,

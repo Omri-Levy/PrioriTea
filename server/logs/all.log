@@ -2066,3 +2066,415 @@
 2022-04-20 20:37:05:375 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
 2022-04-20 20:37:05:375 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
 2022-04-20 20:37:05:375 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 20:38:56:3856 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 20:47:32:4732 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:20:43:2043 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:20:53:2053 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:21:02:212 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:21:22:2122 [31merror[39m: [31m[ { message: 'Route not found.' } ][39m
+2022-04-20 21:21:22:2122 [35mhttp[39m: [35mGET /api/tasks/ 404 43 - 3.174 ms[39m
+[35m[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:23:11:2311 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:23:13:2313 [31merror[39m: [31mCannot read properties of undefined (reading 'id')[39m
+2022-04-20 21:23:13:2313 [35mhttp[39m: [35mGET /api/tasks/ 500 36 - 3.397 ms[39m
+[35m[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:24:49:2449 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:24:50:2450 [31merror[39m: [31m[ { message: 'Unauthorized.' } ][39m
+2022-04-20 21:24:50:2450 [35mhttp[39m: [35mGET /api/tasks/ 401 40 - 3.480 ms[39m
+[35m[39m
+2022-04-20 21:25:29:2529 [31merror[39m: [31m[ { message: 'Route not found.' } ][39m
+2022-04-20 21:25:29:2529 [35mhttp[39m: [35mPOST /api/sign-in/ 404 43 - 1.161 ms[39m
+[35m[39m
+2022-04-20 21:25:35:2535 [35mhttp[39m: [35mPOST /api/auth/sign-in/ 200 - - 103.571 ms[39m
+[35m[39m
+2022-04-20 21:25:44:2544 [31merror[39m: [31m[ { message: 'Unauthorized.' } ][39m
+2022-04-20 21:25:44:2544 [35mhttp[39m: [35mGET /api/tasks/ 401 40 - 0.761 ms[39m
+[35m[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:25:58:2558 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:26:08:268 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:26:11:2611 [31merror[39m: [31mCannot read properties of undefined (reading 'id')[39m
+2022-04-20 21:26:11:2611 [35mhttp[39m: [35mGET /api/tasks/ 500 36 - 3.908 ms[39m
+[35m[39m
+2022-04-20 21:26:12:2612 [31merror[39m: [31mCannot read properties of undefined (reading 'id')[39m
+2022-04-20 21:26:12:2612 [35mhttp[39m: [35mGET /api/tasks/ 500 36 - 0.902 ms[39m
+[35m[39m
+2022-04-20 21:26:34:2634 [31merror[39m: [31mCannot read properties of undefined (reading 'id')[39m
+2022-04-20 21:26:34:2634 [35mhttp[39m: [35mGET /api/tasks 500 36 - 0.784 ms[39m
+[35m[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:26:52:2652 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:27:00:270 [35mhttp[39m: [35mGET /api/tasks - - - - ms[39m
+[35m[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:27:13:2713 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:27:31:2731 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:29:54:2954 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:30:39:3039 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:32:13:3213 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:32:22:3222 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:32:44:3244 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:34:48:3448 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:37:23:3723 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:37:41:3741 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:40:14:4014 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:40:18:4018 [35mhttp[39m: [35mGET /api/tasks 200 21 - 5.420 ms[39m
+[35m[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:41:15:4115 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:41:23:4123 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:41:25:4125 [35mhttp[39m: [35mGET /api/tasks 200 6863 - 127.020 ms[39m
+[35m[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: GET /users/ UserController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: GET /users/:id UserController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: PATCH /users/:id UserController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: DELETE /users/:id UserController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: ALL /users* UserController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: POST /auth/sign-up AuthController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: POST /auth/sign-in AuthController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: POST /auth/sign-out AuthController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: GET /auth/current-user AuthController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: ALL /auth* AuthController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: POST /tasks/ TaskController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: GET /tasks/ TaskController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: GET /tasks/:id TaskController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: PATCH /tasks/:id TaskController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: DELETE /tasks/:id TaskController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mRegistered route: ALL /tasks* TaskController[39m
+2022-04-20 21:42:14:4214 [32minfo[39m: [32mServer is listening on port 4000[39m
+2022-04-20 21:42:17:4217 [35mhttp[39m: [35mGET /api/tasks 200 6863 - 141.095 ms[39m
+[35m[39m

@@ -1,6 +1,7 @@
 import { ErrorRequestHandler } from 'express';
 import { logger } from '..';
 import { CustomError } from '../errors/custom-error';
+import { SomethingWentWrongResponse } from './SomethingWentWrongResponse';
 
 const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
 	if (err instanceof CustomError) {
@@ -13,7 +14,7 @@ const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
 
 	logger.error(err);
 
-	return res.status(500).send({
+	return new SomethingWentWrongResponse(res, {
 		message: `Something went wrong..`,
 	});
 };

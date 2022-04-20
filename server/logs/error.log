@@ -146,3 +146,11 @@
 2022-04-20 20:32:15:3215 [31merror[39m: [31mInvalid status code: undefined[39m
 2022-04-20 20:33:18:3318 [31merror[39m: [31m[ { message: 'Email already in use' } ][39m
 2022-04-20 20:34:42:3442 [31merror[39m: [31m[ { message: 'Route not found.' } ][39m
+2022-04-20 21:21:22:2122 [31merror[39m: [31m[ { message: 'Route not found.' } ][39m
+2022-04-20 21:23:13:2313 [31merror[39m: [31mCannot read properties of undefined (reading 'id')[39m
+2022-04-20 21:24:50:2450 [31merror[39m: [31m[ { message: 'Unauthorized.' } ][39m
+2022-04-20 21:25:29:2529 [31merror[39m: [31m[ { message: 'Route not found.' } ][39m
+2022-04-20 21:25:44:2544 [31merror[39m: [31m[ { message: 'Unauthorized.' } ][39m
+2022-04-20 21:26:11:2611 [31merror[39m: [31mCannot read properties of undefined (reading 'id')[39m
+2022-04-20 21:26:12:2612 [31merror[39m: [31mCannot read properties of undefined (reading 'id')[39m
+2022-04-20 21:26:34:2634 [31merror[39m: [31mCannot read properties of undefined (reading 'id')[39m
