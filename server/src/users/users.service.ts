@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { UserModel } from '.';
-import { InjectService, logger } from '..';
+import { InjectService, logger } from '../';
 import { getErrorMessage } from '../error-utils';
+import { UserModel } from './';
 export interface IUserService {
 	getUser(req: Request, res: Response): void;
 	getUsers(req: Request, res: Response): void;
@@ -11,7 +11,7 @@ export interface IUserService {
 
 @InjectService()
 export class UserService implements IUserService {
-	constructor(private readonly model: UserModel) {}
+	constructor(private model: UserModel) {}
 
 	/**
 	 *	@path /api/user/:id

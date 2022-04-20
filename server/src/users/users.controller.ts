@@ -1,7 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 import {
-	All, Controller, Delete, Get, InjectService, Method, Patch, restful, UserService
+	All,
+	Controller,
+	Delete,
+	Get,
+	InjectService,
+	Method,
+	Patch,
+	restful,
 } from '../';
+import { UserService } from './';
 
 export interface IUserController {
 	getUser(req: Request, res: Response): void;

@@ -1,5 +1,4 @@
-import { InjectService } from '..';
-import { prisma } from '../db/prisma';
+import { InjectService, PassUtils, prisma } from '..';
 
 export interface IUserModel {
 	getUserById(id: string): void;
@@ -15,6 +14,16 @@ export interface IUserModel {
 
 @InjectService()
 export class UserModel implements IUserModel {
+	public async createUser(email: string, fullName: string, password: string) {
+		return prisma.user.create({
+			data: {
+				email,
+				fullName,
+				password: await PassUtils.hash(password),
+			},
+		});
+	}
+
 	public async getUserById(id: string) {
 		return prisma.user.findUnique({
 			where: {

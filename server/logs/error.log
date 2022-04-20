@@ -1,1 +1,148 @@
 2022-04-20 17:00:47:047 [31merror[39m: [31m4000[39m
+2022-04-20 19:58:00:580 [31merror[39m: [31m[ { message: 'Method not allowed.' } ][39m
+2022-04-20 19:58:14:5814 [31merror[39m: [31mCannot read properties of undefined (reading 'signIn')[39m
+2022-04-20 19:58:55:5855 [31merror[39m: [31mCannot read properties of undefined (reading 'signIn')[39m
+2022-04-20 19:59:05:595 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:00:52:052 [31merror[39m: [31mCannot read properties of undefined (reading 'getAllUsers')[39m
+2022-04-20 20:01:13:113 [31merror[39m: [31mCannot read properties of undefined (reading 'getAllUsers')[39m
+2022-04-20 20:01:45:145 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:05:31:531 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:05:41:541 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:12:06:126 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:16:19:1619 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:16:20:1620 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:16:59:1659 [31merror[39m: [31mCannot read properties of undefined (reading 'getAllUsers')[39m
+2022-04-20 20:17:01:171 [31merror[39m: [31mCannot read properties of undefined (reading 'getAllUsers')[39m
+2022-04-20 20:17:12:1712 [31merror[39m: [31mCannot read properties of undefined (reading 'getAllUsers')[39m
+2022-04-20 20:17:21:1721 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:17:23:1723 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:18:14:1814 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:18:51:1851 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:18:54:1854 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:19:16:1916 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:19:16:1916 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:20:25:2025 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:20:47:2047 [31merror[39m: [31mCannot read properties of undefined (reading 'getAllUsers')[39m
+2022-04-20 20:21:13:2113 [31merror[39m: [31mCannot read properties of undefined (reading 'getUsers')[39m
+2022-04-20 20:22:53:2253 [31merror[39m: [31mCannot read properties of undefined (reading 'signIn')[39m
+2022-04-20 20:23:12:2312 [31merror[39m: [31m[39m
+[31mInvalid `__1.prisma.user.findUnique()` invocation in[39m
+[31m/home/omri/PrioriTea/server/dist/users/users.model.js:29:32[39m
+
+[31m  26     });[39m
+[31m  27 }[39m
+[31m  28 async getUserByEmail(email) {[39m
+[31m→ 29     return __1.prisma.user.findUnique({[39m
+[31m           where: {[39m
+[31m         ?   email?: String,[39m
+[31m         ?   id?: String[39m
+[31m           }[39m
+[31m         })[39m
+
+[31mArgument where of type UserWhereUniqueInput needs at least one argument. Available args are listed in green.[39m
+
+[31mNote: Lines with ? are optional.[39m
+[31m[39m
+2022-04-20 20:23:31:2331 [31merror[39m: [31m[39m
+[31mInvalid `__1.prisma.user.findUnique()` invocation in[39m
+[31m/home/omri/PrioriTea/server/dist/users/users.model.js:29:32[39m
+
+[31m  26     });[39m
+[31m  27 }[39m
+[31m  28 async getUserByEmail(email) {[39m
+[31m→ 29     return __1.prisma.user.findUnique({[39m
+[31m           where: {[39m
+[31m         ?   email?: String,[39m
+[31m         ?   id?: String[39m
+[31m           }[39m
+[31m         })[39m
+
+[31mArgument where of type UserWhereUniqueInput needs at least one argument. Available args are listed in green.[39m
+
+[31mNote: Lines with ? are optional.[39m
+[31m[39m
+2022-04-20 20:23:45:2345 [31merror[39m: [31mCannot read properties of undefined (reading 'signIn')[39m
+2022-04-20 20:23:56:2356 [31merror[39m: [31m[39m
+[31mInvalid `__1.prisma.user.findUnique()` invocation in[39m
+[31m/home/omri/PrioriTea/server/dist/users/users.model.js:29:32[39m
+
+[31m  26     });[39m
+[31m  27 }[39m
+[31m  28 async getUserByEmail(email) {[39m
+[31m→ 29     return __1.prisma.user.findUnique({[39m
+[31m           where: {[39m
+[31m         ?   email?: String,[39m
+[31m         ?   id?: String[39m
+[31m           }[39m
+[31m         })[39m
+
+[31mArgument where of type UserWhereUniqueInput needs at least one argument. Available args are listed in green.[39m
+
+[31mNote: Lines with ? are optional.[39m
+[31m[39m
+2022-04-20 20:26:44:2644 [31merror[39m: [31m[[39m
+[31m  { message: 'Required', field: 'email' },[39m
+[31m  { message: 'Required', field: 'password' }[39m
+[31m][39m
+2022-04-20 20:27:04:274 [31merror[39m: [31mUnexpected token } in JSON at position 54[39m
+2022-04-20 20:27:08:278 [31merror[39m: [31m[[39m
+[31m  {[39m
+[31m    message: 'String must contain at least 8 character(s)',[39m
+[31m    field: 'password'[39m
+[31m  },[39m
+[31m  {[39m
+[31m    message: 'Password must contain at least one upper case letter, one lower case letter, one number, and one special character.',[39m
+[31m    field: 'password'[39m
+[31m  }[39m
+[31m][39m
+2022-04-20 20:27:20:2720 [31merror[39m: [31m[[39m
+[31m  {[39m
+[31m    message: 'Password must contain at least one upper case letter, one lower case letter, one number, and one special character.',[39m
+[31m    field: 'password'[39m
+[31m  }[39m
+[31m][39m
+2022-04-20 20:27:30:2730 [31merror[39m: [31m[[39m
+[31m  {[39m
+[31m    message: 'Password must contain at least one upper case letter, one lower case letter, one number, and one special character.',[39m
+[31m    field: 'password'[39m
+[31m  }[39m
+[31m][39m
+2022-04-20 20:27:45:2745 [31merror[39m: [31m[ { message: 'Email or password are wrong - please try again.' } ][39m
+2022-04-20 20:27:52:2752 [31merror[39m: [31m[ { message: 'Email or password are wrong - please try again.' } ][39m
+2022-04-20 20:27:56:2756 [31merror[39m: [31m[ { message: 'Email or password are wrong - please try again.' } ][39m
+2022-04-20 20:28:08:288 [31merror[39m: [31m[ { message: 'Email or password are wrong - please try again.' } ][39m
+2022-04-20 20:28:15:2815 [31merror[39m: [31m[[39m
+[31m  {[39m
+[31m    message: 'Email must contain a "@", preceded and followed by English characters, numbers, and special characters, and may not contain two consecutive "."s',[39m
+[31m    field: 'email'[39m
+[31m  }[39m
+[31m][39m
+2022-04-20 20:28:21:2821 [31merror[39m: [31m[ { message: 'Email or password are wrong - please try again.' } ][39m
+2022-04-20 20:28:54:2854 [31merror[39m: [31m[[39m
+[31m  {[39m
+[31m    message: 'Password must contain at least one upper case letter, one lower case letter, one number, and one special character.',[39m
+[31m    field: 'password'[39m
+[31m  },[39m
+[31m  {[39m
+[31m    message: 'Password confirmation must match password',[39m
+[31m    field: 'passwordConfirmation'[39m
+[31m  }[39m
+[31m][39m
+2022-04-20 20:28:59:2859 [31merror[39m: [31m[[39m
+[31m  {[39m
+[31m    message: 'Password confirmation must match password',[39m
+[31m    field: 'passwordConfirmation'[39m
+[31m  }[39m
+[31m][39m
+2022-04-20 20:29:07:297 [31merror[39m: [31m[[39m
+[31m  {[39m
+[31m    message: 'Password confirmation must match password',[39m
+[31m    field: 'passwordConfirmation'[39m
+[31m  }[39m
+[31m][39m
+2022-04-20 20:29:41:2941 [31merror[39m: [31m[ { message: 'Email already in use' } ][39m
+2022-04-20 20:31:09:319 [31merror[39m: [31m[ { message: 'Email already in use' } ][39m
+2022-04-20 20:32:11:3211 [31merror[39m: [31m[ { message: 'Email already in use' } ][39m
+2022-04-20 20:32:15:3215 [31merror[39m: [31mInvalid status code: undefined[39m
+2022-04-20 20:33:18:3318 [31merror[39m: [31m[ { message: 'Email already in use' } ][39m
+2022-04-20 20:34:42:3442 [31merror[39m: [31m[ { message: 'Route not found.' } ][39m

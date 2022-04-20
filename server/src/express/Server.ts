@@ -23,8 +23,8 @@ export class Server {
 	registerMiddleware(
 		...middleware: Array<RequestHandler | ErrorRequestHandler>
 	) {
-		middleware.forEach((_mdw) => {
-			// this.app.use(mdw);
+		middleware.forEach((mdw) => {
+			this.app.use(mdw);
 		});
 
 		return this;

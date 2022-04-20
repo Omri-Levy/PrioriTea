@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 if (!process.env.PORT) {
 	throw new Error('process.env.PORT is undefined');
 }

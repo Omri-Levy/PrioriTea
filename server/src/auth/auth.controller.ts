@@ -1,7 +1,6 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
 import {
 	All,
-	AuthService,
 	Controller,
 	Get,
 	InjectService,
@@ -9,13 +8,13 @@ import {
 	Post,
 	restful,
 } from '../';
+import { AuthService } from './';
 
 interface IAuthController {
 	signUp: RequestHandler;
 	signIn: RequestHandler;
 	signOut: RequestHandler;
-	setIsSignedIn: RequestHandler;
-	getCurrentUser: RequestHandler;
+	getUserInfo: RequestHandler;
 	methodNotAllowed: RequestHandler;
 }
 
@@ -25,7 +24,7 @@ export class AuthController implements IAuthController {
 	constructor(private service: AuthService) {}
 
 	/**
-	 * @path /api/user/sign_up
+	 * @path /api/user/sign-up
 	 * @request post
 	 * @desc add a new user to db
 	 */
@@ -55,11 +54,9 @@ export class AuthController implements IAuthController {
 	}
 
 	@Get('/current-user')
-	async getCurrentUser(_req: Request, _res: Response) {}
-
-	// @Middleware(cookieParser())
-	@Post('/set-is-signed-in')
-	async setIsSignedIn(_req: Request, _res: Response) {}
+	async getUserInfo(req: Request, res: Response) {
+		return this.service.getUserInfo(req, res);
+	}
 
 	@All('*')
 	methodNotAllowed(req: Request, res: Response, next: NextFunction) {

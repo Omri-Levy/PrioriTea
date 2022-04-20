@@ -1,2 +1,2 @@
 export { Method } from './enums';
-export { Route, User } from './interfaces';
+export { Route, User, JwtPayload } from './interfaces';

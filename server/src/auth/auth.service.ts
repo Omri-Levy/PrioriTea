@@ -1,26 +1,31 @@
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { hash, verify } from 'argon2';
 import { Request, RequestHandler, Response } from 'express';
 import { z } from 'zod';
 import {
-	prisma,
-	getUser,
-	signUpSchema,
-	createAccessToken,
-	sendAccessToken,
 	BadRequestError,
+	getUser,
+	InjectService,
+	JwtUtils,
+	PassUtils,
 	RequestValidationError,
+	signInSchema,
+	signUpSchema,
+	UserModel,
 } from '../';
+import { CreatedResponse } from './CreatedResponse';
+import { SuccessResponse } from './SuccessResponse';
 
 interface IAuthService {
 	signUp: RequestHandler;
 	signIn: RequestHandler;
 	signOut: RequestHandler;
-	setIsSignedIn: RequestHandler;
-	getCurrentUser: RequestHandler;
+	getUserInfo: RequestHandler;
 }
 
+@InjectService()
 export class AuthService implements IAuthService {
+	constructor(private model: UserModel) {}
+
 	async signUp(req: Request, res: Response) {
 		try {
 			signUpSchema.parse({
@@ -30,15 +35,13 @@ export class AuthService implements IAuthService {
 				passwordConfirmation: req.body.passwordConfirmation,
 			});
 
-			await prisma.user.create({
-				data: {
-					email: req.body.email,
-					fullName: req.body.fullName,
-					password: await hash(req.body.password),
-				},
-			});
+			await this.model.createUser(
+				req.body.email,
+				req.body.fullName,
+				req.body.password,
+			);
 
-			return res.status(201).send();
+			return new CreatedResponse(res, { test: 'testing' });
 		} catch (err) {
 			if (err instanceof z.ZodError) {
 				throw new RequestValidationError(err);
@@ -57,62 +60,55 @@ export class AuthService implements IAuthService {
 			throw err;
 		}
 	}
+
 	async signIn(req: Request, res: Response) {
 		try {
 			const invalidCredentialsMsg =
 				'Email or password are wrong - please try again.';
 
-			const user = await prisma.user.findUnique({
-				where: { email: req.body.email },
+			signInSchema.parse({
+				email: req.body.email,
+				password: req.body.password,
 			});
+
+			const user = await this.model.getUserByEmail(req.body.email);
 
 			if (!user) {
 				throw new BadRequestError(invalidCredentialsMsg);
 			}
 
-			const validPass = await verify(user.password, req.body.password);
+			const validPass = await PassUtils.compare(
+				user.password,
+				req.body.password,
+			);
 
 			if (!validPass) {
 				throw new BadRequestError(invalidCredentialsMsg);
 			}
 
-			sendAccessToken(res, createAccessToken(user));
+			JwtUtils.createAccessTokenCookie(res, user);
 
-			return res.status(200).send({});
+			return new SuccessResponse(res);
 		} catch (err) {
+			if (err instanceof z.ZodError) {
+				throw new RequestValidationError(err);
+			}
+
 			throw err;
 		}
 	}
 
 	signOut(_req: Request, res: Response) {
-		sendAccessToken(res, '');
+		JwtUtils.deleteAccessTokenCookie(res);
 
-		return res.status(200).send({});
+		return new SuccessResponse(res);
 	}
 
-	async setIsSignedIn(_req: Request, res: Response) {
-		try {
-			const user = getUser(res)!;
-
-			if (!user) {
-				sendAccessToken(res, '');
-
-				return res.status(401).send({
-					message: 'unauthorized',
-				});
-			}
-
-			return res.status(200).send({});
-		} catch (err) {
-			throw err;
-		}
-	}
-
-	getCurrentUser(_req: Request, res: Response) {
+	getUserInfo(_req: Request, res: Response) {
 		try {
 			const user = getUser(res);
 
-			return res.status(200).send({
+			return new SuccessResponse(res, {
 				user: user
 					? {
 							email: user.email,

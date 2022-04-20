@@ -1,6 +1,5 @@
 import express from 'express';
-import { Method, restful } from '../';
-import { isAuth } from '../auth';
+import { isAuth, Method, restful } from '../';
 import {
 	createTask,
 	deleteTask,

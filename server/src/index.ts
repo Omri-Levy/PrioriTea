@@ -6,7 +6,7 @@ import {
 	DOMAIN,
 	NODE_ENV,
 } from './env';
-import { Method, Route, User } from './types';
+import { Method, Route, User, JwtPayload } from './types';
 import {
 	CustomError,
 	NotFoundError,
@@ -33,14 +33,15 @@ import {
 	Controller,
 	Middleware,
 } from './decorators';
-import { UserController, UserService, UserModel } from './users';
+import { UserModel, UserService, UserController } from './users';
 import {
-	AuthController,
 	AuthService,
+	AuthController,
 	signInSchema,
 	signUpSchema,
-	sendAccessToken,
-	createAccessToken,
+	PassUtils,
+	JwtUtils,
+	isAuth,
 } from './auth';
 
 export {
@@ -55,6 +56,7 @@ export {
 	Method,
 	Route,
 	User,
+	JwtPayload,
 	// Errors
 	CustomError,
 	NotFoundError,
@@ -84,20 +86,20 @@ export {
 	morgan,
 	errorHandler,
 	restful,
+	isAuth,
 	// Validation
 	signUpSchema,
 	signInSchema,
 	// Jwt
-	createAccessToken,
-	sendAccessToken,
+	JwtUtils,
 	// argon2
+	PassUtils,
 	// Routes
-	UserController,
-	UserService,
 	UserModel,
-	AuthController,
+	UserService,
+	UserController,
 	AuthService,
-	// AuthModel,
+	AuthController,
 	// Core
 	router,
 	Server,

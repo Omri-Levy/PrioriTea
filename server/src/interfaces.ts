@@ -11,3 +11,12 @@ export interface User {
 	email: string;
 	fullName: string;
 }
+
+export interface JwtPayload {
+	data: {
+		id: string;
+		email: string;
+		fullName: string;
+	};
+	exp: number;
+}

@@ -12,9 +12,11 @@ export class RequestValidationError extends CustomError {
 
 	serializeErrors() {
 		return this.error.issues.map(function (err) {
+			const [firstErr] = err.path;
+
 			return {
 				message: err.message,
-				field: err.path[0]?.toString(),
+				field: firstErr?.toString(),
 			};
 		});
 	}
