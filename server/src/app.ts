@@ -1,7 +1,7 @@
 import { Server } from "@overnightjs/core";
 import { NotFoundError } from "./errors/not-found-error";
 import { ErrorHandler, Middleware } from "./types";
-import { isDev } from "./utils/isDev";
+import { isDev } from "./utils/is-dev";
 import { logger } from "./utils/logger";
 
 export class App extends Server {

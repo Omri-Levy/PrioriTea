@@ -10,7 +10,7 @@ import {
 	BaseEntity,
 	BeforeInsert,
 } from "typeorm";
-import { Task } from "../tasks/tasks.entity";
+import { Task } from "../tasks/tasks-entity";
 import { PassUtils } from "../utils/pass-utils";
 import { specialUpperLowerNum } from "./users-validation";
 

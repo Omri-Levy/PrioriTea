@@ -15,7 +15,7 @@ import { restful } from "../middleware/restful";
 import { CreatedResponse } from "../responses/created-response";
 import { OkResponse } from "../responses/ok-response";
 import { RequestHandler } from "../types";
-import { getUserId } from "./getUserId";
+import { getUserId } from "./get-user-id";
 import { TasksService } from "./tasks.service";
 
 interface ITasksController {

@@ -3,9 +3,9 @@ import { Request, Response } from "express";
 import { sign, verify as verifyJwt } from "jsonwebtoken";
 import { DOMAIN, SECRET_ACCESS_TOKEN } from "../env";
 import { UnauthorizedError } from "../errors/unauthorized-error";
-import { JwtPayload, User } from '../interfaces';
+import { JwtPayload, User } from "../interfaces";
 import { Expiration } from "./expiration";
-import { isDev } from "./isDev";
+import { isDev } from "./is-dev";
 
 export class JwtUtils {
 	// eslint-disable-next-line no-use-before-define

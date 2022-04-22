@@ -7,7 +7,7 @@ import { CreatedResponse } from "../responses/created-response";
 import { OkResponse } from "../responses/ok-response";
 import { getUser } from "../utils/get-user";
 import { JwtUtils } from "../utils/jwt-utils";
-import { AuthService } from "./auth-service";
+import { AuthService } from "./auth.service";
 
 interface IAuthController {
 	signUp: RequestHandler;

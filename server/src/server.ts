@@ -8,16 +8,16 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { json, urlencoded } from "express";
 import helmet from "helmet";
-import { AuthController } from "./auth/auth.controller";
-import { Database } from "./Database";
+import { AuthController } from "./auth/auth-controller";
+import { Database } from "./database";
 import { CORS_ORIGIN, PORT } from "./env";
 import { morgan } from "./middleware/morgan";
-import { TasksController } from "./tasks/tasks.controller";
-import { TypeormAdapter } from "./TypeormAdapter";
-import { UsersController } from "./users/users.controller";
+import { TasksController } from "./tasks/tasks-controller";
+import { TypeormAdapter } from "./typeorm-adapater";
+import { UsersController } from "./users/users-controller";
 import { Container } from "typeorm-typedi-extensions";
 import { useContainer } from "typeorm";
-import { App } from "./App";
+import { App } from "./app";
 import { errorHandler } from "./middleware/error-handler";
 
 (async () => {
