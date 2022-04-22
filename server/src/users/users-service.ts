@@ -1,31 +1,29 @@
-import { Service } from "typedi";
-import { Repository } from "typeorm";
-import { InjectRepository } from "typeorm-typedi-extensions";
-import { User } from "./users-entity";
+import { autoInjectable } from "tsyringe";
+import { IUser } from "../interfaces";
+import { UserRepository } from "./users-repository";
 
 export interface IUsersService {
-	getUsers(): Promise<Array<User>>;
-	getUser(id: string): Promise<User | null>;
+	getUsers(): Promise<Array<IUser>>;
+	getUser(id: string): Promise<IUser | null>;
 	updateUser(
 		id: string,
 		email?: string,
 		fullName?: string,
 		password?: string
-	): Promise<Array<User> | null>;
-	deleteUser(id: string): Promise<Array<User> | null>;
+	): Promise<Array<IUser> | null>;
+	deleteUser(id: string): Promise<Array<IUser> | null>;
 }
 
-@Service()
+@autoInjectable()
 export class UsersService implements IUsersService {
-	@InjectRepository(User)
-	private repository: Repository<User>;
+	constructor(public repository: UserRepository) {}
 
 	public async getUsers() {
-		return this.repository.find();
+		return this.repository.getAllUsers();
 	}
 
 	public async getUser(id: string) {
-		return this.repository.findOneBy({ id });
+		return this.repository.getUserById(id);
 	}
 
 	public async updateUser(
@@ -34,18 +32,14 @@ export class UsersService implements IUsersService {
 		fullName?: string,
 		password?: string
 	) {
-		await this.repository.update(id, {
-			email,
-			fullName,
-			password,
-		});
+		await this.repository.updateUserById(id, email, fullName, password);
 
-		return this.repository.find();
+		return this.repository.getAllUsers();
 	}
 
 	public async deleteUser(id: string) {
-		this.repository.delete(id);
+		this.repository.deleteUserById(id);
 
-		return this.repository.find();
+		return this.repository.getAllUsers();
 	}
 }

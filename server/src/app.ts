@@ -1,8 +1,19 @@
 import { Server } from "@overnightjs/core";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import { json, urlencoded } from "express";
+import helmet from "helmet";
+import { AuthController } from "./auth/auth-controller";
+import { CORS_ORIGIN } from "./env";
 import { NotFoundError } from "./errors/not-found-error";
+import { errorHandler } from "./middleware/error-handler";
+import { morgan } from "./middleware/morgan";
+import { TasksController } from "./tasks/tasks-controller";
 import { ErrorHandler, Middleware } from "./types";
+import { UsersController } from "./users/users-controller";
 import { isDev } from "./utils/is-dev";
 import { logger } from "./utils/logger";
+import {container} from 'tsyringe'
 
 export class App extends Server {
 	constructor(private readonly port: number) {
@@ -42,13 +53,33 @@ export class App extends Server {
 		return this;
 	}
 
-	public async listen() {
-		try {
-			this.app.listen(this.port, this.onListen.bind(this));
+	public init() {
+		this.setupConfig()
+			.setupMiddleware(
+				cookieParser(),
+				cors({ origin: CORS_ORIGIN, credentials: true }),
+				urlencoded({ extended: true }),
+				json(),
+				morgan,
+				helmet()
+			)
+			.setupControllers(
+				container.resolveAll(UsersController),
+				container.resolve(AuthController),
+				container.resolve(TasksController)
+			)
+			.setupMiddleware(errorHandler);
 
-			return this;
+		return this;
+	}
+
+	public listen() {
+		try {
+			this.init();
+
+			return this.app.listen(this.port, this.onListen.bind(this));
 		} catch (err) {
-			throw err;
+			return;
 		}
 	}
 }

@@ -1,5 +1,6 @@
-import { ClassMiddleware, Controller, Post, Get } from "@overnightjs/core";
-import { RequestHandler, Request, Response } from "express";
+import { ClassMiddleware, Controller, Get, Post } from "@overnightjs/core";
+import { Request, RequestHandler, Response } from "express";
+import { autoInjectable } from "tsyringe";
 import { Method } from "../enums";
 import { BASE_URL } from "../env";
 import { restful } from "../middleware/restful";
@@ -7,7 +8,11 @@ import { CreatedResponse } from "../responses/created-response";
 import { OkResponse } from "../responses/ok-response";
 import { getUser } from "../utils/get-user";
 import { JwtUtils } from "../utils/jwt-utils";
-import { AuthService } from "./auth.service";
+import { zParse } from "../utils/z-parse";
+import { AuthService } from "./auth-service";
+import { emailAlreadyInUse } from "./email-already-in-use";
+import { signInSchema } from "./validation/sign-in-schema";
+import { signUpSchema } from "./validation/sign-up-schema";
 
 interface IAuthController {
 	signUp: RequestHandler;
@@ -18,8 +23,9 @@ interface IAuthController {
 
 @ClassMiddleware(restful([Method.GET, Method.POST]))
 @Controller(`${BASE_URL}/auth`)
+@autoInjectable()
 export class AuthController implements IAuthController {
-	constructor(private service: AuthService) {}
+	constructor(public service: AuthService) {}
 
 	/**
 	 * @path /api/user/sign-up
@@ -28,12 +34,18 @@ export class AuthController implements IAuthController {
 	 */
 	@Post(`sign-up`)
 	async signUp(req: Request, res: Response) {
-		const { email, fullName, password } = req.body;
+		const { email, fullName, password } = await zParse(signUpSchema as any, req.body);
+		try {
 		const user = await this.service.signUp(email, fullName, password);
 
 		return new CreatedResponse(res, { data: { user } });
 
-		// emailAlreadyInUse(err);
+		
+		} catch(err) {
+			emailAlreadyInUse(err);
+
+			throw err;
+		}
 	}
 
 	/**
@@ -43,20 +55,13 @@ export class AuthController implements IAuthController {
 	 */
 	@Post(`sign-in`)
 	async signIn(req: Request, res: Response) {
-		// signInSchema.parse({
-		// 	email: req.body.email,
-		// 	password: req.body.password,
-		// });
+		const { email, password } = await zParse(signInSchema, req);
 
-		const { email, password } = req.body;
 		const user = await this.service.signIn(email, password);
 
 		JwtUtils.createAccessTokenCookie(res, user);
 
 		return new OkResponse(res);
-		// if (err instanceof z.ZodError) {
-		// 	throw new RequestValidationError(err);
-		// }
 	}
 
 	/**

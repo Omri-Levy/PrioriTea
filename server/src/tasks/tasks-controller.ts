@@ -7,7 +7,7 @@ import {
 	Post,
 } from "@overnightjs/core";
 import { Request, Response } from "express";
-import { Service } from "typedi";
+import { autoInjectable } from "tsyringe";
 import { Method } from "../enums";
 import { BASE_URL } from "../env";
 import { auth } from "../middleware/auth";
@@ -16,7 +16,7 @@ import { CreatedResponse } from "../responses/created-response";
 import { OkResponse } from "../responses/ok-response";
 import { RequestHandler } from "../types";
 import { getUserId } from "./get-user-id";
-import { TasksService } from "./tasks.service";
+import { TasksService } from "./tasks-service";
 
 interface ITasksController {
 	createTask: RequestHandler;
@@ -31,9 +31,9 @@ interface ITasksController {
 	auth,
 ])
 @Controller(`${BASE_URL}/tasks`)
-@Service()
+@autoInjectable()
 export class TasksController implements ITasksController {
-	constructor(private service: TasksService) {}
+	constructor(public service: TasksService) {}
 
 	/**
 	 * @path /api/tasks

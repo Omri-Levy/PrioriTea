@@ -1,9 +1,6 @@
-import { plainToClass } from "class-transformer";
-import { Service } from "typedi";
-import { Repository } from "typeorm";
-import { InjectRepository } from "typeorm-typedi-extensions";
-import { User } from "../users/users-entity";
-import { Task } from "./tasks.entity";
+import { Task } from "@prisma/client";
+import { autoInjectable } from "tsyringe";
+import { TaskRepository } from "./tasks-repository";
 
 export interface ITasksService {
 	createTask(
@@ -24,13 +21,9 @@ export interface ITasksService {
 	deleteTask(userId: string, id: string): Promise<Array<Task> | null>;
 }
 
-@Service()
+@autoInjectable()
 export class TasksService implements ITasksService {
-	@InjectRepository(Task)
-	private tasksRepository: Repository<Task>;
-
-	@InjectRepository(User)
-	private usersRepository: Repository<User>;
+	constructor(public repository: TaskRepository){}
 
 	async createTask(
 		userId: string,
@@ -38,35 +31,17 @@ export class TasksService implements ITasksService {
 		description: string,
 		status?: string
 	) {
-		const task = plainToClass(Task, {
-			priority,
-			description,
-			status,
-		});
+		await this.repository.createTask(userId, priority, description, status);
 
-		this.tasksRepository.create(task);
-
-		const user = await this.usersRepository.findOneBy({
-			id: userId,
-		});
-
-		task.user = user!;
-
-		await this.tasksRepository.save(task);
-
-		return this.tasksRepository.findBy({
-			user: { id: userId },
-		});
+		return this.repository.getAllTasksByUserId(userId);
 	}
 
 	async getTasks(userId: string) {
-		return this.tasksRepository.findBy({
-			user: { id: userId },
-		});
+		return this.repository.getAllTasksByUserId(userId);
 	}
 
 	async getTask(id: string) {
-		return this.tasksRepository.findOneBy({ id });
+		return this.repository.getTaskById(id);
 	}
 
 	async updateTask(
@@ -76,22 +51,18 @@ export class TasksService implements ITasksService {
 		description?: string,
 		status?: string
 	) {
-		await this.tasksRepository.update(id, {
+		await this.repository.updateTaskById(id, 
 			priority,
 			description,
 			status,
-		});
+		);
 
-		return this.tasksRepository.findBy({
-			user: { id: userId },
-		});
+		return this.repository.getAllTasksByUserId(userId);
 	}
 
 	async deleteTask(id: string, userId: string) {
-		await this.tasksRepository.delete(id);
+		await this.repository.deleteTaskById(id);
 
-		return this.tasksRepository.findBy({
-			user: { id: userId },
-		});
+		return this.repository.getAllTasksByUserId(userId);
 	}
 }

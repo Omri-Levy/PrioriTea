@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { User } from "../interfaces";
+import { IUser } from "../interfaces";
 
-export const getUser = function (res: Response): User | undefined {
+export const getUser = function (res: Response): IUser | undefined {
 	return res.locals.user;
 };

@@ -1,3 +1,3 @@
-// import { sharedSchema } from './shared-schema';
+import { sharedSchema } from './shared-schema';
 
-// export const signInSchema = sharedSchema;
+export const signInSchema = sharedSchema;

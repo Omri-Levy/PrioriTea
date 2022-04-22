@@ -1,10 +1,7 @@
-// import { z } from 'zod';
-import { plainToClass } from "class-transformer";
-import { Service } from "typedi";
-import { Repository } from "typeorm";
-import { InjectRepository } from "typeorm-typedi-extensions";
+import { User } from "@prisma/client";
+import { autoInjectable } from "tsyringe";
 import { BadRequestError } from "../errors/bad-request-error";
-import { User } from "../users/users-entity";
+import { UserRepository } from "../users/users-repository";
 import { PassUtils } from "../utils/pass-utils";
 
 interface IAuthService {
@@ -16,45 +13,18 @@ interface IAuthService {
 	signIn(email: string, fullName: string): Promise<User | null>;
 }
 
-// export const emailAlreadyInUse = function (err: unknown) {
-// 	if (
-// 		err instanceof PrismaClientKnownRequestError &&
-// 		err.code === 'P2002' &&
-// 		(err.meta as { target: Array<string> })?.target.includes('email')
-// 	) {
-// 		throw new BadRequestError('Email already in use');
-// 	}
-// };
-
-@Service()
+@autoInjectable()
 export class AuthService implements IAuthService {
-	@InjectRepository(User)
-	private repository: Repository<User>;
+	constructor(public repository: UserRepository){}
 
-	// @Validate(signUpSchema)
 	async signUp(email: string, fullName: string, password: string) {
-		const user = plainToClass(User, {
-			email,
-			fullName,
-			password,
-		});
-
-		this.repository.create(user);
-
-		return this.repository.save(user);
+		return this.repository.createUser(email, fullName, password);
 	}
 
 	async signIn(email: string, password: string) {
 		const invalidCredentialsMsg = `Email or password are wrong - please try again.`;
 
-		// signInSchema.parse({
-		// 	email: req.body.email,
-		// 	password: req.body.password,
-		// });
-
-		const user = await this.repository.findOneBy({
-			email,
-		});
+		const user = await this.repository.getUserByEmail(email);
 
 		if (!user) {
 			throw new BadRequestError(invalidCredentialsMsg);

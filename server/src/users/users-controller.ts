@@ -6,12 +6,12 @@ import {
 	Patch,
 } from "@overnightjs/core";
 import { Request, Response } from "express";
-import { Service } from "typedi";
+import { autoInjectable } from "tsyringe";
 import { Method } from "../enums";
 import { BASE_URL } from "../env";
 import { restful } from "../middleware/restful";
 import { OkResponse } from "../responses/ok-response";
-import { UsersService } from "./users.service";
+import { UsersService } from "./users-service";
 
 export interface IUsersController {
 	getUsers(req: Request, res: Response): void;
@@ -22,9 +22,9 @@ export interface IUsersController {
 
 @ClassMiddleware(restful([Method.GET, Method.PATCH, Method.DELETE]))
 @Controller(`${BASE_URL}/users`)
-@Service()
+@autoInjectable()
 export class UsersController implements IUsersController {
-	constructor(private service: UsersService) {}
+	constructor(public service: UsersService) {}
 
 	/**
 	 * @path /api/users/

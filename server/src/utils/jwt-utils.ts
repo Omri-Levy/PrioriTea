@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { sign, verify as verifyJwt } from "jsonwebtoken";
 import { DOMAIN, SECRET_ACCESS_TOKEN } from "../env";
 import { UnauthorizedError } from "../errors/unauthorized-error";
-import { JwtPayload, User } from "../interfaces";
+import { IJwtPayload, IUser } from "../interfaces";
 import { Expiration } from "./expiration";
 import { isDev } from "./is-dev";
 
@@ -33,7 +33,7 @@ export class JwtUtils {
 		return token;
 	}
 
-	static createAccessTokenCookie(res: Response, toTokenize: User | string) {
+	static createAccessTokenCookie(res: Response, toTokenize: IUser | string) {
 		const isProd = !isDev();
 		// Allows passing an empty string instead of a user when unauthenticated.
 		const token =
@@ -52,7 +52,7 @@ export class JwtUtils {
 		});
 	}
 
-	static createAccessToken(user: User) {
+	static createAccessToken(user: IUser) {
 		return sign(
 			{
 				exp: Expiration.inHours(9).getTime(),
@@ -82,7 +82,7 @@ export class JwtUtils {
 		const { exp, data } = verifyJwt(
 			token,
 			SECRET_ACCESS_TOKEN
-		) as JwtPayload;
+		) as IJwtPayload;
 
 		if (this.isExpired(exp)) {
 			throw new UnauthorizedError();
