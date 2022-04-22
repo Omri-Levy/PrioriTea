@@ -5,25 +5,32 @@ import {
 	ManyToOne,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
+	Column,
+	BaseEntity,
 } from "typeorm";
 import { User } from "../users/users.entity";
 
 @Entity()
-export class Task {
-	@PrimaryGeneratedColumn(`uuid`)
+export class Task extends BaseEntity {
 	@IsUUID()
+	@PrimaryGeneratedColumn(`uuid`)
 	id: string;
 
 	@Length(1, 256)
+	@Column()
 	priority: string;
 
 	@Length(1, 500)
+	@Column()
 	description: string;
 
 	@Length(1, 256)
+	@Column("varchar", { default: "Standby" })
 	status: string;
 
-	@ManyToOne((_type) => User, (user) => user.tasks)
+	@ManyToOne(() => User, (user) => user.tasks, {
+		onDelete: "CASCADE",
+	})
 	user: User;
 
 	@CreateDateColumn()

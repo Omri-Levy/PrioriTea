@@ -1,20 +1,19 @@
 // import { z } from 'zod';
-import {
-  BadRequestError,
-  PassUtils,
-  Service,
-  Repository,
-  InjectRepository,
-} from "..";
+import { plainToClass } from "class-transformer";
+import { Service } from "typedi";
+import { Repository } from "typeorm";
+import { InjectRepository } from "typeorm-typedi-extensions";
+import { BadRequestError } from "../errors/bad-request-error";
 import { User } from "../users/users.entity";
+import { PassUtils } from "../utils/pass-utils";
 
 interface IAuthService {
-  signUp(
-    email: string,
-    fullName: string,
-    password: string
-  ): Promise<User | null>;
-  signIn(email: string, fullName: string): Promise<User | null>;
+	signUp(
+		email: string,
+		fullName: string,
+		password: string
+	): Promise<User | null>;
+	signIn(email: string, fullName: string): Promise<User | null>;
 }
 
 // export const emailAlreadyInUse = function (err: unknown) {
@@ -29,44 +28,44 @@ interface IAuthService {
 
 @Service()
 export class AuthService implements IAuthService {
-  @InjectRepository(User)
-  private repository: Repository<User>;
+	@InjectRepository(User)
+	private repository: Repository<User>;
 
-  // @Validate(signUpSchema)
-  async signUp(email: string, fullName: string, password: string) {
-    const user = new User();
+	// @Validate(signUpSchema)
+	async signUp(email: string, fullName: string, password: string) {
+		const user = plainToClass(User, {
+			email,
+			fullName,
+			password,
+		});
 
-    user.email = email;
-    user.fullName = fullName;
-    user.password = password;
+		this.repository.create(user);
 
-    this.repository.create(user);
+		return this.repository.save(user);
+	}
 
-    return this.repository.save(user);
-  }
+	async signIn(email: string, password: string) {
+		const invalidCredentialsMsg = `Email or password are wrong - please try again.`;
 
-  async signIn(email: string, password: string) {
-    const invalidCredentialsMsg = `Email or password are wrong - please try again.`;
+		// signInSchema.parse({
+		// 	email: req.body.email,
+		// 	password: req.body.password,
+		// });
 
-    // signInSchema.parse({
-    // 	email: req.body.email,
-    // 	password: req.body.password,
-    // });
+		const user = await this.repository.findOneBy({
+			email,
+		});
 
-    const user = await this.repository.findOneBy({
-      email,
-    });
+		if (!user) {
+			throw new BadRequestError(invalidCredentialsMsg);
+		}
 
-    if (!user) {
-      throw new BadRequestError(invalidCredentialsMsg);
-    }
+		const validPass = await PassUtils.compare(user.password, password);
 
-    const validPass = await PassUtils.compare(user.password, password);
+		if (!validPass) {
+			throw new BadRequestError(invalidCredentialsMsg);
+		}
 
-    if (!validPass) {
-      throw new BadRequestError(invalidCredentialsMsg);
-    }
-
-    return user;
-  }
+		return user;
+	}
 }

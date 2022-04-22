@@ -1,63 +1,97 @@
-import { Request, Response } from "express";
+import { plainToClass } from "class-transformer";
+import { Service } from "typedi";
 import { Repository } from "typeorm";
 import { InjectRepository } from "typeorm-typedi-extensions";
-import { Service } from "typedi";
-import { CreatedResponse, OkResponse } from "../responses";
+import { User } from "../users/users.entity";
 import { Task } from "./tasks.entity";
 
-@Service()
 export interface ITasksService {
-  createTask(req: Request, res: Response): void;
-  getTasks(req: Request, res: Response): void;
-  getTask(req: Request, res: Response): void;
-  updateTask(req: Request, res: Response): void;
-  deleteTask(req: Request, res: Response): void;
+	createTask(
+		userId: string,
+		priority: string,
+		description: string,
+		status?: string
+	): Promise<Array<Task> | null>;
+	getTasks(userId: string): Promise<Array<Task> | null>;
+	getTask(id: string): Promise<Task | null>;
+	updateTask(
+		userId: string,
+		id: string,
+		priority?: string,
+		description?: string,
+		status?: string
+	): Promise<Array<Task> | null>;
+	deleteTask(userId: string, id: string): Promise<Array<Task> | null>;
 }
 
 @Service()
 export class TasksService implements ITasksService {
-  @InjectRepository(Task)
-  private repository: Repository<Task>;
+	@InjectRepository(Task)
+	private tasksRepository: Repository<Task>;
 
-  async createTask(req: Request, res: Response) {
-    const task = new Task();
+	@InjectRepository(User)
+	private usersRepository: Repository<User>;
 
-    task.priority = req.body.priority;
-    task.description = req.body.description;
-    task.status = req.body.status;
+	async createTask(
+		userId: string,
+		priority: string,
+		description: string,
+		status?: string
+	) {
+		const task = plainToClass(Task, {
+			priority,
+			description,
+			status,
+		});
 
-    this.repository.create(task);
+		this.tasksRepository.create(task);
 
-    const tasks = await this.repository.find();
+		const user = await this.usersRepository.findOneBy({
+			id: userId,
+		});
 
-    return new CreatedResponse(res, { data: { tasks } });
-  }
+		task.user = user!;
 
-  async getTasks(_req: Request, res: Response) {
-    const tasks = await this.repository.find();
+		await this.tasksRepository.save(task);
 
-    return new OkResponse(res, { data: { tasks } });
-  }
+		return this.tasksRepository.findBy({
+			user: { id: userId },
+		});
+	}
 
-  async getTask(req: Request, res: Response) {
-    const task = await this.repository.findOneBy({ id: req.params.id });
+	async getTasks(userId: string) {
+		return this.tasksRepository.findBy({
+			user: { id: userId },
+		});
+	}
 
-    return new OkResponse(res, { data: { task } });
-  }
+	async getTask(id: string) {
+		return this.tasksRepository.findOneBy({ id });
+	}
 
-  async updateTask(req: Request, res: Response) {
-    await this.repository.update(req.params.id!, {
-      priority: req.body.priority,
-      description: req.body.description,
-      status: req.body.status,
-    });
+	async updateTask(
+		userId: string,
+		id: string,
+		priority?: string,
+		description?: string,
+		status?: string
+	) {
+		await this.tasksRepository.update(id, {
+			priority,
+			description,
+			status,
+		});
 
-    const tasks = await this.repository.find();
+		return this.tasksRepository.findBy({
+			user: { id: userId },
+		});
+	}
 
-    return new OkResponse(res, { data: { tasks } });
-  }
+	async deleteTask(id: string, userId: string) {
+		await this.tasksRepository.delete(id);
 
-  async deleteTask(req: Request, _res: Response) {
-    return this.repository.delete(req.params.id!);
-  }
+		return this.tasksRepository.findBy({
+			user: { id: userId },
+		});
+	}
 }

@@ -7,30 +7,34 @@ import {
 	CreateDateColumn,
 	OneToMany,
 	Entity,
+	BaseEntity,
 	BeforeInsert,
 } from "typeorm";
-import { specialUpperLowerNum } from ".";
-import { PassUtils, Task } from "..";
+import { Task } from "../tasks/tasks.entity";
+import { PassUtils } from "../utils/pass-utils";
+import { specialUpperLowerNum } from "./users.validation";
 
 @Unique([`email`])
 @Entity()
-export class User {
-	@PrimaryGeneratedColumn(`uuid`)
+export class User extends BaseEntity {
 	@IsUUID()
+	@PrimaryGeneratedColumn(`uuid`)
 	id: string;
 
+	@Max(320)
 	@IsEmail()
 	@Column(`citext`)
-	@Max(320)
 	email: string;
 
 	@Length(1, 70)
+	@Column()
 	fullName: string;
 
 	// Ensure that an attacker can't DoS the server by programmatically
 	// sending a string that is as long as possible.
-	@Length(8, 256)
 	@Matches(specialUpperLowerNum)
+	@Length(8, 256)
+	@Column()
 	password: string;
 
 	@OneToMany(() => Task, (task) => task.user)
@@ -43,7 +47,7 @@ export class User {
 	updatedAt: Date;
 
 	@BeforeInsert()
-	async setPassword(password: string) {
-		this.password = await PassUtils.hash(password);
+	async setPassword() {
+		this.password = await PassUtils.hash(this.password);
 	}
 }

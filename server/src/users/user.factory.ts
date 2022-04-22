@@ -1,18 +1,19 @@
-import { Faker, GenderType } from "@faker-js/faker";
+// @ts-ignore
+import Faker from "faker";
+import { plainToClass } from "class-transformer";
 import { define } from "typeorm-seeding";
 import { User } from "./users.entity";
 
-define(User, (faker: Faker) => {
-	const gender = faker.name.gender(true).toLowerCase() as GenderType;
-	const firstName = faker.name.firstName(gender);
-	const lastName = faker.name.lastName(gender);
+define(User, (faker: typeof Faker) => {
+	const firstName = faker.name.firstName();
+	const lastName = faker.name.lastName();
 	const email = faker.internet.email(firstName, lastName);
+	const fullName = `${firstName} ${lastName}`;
+	const password = faker.internet.password() + "!";
 
-	const user = new User();
-
-	user.email = email;
-	user.fullName = `${firstName} ${lastName}`;
-	user.password = faker.random.word();
-
-	return user;
+	return plainToClass(User, {
+		email,
+		fullName,
+		password,
+	});
 });

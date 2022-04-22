@@ -1,21 +1,13 @@
-import {
-  Use,
-  Controller,
-  CreatedResponse,
-  Get,
-  getUser,
-  JwtUtils,
-  Method,
-  OkResponse,
-  Post,
-  restful,
-  Service,
-  BASE_URL,
-  Request,
-  RequestHandler,
-  Response,
-} from "..";
-import { AuthService } from ".";
+import { ClassMiddleware, Controller, Post, Get } from "@overnightjs/core";
+import { RequestHandler, Request, Response } from "express";
+import { Method } from "../enums";
+import { BASE_URL } from "../env";
+import { restful } from "../middleware/restful";
+import { CreatedResponse } from "../responses/created-response";
+import { OkResponse } from "../responses/ok-response";
+import { getUser } from "../utils/get-user";
+import { JwtUtils } from "../utils/jwt-utils";
+import { AuthService } from "./auth.service";
 
 interface IAuthController {
   signUp: RequestHandler;
@@ -24,7 +16,7 @@ interface IAuthController {
   getUserInfo: RequestHandler;
 }
 
-@Use(restful([Method.GET, Method.POST]))
+@ClassMiddleware(restful([Method.GET, Method.POST]))
 @Controller(`${BASE_URL}/auth`)
 export class AuthController implements IAuthController {
   constructor(private service: AuthService) {}

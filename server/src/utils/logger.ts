@@ -1,5 +1,7 @@
-import { winston } from "..";
-import { isDev } from ".";
+import winston from 'winston';
+import { isDev } from "./isDev";
+// show me the current time
+
 
 winston.addColors({
   error: `red`,

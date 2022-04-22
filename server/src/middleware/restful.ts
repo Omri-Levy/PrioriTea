@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
-import { Method, MethodNotAllowed } from "..";
+import { Method } from "../enums";
+import { MethodNotAllowed } from "../errors/method-not-allowed";
 
 //
 // This shortcut function responses with HTTP 405
@@ -33,7 +34,9 @@ import { Method, MethodNotAllowed } from "..";
 //     https://expressjs.com/en/guide/routing.html
 //
 
-export const restful = function (methods: Array<Method>) {
+export type Restful = (methods: Array<Method>) => RequestHandler;
+
+export const restful: Restful = function (methods) {
 	return function (req, res, next) {
 		const { method } = req; // [2]
 
@@ -44,5 +47,5 @@ export const restful = function (methods: Array<Method>) {
 		} else {
 			next();
 		}
-	} as RequestHandler;
+	};
 };

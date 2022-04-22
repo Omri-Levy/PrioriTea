@@ -1,7 +1,7 @@
-import { RequestHandler } from "express";
-import { JwtUtils } from "..";
+import { Request, Response, NextFunction } from "express";
+import { JwtUtils } from "../utils/jwt-utils";
 
-export const auth: RequestHandler = async function (req, res, next) {
+export const auth = async function (req: Request, res: Response, next: NextFunction) {
 	const token = JwtUtils.getToken(req);
 	const user = await JwtUtils.verify(token);
 

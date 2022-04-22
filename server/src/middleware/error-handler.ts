@@ -1,9 +1,9 @@
-import { ErrorRequestHandler } from "express";
-import { logger } from "..";
 import { CustomError } from "../errors/custom-error";
 import { SomethingWentWrongResponse } from "../responses/internal-server-error";
+import { ErrorHandler } from "../types";
+import { logger } from "../utils/logger";
 
-const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
+const errorHandler: ErrorHandler = (err, _req, res, _next) => {
 	if (err instanceof CustomError) {
 		const errors = err.serializeErrors();
 

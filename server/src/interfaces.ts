@@ -1,22 +1,22 @@
-import { Method } from ".";
+import { Method } from "./enums";
 
 export interface Route {
-  path: string;
-  method: Method;
-  methodName: string;
+	path: string;
+	method: Method;
+	methodName: string;
 }
 
 export interface User {
-  id: string;
-  email: string;
-  fullName: string;
+	id: string;
+	email: string;
+	fullName: string;
 }
 
 export interface JwtPayload {
-  data: {
-    id: string;
-    email: string;
-    fullName: string;
-  };
-  exp: number;
+	data: {
+		id: string;
+		email: string;
+		fullName: string;
+	};
+	exp: number;
 }

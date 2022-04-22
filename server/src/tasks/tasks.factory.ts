@@ -1,12 +1,12 @@
+// @ts-ignore
+import Faker from "faker";
+import { plainToClass } from "class-transformer";
 import { define, factory } from "typeorm-seeding";
-import { Faker } from "@faker-js/faker";
 import { User } from "../users/users.entity";
 import { Task } from "./tasks.entity";
 
-define(Task, (faker: Faker) => {
-	const task = new Task();
-
-	task.priority = faker.random.arrayElement([
+define(Task, (faker: typeof Faker) => {
+	const priority = faker.random.arrayElement([
 		`low`,
 		`medium`,
 		`high`,
@@ -16,8 +16,8 @@ define(Task, (faker: Faker) => {
 		`soon`,
 		`by 5PM 01/01/2024`,
 	]);
-	task.description = `${faker.word.verb()} ${faker.word.conjunction()} ${faker.word.noun()}`;
-	task.status = faker.random.arrayElement([
+	const description = faker.lorem.paragraph(1);
+	const status = faker.random.arrayElement([
 		`done`,
 		`standby`,
 		`in-progress`,
@@ -28,7 +28,12 @@ define(Task, (faker: Faker) => {
 		`by 5PM 01/01/2024`,
 	]);
 
-	task.user = factory(User)() as any;
+	const user = factory(User)() as any;
 
-	return task;
+	return plainToClass(Task, {
+		priority,
+		description,
+		status,
+		user,
+	});
 });

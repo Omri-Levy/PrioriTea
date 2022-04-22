@@ -1,4 +1,5 @@
-import { hash, verifyArgon2 } from "..";
+// Not to confuse with jsonwebtoken verify
+import { hash, verify as verifyArgon2 } from "argon2";
 
 export class PassUtils {
 	// eslint-disable-next-line no-use-before-define

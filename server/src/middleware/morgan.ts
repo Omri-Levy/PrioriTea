@@ -1,5 +1,6 @@
 import mrgn from "morgan";
-import { isDev, logger } from "..";
+import { isDev } from "../utils/isDev";
+import { logger } from "../utils/logger";
 
 export const morgan = mrgn(
 	`:method :url :status :res[content-length] - :response-time ms`,
