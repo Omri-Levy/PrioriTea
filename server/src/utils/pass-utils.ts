@@ -1,6 +1,7 @@
-import { hash, verify } from 'argon2';
+import { hash, verifyArgon2 } from "..";
 
 export class PassUtils {
+	// eslint-disable-next-line no-use-before-define
 	private static _instance: PassUtils;
 
 	private constructor() {}
@@ -18,6 +19,6 @@ export class PassUtils {
 	}
 
 	static async compare(hashed: string, unhashed: string) {
-		return verify(hashed, unhashed);
+		return verifyArgon2(hashed, unhashed);
 	}
 }

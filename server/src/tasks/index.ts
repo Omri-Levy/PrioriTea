@@ -1,4 +1,7 @@
-export { taskSchema } from './tasks.validation';
-export { TaskModel } from './tasks.model';
-export { TaskService } from './tasks.service';
-export { TaskController } from './tasks.controller';
+export * from "./getUserId";
+export * from "./tasks.entity";
+export * from "./tasks.controller";
+export * from "./tasks.service";
+export * from "./tasks.module";
+export * from "./tasks.factory";
+// export * from './tasks.validation';

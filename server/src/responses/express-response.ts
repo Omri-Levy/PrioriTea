@@ -1,11 +1,11 @@
-import { Response } from 'express';
+import { Response } from "express";
 
 export abstract class ExpressResponse {
 	protected abstract readonly statusCode: number;
 
 	constructor(
 		private readonly res: Response,
-		private readonly payload?: any,
+		private readonly payload?: any
 	) {}
 
 	send() {

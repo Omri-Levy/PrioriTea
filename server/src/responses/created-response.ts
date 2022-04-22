@@ -1,5 +1,5 @@
-import { ExpressResponse } from './ExpressResponse';
-import { Response } from 'express';
+import { Response } from "express";
+import { ExpressResponse } from "./express-response";
 
 export class CreatedResponse extends ExpressResponse {
 	protected statusCode = 201;

@@ -1,125 +1,72 @@
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { Request, RequestHandler, Response } from 'express';
-import { z } from 'zod';
+// import { z } from 'zod';
 import {
-	BadRequestError,
-	getUser,
-	InjectService,
-	JwtUtils,
-	PassUtils,
-	RequestValidationError,
-	signInSchema,
-	signUpSchema,
-	UserModel,
-} from '../';
-import { CreatedResponse } from './CreatedResponse';
-import { SuccessResponse } from './SuccessResponse';
+  BadRequestError,
+  PassUtils,
+  Service,
+  Repository,
+  InjectRepository,
+} from "..";
+import { User } from "../users/users.entity";
 
 interface IAuthService {
-	signUp: RequestHandler;
-	signIn: RequestHandler;
-	signOut: RequestHandler;
-	getUserInfo: RequestHandler;
+  signUp(
+    email: string,
+    fullName: string,
+    password: string
+  ): Promise<User | null>;
+  signIn(email: string, fullName: string): Promise<User | null>;
 }
 
-@InjectService()
+// export const emailAlreadyInUse = function (err: unknown) {
+// 	if (
+// 		err instanceof PrismaClientKnownRequestError &&
+// 		err.code === 'P2002' &&
+// 		(err.meta as { target: Array<string> })?.target.includes('email')
+// 	) {
+// 		throw new BadRequestError('Email already in use');
+// 	}
+// };
+
+@Service()
 export class AuthService implements IAuthService {
-	constructor(private model: UserModel) {}
+  @InjectRepository(User)
+  private repository: Repository<User>;
 
-	async signUp(req: Request, res: Response) {
-		try {
-			signUpSchema.parse({
-				email: req.body.email,
-				fullName: req.body.fullName,
-				password: req.body.password,
-				passwordConfirmation: req.body.passwordConfirmation,
-			});
+  // @Validate(signUpSchema)
+  async signUp(email: string, fullName: string, password: string) {
+    const user = new User();
 
-			await this.model.createUser(
-				req.body.email,
-				req.body.fullName,
-				req.body.password,
-			);
+    user.email = email;
+    user.fullName = fullName;
+    user.password = password;
 
-			return new CreatedResponse(res);
-		} catch (err) {
-			if (err instanceof z.ZodError) {
-				throw new RequestValidationError(err);
-			}
+    this.repository.create(user);
 
-			if (
-				err instanceof PrismaClientKnownRequestError &&
-				err.code === 'P2002' &&
-				(err.meta as { target: Array<string> })?.target.includes(
-					'email',
-				)
-			) {
-				throw new BadRequestError('Email already in use');
-			}
+    return this.repository.save(user);
+  }
 
-			throw err;
-		}
-	}
+  async signIn(email: string, password: string) {
+    const invalidCredentialsMsg = `Email or password are wrong - please try again.`;
 
-	async signIn(req: Request, res: Response) {
-		try {
-			const invalidCredentialsMsg =
-				'Email or password are wrong - please try again.';
+    // signInSchema.parse({
+    // 	email: req.body.email,
+    // 	password: req.body.password,
+    // });
 
-			signInSchema.parse({
-				email: req.body.email,
-				password: req.body.password,
-			});
+    const user = await this.repository.findOneBy({
+      email,
+    });
 
-			const user = await this.model.getUserByEmail(req.body.email);
+    if (!user) {
+      throw new BadRequestError(invalidCredentialsMsg);
+    }
 
-			if (!user) {
-				throw new BadRequestError(invalidCredentialsMsg);
-			}
+    const validPass = await PassUtils.compare(user.password, password);
 
-			const validPass = await PassUtils.compare(
-				user.password,
-				req.body.password,
-			);
+    if (!validPass) {
+      throw new BadRequestError(invalidCredentialsMsg);
+    }
 
-			if (!validPass) {
-				throw new BadRequestError(invalidCredentialsMsg);
-			}
-
-			JwtUtils.createAccessTokenCookie(res, user);
-
-			return new SuccessResponse(res);
-		} catch (err) {
-			if (err instanceof z.ZodError) {
-				throw new RequestValidationError(err);
-			}
-
-			throw err;
-		}
-	}
-
-	signOut(_req: Request, res: Response) {
-		JwtUtils.deleteAccessTokenCookie(res);
-
-		return new SuccessResponse(res);
-	}
-
-	getUserInfo(_req: Request, res: Response) {
-		try {
-			const user = getUser(res);
-
-			return new SuccessResponse(res, {
-				data: {
-					user: user
-						? {
-								email: user.email,
-								fullName: user.fullName,
-						  }
-						: null,
-				},
-			});
-		} catch (err) {
-			throw err;
-		}
-	}
+    return user;
+  }
 }

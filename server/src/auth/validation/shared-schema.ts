@@ -1,6 +1,6 @@
-import { userSchema } from '../../users/users.validation';
+// import { userSchema } from '../../users/users.validation';
 
-export const sharedSchema = userSchema.pick({
-	email: true,
-	password: true,
-});
+// export const sharedSchema = userSchema.pick({
+// 	email: true,
+// 	password: true,
+// });

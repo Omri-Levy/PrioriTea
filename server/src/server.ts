@@ -1,14 +1,39 @@
-import 'express-async-errors';
-import 'reflect-metadata';
-import 'dotenv/config';
-import { app, logger, prisma } from './';
+import {
+  Container,
+  cookieParser,
+  cors,
+  CORS_ORIGIN,
+  DATABASE_URL,
+  DataSource,
+  express,
+  helmet,
+  json,
+  morgan,
+  urlencoded,
+} from ".";
 
 (async () => {
-	try {
-		app.listen();
-	} catch (err) {
-		logger.error(err);
-	} finally {
-		await prisma.$disconnect();
-	}
+  useContainer(Container);
+
+  new DataSource({
+    type: `postgres`,
+    url: DATABASE_URL,
+  });
+
+  const app = express();
+
+  const middleware = [
+    cookieParser(),
+    cors({ origin: CORS_ORIGIN, credentials: true }),
+    urlencoded({ extended: true }),
+    json(),
+    morgan,
+    helmet(),
+  ];
+
+  middleware.forEach((mdw) => {
+    app.use(mdw);
+  });
+
+  app.listen();
 })();

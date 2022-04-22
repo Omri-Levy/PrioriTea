@@ -1,5 +1,5 @@
-import { Response } from 'express';
-import { ExpressResponse } from '../auth/ExpressResponse';
+import { Response } from "express";
+import { ExpressResponse } from "./express-response";
 
 export class SomethingWentWrongResponse extends ExpressResponse {
 	protected statusCode = 500;

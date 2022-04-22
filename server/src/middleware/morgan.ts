@@ -1,5 +1,5 @@
-import mrgn from 'morgan';
-import { isDev, logger } from '../';
+import mrgn from "morgan";
+import { isDev, logger } from "..";
 
 export const morgan = mrgn(
 	`:method :url :status :res[content-length] - :response-time ms`,
@@ -13,5 +13,5 @@ export const morgan = mrgn(
 		skip() {
 			return !isDev();
 		},
-	},
+	}
 );

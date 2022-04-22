@@ -1,4 +1,4 @@
-import { CustomError } from './custom-error';
+import { CustomError } from "./custom-error";
 
 export class MethodNotAllowed extends CustomError {
 	statusCode = 405;

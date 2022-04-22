@@ -1,5 +1,7 @@
 export class Expiration {
+	// eslint-disable-next-line no-use-before-define
 	private static _instance: Expiration;
+
 	private constructor() {}
 
 	static get instance() {

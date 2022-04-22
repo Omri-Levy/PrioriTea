@@ -1,5 +1,3 @@
-import { Response, Request } from 'express';
-import { sign, verify } from 'jsonwebtoken';
 import {
 	DOMAIN,
 	isDev,
@@ -7,10 +5,15 @@ import {
 	SECRET_ACCESS_TOKEN,
 	UnauthorizedError,
 	User,
-} from '../';
-import { Expiration } from './Expiration';
+	Expiration,
+	Request,
+	Response,
+	sign,
+	verifyJwt,
+} from "..";
 
 export class JwtUtils {
+	// eslint-disable-next-line no-use-before-define
 	private static _instance: JwtUtils;
 
 	private constructor() {}
@@ -24,13 +27,13 @@ export class JwtUtils {
 	}
 
 	static getToken(req: Request) {
-		const cookie = req.headers['cookie'];
+		const { cookie } = req.headers;
 
 		if (!cookie) {
 			throw new UnauthorizedError();
 		}
 
-		const [, token] = cookie.split('mid=');
+		const [, token] = cookie.split(`mid=`);
 
 		return token;
 	}
@@ -39,15 +42,15 @@ export class JwtUtils {
 		const isProd = !isDev();
 		// Allows passing an empty string instead of a user when unauthenticated.
 		const token =
-			typeof toTokenize === 'string'
+			typeof toTokenize === `string`
 				? toTokenize
 				: JwtUtils.createAccessToken(toTokenize);
 
-		return res.cookie('mid', token, {
+		return res.cookie(`mid`, token, {
 			maxAge: 1000 * 60 * 60 * 9,
 			httpOnly: true,
-			sameSite: 'lax',
-			path: '/',
+			sameSite: `lax`,
+			path: `/`,
 			secure: isProd,
 			expires: Expiration.inHours(9),
 			domain: isProd ? DOMAIN : undefined,
@@ -64,12 +67,12 @@ export class JwtUtils {
 					fullName: user.fullName,
 				},
 			},
-			SECRET_ACCESS_TOKEN,
+			SECRET_ACCESS_TOKEN
 		);
 	}
 
 	static deleteAccessTokenCookie(res: Response) {
-		this.createAccessTokenCookie(res, '');
+		this.createAccessTokenCookie(res, ``);
 	}
 
 	static isExpired(exp: number) {
@@ -81,19 +84,15 @@ export class JwtUtils {
 			throw new UnauthorizedError();
 		}
 
-		try {
-			const { exp, data } = (await verify(
-				token,
-				SECRET_ACCESS_TOKEN,
-			)) as JwtPayload;
+		const { exp, data } = verifyJwt(
+			token,
+			SECRET_ACCESS_TOKEN
+		) as JwtPayload;
 
-			if (this.isExpired(exp)) {
-				throw new UnauthorizedError();
-			}
-
-			return data;
-		} catch (err) {
-			throw err;
+		if (this.isExpired(exp)) {
+			throw new UnauthorizedError();
 		}
+
+		return data;
 	}
 }

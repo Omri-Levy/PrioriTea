@@ -1,5 +1,5 @@
-import { RequestHandler } from 'express';
-import { Method, MethodNotAllowed } from '../';
+import { RequestHandler } from "express";
+import { Method, MethodNotAllowed } from "..";
 
 //
 // This shortcut function responses with HTTP 405

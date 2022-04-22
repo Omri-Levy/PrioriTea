@@ -1,113 +1,153 @@
+import "dotenv/config";
+import "express-async-errors";
+import "reflect-metadata";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import helmet from "helmet";
+import express, {
+  Request,
+  urlencoded,
+  json,
+  Response,
+  RequestHandler,
+} from "express";
+import { hash, verify as verifyArgon2 } from "argon2";
+import { sign, verify as verifyJwt } from "jsonwebtoken";
+import { DeleteResult, Repository, DataSource } from "typeorm";
+import { Factory, Seeder } from "typeorm-seeding";
+import { InjectRepository, Container } from "typeorm-typedi-extensions";
+import { Service } from "typedi";
 import {
-	PORT,
-	DATABASE_URL,
-	CORS_ORIGIN,
-	SECRET_ACCESS_TOKEN,
-	DOMAIN,
-	NODE_ENV,
-} from './env';
-import { Method, Route, User, JwtPayload } from './types';
+  Controller,
+  Delete,
+  Get,
+  Post,
+  Put,
+  Middleware as Use,
+} from "@overnightjs/core";
+import { JwtPayload, Method, Route, User as UserType } from "./types";
+import winston from "winston";
 import {
-	CustomError,
-	NotFoundError,
-	MethodNotAllowed,
-	RequestValidationError,
-	BadRequestError,
-	DatabaseConnectionError,
-	UnauthorizedError,
-} from './errors';
-import { Service as InjectService } from 'typedi';
-import { isDev, logger, getUser } from './utils';
-import { router, Server } from './express';
-import { morgan, errorHandler, restful } from './middleware';
-import { prisma } from './db';
-import { app } from './app';
+  isDev,
+  logger,
+  Expiration,
+  getUser,
+  JwtUtils,
+  PassUtils,
+} from "./utils";
 import {
-	HttpMethod,
-	Get,
-	Post,
-	Put,
-	Patch,
-	Delete,
-	All,
-	Controller,
-	Middleware,
-} from './decorators';
-import { UserModel, UserService, UserController } from './users';
+  BadRequestError,
+  CustomError,
+  DatabaseConnectionError,
+  MethodNotAllowed,
+  NotFoundError,
+  RequestValidationError,
+  UnauthorizedError,
+} from "./errors";
 import {
-	AuthService,
-	AuthController,
-	signInSchema,
-	signUpSchema,
-	PassUtils,
-	JwtUtils,
-	isAuth,
-} from './auth';
-import { TaskModel, TaskService, TaskController, taskSchema } from './tasks';
+  CreatedResponse,
+  ExpressResponse,
+  OkResponse,
+  SomethingWentWrongResponse,
+} from "./responses";
+import {
+  CORS_ORIGIN,
+  DATABASE_URL,
+  DOMAIN,
+  NODE_ENV,
+  PORT,
+  SECRET_ACCESS_TOKEN,
+  BASE_URL,
+} from "./env";
+import { auth, errorHandler, morgan, restful } from "./middleware";
+import { Validate } from "./decorators";
+import { UsersModule, User } from "./users";
+import { AuthModule } from "./auth";
+import { Task, TasksModule } from "./tasks";
 
 export {
-	// Env
-	NODE_ENV,
-	PORT,
-	DATABASE_URL,
-	CORS_ORIGIN,
-	SECRET_ACCESS_TOKEN,
-	DOMAIN,
-	// Types
-	Method,
-	Route,
-	User,
-	JwtPayload,
-	// Errors
-	CustomError,
-	NotFoundError,
-	MethodNotAllowed,
-	RequestValidationError,
-	BadRequestError,
-	DatabaseConnectionError,
-	UnauthorizedError,
-	// Avoid controllers having a @Service decorator
-	// causing confusion.
-	InjectService,
-	// Route decorators
-	HttpMethod,
-	Get,
-	Post,
-	Put,
-	Patch,
-	Delete,
-	All,
-	Controller,
-	Middleware,
-	// App utils
-	logger,
-	getUser,
-	isDev,
-	//Middleware
-	morgan,
-	errorHandler,
-	restful,
-	isAuth,
-	// Validation
-	signUpSchema,
-	signInSchema,
-	taskSchema,
-	// Jwt
-	JwtUtils,
-	// argon2
-	PassUtils,
-	// Routes
-	UserModel,
-	UserService,
-	UserController,
-	AuthService,
-	AuthController,
-	TaskModel,
-	TaskService,
-	TaskController,
-	// Core
-	router,
-	Server,
-	prisma,
-	app,
+  // Env vars
+  NODE_ENV,
+  PORT,
+  DATABASE_URL,
+  CORS_ORIGIN,
+  SECRET_ACCESS_TOKEN,
+  DOMAIN,
+  BASE_URL,
+  // Types
+  Method,
+  Route,
+  UserType,
+  JwtPayload,
+  DeleteResult,
+  Repository,
+  Request,
+  Response,
+  RequestHandler,
+  Factory,
+  // Errors
+  CustomError,
+  NotFoundError,
+  MethodNotAllowed,
+  RequestValidationError,
+  BadRequestError,
+  DatabaseConnectionError,
+  UnauthorizedError,
+  // Responses
+  ExpressResponse,
+  OkResponse,
+  CreatedResponse,
+  SomethingWentWrongResponse,
+  // Route decorators
+  Use,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Controller,
+  // Decorators
+  Validate,
+  // App utils
+  Seeder,
+  Expiration,
+  winston,
+  logger,
+  getUser,
+  isDev,
+  // Middleware
+  urlencoded,
+  cookieParser,
+  json,
+  cors,
+  helmet,
+  morgan,
+  errorHandler,
+  restful,
+  auth,
+  // Validation
+  // signUpSchema,
+  // signInSchema,
+  // taskSchema,
+  // Jwt
+  verifyJwt,
+  sign,
+  JwtUtils,
+  // argon2
+  hash,
+  verifyArgon2,
+  PassUtils,
+  // Entities
+  User,
+  Task,
+  // Requirements
+  Service,
+  InjectRepository,
+  Container,
+  DataSource,
+  // Routes
+  UsersModule,
+  AuthModule,
+  TasksModule,
+  // Core
+  express,
 };

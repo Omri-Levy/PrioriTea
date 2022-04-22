@@ -1,65 +1,97 @@
-import { NextFunction, Request, RequestHandler, Response } from 'express';
 import {
-	All,
-	Controller,
-	Get,
-	InjectService,
-	Method,
-	Post,
-	restful,
-} from '../';
-import { AuthService } from './';
+  Use,
+  Controller,
+  CreatedResponse,
+  Get,
+  getUser,
+  JwtUtils,
+  Method,
+  OkResponse,
+  Post,
+  restful,
+  Service,
+  BASE_URL,
+  Request,
+  RequestHandler,
+  Response,
+} from "..";
+import { AuthService } from ".";
 
 interface IAuthController {
-	signUp: RequestHandler;
-	signIn: RequestHandler;
-	signOut: RequestHandler;
-	getUserInfo: RequestHandler;
-	methodNotAllowed: RequestHandler;
+  signUp: RequestHandler;
+  signIn: RequestHandler;
+  signOut: RequestHandler;
+  getUserInfo: RequestHandler;
 }
 
-@Controller('/auth')
-@InjectService()
+@Use(restful([Method.GET, Method.POST]))
+@Controller(`${BASE_URL}/auth`)
 export class AuthController implements IAuthController {
-	constructor(private service: AuthService) {}
+  constructor(private service: AuthService) {}
 
-	/**
-	 * @path /api/user/sign-up
-	 * @request post
-	 * @desc add a new user to db
-	 */
-	@Post('/sign-up')
-	async signUp(req: Request, res: Response) {
-		return this.service.signUp(req, res);
-	}
+  /**
+   * @path /api/user/sign-up
+   * @request post
+   * @desc add a new user to db
+   */
+  @Post(`sign-up`)
+  async signUp(req: Request, res: Response) {
+    const { email, fullName, password } = req.body;
+    const user = await this.service.signUp(email, fullName, password);
 
-	/**
-	 * @path /api/user/sign-in
-	 * @request post
-	 * @desc sign in an existing user from db
-	 */
-	@Post('/sign-in')
-	async signIn(req: Request, res: Response) {
-		return this.service.signIn(req, res);
-	}
+    return new CreatedResponse(res, { data: { user } });
 
-	/**
-	 * @path /api/user/sign-out
-	 * @request post
-	 * @desc sign out an existing user from db
-	 */
-	@Post('/sign-out')
-	async signOut(req: Request, res: Response) {
-		return this.service.signOut(req, res);
-	}
+    // emailAlreadyInUse(err);
+  }
 
-	@Get('/current-user')
-	async getUserInfo(req: Request, res: Response) {
-		return this.service.getUserInfo(req, res);
-	}
+  /**
+   * @path /api/user/sign-in
+   * @request post
+   * @desc sign in an existing user from db
+   */
+  @Post(`sign-in`)
+  async signIn(req: Request, res: Response) {
+    // signInSchema.parse({
+    // 	email: req.body.email,
+    // 	password: req.body.password,
+    // });
 
-	@All('*')
-	methodNotAllowed(req: Request, res: Response, next: NextFunction) {
-		return restful([Method.GET, Method.POST])(req, res, next);
-	}
+    const { email, password } = req.body;
+    const user = await this.service.signIn(email, password);
+
+    JwtUtils.createAccessTokenCookie(res, user);
+
+    return new OkResponse(res);
+    // if (err instanceof z.ZodError) {
+    // 	throw new RequestValidationError(err);
+    // }
+  }
+
+  /**
+   * @path /api/user/sign-out
+   * @request post
+   * @desc sign out an existing user from db
+   */
+  @Post(`sign-out`)
+  async signOut(_req: Request, res: Response) {
+    JwtUtils.deleteAccessTokenCookie(res);
+
+    return new OkResponse(res);
+  }
+
+  @Get(`current-user`)
+  async getUserInfo(_req: Request, res: Response) {
+    const user = getUser(res);
+
+    return new OkResponse(res, {
+      data: {
+        user: user
+          ? {
+              email: user.email,
+              fullName: user.fullName,
+            }
+          : null,
+      },
+    });
+  }
 }
