@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/29</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/20</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/26</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
@@ -104,32 +104,10 @@
 <a name='L39'></a><a href='#L39'>39</a>
 <a name='L40'></a><a href='#L40'>40</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -141,41 +119,63 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import winston <span class="cstat-no" title="statement not covered" >from "winston"</span>;
-import { isDev }<span class="cstat-no" title="statement not covered" > from "./is-dev";</span>
-// show me the current <span class="cstat-no" title="statement not covered" >time</span>
-<span class="cstat-no" title="statement not covered" ></span>
-winston.addColors({<span class="cstat-no" title="statement not covered" ></span>
-	error: `red`,<span class="cstat-no" title="statement not covered" ></span>
-	warn: `yellow`<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >,</span></span>
-	i<span class="cstat-no" title="statement not covered" >nfo: `green`,</span>
-	htt<span class="cstat-no" title="statement not covered" >p: `magenta`,</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import winston from "winston";</span>
+<span class="cstat-no" title="statement not covered" >import { isDev } from "../env/is-dev";</span>
+// show me the current time
+&nbsp;
+<span class="cstat-no" title="statement not covered" >winston.addColors({</span>
+	error: `red`,
+	warn: `yellow`,
+	info: `green`,
+	http: `magenta`,
 	debug: `white`,
-});<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-<span class="cstat-no" title="statement not covered" ></span>
-expo<span class="cstat-no" title="statement not covered" >rt const logger = winston.createLogger({</span>
-	level<span class="cstat-no" title="statement not covered" >: isDev() ? `debug` : `warn`,</span>
-	levels:<span class="cstat-no" title="statement not covered" > {<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
+});
+&nbsp;
+export const <span class="cstat-no" title="statement not covered" >logger = winston.createLogger({</span>
+	level: isDev() ? `debug` : `warn`,
+	levels: {
 		error: 0,
-<span class="cstat-no" title="statement not covered" >		warn: 1,</span>
+		warn: 1,
 		info: 2,
-		http: 3,<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
-		debug: 4,<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
-	},<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" >	format: winston.format.combine(</span>
-		winston.<span class="fstat-no" title="function not covered" >fo</span>rmat<span class="cstat-no" title="statement not covered" >.json()</span>,
+		http: 3,
+		debug: 4,
+	},
+	format: winston.format.combine(
+		winston.format.json(),
 		winston.format.prettyPrint(),
-<span class="cstat-no" title="statement not covered" >		winston.format.timestamp({ format: `YYYY-MM-</span>DD HH:mm:ss:ms` }),
-		winston.format.colo<span class="cstat-no" title="statement not covered" >rize({ all: true }),</span>
-		winston.format.pri<span class="cstat-no" title="statement not covered" >ntf(</span>
-<span class="cstat-no" title="statement not covered" >			(info) =&gt; `${info.timestamp} ${info.level}: ${info.message}`</span>
+		winston.format.timestamp({ format: `YYYY-MM-DD HH:mm:ss:ms` }),
+		winston.format.colorize({ all: true }),
+		winston.format.printf(
+<span class="fstat-no" title="function not covered" >			(i</span>nfo) =&gt; <span class="cstat-no" title="statement not covered" >`${info.timestamp} ${info.level}: ${info.message}`</span>
 		)
 	),
 	transports: [
 		new winston.transports.Console(),
 		new winston.transports.File({
 			filename: `logs/error.log`,
-			level: `erro<span class="cstat-no" title="statement not covered" >r`,</span>
+			level: `error`,
 		}),
 		new winston.transports.File({ filename: `logs/all.log` }),
 	],
@@ -187,7 +187,7 @@ expo<span class="cstat-no" title="statement not covered" >rt const logger = wins
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri Apr 22 2022 17:38:22 GMT+0300 (Israel Daylight Time)
+                at Sat Apr 23 2022 13:24:06 GMT+0300 (Israel Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

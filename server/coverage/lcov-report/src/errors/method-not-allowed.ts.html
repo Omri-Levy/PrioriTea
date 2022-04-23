@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/25</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/11</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/23</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
@@ -80,45 +80,45 @@
 <a name='L15'></a><a href='#L15'>15</a>
 <a name='L16'></a><a href='#L16'>16</a>
 <a name='L17'></a><a href='#L17'>17</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { CustomE<span class="cstat-no" title="statement not covered" >rror } from "./custom-</span>error";
-<span class="cstat-no" title="statement not covered" ></span>
-export class MethodNotAl<span class="cstat-no" title="statement not covered" >lowed extends CustomError {</span>
-	statusCode = 405;<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-	c<span class="cstat-no" title="statement not covered" >onstructor() {</span>
-		su<span class="cstat-no" title="statement not covered" >per(`Method not allowed.`);</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { CustomError } from "./custom-error";</span>
 &nbsp;
-		Object.setProtot<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >yp</span>eOf(this, MethodNotAllowed.prototype);</span>
-	}<span class="cstat-no" title="statement not covered" ></span>
-<span class="cstat-no" title="statement not covered" ></span>
-	// es<span class="cstat-no" title="statement not covered" >lint-disable-next-line class-methods-use-this</span>
-	seriali<span class="cstat-no" title="statement not covered" >zeErrors() {<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
-		return [{ message: `Method not allowed.` }];
-	}<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >export class M</span>ethodNotAllowed extends CustomError {
+	statusCode = <span class="cstat-no" title="statement not covered" >405;</span>
+&nbsp;
+<span class="fstat-no" title="function not covered" >	constructor() {</span>
+<span class="cstat-no" title="statement not covered" >		super(`Method not allowed.`);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >		Object.setPrototypeOf(this, MethodNotAllowed.prototype);</span>
+	}
+&nbsp;
+	// eslint-disable-next-line class-methods-use-this
+<span class="fstat-no" title="function not covered" >	serializeErrors(</span>) {
+<span class="cstat-no" title="statement not covered" >		return [{ message: `Method not allowed.` }];</span>
+	}
 }
-<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span></pre></td></tr></table></pre>
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri Apr 22 2022 17:38:22 GMT+0300 (Israel Daylight Time)
+                at Sat Apr 23 2022 13:24:06 GMT+0300 (Israel Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>

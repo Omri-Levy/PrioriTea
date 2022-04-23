@@ -40,7 +40,7 @@ export const restful: Restful = function (methods) {
 	return function (req, res, next) {
 		const { method } = req; // [2]
 
-		if (!methods.includes(method as Method)) {
+		if (!methods.includes(method.toLowerCase() as Method)) {
 			res.set(`Allow`, methods.join(`, `));
 
 			throw new MethodNotAllowed();

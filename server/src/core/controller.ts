@@ -50,11 +50,10 @@ export abstract class Controller<TService> implements IController<TService> {
 		z.string().min(1).parse(this.prefix);
 
 		this.routes.forEach(({ method, path, handler, middleware }) => {
-			const mtd = method.toLowerCase() as Lowercase<Method>;
 
 			iterableArray(middleware)
-				? this.router[mtd](path, ...middleware!, handler)
-				: this.router[mtd](path, handler);
+				? this.router[method](path, ...middleware!, handler)
+				: this.router[method](path, handler);
 
 			logger.info(`Registered route: ${method} ${this.prefix}${path}`);
 		});

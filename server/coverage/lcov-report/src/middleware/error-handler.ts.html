@@ -25,28 +25,28 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/30</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/13</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/28</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
@@ -87,14 +87,9 @@
 <a name='L22'></a><a href='#L22'>22</a>
 <a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -102,41 +97,46 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { CustomE<span class="cstat-no" title="statement not covered" >rror } from "../errors</span>/custom-error";
-import { SomethingWentW<span class="cstat-no" title="statement not covered" >rongResponse } from "../response</span>s/internal-server-error";
-import { ErrorHandler } <span class="cstat-no" title="statement not covered" >from "../types";</span>
-import { logger } f<span class="cstat-no" title="statement not covered" >rom "../utils/logger";</span>
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
-co<span class="cstat-no" title="statement not covered" >nst errorHandler: ErrorHandler = (err, _req, res, _next) =&gt; {</span>
-	if <span class="cstat-no" title="statement not covered" >(err instanceof CustomError) {</span>
-		const errors = err.serializeErrors();
-<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >import { CustomError } from "../errors/custom-error";</span>
+<span class="cstat-no" title="statement not covered" >import { SomethingWentWrongResponse } from "../responses/internal-server-error";</span>
+import { ErrorHandler } from "../types";
+<span class="cstat-no" title="statement not covered" >import { logger } from "../utils/logger";</span>
+&nbsp;
+const errorHandler: ErrorHandler = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(e</span>rr, _req, res, _next) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >	<span class="missing-if-branch" title="if path not taken" >I</span>if (err instanceof CustomError) {</span>
+		const errors = <span class="cstat-no" title="statement not covered" >err.serializeErrors();</span>
+&nbsp;
 <span class="cstat-no" title="statement not covered" >		logger.error(errors);</span>
-<span class="cstat-no" title="statement not covered" ></span>
-		retu<span class="cstat-no" title="statement not covered" >rn res.status(err.statusCode).send({ errors });</span>
-	}<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span></span>
 &nbsp;
-	l<span class="cstat-no" title="statement not covered" >ogger.error</span>(err);
+<span class="cstat-no" title="statement not covered" >		return res.status(err.statusCode).send({ errors });</span>
+	}
 &nbsp;
-	return new Somethi<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >ng</span>WentWro<span class="cstat-no" title="statement not covered" >ngResponse(res, {</span></span>
-		message: `Somethin<span class="cstat-no" title="statement not covered" >g w</span>ent wrong..`,
-<span class="cstat-no" title="statement not covered" >	});</span>
-};<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" ></span></span>
+<span class="cstat-no" title="statement not covered" >	logger.error(err);</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export { errorHandler };</span>
-<span class="cstat-no" title="statement not covered" ></span></pre></td></tr></table></pre>
+<span class="cstat-no" title="statement not covered" >	return new SomethingWentWrongResponse(res, {</span>
+		message: `Something went wrong..`,
+	});
+};
+&nbsp;
+export { <span class="cstat-no" title="statement not covered" >errorHandler </span>};
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri Apr 22 2022 17:38:22 GMT+0300 (Israel Daylight Time)
+                at Sat Apr 23 2022 13:24:06 GMT+0300 (Israel Daylight Time)
             </div>
         <script src="../../prettify.js"></script>
         <script>
