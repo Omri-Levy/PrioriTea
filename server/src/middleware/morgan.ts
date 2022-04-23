@@ -1,5 +1,5 @@
 import mrgn from "morgan";
-import { isDev } from "../utils/is-dev";
+import { isDev } from "../env/is-dev";
 import { logger } from "../utils/logger";
 
 export const morgan = mrgn(

@@ -1,8 +1,8 @@
 import { User } from "@prisma/client";
-import { autoInjectable } from "tsyringe";
+import { Service } from "../core/service";
 import { BadRequestError } from "../errors/bad-request-error";
-import { UserRepository } from "../users/users-repository";
-import { PassUtils } from "../utils/pass-utils";
+import { UsersRepository } from "../users/users-repository";
+import { PassUtils } from "./utils/pass-utils";
 
 interface IAuthService {
 	signUp(
@@ -13,9 +13,8 @@ interface IAuthService {
 	signIn(email: string, fullName: string): Promise<User | null>;
 }
 
-@autoInjectable()
-export class AuthService implements IAuthService {
-	constructor(public repository: UserRepository){}
+export class AuthService extends Service<UsersRepository> implements IAuthService {
+	_repository = new UsersRepository();
 
 	async signUp(email: string, fullName: string, password: string) {
 		return this.repository.createUser(email, fullName, password);

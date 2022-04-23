@@ -2,10 +2,10 @@
 import "dotenv/config";
 // Required for the error-handler middleware
 import "express-async-errors";
-// For decorators, typedi, @overnightjs
+// For decorators and tsyringe
 import "reflect-metadata";
-import { App } from "./app";
-import { NODE_ENV, PORT } from "./env";
+import { App } from "./core/app";
+import { NODE_ENV, PORT } from "./env/env";
 
 (async () => {
 	const app = new App(Number(PORT));

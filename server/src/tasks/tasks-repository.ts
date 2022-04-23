@@ -1,6 +1,6 @@
-import { db } from "../../prisma/db";
+import { db } from "../core/db/db";
 
-export class TaskRepository {
+export class TasksRepository {
 	public async createTask(
 		userId: string,
 		priority: string,

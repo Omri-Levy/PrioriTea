@@ -2,5 +2,5 @@
 import "dotenv/config";
 // Required for the error-handler middleware
 import "express-async-errors";
-// For decorators, typedi, @overnightjs
+// For decorators, tsyringe
 import "reflect-metadata";

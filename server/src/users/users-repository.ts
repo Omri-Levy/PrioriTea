@@ -1,7 +1,7 @@
-import { db } from "../../prisma/db";
-import { PassUtils } from "../utils/pass-utils";
+import { db } from "../core/db/db";
+import { PassUtils } from "../auth/utils/pass-utils";
 
-export class UserRepository {
+export class UsersRepository {
 	public async createUser(email: string, fullName: string, password: string) {
 		return db.user.create({
 			data: {

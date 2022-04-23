@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { JwtUtils } from "../utils/jwt-utils";
+import { JwtUtils } from "../auth/utils/jwt-utils";
 
 export const auth = async function (req: Request, res: Response, next: NextFunction) {
 	const token = JwtUtils.getToken(req);

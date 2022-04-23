@@ -1,6 +1,6 @@
 import { Task } from "@prisma/client";
-import { autoInjectable } from "tsyringe";
-import { TaskRepository } from "./tasks-repository";
+import { Service } from "../core/service";
+import { TasksRepository } from "./tasks-repository";
 
 export interface ITasksService {
 	createTask(
@@ -21,9 +21,8 @@ export interface ITasksService {
 	deleteTask(userId: string, id: string): Promise<Array<Task> | null>;
 }
 
-@autoInjectable()
-export class TasksService implements ITasksService {
-	constructor(public repository: TaskRepository){}
+export class TasksService extends Service<TasksRepository> implements ITasksService {
+	_repository = new TasksRepository();
 
 	async createTask(
 		userId: string,
@@ -51,11 +50,7 @@ export class TasksService implements ITasksService {
 		description?: string,
 		status?: string
 	) {
-		await this.repository.updateTaskById(id, 
-			priority,
-			description,
-			status,
-		);
+		await this.repository.updateTaskById(id, priority, description, status);
 
 		return this.repository.getAllTasksByUserId(userId);
 	}

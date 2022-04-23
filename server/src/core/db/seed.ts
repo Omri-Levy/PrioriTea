@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { db } from "./db";
+import { db } from "../db/db";
 import { faker } from "@faker-js/faker";
 
 // Iterate 10 times

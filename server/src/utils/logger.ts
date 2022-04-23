@@ -1,5 +1,5 @@
 import winston from "winston";
-import { isDev } from "./is-dev";
+import { isDev } from "../env/is-dev";
 // show me the current time
 
 winston.addColors({

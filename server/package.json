@@ -2,31 +2,28 @@
 	"name": "prioritea",
 	"version": "1.0.0",
 	"description": "MERN CRUD",
-	"main": "dist/src/index.js",
+	"main": "dist/index.js",
 	"scripts": {
 		"lint": "eslint --fix ./src/**/*.ts",
 		"format": "prettier --write ./src/**/* --ignore-unknown",
 		"build": "tsc",
 		"watch": "tsc -w",
-		"dev": "cross-env NODE_ENV=development nodemon dist/src/index.js",
+		"dev": "cross-env NODE_ENV=development nodemon dist/index.js",
 		"test": "cross-env NODE_ENV=test jest --verbose",
 		"test:ci": "yarn test --findRelatedTests",
 		"test:watch": "yarn test --watch",
-		"typeorm": "typeorm-ts-node-commonjs",
-		"typeorm:seeding": "ts-node ./node_modules/typeorm-seeding/dist/cli.js",
 		"db:seed": "prisma db seed",
-		"db:migrate": "prisma migrate dev --name",
-		"db:gen": "prisma generate",
+		"db:migrate": "prisma migrate dev --schema=src/core/db/schema.prisma --name",
+		"db:gen": "prisma generate --schema=src/core/db/schema.prisma",
 		"db:studio": "prisma studio"
 	},
 	"prisma": {
-		"seed": "ts-node prisma/seed.ts"
+		"seed": "ts-node src/core/db/seed.ts"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@overnightjs/core": "^1.7.6",
 		"@prisma/client": "^3.12.0",
 		"argon2": "^0.28.5",
 		"cookie-parser": "^1.4.6",
@@ -44,7 +41,6 @@
 		"prisma": "^3.12.0",
 		"reflect-metadata": "^0.1.13",
 		"tslib": "^2.3.1",
-		"tsyringe": "^4.6.0",
 		"winston": "^3.7.2",
 		"zod": "^3.14.4"
 	},

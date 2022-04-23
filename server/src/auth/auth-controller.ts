@@ -1,16 +1,16 @@
-import { ClassMiddleware, Controller, Get, Post } from "@overnightjs/core";
 import { Request, RequestHandler, Response } from "express";
-import { autoInjectable } from "tsyringe";
+import { Controller, IRoute } from "../core/controller";
 import { Method } from "../enums";
-import { BASE_URL } from "../env";
+import { auth } from "../middleware/auth";
 import { restful } from "../middleware/restful";
 import { CreatedResponse } from "../responses/created-response";
 import { OkResponse } from "../responses/ok-response";
-import { getUser } from "../utils/get-user";
-import { JwtUtils } from "../utils/jwt-utils";
+import { Middleware } from "../types";
 import { zParse } from "../utils/z-parse";
 import { AuthService } from "./auth-service";
-import { emailAlreadyInUse } from "./email-already-in-use";
+import { emailAlreadyInUse } from "./utils/email-already-in-use";
+import { getUser } from "./utils/get-user";
+import { JwtUtils } from "./utils/jwt-utils";
 import { signInSchema } from "./validation/sign-in-schema";
 import { signUpSchema } from "./validation/sign-up-schema";
 
@@ -18,30 +18,62 @@ interface IAuthController {
 	signUp: RequestHandler;
 	signIn: RequestHandler;
 	signOut: RequestHandler;
-	getUserInfo: RequestHandler;
+	userInfo: RequestHandler;
 }
 
-@ClassMiddleware(restful([Method.GET, Method.POST]))
-@Controller(`${BASE_URL}/auth`)
-@autoInjectable()
-export class AuthController implements IAuthController {
-	constructor(public service: AuthService) {}
+export class AuthController
+	extends Controller<AuthService>
+	implements IAuthController
+{
+	_service = new AuthService();
+	prefix = "/auth";
+	routes: Array<IRoute> = [
+		{
+			method: Method.POST,
+			path: "/sign-up",
+			handler: this.signUp.bind(this),
+		},
+		{
+			method: Method.POST,
+			path: "/sign-in",
+			handler: this.signIn.bind(this),
+		},
+		{
+			method: Method.POST,
+			path: "/sign-out",
+			handler: this.signOut.bind(this),
+			middleware: [auth],
+		},
+		{
+			method: Method.GET,
+			path: "/user-info",
+			handler: this.userInfo.bind(this),
+			middleware: [auth],
+		},
+	];
+	middleware?: Array<Middleware> = [restful([Method.GET, Method.POST])];
+
+	constructor() {
+		super();
+
+		this.registerRoutes();
+	}
 
 	/**
 	 * @path /api/user/sign-up
 	 * @request post
 	 * @desc add a new user to db
 	 */
-	@Post(`sign-up`)
 	async signUp(req: Request, res: Response) {
-		const { email, fullName, password } = await zParse(signUpSchema as any, req.body);
+		const { email, fullName, password } = await zParse(
+			signUpSchema as any,
+			req.body
+		);
 		try {
-		const user = await this.service.signUp(email, fullName, password);
+			const user = await this.service.signUp(email, fullName, password);
 
-		return new CreatedResponse(res, { data: { user } });
-
-		
-		} catch(err) {
+			return new CreatedResponse(res, { data: { user } });
+		} catch (err) {
 			emailAlreadyInUse(err);
 
 			throw err;
@@ -53,9 +85,8 @@ export class AuthController implements IAuthController {
 	 * @request post
 	 * @desc sign in an existing user from db
 	 */
-	@Post(`sign-in`)
 	async signIn(req: Request, res: Response) {
-		const { email, password } = await zParse(signInSchema, req);
+		const { email, password } = await zParse(signInSchema, req.body);
 
 		const user = await this.service.signIn(email, password);
 
@@ -69,15 +100,13 @@ export class AuthController implements IAuthController {
 	 * @request post
 	 * @desc sign out an existing user from db
 	 */
-	@Post(`sign-out`)
 	async signOut(_req: Request, res: Response) {
 		JwtUtils.deleteAccessTokenCookie(res);
 
 		return new OkResponse(res);
 	}
 
-	@Get(`current-user`)
-	async getUserInfo(_req: Request, res: Response) {
+	async userInfo(_req: Request, res: Response) {
 		const user = getUser(res);
 
 		return new OkResponse(res, {

@@ -1,16 +1,10 @@
-import {
-	ClassMiddleware,
-	Controller,
-	Delete,
-	Get,
-	Patch,
-} from "@overnightjs/core";
 import { Request, Response } from "express";
-import { autoInjectable } from "tsyringe";
+import { Controller, IRoute } from "../core/controller";
 import { Method } from "../enums";
-import { BASE_URL } from "../env";
+import { auth } from "../middleware/auth";
 import { restful } from "../middleware/restful";
 import { OkResponse } from "../responses/ok-response";
+import { Middleware } from "../types";
 import { UsersService } from "./users-service";
 
 export interface IUsersController {
@@ -20,18 +14,50 @@ export interface IUsersController {
 	deleteUser(req: Request, res: Response): void;
 }
 
-@ClassMiddleware(restful([Method.GET, Method.PATCH, Method.DELETE]))
-@Controller(`${BASE_URL}/users`)
-@autoInjectable()
-export class UsersController implements IUsersController {
-	constructor(public service: UsersService) {}
+export class UsersController
+	extends Controller<UsersService>
+	implements IUsersController
+{
+	_service = new UsersService();
+	prefix = "/users";
+	routes: Array<IRoute> = [
+		{
+			method: Method.GET,
+			path: "/",
+			handler: this.getUsers.bind(this),
+		},
+		{
+			method: Method.GET,
+			path: "/:id",
+			handler: this.getUser.bind(this),
+		},
+		{
+			method: Method.PATCH,
+			path: "/:id",
+			handler: this.updateUser.bind(this),
+		},
+		{
+			method: Method.DELETE,
+			path: "/:id",
+			handler: this.deleteUser.bind(this),
+		},
+	];
+	middleware?: Array<Middleware> = [
+		auth,
+		restful([Method.GET, Method.PATCH, Method.DELETE]),
+	];
+
+	constructor() {
+		super();
+
+		this.registerRoutes();
+	}
 
 	/**
 	 * @path /api/users/
 	 * @request get
 	 * @desc get all users from db
 	 */
-	@Get(`/`)
 	public async getUsers(_req: Request, res: Response) {
 		const users = await this.service.getUsers();
 
@@ -43,7 +69,6 @@ export class UsersController implements IUsersController {
 	 *	@request get
 	 *	@desc get a user by id from db
 	 */
-	@Get(`:id`)
 	public async getUser(req: Request, res: Response) {
 		try {
 			const user = await this.service.getUser(req.params.id!);
@@ -59,7 +84,6 @@ export class UsersController implements IUsersController {
 	 * @request Patch
 	 * @desc update an existing user from db
 	 */
-	@Patch(`:id`)
 	public async updateUser(req: Request, res: Response) {
 		try {
 			const user = await this.service.updateUser(
@@ -80,7 +104,6 @@ export class UsersController implements IUsersController {
 	 * @request delete
 	 * @desc delete an existing user from db
 	 */
-	@Delete(`:id`)
 	public async deleteUser(req: Request, res: Response) {
 		const user = await this.service.deleteUser(req.params.id!);
 

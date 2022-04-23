@@ -1,6 +1,6 @@
 import request, { Response } from "supertest";
-import { App } from "../app";
-import { BASE_URL, PORT } from "../env";
+import { App } from "../core/app";
+import { BASE_URL, PORT } from "../env/env";
 
 const app = new App(Number(PORT)).init().app;
 const agent = request.agent(app);
