@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import React, { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../context';
+import { useAuthContext } from '../../context/AuthContext/useAuthContext';
+
 
 export const EmailExists = () => {
-	const { setDisplayEmailExistsMsg } = useContext(AuthContext);
+	const { setDisplayEmailExistsMsg } = useAuthContext();
 	const [msgFits, setMsgFits] = useState(true);
 
 	const ifMsgFits = () => {

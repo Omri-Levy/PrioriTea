@@ -1,5 +1,3 @@
-import React from 'react';
-import { TaskOptionsModal, TaskFilterModal } from '../../../components';
 
 export const InvalidFilter = () => {
 	const titleMessage = 'Sorting Is Unavailable With Invalid Filter';

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { AuthContext } from '../../context';
-import { fetchFn, slideNav } from '../../static/js';
+import { useAuthContext } from '../../context/AuthContext/useAuthContext';
+import { fetchFn } from '../../static/js/requests/fetch-fn/fetch-fn';
 
 export const Nav = () => {
-	const { isSignedIn, signOut, signIn } = useContext(AuthContext);
+	const { isSignedIn, signOut, signIn } = useAuthContext();
 	const getCurrentUserUrl = `${process.env.REACT_APP_API}/get-current-user`;
 	const signOutUrl = `${process.env.REACT_APP_API_AUTH}/sign-out`;
 

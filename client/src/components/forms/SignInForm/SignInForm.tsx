@@ -1,12 +1,12 @@
-import { AuthContext, LoadingContext } from '../../../context';
-import { signInSchema, fetchFn } from '../../../static/js';
 import { Form, Formik } from 'formik';
-import React, { useContext, useState } from 'react';
-import { FormikInput } from '../../../components';
+import { useState } from 'react';
+import { useAuthContext } from '../../../context/AuthContext/useAuthContext';
+import { useLoadingContext } from '../../../context/LoadingContext/useLoadingContext';
+
 
 export const SignInForm = ({ history }) => {
-	const { signIn, signOut } = useContext(AuthContext);
-	const { startLoading, stopLoading, loading } = useContext(LoadingContext);
+	const { signIn, signOut } = useAuthContext();
+	const { startLoading, stopLoading, loading } = useLoadingContext();
 	const [error, setError] = useState(null);
 	const signInUrl = `${process.env.REACT_APP_API_AUTH}/sign-in`;
 	const setIsSignedInUrl = `${process.env.REACT_APP_API}/auth`;

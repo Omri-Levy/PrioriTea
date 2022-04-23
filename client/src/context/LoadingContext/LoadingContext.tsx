@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import { createContext, useReducer } from 'react';
 import { loadingReducer } from './loading-reducer.js';
 
 export const LoadingContext = createContext(undefined);

@@ -1,25 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { TasksContext, ModalsContext, LoadingContext } from '../../../context';
-import {
-	sortFn,
-	fetchFn,
-	filterBySearch,
-	persistFilter,
-} from '../../../static/js';
-import {
-	Tasks,
-	Pagination,
-	OnePager,
-	NoTasks,
-	EditTaskModal,
-	CreateTaskModal,
-	MobileTasks,
-	MobilePagination,
-	MobileNoTasks,
-	InvalidFilter,
-	Loading,
-	FilterSearch,
-} from '../../../components';
+import { fetchFn } from '../../../static/js/requests/fetch-fn/fetch-fn';
+import { FilterSearch } from '../../FilterSearch/FilterSearch';
+import { InvalidFilter } from '../InvalidFilter/InvalidFilter';
+import { MobileNoTasks } from '../MobileNoTasks/MobileNoTasks';
+import { MobilePagination } from '../MobilePagination/MobilePagination';
+import { MobileTasks } from '../MobileTasks/MobileTasks';
+import { CreateTaskModal } from '../modals/CreateTaskModal/CreateTaskModal';
+import { EditTaskModal } from '../modals/EditTaskModal/EditTaskModal';
+import { NoTasks } from '../NoTasks/NoTasks';
+import { OnePager } from '../OnePager/OnePager';
+import { Pagination } from '../Pagination/Pagination';
+import { Tasks } from '../Tasks/Tasks';
+
 
 export const TasksContainer = () => {
 	const { tasks, setTasks, tasksCopy, setTasksCopy } =

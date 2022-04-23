@@ -1,9 +1,9 @@
-import React from 'react';
 import ReactDOM from 'react-dom';
+import { App } from './components/App/App';
+import { AuthProvider } from './context/AuthContext/AuthContext';
+import { LoadingProvider } from './context/LoadingContext/LoadingContext';
+import * as serviceWorker from './serviceWorker';
 import './static/scss/index.scss';
-import { LoadingProvider, AuthProvider } from './context';
-import * as serviceWorker from './serviceWorker.js';
-import { App } from './components';
 
 ReactDOM.render(
 	<AuthProvider>

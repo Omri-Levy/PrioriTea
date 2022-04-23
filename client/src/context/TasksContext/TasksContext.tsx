@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import { createContext, useReducer } from 'react';
 import { tasksReducer } from './tasks-reducer.js';
 
 export const TasksContext = createContext(undefined);

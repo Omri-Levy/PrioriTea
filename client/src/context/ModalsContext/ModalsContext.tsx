@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import { createContext, useReducer } from 'react';
 import { modalsReducer } from './modals-reducer.js';
 
 export const ModalsContext = createContext(undefined);

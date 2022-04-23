@@ -1,18 +1,14 @@
-import { LoadingContext, ModalsContext, TasksContext } from '../../../context';
-import {
-	persistFilter,
-	fetchFn,
-	sortFn,
-	editTaskSchema,
-} from '../../../static/js';
 import { Form, Formik } from 'formik';
-import React, { useContext } from 'react';
-import { FormikInput } from '../../../components';
+import { useLoadingContext } from '../../../context/LoadingContext/useLoadingContext';
+import { useModalsContext } from '../../../context/ModalsContext/useModalsContext';
+import { useTasksContext } from '../../../context/TasksContext/useTasksContext';
+import { fetchFn } from '../../../static/js/requests/fetch-fn/fetch-fn';
+import { FormikInput } from '../../FormikInput/FormikInput';
 
 export const EditTaskForm = () => {
-	const { setTasks, setTasksCopy, editTaskId } = useContext(TasksContext);
-	const { closeEditTaskModal } = useContext(ModalsContext);
-	const { startLoading, stopLoading, loading } = useContext(LoadingContext);
+	const { setTasks, setTasksCopy, editTaskId } = useTasksContext();
+	const { closeEditTaskModal } = useModalsContext();
+	const { startLoading, stopLoading, loading } = useLoadingContext();
 	const getTasksUrl = `${process.env.REACT_APP_API_TASK}/get-tasks`;
 	const editTaskUrl = `${process.env.REACT_APP_API_TASK}/edit-task`;
 

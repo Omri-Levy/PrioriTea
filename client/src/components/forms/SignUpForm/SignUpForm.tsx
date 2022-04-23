@@ -1,13 +1,13 @@
-import { AuthContext, LoadingContext } from '../../../context';
-import { signUpSchema, fetchFn } from '../../../static/js';
 import { Form, Formik } from 'formik';
-import React, { useContext } from 'react';
-import { EmailExists, FormikInput } from '../../../components';
+import { useAuthContext } from '../../../context/AuthContext/useAuthContext';
+import { useLoadingContext } from '../../../context/LoadingContext/useLoadingContext';
+import { fetchFn } from '../../../static/js/requests/fetch-fn/fetch-fn';
+import { EmailExists } from '../../EmailExists/EmailExists';
+
 
 export const SignUpForm = ({ history }) => {
-	const { displayEmailExistsMsg, setDisplayEmailExistsMsg } =
-		useContext(AuthContext);
-	const { startLoading, stopLoading, loading } = useContext(LoadingContext);
+	const { displayEmailExistsMsg, setDisplayEmailExistsMsg } = useAuthContext();
+	const { startLoading, stopLoading, loading } = useLoadingContext();
 	const signUpUrl = `${process.env.REACT_APP_API_AUTH}/sign-up`;
 
 	return (

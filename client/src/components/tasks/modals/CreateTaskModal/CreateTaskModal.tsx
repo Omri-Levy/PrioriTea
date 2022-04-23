@@ -1,5 +1,4 @@
-import React from 'react';
-import { CreateTaskForm } from '../../../forms';
+import { CreateTaskForm } from '../../../forms/CreateTaskForm/CreateTaskForm';
 
 export const CreateTaskModal = () => {
 	return (

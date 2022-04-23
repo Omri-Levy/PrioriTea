@@ -1,5 +1,5 @@
-import React from 'react';
-import { EditTaskForm } from '../../../../components';
+import { EditTaskForm } from "../../../forms/EditTaskForm/EditTaskForm";
+
 
 export const EditTaskModal = () => {
 	return (

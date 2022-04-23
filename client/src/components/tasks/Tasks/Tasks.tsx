@@ -1,20 +1,13 @@
-import React, { useContext } from 'react';
-import {
-	LoadingContext,
-	PaginationContext,
-	TasksContext,
-} from '../../../context';
-import { toggleSort, sortFn } from '../../../static/js';
-import {
-	Loading,
-	TaskOptionsModal,
-	TaskFilterModal,
-} from '../../../components';
+import { useLoadingContext } from '../../../context/LoadingContext/useLoadingContext';
+import { usePaginationContext } from '../../../context/PaginationContext/usePaginationContext';
+import { useTasksContext } from '../../../context/TasksContext/useTasksContext';
+import { TaskFilterModal } from '../modals/TaskFilterModal/TaskFilterModal';
+
 
 export const Tasks = () => {
-	const { tasksCopy, setTasksCopy } = useContext(TasksContext);
-	const { loading } = useContext(LoadingContext);
-	const { currentPage, tasksPerPage } = useContext(PaginationContext);
+	const { tasksCopy, setTasksCopy } = useTasksContext();
+	const { loading } = useLoadingContext();
+	const { currentPage, tasksPerPage } = usePaginationContext();
 	const indexOfLastTask = currentPage * tasksPerPage;
 	const indexOfFirstTask = indexOfLastTask - tasksPerPage;
 

@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { ModalsContext } from '../../../context';
-import { TaskOptionsModal, TaskFilterModal } from '../../../components';
+import { useEffect, useState } from 'react';
+import { useModalsContext } from '../../../context/ModalsContext/useModalsContext';
+import { TaskFilterModal } from '../modals/TaskFilterModal/TaskFilterModal';
+import { TaskOptionsModal } from '../modals/TaskOptionsModal/TaskOptionsModal';
 
 export const NoTasks = () => {
-	const { openCreateTaskModal } = useContext(ModalsContext);
+	const { openCreateTaskModal } = useModalsContext();
 	const [counter, setCounter] = useState(
 		JSON.parse(localStorage.getItem('counter') || 0),
 	);

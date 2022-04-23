@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from 'react';
-import { PaginationContext, TasksContext } from '../../../context';
-import { movePage } from '../../../static/js';
+import { useEffect } from 'react';
+import { usePaginationContext } from '../../../context/PaginationContext/usePaginationContext';
+import { useTasksContext } from '../../../context/TasksContext/useTasksContext';
 
 export const Pagination = () => {
 	const {
@@ -9,8 +9,8 @@ export const Pagination = () => {
 		tasksPerPage,
 		currentPage,
 		setCurrentPage,
-	} = useContext(PaginationContext);
-	const { tasks, tasksCopy } = useContext(TasksContext);
+	} = usePaginationContext();
+	const { tasks, tasksCopy } = useTasksContext();
 	const pageNumbers = [];
 	const maxPages = 5;
 

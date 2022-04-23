@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { fetchFn } from '../../../static/js';
+import { useEffect, useState } from 'react';
+import { fetchFn } from '../../../static/js/requests/fetch-fn/fetch-fn';
 
 export const Profile = () => {
 	const [currentEmail, setCurrentEmail] = useState('');

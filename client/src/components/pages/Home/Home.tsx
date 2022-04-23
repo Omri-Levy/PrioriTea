@@ -1,21 +1,19 @@
-import React from 'react';
-import {
-	TasksProvider,
-	PaginationProvider,
-	ModalsProvider,
-} from '../../../context';
-import { TasksContainer } from '../../../components';
+import React from "react";
+import { ModalsProvider } from "../../../context/ModalsContext/ModalsContext";
+import { PaginationProvider } from "../../../context/PaginationContext/PaginationContext";
+import { TasksProvider } from "../../../context/TasksContext/TasksContext";
+import { TasksContainer } from "../../tasks/TasksContainer/TasksContainer";
 
 export const Home = () => {
-	return (
-		<main className="body-container">
-			<TasksProvider>
-				<PaginationProvider>
-					<ModalsProvider>
-						<TasksContainer />
-					</ModalsProvider>
-				</PaginationProvider>
-			</TasksProvider>
-		</main>
-	);
+  return (
+    <main className="body-container">
+      <TasksProvider>
+        <PaginationProvider>
+          <ModalsProvider>
+            <TasksContainer />
+          </ModalsProvider>
+        </PaginationProvider>
+      </TasksProvider>
+    </main>
+  );
 };

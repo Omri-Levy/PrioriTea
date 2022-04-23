@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from 'react';
+import { createContext, useEffect, useReducer } from 'react';
 import { paginationReducer } from './pagination-reducer.js';
 
 export const PaginationContext = createContext(undefined);

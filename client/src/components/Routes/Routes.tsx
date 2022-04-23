@@ -1,10 +1,13 @@
-import React, { useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { AuthContext } from '../../context';
-import { Header, Home, Profile, SignIn, SignUp } from '../../components';
+import { useAuthContext } from '../../context/AuthContext/useAuthContext';
+import { Header } from '../Header/Header';
+import { Home } from '../pages/Home/Home';
+import { Profile } from '../pages/Profile/Profile';
+import { SignIn } from '../pages/SignIn/SignIn';
+import { SignUp } from '../pages/SignUp/SignUp';
 
 export const Routes = () => {
-	const { isSignedIn } = useContext(AuthContext);
+	const { isSignedIn } = useAuthContext();
 
 	return (
 		<Router>
