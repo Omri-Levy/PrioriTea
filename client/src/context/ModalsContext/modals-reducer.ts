@@ -1,4 +1,4 @@
-export const modalsReducer = (state, action) => {
+export const modalsReducer = (state: any, action: {type: string}) => {
 	switch (action.type) {
 		case 'OPEN_CREATE_TASK_MODAL':
 			return {

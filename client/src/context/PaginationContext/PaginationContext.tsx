@@ -1,32 +1,49 @@
 import { createContext, useEffect, useReducer } from 'react';
-import { paginationReducer } from './pagination-reducer.js';
+import { IChildren } from '../../interfaces';
+import { paginationReducer } from './pagination-reducer';
 
-export const PaginationContext = createContext(undefined);
+interface IPaginationContext {
+  totalPages: 0;
+  tasksPerPage: 1;
+  currentPage: 1;
+  setTotalPages: (pagesNum: number) => void;
+  setTasksPerPage: (tasksNum: number) => void;
+  setCurrentPage: (pageNum: number) => void;
+}
 
-export const PaginationProvider = (props) => {
+export const PaginationContext = createContext<IPaginationContext>({
+	totalPages: 0,
+	tasksPerPage: 1,
+	currentPage: 1,
+	setTotalPages: () => {},
+	setCurrentPage: () => {},
+	setTasksPerPage: () => {},
+});
+
+export const PaginationProvider = ({children}: IChildren) => {
 	const [paginationObj, dispatch] = useReducer(paginationReducer, {
-		totalPages: JSON.parse(localStorage.getItem('totalPages')) || 0,
+		totalPages: 0,
 		tasksPerPage: 1,
-		currentPage: JSON.parse(localStorage.getItem('currentPage')) || 1,
+		currentPage: 1,
 	});
 
-	const setTotalPages = (pagesNum) =>
+	const setTotalPages = (pagesNum: number) =>
 		dispatch({
 			type: 'SET_TOTAL_PAGES',
 			payload: pagesNum,
 		});
 
-	const setTasksPerPage = (tasksNum) =>
-		dispatch({
-			type: 'SET_TASKS_PER_PAGE',
-			payload: tasksNum,
-		});
+	const setTasksPerPage = (tasksNum: number) =>
+    dispatch({
+      type: "SET_TASKS_PER_PAGE",
+      payload: tasksNum,
+    });
 
-	const setCurrentPage = (pageNum) =>
-		dispatch({
-			type: 'SET_CURRENT_PAGE',
-			payload: pageNum,
-		});
+	const setCurrentPage = (pageNum: number) =>
+    dispatch({
+      type: "SET_CURRENT_PAGE",
+      payload: pageNum,
+    });
 
 	useEffect(() => {
 		localStorage.setItem(
@@ -58,7 +75,7 @@ export const PaginationProvider = (props) => {
 				setTasksPerPage,
 			}}
 		>
-			{props.children}
+			{children}
 		</PaginationContext.Provider>
 	);
 };

@@ -1,4 +1,4 @@
-export const tasksReducer = (state, action) => {
+export const tasksReducer = (state: any, action: {type: string, payload: any}) => {
 	switch (action.type) {
 		case 'GET_TASKS':
 			return {

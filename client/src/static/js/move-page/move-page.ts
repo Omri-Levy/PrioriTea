@@ -1,2 +1,3 @@
-export const movePage = (pageNumber, setCurrentPage) =>
-	setCurrentPage(pageNumber);
+export const movePage =
+  (setCurrentPage: (pageNum: number) => void) => (pageNumber: number) =>
+    setCurrentPage(pageNumber);

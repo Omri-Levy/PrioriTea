@@ -1,9 +1,17 @@
 import { createContext, useReducer } from 'react';
-import { modalsReducer } from './modals-reducer.js';
+import { IChildren } from '../../interfaces';
+import { modalsReducer } from './modals-reducer';
 
-export const ModalsContext = createContext(undefined);
+export const ModalsContext = createContext({
+  createTaskModalOpen: false,
+  editTaskModalOpen: false,
+  openCreateTaskModal: () => {},
+  closeCreateTaskModal: () => {},
+  openEditTaskModal: () => {},
+  closeEditTaskModal: () => {},
+});
 
-export const ModalsProvider = (props) => {
+export const ModalsProvider = ({children}: IChildren) => {
 	const [modalsObj, dispatch] = useReducer(modalsReducer, {
 		createTaskModalOpen: false,
 		editTaskModalOpen: false,
@@ -36,7 +44,7 @@ export const ModalsProvider = (props) => {
 				closeEditTaskModal,
 			}}
 		>
-			{props.children}
+			{children}
 		</ModalsContext.Provider>
 	);
 };

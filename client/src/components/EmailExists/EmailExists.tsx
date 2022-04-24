@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext/useAuthContext';
 
 
 export const EmailExists = () => {
-	const { setDisplayEmailExistsMsg } = useAuthContext();
+	const { toggleEmailExistsMsg } = useAuthContext();
 	const [msgFits, setMsgFits] = useState(true);
 
 	const ifMsgFits = () => {
@@ -12,6 +12,9 @@ export const EmailExists = () => {
 			setMsgFits(false);
 		}
 	};
+	const closeEmailExistsMsg = useCallback(function() {
+		toggleEmailExistsMsg(false);
+	}, [toggleEmailExistsMsg])
 
 	useEffect(() => {
 		window.addEventListener('resize', ifMsgFits);
@@ -21,15 +24,15 @@ export const EmailExists = () => {
 		<div className="email-exists">
 			<div className="email-exists-content">
 				{msgFits ? (
-					<>Email already exists - navigate to</>
+					"Email already exists - navigate to"
 				) : (
-					<>Email already exists</>
+					"Email already exists"
 				)}
 				{msgFits && (
 					<Link
 						to="/sign-in"
 						className="sign-in-link"
-						onClick={() => setDisplayEmailExistsMsg(false)}
+						onClick={closeEmailExistsMsg}
 					>
 						<em>Signin</em>
 					</Link>

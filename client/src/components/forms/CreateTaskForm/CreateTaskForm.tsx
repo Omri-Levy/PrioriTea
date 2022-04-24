@@ -2,6 +2,11 @@ import { Form, Formik } from "formik";
 import { useLoadingContext } from "../../../context/LoadingContext/useLoadingContext";
 import { useModalsContext } from "../../../context/ModalsContext/useModalsContext";
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
+import { persistFilter } from "../../../static/js/filter/filter";
+import { fetchFn } from "../../../static/js/requests/fetch-fn/fetch-fn";
+import { sortFn } from "../../../static/js/sort-fn/sort-fn";
+import { createTaskSchema } from "../../../static/js/validation/create-task-schema/create-task-schema";
+import { FormikInput } from "../../FormikInput/FormikInput";
 
 export const CreateTaskForm = () => {
   const { setTasks, setTasksCopy } = useTasksContext();
@@ -61,7 +66,7 @@ export const CreateTaskForm = () => {
         <Form className="create-task-form">
           <p className="required-fields-msg">Indicates required fields</p>
           <FormikInput
-            maxLength="80"
+            maxLength={80}
             autoFocus={true}
             label="Priority"
             name="priority"
@@ -72,7 +77,7 @@ export const CreateTaskForm = () => {
             placeholder="Priority"
           />
           <FormikInput
-            maxLength="80"
+            maxLength={80}
             label="Task"
             name="task"
             type="text"

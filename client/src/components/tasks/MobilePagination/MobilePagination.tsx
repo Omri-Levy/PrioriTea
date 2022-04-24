@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { usePaginationContext } from "../../../context/PaginationContext/usePaginationContext";
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
+import { movePage } from "../../../static/js/move-page/move-page";
 
 export const MobilePagination = () => {
   const {
@@ -10,7 +11,7 @@ export const MobilePagination = () => {
     currentPage,
     setCurrentPage,
   } = usePaginationContext();
-  const { tasks, tasksCopy } = useTasksContext();
+  const { tasksCopy } = useTasksContext();
   const pageNumbers = [];
   const maxPages = 3;
 
@@ -19,7 +20,7 @@ export const MobilePagination = () => {
 
   useEffect(() => {
     setTotalPages(Math.round(tasksCopy.length / tasksPerPage));
-  }, [tasks, tasksCopy]);
+  }, [tasksPerPage, tasksCopy, setTotalPages]);
 
   if (maxLeft < 1) {
     maxLeft = 1;
@@ -36,11 +37,12 @@ export const MobilePagination = () => {
 
   for (let page = maxLeft; page <= maxRight; page++) pageNumbers.push(page);
 
-  const isCurrentPage = (number) => {
+  const isCurrentPage = (number: number) => {
     return currentPage === number
       ? "current-page pagination-btn"
       : "pagination-btn link-underline";
   };
+  const paginate = movePage(setCurrentPage);
 
   return (
     <nav>
@@ -50,7 +52,7 @@ export const MobilePagination = () => {
             <button
               id="first-page"
               className="pagination-btn link-underline"
-              onClick={() => movePage(1, setCurrentPage)}
+              onClick={() => paginate(1)}
             >
               <i className="first-page" />
             </button>
@@ -61,7 +63,7 @@ export const MobilePagination = () => {
             <button
               id={"page-" + number}
               className={isCurrentPage(number)}
-              onClick={() => movePage(number, setCurrentPage)}
+              onClick={() => paginate(number)}
             >
               {number}
             </button>
@@ -72,7 +74,7 @@ export const MobilePagination = () => {
             <button
               className="pagination-btn link-underline"
               id="last-page"
-              onClick={() => movePage(totalPages, setCurrentPage)}
+              onClick={() => paginate(totalPages)}
             >
               <i className="last-page" />
             </button>

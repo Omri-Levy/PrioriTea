@@ -1,10 +1,15 @@
 import { timeout } from './timeout';
 import { TIMEOUT_IN_MS } from '../../../../config';
 
-export const fetchFn = async (url, options) => {
+export const fetchFn = async (url: string, body?: Record<string, unknown>) => {
 	try {
 		const res = await Promise.race([
-			fetch(url, options),
+			fetch(url, {
+				headers: {
+					'Content-Type': 'application/json',
+				}, 
+				body: body ? JSON.stringify(body) : undefined,
+			}),
 			timeout(TIMEOUT_IN_MS),
 		]);
 		const data = await res.json();
@@ -13,7 +18,7 @@ export const fetchFn = async (url, options) => {
 			throw new Error(`${data.message} (${res.status})`);
 		}
 
-		return { res, data };
+		return data;
 	} catch (err) {
 		console.error(err);
 

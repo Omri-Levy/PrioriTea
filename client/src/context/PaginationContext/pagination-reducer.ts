@@ -1,4 +1,4 @@
-export const paginationReducer = (state, action) => {
+export const paginationReducer = (state: any, action: {type: string, payload: number}) => {
 	switch (action.type) {
 		case 'SET_CURRENT_PAGE':
 			return {

@@ -1,6 +1,18 @@
 import { useField } from 'formik';
+import { DetailedHTMLProps, FunctionComponent, InputHTMLAttributes } from 'react';
 
-export const FormikInput = ({ label, isRequired, ...props }) => {
+export type HTMLInputProps = DetailedHTMLProps<
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
+
+interface FormikInputProps extends HTMLInputProps{
+	label: string;
+	isRequired?: boolean;
+	name: string;
+}
+
+export const FormikInput: FunctionComponent<FormikInputProps> = ({ label, isRequired, ...props }) => {
 	const [field, meta] = useField(props);
 
 	return (
