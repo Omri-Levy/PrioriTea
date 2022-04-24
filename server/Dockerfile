@@ -1,4 +1,4 @@
-FROM node:14
+FROM alpine:3.15.4
 
 WORKDIR /usr/src/app
 
@@ -9,12 +9,13 @@ COPY yarn.lock ./
 RUN yarn
 
 COPY . .
-COPY .env.production .env
 
 RUN yarn build
 
 ENV NODE_ENV production
 
 EXPOSE 8080
+
 CMD [ "node", "build/src/server.js" ]
+
 USER node

@@ -15,7 +15,7 @@ dist
 .pnp.js
 
 # testing
-/coverage
+coverage
 
 # misc
 .DS_Store
@@ -28,3 +28,5 @@ yarn-error.log*
 
 # Local Netlify folder
 .netlify
+
+logs
