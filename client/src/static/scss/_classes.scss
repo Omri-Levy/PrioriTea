@@ -110,15 +110,6 @@
   }
 }
 
-.current-link::after {
-  content: '';
-  display: block;
-  width: 100%;
-  transition: width 0.3s;
-  height: 2px;
-  background-color: set-text-color($bg-color);
-}
-
 .current-page::after {
   content: '';
   display: block;
