@@ -9,6 +9,10 @@ export abstract class ExpressResponse {
 	) {}
 
 	send() {
-		return this.res.status(this.statusCode).send(this.payload);
+		return this.res.status(this.statusCode).json({
+			errors: null,
+			data: null,
+			...(this.payload ?? {})
+		});
 	}
 }

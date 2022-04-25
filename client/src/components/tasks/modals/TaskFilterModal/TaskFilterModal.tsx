@@ -27,7 +27,7 @@ export const TaskFilterModal: FunctionComponent<TaskFilterModalProps> = ({
           tempArr.push(item.priority);
           break;
         case "task":
-          tempArr.push(item.task);
+          tempArr.push(item.description);
           break;
         case "status":
           tempArr.push(item.status);

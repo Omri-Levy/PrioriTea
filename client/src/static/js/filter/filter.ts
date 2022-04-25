@@ -7,7 +7,7 @@ export const filterBySearch = (value: string, tasks: Tasks, setTasksCopy: (tasks
 	const valueIncluded = (task: ITask) => {
 		return (
 			task.priority.toLowerCase().includes(value) ||
-			task.task.toLowerCase().includes(value) ||
+			task.description.toLowerCase().includes(value) ||
 			task.status.toLowerCase().includes(value)
 		);
 	};

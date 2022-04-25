@@ -37,9 +37,9 @@ export const Tasks: FunctionComponent = () => {
   };
 
   return (
-	  <>
-	  {slicedTasksCopy?.map((task) => (
-        <table key={task._id}>
+    <>
+      {slicedTasksCopy?.map((task) => (
+        <table key={task.id}>
           <thead>
             <tr>
               <th>
@@ -66,7 +66,7 @@ export const Tasks: FunctionComponent = () => {
               </th>
               <th>
                 <TaskFilterModal target={"status"} />
-                <TaskOptionsModal taskId={task._id} />
+                <TaskOptionsModal taskId={task.id} />
                 <span>
                   Status
                   <i
@@ -81,12 +81,12 @@ export const Tasks: FunctionComponent = () => {
           <tbody>
             <tr>
               <td className="priority">{task.priority}</td>
-              <td className="task">{task.task}</td>
+              <td className="task">{task.description}</td>
               <td className="status">{task.status}</td>
             </tr>
           </tbody>
         </table>
       ))}
-	</>
-	);
+    </>
+  );
 };

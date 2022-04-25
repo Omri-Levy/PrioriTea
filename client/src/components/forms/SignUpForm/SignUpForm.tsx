@@ -1,5 +1,6 @@
 import { Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { AuthApi } from "../../../api/auth-api";
 import { useAuthContext } from "../../../context/AuthContext/useAuthContext";
 import { useLoadingContext } from "../../../context/LoadingContext/useLoadingContext";
 import { fetchFn } from "../../../static/js/requests/fetch-fn/fetch-fn";
@@ -10,7 +11,6 @@ import { FormikInput } from "../../FormikInput/FormikInput";
 export const SignUpForm = () => {
   const { displayEmailExistsMsg, toggleEmailExistsMsg } = useAuthContext();
   const { startLoading, stopLoading, loading } = useLoadingContext();
-  const signUpUrl = `${process.env.REACT_APP_API_AUTH}/sign-up`;
   const navigate = useNavigate();
 
   return (
@@ -25,38 +25,26 @@ export const SignUpForm = () => {
             passwordConfirmation: "",
           }}
           validationSchema={signUpSchema}
-          onSubmit={async (data) => {
+          onSubmit={async ({email, fullName, password, passwordConfirmation}) => {
             startLoading();
 
-            const signUpOptions = {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                email: data.email,
-                fullName: data.fullName,
-                password: data.password,
-                passwordConfirmation: data.passwordConfirmation,
-              }),
-            };
-
-            try {
-              const resData = await fetchFn(signUpUrl, signUpOptions);
-
-              if (resData.message === "Email already exists.") {
-                toggleEmailExistsMsg(true);
-
-                return;
-              }
-
-              toggleEmailExistsMsg(true);
-              navigate("/sign-in");
-            } catch (err) {
-              console.error(err);
-            }
+            const { errors } = await AuthApi.signUp(
+              email,
+              fullName,
+              password,
+              passwordConfirmation
+            );
 
             stopLoading();
+
+            if (errors && errors[0].message === "Email already exists.") {
+              toggleEmailExistsMsg(true);
+
+              return;
+            }
+
+            toggleEmailExistsMsg(true);
+            navigate("/sign-in");
           }}
         >
           {() => (

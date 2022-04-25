@@ -1,27 +1,45 @@
-import { timeout } from './timeout';
-import { TIMEOUT_IN_MS } from '../../../../config';
+import { timeout } from "./timeout";
+import { TIMEOUT_IN_MS } from "../../../../config";
 
-export const fetchFn = async (url: string, body?: Record<string, unknown>) => {
-	try {
-		const res = await Promise.race([
-			fetch(url, {
-				headers: {
-					'Content-Type': 'application/json',
-				}, 
-				body: body ? JSON.stringify(body) : undefined,
-			}),
-			timeout(TIMEOUT_IN_MS),
-		]);
-		const data = await res.json();
+export enum Method {
+  GET = "get",
+  POST = "post",
+  PUT = "put",
+  PATCH = "patch",
+  DELETE = "delete",
+}
 
-		if (!res.ok) {
-			throw new Error(`${data.message} (${res.status})`);
-		}
+export const fetchFn = async (
+  method: Method,
+  url: string,
+  body?: Record<string, unknown>
+) => {
+  try {
+    const res = await Promise.race([
+      fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: body ? JSON.stringify(body) : undefined,
+      }),
+      timeout(TIMEOUT_IN_MS),
+    ]);
+    try {
+      const data = await res.json();
 
-		return data;
-	} catch (err) {
-		console.error(err);
+      if (!res.ok) {
+        throw new Error(`${data.errors[0].message} (${res.status})`);
+      }
 
-		throw err;
-	}
+      return data;
+    } catch (err) {
+      console.error(res, err);
+
+      return res;
+    }
+  } catch (err) {
+    throw err;
+  }
 };

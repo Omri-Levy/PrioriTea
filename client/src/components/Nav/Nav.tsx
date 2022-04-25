@@ -1,29 +1,23 @@
 import { useCallback, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { AuthApi } from "../../api/auth-api";
 import { useAuthContext } from "../../context/AuthContext/useAuthContext";
-import { fetchFn } from "../../static/js/requests/fetch-fn/fetch-fn";
 import { slideNav } from "../../static/js/slide-nav/slide-nav";
 
 export const Nav = () => {
   const { isSignedIn, signOut, signIn } = useAuthContext();
-  const getCurrentUserUrl = `${process.env.REACT_APP_API}/get-current-user`;
-  const signOutUrl = `${process.env.REACT_APP_API_AUTH}/sign-out`;
 
   const fetchCurrentUser = useCallback(async () => {
-	    const getCurrentUserOptions = {
-        method: "POST",
-        credentials: "include",
-      };
-    const { data } = await fetchFn(getCurrentUserUrl, getCurrentUserOptions);
+    const { data } = await AuthApi.getUserInfo();
     const currentPageIsSignin = window.location.pathname === "/sign-in";
     const currentPageIsRoot = window.location.pathname === "/";
 
-    if (data && data.email) return signIn();
+    if (data?.user) return signIn();
 
     if (!currentPageIsSignin && currentPageIsRoot) {
       window.location.href = "/sign-in";
     }
-  }, [signIn, getCurrentUserUrl]);
+  }, [signIn]);
 
   useEffect(() => {
     fetchCurrentUser()
@@ -70,15 +64,7 @@ export const Nav = () => {
             <NavLink
               className={({ isActive }) => (isActive ? "current-link" : "")}
               onClick={async () => {
-                const signOutOptions = {
-                  method: "POST",
-                  credentials: "include",
-                };
-                try {
-                  await fetchFn(signOutUrl, signOutOptions);
-                } catch (err) {
-                  console.error(err);
-                }
+                await AuthApi.signOut();
 
                 signOut();
               }}

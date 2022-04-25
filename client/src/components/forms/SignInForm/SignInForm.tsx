@@ -1,18 +1,16 @@
 import { Form, Formik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthApi } from "../../../api/auth-api";
 import { useAuthContext } from "../../../context/AuthContext/useAuthContext";
 import { useLoadingContext } from "../../../context/LoadingContext/useLoadingContext";
-import { fetchFn } from "../../../static/js/requests/fetch-fn/fetch-fn";
 import { signInSchema } from "../../../static/js/validation/sign-in-schema/sign-in-schema";
 import { FormikInput } from "../../FormikInput/FormikInput";
 
 export const SignInForm = () => {
-  const { signIn, signOut } = useAuthContext();
+  const { signIn } = useAuthContext();
   const { startLoading, stopLoading, loading } = useLoadingContext();
-  const [error, setError] = useState(null);
-  const signInUrl = `${process.env.REACT_APP_API_AUTH}/sign-in`;
-  const setIsSignedInUrl = `${process.env.REACT_APP_API}/auth`;
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   return (
@@ -26,58 +24,24 @@ export const SignInForm = () => {
             passwordConfirmation: "",
           }}
           validationSchema={signInSchema}
-          onSubmit={async (data) => {
+          onSubmit={async ({ email, password }) => {
             startLoading();
 
-            const signInOptions = {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                email: data.email,
-                password: data.password,
-              }),
-              credentials: "include",
-            };
+            const { errors } = await AuthApi.signIn(email, password);
 
-            const setIsSignedInOptions = {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              credentials: "include",
-            };
-
-            try {
-              const { data: signInData } = await fetchFn(
-                signInUrl,
-                signInOptions
-              );
-              console.log(signInData);
-              if (
-                signInData.message &&
-                signInData.message.includes("Email or password are wrong")
-              ) {
-                setError(signInData.message);
-              }
-
-              const { data: setIsSignedInData } = await fetchFn(
-                setIsSignedInUrl,
-                setIsSignedInOptions
-              );
-
-              if (setIsSignedInData && setIsSignedInData.isSignedIn) {
-                signIn();
-                navigate("/");
-              } else {
-                signOut();
-                navigate("/sign-in");
-              }
-            } catch (err) {
-              console.error(err);
-            }
             stopLoading();
+
+            if (
+              errors?.[0].message &&
+              errors?.[0].message === "Email or password are wrong"
+            ) {
+              setError(errors[0].message);
+
+              return;
+            }
+
+            signIn();
+            navigate("/");
           }}
         >
           {() => (

@@ -14,10 +14,7 @@ export interface IUsersService {
 	deleteUser(id: string): Promise<Array<User> | null>;
 }
 
-export class UsersService
-	extends Service<UsersRepository>
-	implements IUsersService
-{
+export class UsersService extends Service<UsersRepository> implements IUsersService {
 	_repository = new UsersRepository();
 
 	public async getUsers() {
@@ -41,6 +38,12 @@ export class UsersService
 
 	public async deleteUser(id: string) {
 		this.repository.deleteUserById(id);
+
+		return this.repository.getAllUsers();
+	}
+
+	public async deleteUsers() {
+		this.repository.deleteAllUsers();
 
 		return this.repository.getAllUsers();
 	}

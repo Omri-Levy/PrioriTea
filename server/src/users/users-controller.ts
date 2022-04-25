@@ -41,6 +41,11 @@ export class UsersController
 			path: "/:id",
 			handler: this.deleteUser.bind(this),
 		},
+		{
+			method: Method.DELETE,
+			path: "/",
+			handler: this.deleteUsers.bind(this),
+		},
 	];
 	middleware?: Array<Middleware> = [
 		auth,
@@ -86,14 +91,14 @@ export class UsersController
 	 */
 	public async updateUser(req: Request, res: Response) {
 		try {
-			const user = await this.service.updateUser(
+			const users = await this.service.updateUser(
 				req.params.id!,
 				req.body.email,
 				req.body.fullName,
 				req.body.password
 			);
 
-			return new OkResponse(res, { data: { user } });
+			return new OkResponse(res, { data: { users } });
 		} catch (err) {
 			return null;
 		}
@@ -105,8 +110,19 @@ export class UsersController
 	 * @desc delete an existing user from db
 	 */
 	public async deleteUser(req: Request, res: Response) {
-		const user = await this.service.deleteUser(req.params.id!);
+		const users = await this.service.deleteUser(req.params.id!);
 
-		return new OkResponse(res, { data: { user } });
+		return new OkResponse(res, { data: { users } });
+	}
+
+	/**
+	 * @path /api/users/:id
+	 * @request delete
+	 * @desc delete an existing user from db
+	 */
+	public async deleteUsers(_req: Request, res: Response) {
+		const users = await this.service.deleteUsers();
+
+		return new OkResponse(res, { data: { users } });
 	}
 }

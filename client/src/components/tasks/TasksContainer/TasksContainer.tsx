@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { TasksApi } from "../../../api/tasks-api";
 import { useLoadingContext } from "../../../context/LoadingContext/useLoadingContext";
 import { useModalsContext } from "../../../context/ModalsContext/useModalsContext";
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
@@ -6,7 +7,6 @@ import {
   filterBySearch,
   persistFilter,
 } from "../../../static/js/filter/filter";
-import { fetchFn } from "../../../static/js/requests/fetch-fn/fetch-fn";
 import { sortFn } from "../../../static/js/sort-fn/sort-fn";
 import { FilterSearch } from "../../FilterSearch/FilterSearch";
 import { Loading } from "../../Loading/Loading";
@@ -52,26 +52,18 @@ export const TasksContainer = () => {
   };
 
   useEffect(() => {
-    startLoading();
-
     (async () => {
-      const getTasksUrl = `${process.env.REACT_APP_API_TASK}/get-tasks`;
-      const getTasksOptions = {
-        method: "GET",
-        credentials: "include",
-      };
+      startLoading();
+      const { data } = await TasksApi.getAll();
+      stopLoading();
 
-      const { data } = await fetchFn(getTasksUrl, getTasksOptions);
-
-      const filteredData = persistFilter(data);
+      const filteredData = persistFilter(data?.tasks);
       const sortedData = sortFn(filteredData);
 
       setTasks(sortedData);
       setTasksCopy(sortedData);
     })();
-
-    stopLoading();
-  }, [setTasks, setTasksCopy, startLoading, stopLoading]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("resize", () => {

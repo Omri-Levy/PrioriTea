@@ -1,25 +1,24 @@
-import { useLoadingContext } from '../../../context/LoadingContext/useLoadingContext';
-import { usePaginationContext } from '../../../context/PaginationContext/usePaginationContext';
-import { useTasksContext } from '../../../context/TasksContext/useTasksContext';
-import { toggleSort } from '../../../static/js/handlers';
-import { sortFn } from '../../../static/js/sort-fn/sort-fn';
-import { Loading } from '../../Loading/Loading';
-import { TaskFilterModal } from '../modals/TaskFilterModal/TaskFilterModal';
-import { TaskOptionsModal } from '../modals/TaskOptionsModal/TaskOptionsModal';
-
+import { useLoadingContext } from "../../../context/LoadingContext/useLoadingContext";
+import { usePaginationContext } from "../../../context/PaginationContext/usePaginationContext";
+import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
+import { toggleSort } from "../../../static/js/handlers";
+import { sortFn } from "../../../static/js/sort-fn/sort-fn";
+import { Loading } from "../../Loading/Loading";
+import { TaskFilterModal } from "../modals/TaskFilterModal/TaskFilterModal";
+import { TaskOptionsModal } from "../modals/TaskOptionsModal/TaskOptionsModal";
 
 export const MobileTasks = () => {
-	const { tasksCopy, setTasksCopy } = useTasksContext();
-	const { loading } = useLoadingContext();
-	const { currentPage, tasksPerPage } = usePaginationContext();
-	const indexOfLastTask = currentPage * tasksPerPage;
-	const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+  const { tasksCopy, setTasksCopy } = useTasksContext();
+  const { loading } = useLoadingContext();
+  const { currentPage, tasksPerPage } = usePaginationContext();
+  const indexOfLastTask = currentPage * tasksPerPage;
+  const indexOfFirstTask = indexOfLastTask - tasksPerPage;
 
-	let slicedTasksCopy = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
+  let slicedTasksCopy = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
 
-	if (loading) return <Loading />;
+  if (loading) return <Loading />;
 
-	const updateSorting = (event: any) => {
+  const updateSorting = (event: any) => {
     toggleSort(event);
 
     const sortedData = sortFn(tasksCopy);
@@ -27,23 +26,23 @@ export const MobileTasks = () => {
     setTasksCopy(sortedData);
   };
 
-	const sortExists = (header: string) => {
-		const cached =  localStorage.getItem('sort')
-		const { sortBy, orderBy } = cached ? JSON.parse(
-			cached
-		) : {
-			sortBy: 'priority',
-			orderBy: 'desc',
-		};
-		return sortBy === header && orderBy === 'asc'
-			? 'sorted-asc'
-			: 'sorted-desc';
-	};
+  const sortExists = (header: string) => {
+    const cached = localStorage.getItem("sort");
+    const { sortBy, orderBy } = cached
+      ? JSON.parse(cached)
+      : {
+          sortBy: "priority",
+          orderBy: "desc",
+        };
+    return sortBy === header && orderBy === "asc"
+      ? "sorted-asc"
+      : "sorted-desc";
+  };
 
-	return (
+  return (
     <>
       {slicedTasksCopy.map((task) => (
-        <table key={task._id}>
+        <table key={task.id}>
           <thead>
             <tr>
               <th>
@@ -81,14 +80,14 @@ export const MobileTasks = () => {
           </thead>
           <tbody>
             <tr>
-              <td className="task">{task.task}</td>
+              <td className="task">{task.description}</td>
             </tr>
           </tbody>
           <thead>
             <tr>
               <th>
                 <TaskFilterModal target={"status"} />
-                <TaskOptionsModal taskId={task._id} />
+                <TaskOptionsModal taskId={task.id} />
                 <span>
                   Status
                   <i

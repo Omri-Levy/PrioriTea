@@ -9,7 +9,7 @@ const errorHandler: ErrorHandler = (err, _req, res, _next) => {
 
 		logger.error(errors);
 
-		return res.status(err.statusCode).send({ errors });
+		return res.status(err.statusCode).send({ errors, data: null });
 	}
 
 	logger.error(err);

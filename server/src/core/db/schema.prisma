@@ -26,8 +26,8 @@ model Task {
   id String @id @default(cuid())
   priority    String @db.VarChar(255)
   description String @db.VarChar(500)
-  status      String @default("Standby") @db.VarChar(255)
-  User   User   @relation(fields: [userId], references: [id])
+  status      String @db.VarChar(255) @default("Standby")
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

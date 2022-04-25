@@ -1,19 +1,14 @@
 import { FunctionComponent, useCallback, useEffect, useState } from "react";
-import { fetchFn } from "../../../static/js/requests/fetch-fn/fetch-fn";
+import { AuthApi } from "../../../api/auth-api";
 
 export const Profile: FunctionComponent = () => {
   const [currentEmail, setCurrentEmail] = useState("");
   const [currentFullName, setCurrentFullName] = useState("");
   const fetchCurrentUser = useCallback(async () => {
-    const getCurrentUserUrl = `${process.env.REACT_APP_API}/get-current-user`;
-    const getCurrentUserOptions = {
-      method: "POST",
-      credentials: "include",
-    };
-    const { data } = await fetchFn(getCurrentUserUrl, getCurrentUserOptions);
+    const { data } = await AuthApi.getUserInfo();
 
-    setCurrentEmail(data.email);
-    setCurrentFullName(data.fullName);
+    setCurrentEmail(data?.user?.email);
+    setCurrentFullName(data?.user?.fullName);
   }, []);
 
   useEffect(() => {

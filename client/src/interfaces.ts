@@ -38,8 +38,8 @@ export interface ILoadingContext {
 }
 
 export interface ITask {
-  _id: string;
+  id: string;
   priority: string;
-  task: string;
+  description: string;
   status: string;
 }

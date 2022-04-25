@@ -1,13 +1,13 @@
 import { FunctionComponent } from "react";
+import { TasksApi } from "../../../../api/tasks-api";
 import { useLoadingContext } from "../../../../context/LoadingContext/useLoadingContext";
 import { useModalsContext } from "../../../../context/ModalsContext/useModalsContext";
 import { useTasksContext } from "../../../../context/TasksContext/useTasksContext";
 import { persistFilter } from "../../../../static/js/filter/filter";
 import {
   displayTaskOptionsTooltip,
-  hideTaskOptionsTooltip,
+  hideTaskOptionsTooltip
 } from "../../../../static/js/handlers";
-import { fetchFn } from "../../../../static/js/requests/fetch-fn/fetch-fn";
 import { sortFn } from "../../../../static/js/sort-fn/sort-fn";
 
 export interface TaskOptionsModalProps {
@@ -24,9 +24,6 @@ export const TaskOptionsModal: FunctionComponent<TaskOptionsModalProps> = ({
   const { setTasks, setTasksCopy, setEditTaskId } = useTasksContext();
   const { openEditTaskModal, openCreateTaskModal } = useModalsContext();
   const { startLoading, stopLoading } = useLoadingContext();
-  const deleteTaskUrl = `${process.env.REACT_APP_API_TASK}/delete-task`;
-  const getTasksUrl = `${process.env.REACT_APP_API_TASK}/get-tasks`;
-
   const editTask = () => {
     openEditTaskModal();
     setEditTaskId(taskId);
@@ -76,31 +73,12 @@ export const TaskOptionsModal: FunctionComponent<TaskOptionsModalProps> = ({
               : async () => {
                   startLoading();
 
-                  const deleteTaskOptions = {
-                    method: "DELETE",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                      _id: taskId,
-                    }),
-                    credentials: "include",
-                  };
-
-                  const getTasksOptions = {
-                    method: "GET",
-                    credentials: "include",
-                  };
 
                   try {
-                    await fetchFn(deleteTaskUrl, deleteTaskOptions);
+                    const {data: {tasks}} = await TasksApi.deleteById(taskId);
 
-                    const { data: resData } = await fetchFn(
-                      getTasksUrl,
-                      getTasksOptions
-                    );
-
-                    const filteredData = persistFilter(resData);
+              
+                    const filteredData = persistFilter(tasks);
                     const sortedData = sortFn(filteredData);
 
                     setTasks(sortedData);

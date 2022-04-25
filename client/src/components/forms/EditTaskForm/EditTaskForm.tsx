@@ -1,9 +1,9 @@
 import { Form, Formik } from "formik";
+import { TasksApi } from "../../../api/tasks-api";
 import { useLoadingContext } from "../../../context/LoadingContext/useLoadingContext";
 import { useModalsContext } from "../../../context/ModalsContext/useModalsContext";
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
 import { persistFilter } from "../../../static/js/filter/filter";
-import { fetchFn } from "../../../static/js/requests/fetch-fn/fetch-fn";
 import { sortFn } from "../../../static/js/sort-fn/sort-fn";
 import { editTaskSchema } from "../../../static/js/validation/edit-task-schema/edit-task-schema";
 import { FormikInput } from "../../FormikInput/FormikInput";
@@ -12,51 +12,28 @@ export const EditTaskForm = () => {
   const { setTasks, setTasksCopy, editTaskId } = useTasksContext();
   const { closeEditTaskModal } = useModalsContext();
   const { startLoading, stopLoading, loading } = useLoadingContext();
-  const getTasksUrl = `${process.env.REACT_APP_API_TASK}/get-tasks`;
-  const editTaskUrl = `${process.env.REACT_APP_API_TASK}/edit-task`;
 
   return (
     <Formik
-      initialValues={{ priority: "", task: "", status: "" }}
+      initialValues={{ priority: "", description: "", status: "" }}
       validationSchema={editTaskSchema}
-      onSubmit={async (data) => {
+      onSubmit={async ({priority, description, status}) => {
         startLoading();
 
-        const getTasksOptions = {
-          method: "GET",
-          credentials: "include",
-        };
+        const { data: resData } = await TasksApi.updateById(
+          editTaskId,
+          priority,
+          description,
+          status
+        );
 
-        const editTaskOptions = {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            _id: editTaskId,
-            priority: data.priority,
-            task: data.task,
-            status: data.status,
-          }),
-          credentials: "include",
-        };
+        closeEditTaskModal();
 
-        try {
-          await fetchFn(editTaskUrl, editTaskOptions);
+        const filteredData = persistFilter(resData?.tasks);
+        const sortedData = sortFn(filteredData);
 
-          closeEditTaskModal();
-
-          const { data: resData } = await fetchFn(getTasksUrl, getTasksOptions);
-
-          const filteredData = persistFilter(resData);
-          const sortedData = sortFn(filteredData);
-
-          setTasks(sortedData);
-          setTasksCopy(sortedData);
-        } catch (err) {
-          console.error(err);
-        }
-
+        setTasks(sortedData);
+        setTasksCopy(sortedData);
         stopLoading();
       }}
     >
@@ -73,11 +50,11 @@ export const EditTaskForm = () => {
           />
           <FormikInput
             maxLength={80}
-            label="Task"
-            name="task"
+            label="Description"
+            name="description"
             type="text"
             autoComplete="on"
-            placeholder="Task"
+            placeholder="description"
           />
           <FormikInput
             maxLength={80}

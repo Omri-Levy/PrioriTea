@@ -8,15 +8,38 @@ import { SignUp } from "../pages/SignUp/SignUp";
 
 export const Router = () => {
   const { isSignedIn } = useAuthContext();
+  const routes = [
+    {
+      path: "/",
+      element: <Home />,
+      auth: true,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
+      auth: true,
+    },
+    {
+      path: "/sign-in",
+      element: <SignIn />,
+      auth: false,
+    },
+    {
+      path: "/sign-up",
+      element: <SignUp />,
+      auth: false,
+    },
+  ];
 
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        {isSignedIn && <Route path="/" element={<Home />} />}
-        {isSignedIn && <Route path="/profile" element={<Profile />} />}
-        {!isSignedIn && <Route path="/sign-in" element={<SignIn />} />}
-        {!isSignedIn && <Route path="/sign-up" element={<SignUp />} />}
+        {routes.map(function ({ path, element, auth }) {
+          if ((isSignedIn && !auth) || (!isSignedIn && auth)) return null;
+
+          return <Route path={path} element={element} />;
+        })}
       </Routes>
     </BrowserRouter>
   );

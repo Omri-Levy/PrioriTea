@@ -55,4 +55,8 @@ export class UsersRepository {
 			},
 		});
 	}
+
+	public async deleteAllUsers() {
+		return db.user.deleteMany();
+	}
 }

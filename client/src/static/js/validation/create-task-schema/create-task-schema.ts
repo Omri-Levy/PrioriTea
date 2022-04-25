@@ -16,7 +16,7 @@ export const createTaskSchema = Yup.object({
 		.max(80, priorityMaxCharsMsg)
 		.required(priorityRequiredMsg),
 
-	task: Yup.string()
+	description: Yup.string()
 		.min(1, taskMinCharsMsg)
 		.max(80, taskMaxCharsMsg)
 		.required(taskRequiredMsg),

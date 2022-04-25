@@ -1,9 +1,9 @@
 import { Form, Formik } from "formik";
+import { TasksApi } from "../../../api/tasks-api";
 import { useLoadingContext } from "../../../context/LoadingContext/useLoadingContext";
 import { useModalsContext } from "../../../context/ModalsContext/useModalsContext";
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
 import { persistFilter } from "../../../static/js/filter/filter";
-import { fetchFn } from "../../../static/js/requests/fetch-fn/fetch-fn";
 import { sortFn } from "../../../static/js/sort-fn/sort-fn";
 import { createTaskSchema } from "../../../static/js/validation/create-task-schema/create-task-schema";
 import { FormikInput } from "../../FormikInput/FormikInput";
@@ -12,54 +12,29 @@ export const CreateTaskForm = () => {
   const { setTasks, setTasksCopy } = useTasksContext();
   const { closeCreateTaskModal } = useModalsContext();
   const { startLoading, stopLoading, loading } = useLoadingContext();
-  const createTaskUrl = `${process.env.REACT_APP_API_TASK}/create-task`;
-  const getTasksUrl = `${process.env.REACT_APP_API_TASK}/get-tasks`;
-  //
+
   return (
     <Formik
       initialValues={{
         priority: "",
-        task: "",
+        description: "",
         status: "",
       }}
       validationSchema={createTaskSchema}
-      onSubmit={async (data) => {
+      onSubmit={async ({ priority, description, status }) => {
         startLoading();
 
-        const createTaskOptions = {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            priority: data.priority,
-            task: data.task,
-          }),
-          credentials: "include",
-        };
-
-        const getTasksOptions = {
-          method: "GET",
-          credentials: "include",
-        };
-
-        try {
-          await fetchFn(createTaskUrl, createTaskOptions);
-
-          closeCreateTaskModal();
-
-          const { data: resData } = await fetchFn(getTasksUrl, getTasksOptions);
-
-          const filteredData = persistFilter(resData);
-          const sortedData = sortFn(filteredData);
-
-          setTasks(sortedData);
-          setTasksCopy(sortedData);
-        } catch (err) {
-          console.error(err);
-        }
+        const { data } = await TasksApi.create(priority, description, status);
 
         stopLoading();
+
+        closeCreateTaskModal();
+
+        const filteredData = persistFilter(data?.tasks);
+        const sortedData = sortFn(filteredData);
+
+        setTasks(sortedData);
+        setTasksCopy(sortedData);
       }}
     >
       {() => (
@@ -78,13 +53,13 @@ export const CreateTaskForm = () => {
           />
           <FormikInput
             maxLength={80}
-            label="Task"
-            name="task"
+            label="Description"
+            name="description"
             type="text"
             required
             isRequired={true}
             autoComplete="on"
-            placeholder="Task"
+            placeholder="Description"
           />
           <button
             disabled={loading}

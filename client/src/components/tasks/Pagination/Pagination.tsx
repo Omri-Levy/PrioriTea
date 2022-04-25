@@ -2,6 +2,7 @@ import { FunctionComponent, useEffect } from "react";
 import { usePaginationContext } from "../../../context/PaginationContext/usePaginationContext";
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
 import { movePage } from "../../../static/js/move-page/move-page";
+import { usePagination } from "./usePagination";
 
 export const Pagination: FunctionComponent = () => {
   const {
