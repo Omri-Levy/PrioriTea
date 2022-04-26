@@ -1,12 +1,13 @@
 import { ReactNode } from "react";
-import { Tasks } from "./types";
+import { Tasks, VoidFunction } from "./types";
 
 export interface IAuthContext {
   isSignedIn: boolean;
   signIn: VoidFunction;
   signOut: VoidFunction;
   displayEmailExistsMsg: boolean;
-  toggleEmailExistsMsg: (next: boolean) => void;
+  toggleOnDisplayEmailExistsMsg: VoidFunction;
+  toggleOffDisplayEmailExistsMsg: VoidFunction;
 }
 
 export interface IChildren {
@@ -15,9 +16,7 @@ export interface IChildren {
 
 export interface ITasksContext {
   tasks: Tasks;
-  tasksCopy: Tasks;
   setTasks: (data: Tasks) => void;
-  setTasksCopy: (data: Tasks) => void;
   setEditTaskId: (id: string) => void;
   editTaskId: string;
 }
@@ -32,7 +31,7 @@ export interface IModalsContext {
 }
 
 export interface ILoadingContext {
-  loading: boolean;
+  isLoading: boolean;
   startLoading: VoidFunction;
   stopLoading: VoidFunction;
 }

@@ -11,8 +11,8 @@ import { AuthService } from "./auth-service";
 import { emailAlreadyInUse } from "./utils/email-already-in-use";
 import { getUser } from "./utils/get-user";
 import { JwtUtils } from "./utils/jwt-utils";
-import { signInSchema } from "./validation/sign-in-schema";
-import { signUpSchema } from "./validation/sign-up-schema";
+import {signInSchema} from "@common/validation/sign-in-schema";
+import {signUpSchema} from "@common/validation/sign-up-schema";
 
 interface IAuthController {
 	signUp: RequestHandler;

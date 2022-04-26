@@ -1,7 +1,7 @@
 import { Tasks } from "../../../types";
 
 export const sortFn = (data: Tasks) => {
-  return data.sort((a, b) => {
+  return data.slice().sort((a, b) => {
     const cached = localStorage.getItem("sort");
 
     const sortObj: {

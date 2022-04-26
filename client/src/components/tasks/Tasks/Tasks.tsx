@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect } from "react";
 import { useLoadingContext } from "../../../context/LoadingContext/useLoadingContext";
 import { usePaginationContext } from "../../../context/PaginationContext/usePaginationContext";
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
@@ -7,22 +7,12 @@ import { sortFn } from "../../../static/js/sort-fn/sort-fn";
 import { Loading } from "../../Loading/Loading";
 import { TaskFilterModal } from "../modals/TaskFilterModal/TaskFilterModal";
 import { TaskOptionsModal } from "../modals/TaskOptionsModal/TaskOptionsModal";
+import { usePagination } from "../Pagination/usePagination";
 
 export const Tasks: FunctionComponent = () => {
-  const { tasksCopy, setTasksCopy } = useTasksContext();
-  const { loading } = useLoadingContext();
-  const { currentPage, tasksPerPage } = usePaginationContext();
-  const indexOfLastTask = currentPage * tasksPerPage;
-  const indexOfFirstTask = indexOfLastTask - tasksPerPage;
-
-  let slicedTasksCopy = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
-
-  if (loading) return <Loading />;
-
-  const sortedData = sortFn(tasksCopy);
-
-  setTasksCopy(sortedData);
-
+  const { tasks, setTasks } = useTasksContext();
+  const { isLoading } = useLoadingContext();
+  const { paginated: paginatedTasks } = usePagination(tasks, 5);
   const sortExists = (header: string) => {
     const cached = localStorage.getItem("sort");
     const { sortBy, orderBy } = cached
@@ -36,9 +26,17 @@ export const Tasks: FunctionComponent = () => {
       : "sorted-desc";
   };
 
+  useEffect(function () {
+    const sortedData = sortFn(tasks);
+
+    setTasks(sortedData);
+  }, []);
+
+  if (isLoading) return <Loading />;
+
   return (
     <>
-      {slicedTasksCopy?.map((task) => (
+      {paginatedTasks?.map((task) => (
         <table key={task.id}>
           <thead>
             <tr>

@@ -1,23 +1,19 @@
-import { createContext, useReducer, useState } from "react";
+import { createContext } from "react";
+import { useToggle } from "../../hooks/useToggle/useToggle";
 import { IAuthContext, IChildren } from "../../interfaces";
-import authReducer from "./auth-reducer";
 
 export const AuthContext = createContext<IAuthContext>({
   isSignedIn: false,
   signIn: () => {},
   signOut: () => {},
   displayEmailExistsMsg: false,
-  toggleEmailExistsMsg: () => {},
+  toggleOnDisplayEmailExistsMsg: () => {},
+  toggleOffDisplayEmailExistsMsg: () => {},
 });
 
 export const AuthProvider = ({ children }: IChildren) => {
-  const [isSignedIn, dispatch] = useReducer(authReducer, false);
-  const [displayEmailExistsMsg, setDisplayEmailExistsMsg] = useState(false);
-  const toggleEmailExistsMsg = (next: boolean) =>
-    setDisplayEmailExistsMsg(next);
-
-  const signIn = () => dispatch({ type: "SIGN_IN" });
-  const signOut = () => dispatch({ type: "SIGN_OUT" });
+  const {isToggled: isSignedIn, toggleOn: signIn, toggleOff: signOut} = useToggle();
+  const {isToggled: displayEmailExistsMsg, toggleOff: toggleOffDisplayEmailExistsMsg, toggleOn: toggleOnDisplayEmailExistsMsg} = useToggle();
 
   return (
     <AuthContext.Provider
@@ -26,7 +22,8 @@ export const AuthProvider = ({ children }: IChildren) => {
         signIn,
         signOut,
         displayEmailExistsMsg,
-        toggleEmailExistsMsg,
+        toggleOffDisplayEmailExistsMsg,
+        toggleOnDisplayEmailExistsMsg,
       }}
     >
       {children}

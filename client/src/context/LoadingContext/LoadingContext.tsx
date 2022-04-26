@@ -1,21 +1,22 @@
-import { createContext, useReducer } from "react";
+import { createContext } from "react";
+import { useToggle } from "../../hooks/useToggle/useToggle";
 import { IChildren } from "../../interfaces";
-import { loadingReducer } from "./loading-reducer";
 
 export const LoadingContext = createContext({
-  loading: false,
+  isLoading: false,
   startLoading: () => {},
   stopLoading: () => {},
 });
 
 export const LoadingProvider = ({ children }: IChildren) => {
-  const [loading, dispatch] = useReducer(loadingReducer, false);
-
-  const startLoading = () => dispatch({ type: "START_LOADING" });
-  const stopLoading = () => dispatch({ type: "STOP_LOADING" });
+  const {
+    isToggled: isLoading,
+    toggleOff: stopLoading,
+    toggleOn: startLoading,
+  } = useToggle();
 
   return (
-    <LoadingContext.Provider value={{ loading, startLoading, stopLoading }}>
+    <LoadingContext.Provider value={{ isLoading, startLoading, stopLoading }}>
       {children}
     </LoadingContext.Provider>
   );

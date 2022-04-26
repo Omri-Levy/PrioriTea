@@ -18,11 +18,9 @@ export const Profile: FunctionComponent = () => {
   }, [fetchCurrentUser]);
 
   return (
-    <main className="body-container">
       <div className="form-container">
         <div className="form-label">Email: {currentEmail}</div>
         <div className="form-label">Full Name: {currentFullName}</div>
       </div>
-    </main>
   );
 };

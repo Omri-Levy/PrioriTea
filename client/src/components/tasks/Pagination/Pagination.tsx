@@ -1,67 +1,56 @@
-import { FunctionComponent, useEffect } from "react";
-import { usePaginationContext } from "../../../context/PaginationContext/usePaginationContext";
+import { FunctionComponent } from "react";
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
-import { movePage } from "../../../static/js/move-page/move-page";
 import { usePagination } from "./usePagination";
 
 export const Pagination: FunctionComponent = () => {
-  const {
-    totalPages,
-    setTotalPages,
-    tasksPerPage,
-    currentPage,
-    setCurrentPage,
-  } = usePaginationContext();
-  const { tasksCopy } = useTasksContext();
-  const pageNumbers = [];
+  const { tasks } = useTasksContext();
+  const { totalPages, first, last, page, paginate } = usePagination(tasks, 5);
   const maxPages = 5;
+  const genPageBtns = function () {
+    let pageNumbers: number[] = [];
+    let maxLeft = page - Math.floor(maxPages / 2);
+    let maxRight = page + Math.floor(maxPages / 2);
 
-  let maxLeft = currentPage - Math.floor(maxPages / 2);
-  let maxRight = currentPage + Math.floor(maxPages / 2);
+    if (maxLeft < 1) {
+      maxLeft = 1;
+      maxRight = maxPages;
+    }
 
-  useEffect(() => {
-    setTotalPages(Math.round(tasksCopy.length / tasksPerPage));
-  }, [setTotalPages, tasksPerPage, tasksCopy]);
+    if (maxRight > totalPages) {
+      maxLeft = totalPages - (maxPages - 1);
 
-  if (maxLeft < 1) {
-    maxLeft = 1;
-    maxRight = maxPages;
-  }
+      if (maxLeft < 1) maxLeft = 1;
 
-  if (maxRight > totalPages) {
-    maxLeft = totalPages - (maxPages - 1);
+      maxRight = totalPages;
+    }
 
-    if (maxLeft < 1) maxLeft = 1;
+    for (let pg = maxLeft; pg <= maxRight; pg++) {
+      pageNumbers = [...pageNumbers, pg];
+    }
 
-    maxRight = totalPages;
-  }
-
-  for (let page = maxLeft; page <= maxRight; page++) pageNumbers.push(page);
+    return pageNumbers;
+  };
 
   const isCurrentPage = (number: number) => {
-    return currentPage === number
-      ? "current-page pagination-btn"
-      : "pagination-btn link-underline";
+    return `pagination__btn${page === number ? "--active" : " link-underline"}`;
   };
-  const paginate = movePage(setCurrentPage);
+  const pages = Array.from({ length: tasks.length }, (_, i) => i + 1);
 
   return (
-    <nav>
-      <ul>
-        {currentPage >= 4 && totalPages > 5 && (
-          <li>
-            <button
-              id="first-page"
-              className="pagination-btn link-underline"
-              onClick={() => paginate(1)}
-            >
-              <i className="first-page" />
-              First
-            </button>
-          </li>
-        )}
-        {pageNumbers.map((number) => (
-          <li key={number}>
+    <nav className="pagination__container">
+      <ul className="pagination__list">
+        <li className="pagination__item--first-page">
+          <button
+            id="first-page"
+            className="pagination__btn link-underline"
+            onClick={first}
+          >
+            <i className="first-page" />
+            First
+          </button>
+        </li>
+        {pages.map((number) => (
+          <li key={number} className="pagination__item--page">
             <button
               id={"page-" + number}
               className={isCurrentPage(number)}
@@ -71,18 +60,16 @@ export const Pagination: FunctionComponent = () => {
             </button>
           </li>
         ))}
-        {maxRight !== tasksCopy.length && (
-          <li>
-            <button
-              className="pagination-btn link-underline"
-              id="last-page"
-              onClick={() => paginate(totalPages)}
-            >
-              Last
-              <i className="last-page" />
-            </button>
-          </li>
-        )}
+        <li className="pagination__item--last-page">
+          <button
+            id="last-page"
+            onClick={last}
+            className="pagination__btn link-underline"
+          >
+            Last
+            <i className="last-page" />
+          </button>
+        </li>
       </ul>
     </nav>
   );

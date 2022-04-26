@@ -5,13 +5,13 @@ import { useModalsContext } from "../../../context/ModalsContext/useModalsContex
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
 import { persistFilter } from "../../../static/js/filter/filter";
 import { sortFn } from "../../../static/js/sort-fn/sort-fn";
-import { createTaskSchema } from "../../../static/js/validation/create-task-schema/create-task-schema";
+// import { createTaskSchema } from "../../../static/js/validation/create-task-schema/create-task-schema";
 import { FormikInput } from "../../FormikInput/FormikInput";
 
 export const CreateTaskForm = () => {
-  const { setTasks, setTasksCopy } = useTasksContext();
+  const { setTasks } = useTasksContext();
   const { closeCreateTaskModal } = useModalsContext();
-  const { startLoading, stopLoading, loading } = useLoadingContext();
+  const { startLoading, stopLoading, isLoading } = useLoadingContext();
 
   return (
     <Formik
@@ -20,7 +20,7 @@ export const CreateTaskForm = () => {
         description: "",
         status: "",
       }}
-      validationSchema={createTaskSchema}
+      // validationSchema={createTaskSchema}
       onSubmit={async ({ priority, description, status }) => {
         startLoading();
 
@@ -34,7 +34,6 @@ export const CreateTaskForm = () => {
         const sortedData = sortFn(filteredData);
 
         setTasks(sortedData);
-        setTasksCopy(sortedData);
       }}
     >
       {() => (
@@ -62,11 +61,11 @@ export const CreateTaskForm = () => {
             placeholder="Description"
           />
           <button
-            disabled={loading}
+            disabled={isLoading}
             type="submit"
             className="primary-btn excluded-link"
           >
-            {loading ? (
+            {isLoading ? (
               <i className="fas fa-spinner fa-spin" />
             ) : (
               <p className="custom-span link-underline">Create</p>

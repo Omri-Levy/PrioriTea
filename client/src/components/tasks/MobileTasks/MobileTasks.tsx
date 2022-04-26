@@ -6,24 +6,22 @@ import { sortFn } from "../../../static/js/sort-fn/sort-fn";
 import { Loading } from "../../Loading/Loading";
 import { TaskFilterModal } from "../modals/TaskFilterModal/TaskFilterModal";
 import { TaskOptionsModal } from "../modals/TaskOptionsModal/TaskOptionsModal";
+import { usePagination } from "../Pagination/usePagination";
 
 export const MobileTasks = () => {
-  const { tasksCopy, setTasksCopy } = useTasksContext();
-  const { loading } = useLoadingContext();
-  const { currentPage, tasksPerPage } = usePaginationContext();
-  const indexOfLastTask = currentPage * tasksPerPage;
-  const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+  const { tasks, setTasks } = useTasksContext();
+  const { isLoading } = useLoadingContext();
 
-  let slicedTasksCopy = tasksCopy.slice(indexOfFirstTask, indexOfLastTask);
+  const { paginated: paginatedTasks } = usePagination(tasks, 5);
 
-  if (loading) return <Loading />;
+  if (isLoading) return <Loading />;
 
   const updateSorting = (event: any) => {
     toggleSort(event);
 
-    const sortedData = sortFn(tasksCopy);
+    const sortedData = sortFn(tasks);
 
-    setTasksCopy(sortedData);
+    setTasks(sortedData);
   };
 
   const sortExists = (header: string) => {
@@ -41,7 +39,7 @@ export const MobileTasks = () => {
 
   return (
     <>
-      {slicedTasksCopy.map((task) => (
+      {paginatedTasks.map((task) => (
         <table key={task.id}>
           <thead>
             <tr>

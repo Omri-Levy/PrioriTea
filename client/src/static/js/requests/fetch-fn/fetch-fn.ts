@@ -26,19 +26,13 @@ export const fetchFn = async (
       }),
       timeout(TIMEOUT_IN_MS),
     ]);
-    try {
-      const data = await res.json();
+    const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(`${data.errors[0].message} (${res.status})`);
-      }
-
-      return data;
-    } catch (err) {
-      console.error(res, err);
-
-      return res;
+    if (!res.ok) {
+      throw new Error(`${data.errors[0].message} (${res.status})`);
     }
+
+    return data;
   } catch (err) {
     throw err;
   }

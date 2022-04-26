@@ -22,8 +22,8 @@ import { Pagination } from "../Pagination/Pagination";
 import { Tasks } from "../Tasks/Tasks";
 
 export const TasksContainer = () => {
-  const { tasks, setTasks, tasksCopy, setTasksCopy } = useTasksContext();
-  const { loading, startLoading, stopLoading } = useLoadingContext();
+  const { tasks, setTasks } = useTasksContext();
+  const { isLoading, startLoading, stopLoading } = useLoadingContext();
   const { createTaskModalOpen, editTaskModalOpen } = useModalsContext();
   const [screenSize, setScreenSize] = useState(window.innerWidth);
 
@@ -61,7 +61,6 @@ export const TasksContainer = () => {
       const sortedData = sortFn(filteredData);
 
       setTasks(sortedData);
-      setTasksCopy(sortedData);
     })();
   }, []);
 
@@ -71,18 +70,10 @@ export const TasksContainer = () => {
     });
   }, []);
 
-  if (loading) return <Loading />;
+  if (isLoading) return <Loading />;
 
   const filterBySearchWrapper = (event: any) => {
-    filterBySearch(event.target.value.toLowerCase(), tasks, setTasksCopy);
-  };
-
-  const noTasks = () => {
-    return tasks.length === 0 && tasksCopy.length === 0;
-  };
-
-  const noTasksCopy = () => {
-    return tasksCopy.length === 0 && tasks.length !== 0;
+    filterBySearch(event.target.value.toLowerCase(), tasks, setTasks);
   };
 
   return (
@@ -97,14 +88,16 @@ export const TasksContainer = () => {
         type="text"
         autoComplete="on"
         placeholder={"Filter"}
-        disabled={noTasks()}
-        title={noTasks() ? "Filter Is Unavailable On Draft" : undefined}
-        className={noTasks() ? "primary-input draft" : "primary-input"}
+        disabled={tasks.length === 0}
+        title={
+          tasks.length === 0 ? "Filter Is Unavailable On Draft" : undefined
+        }
+        className={tasks.length === 0 ? "primary-input draft" : "primary-input"}
         onChange={filterBySearchWrapper}
       />
-      {noTasksCopy() && <InvalidFilter />}
-      {noTasks() && !noTasksCopy() ? responsiveNoTasks() : responsiveTasks()}
-      {noTasks() || noTasksCopy() ? <OnePager /> : responsivePagination()}
+      {tasks.length === 0 && <InvalidFilter />}
+      {tasks.length === 0 ? responsiveNoTasks() : responsiveTasks()}
+      {tasks.length === 1 ? <OnePager /> : responsivePagination()}
     </div>
   );
 };

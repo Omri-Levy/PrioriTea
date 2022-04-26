@@ -6,7 +6,6 @@ import { TasksContainer } from "../../tasks/TasksContainer/TasksContainer";
 
 export const Home = () => {
   return (
-    <main className="body-container">
       <TasksProvider>
         <PaginationProvider>
           <ModalsProvider>
@@ -14,6 +13,5 @@ export const Home = () => {
           </ModalsProvider>
         </PaginationProvider>
       </TasksProvider>
-    </main>
   );
 };

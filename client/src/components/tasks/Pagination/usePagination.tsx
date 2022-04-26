@@ -32,23 +32,29 @@ export const usePagination = function <TItem>(
   const paginate = useCallback((pageNum: number) => setPage(pageNum), []);
   const prev = useCallback(() => paginate(page - 1), [page, paginate]);
   const next = useCallback(() => paginate(page + 1), [page, paginate]);
+  const last = useCallback(() => paginate(totalPages), [totalPages, paginate]);
+  const first = useCallback(() => paginate(1), [paginate]);
 
   // Handle invalid page (below 1 or above the array's length)
   useEffect(() => {
     if (page < 1) {
-      paginate(1);
+      first();
     }
 
     if (page > totalPages) {
-      paginate(totalPages);
+      last();
     }
-  }, [page, totalPages, paginate]);
+  }, [page, totalPages, last, first]);
 
   return {
     paginated,
     page,
+    totalPages,
+    paginate,
     prev,
     next,
+    last,
+    first,
     canPrev,
     canNext,
   };

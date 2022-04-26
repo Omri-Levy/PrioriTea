@@ -1,7 +1,7 @@
 import { ITask } from "../../../interfaces";
 import { Tasks } from "../../../types";
 
-export const filterBySearch = (value: string, tasks: Tasks, setTasksCopy: (tasks: Tasks) => void) => {
+export const filterBySearch = (value: string, tasks: Tasks, setTasks: (tasks: Tasks) => void) => {
 	localStorage.getItem('filter') && localStorage.removeItem('filter');
 
 	const valueIncluded = (task: ITask) => {
@@ -13,10 +13,10 @@ export const filterBySearch = (value: string, tasks: Tasks, setTasksCopy: (tasks
 	};
 
 	const filteredTasks = tasks.filter((task) => valueIncluded(task));
-	setTasksCopy(filteredTasks);
+	setTasks(filteredTasks);
 };
 
-export const filterByBtn = (event: any, tasks: Tasks, setTasksCopy: (tasks: Tasks) => void) => {
+export const filterByBtn = (event: any, tasks: Tasks, setTasks: (tasks: Tasks) => void) => {
 	const key = event.target
 		.closest('th')
 		.getElementsByTagName('span')[0]
@@ -27,7 +27,7 @@ export const filterByBtn = (event: any, tasks: Tasks, setTasksCopy: (tasks: Task
 	// @ts-ignore
 	const filteredTasks = tasks.filter((task) => task[key] === value);
 
-	setTasksCopy(filteredTasks);
+	setTasks(filteredTasks);
 };
 
 export const setFilter = (key: string, value: string) => {

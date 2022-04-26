@@ -11,7 +11,7 @@ export const MobilePagination = () => {
     currentPage,
     setCurrentPage,
   } = usePaginationContext();
-  const { tasksCopy } = useTasksContext();
+  const { tasks } = useTasksContext();
   const pageNumbers = [];
   const maxPages = 3;
 
@@ -19,8 +19,8 @@ export const MobilePagination = () => {
   let maxRight = currentPage + Math.floor(maxPages / 2);
 
   useEffect(() => {
-    setTotalPages(Math.round(tasksCopy.length / tasksPerPage));
-  }, [tasksPerPage, tasksCopy, setTotalPages]);
+    setTotalPages(Math.round(tasks.length / tasksPerPage));
+  }, [tasksPerPage, tasks.length, setTotalPages]);
 
   if (maxLeft < 1) {
     maxLeft = 1;
@@ -38,9 +38,9 @@ export const MobilePagination = () => {
   for (let page = maxLeft; page <= maxRight; page++) pageNumbers.push(page);
 
   const isCurrentPage = (number: number) => {
-    return currentPage === number
-      ? "current-page pagination-btn"
-      : "pagination-btn link-underline";
+    return `pagination__btn${
+      currentPage === number ? "--active" : " link-underline"
+    }`;
   };
   const paginate = movePage(setCurrentPage);
 
@@ -49,33 +49,28 @@ export const MobilePagination = () => {
       <ul>
         {currentPage >= 4 && totalPages > 5 && (
           <li>
-            <button
-              id="first-page"
-              className="pagination-btn link-underline"
-              onClick={() => paginate(1)}
-            >
+            <button id="first-page" onClick={() => paginate(1)}>
               <i className="first-page" />
             </button>
           </li>
         )}
-        {pageNumbers.map((number) => (
-          <li key={number}>
-            <button
-              id={"page-" + number}
-              className={isCurrentPage(number)}
-              onClick={() => paginate(number)}
-            >
-              {number}
-            </button>
-          </li>
-        ))}
-        {maxRight !== tasksCopy.length && (
+        {pageNumbers.map(function(number) {
+
+          return (
+            <li key={number}>
+              <button
+                id={"page-" + number}
+                className={isCurrentPage(number)}
+                onClick={() => paginate(number)}
+              >
+                {number}
+              </button>
+            </li>
+          );
+        })}
+        {maxRight !== tasks.length && (
           <li>
-            <button
-              className="pagination-btn link-underline"
-              id="last-page"
-              onClick={() => paginate(totalPages)}
-            >
+            <button id="last-page" onClick={() => paginate(totalPages)}>
               <i className="last-page" />
             </button>
           </li>

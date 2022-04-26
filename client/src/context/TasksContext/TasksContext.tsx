@@ -6,10 +6,8 @@ import { tasksReducer } from "./tasks-reducer";
 
 export const TasksContext = createContext<ITasksContext>({
   setTasks: () => {},
-  setTasksCopy: () => {},
   setEditTaskId: () => {},
   tasks: [],
-  tasksCopy: [],
   editTaskId: "",
 });
 
@@ -18,7 +16,6 @@ export const TasksProvider = ({ children }: IChildren) => {
     tasksReducer,
     {
       tasks: [],
-      tasksCopy: [],
       editTaskId: "",
       filter: "",
     },
@@ -26,13 +23,8 @@ export const TasksProvider = ({ children }: IChildren) => {
   );
 
   const setTasks = (tasks: Tasks) =>
-    dispatch({ type: "GET_TASKS", payload: tasks });
+    dispatch({ type: "SET_TASKS", payload: tasks });
 
-  const setTasksCopy = (tasks: Tasks) =>
-    dispatch({
-      type: "SET_TASKS_COPY",
-      payload: tasks,
-    });
 
   const setEditTaskId = (id: string) =>
     dispatch({
@@ -45,7 +37,6 @@ export const TasksProvider = ({ children }: IChildren) => {
       value={{
         ...tasksObj,
         setTasks,
-        setTasksCopy,
         setEditTaskId,
       }}
     >

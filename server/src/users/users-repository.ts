@@ -1,5 +1,5 @@
-import { db } from "../core/db/db";
 import { PassUtils } from "../auth/utils/pass-utils";
+import { db } from "../core/db/db";
 
 export class UsersRepository {
 	public async createUser(email: string, fullName: string, password: string) {

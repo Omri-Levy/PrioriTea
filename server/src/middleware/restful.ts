@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 import { Method } from "../enums";
-import { MethodNotAllowed } from "../errors/method-not-allowed";
+import { MethodNotAllowedError } from "../errors/method-not-allowed-error";
 
 //
 // This shortcut function responses with HTTP 405
@@ -43,7 +43,7 @@ export const restful: Restful = function (methods) {
 		if (!methods.includes(method.toLowerCase() as Method)) {
 			res.set(`Allow`, methods.join(`, `));
 
-			throw new MethodNotAllowed();
+			throw new MethodNotAllowedError();
 		} else {
 			next();
 		}

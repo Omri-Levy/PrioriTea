@@ -1,13 +1,10 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { TasksApi } from "../../../../api/tasks-api";
 import { useLoadingContext } from "../../../../context/LoadingContext/useLoadingContext";
 import { useModalsContext } from "../../../../context/ModalsContext/useModalsContext";
 import { useTasksContext } from "../../../../context/TasksContext/useTasksContext";
+import { useToggle } from "../../../../hooks/useToggle/useToggle";
 import { persistFilter } from "../../../../static/js/filter/filter";
-import {
-  displayTaskOptionsTooltip,
-  hideTaskOptionsTooltip
-} from "../../../../static/js/handlers";
 import { sortFn } from "../../../../static/js/sort-fn/sort-fn";
 
 export interface TaskOptionsModalProps {
@@ -21,7 +18,7 @@ export const TaskOptionsModal: FunctionComponent<TaskOptionsModalProps> = ({
   noTasks,
   invalidFilter,
 }) => {
-  const { setTasks, setTasksCopy, setEditTaskId } = useTasksContext();
+  const { setTasks, setEditTaskId } = useTasksContext();
   const { openEditTaskModal, openCreateTaskModal } = useModalsContext();
   const { startLoading, stopLoading } = useLoadingContext();
   const editTask = () => {
@@ -42,15 +39,20 @@ export const TaskOptionsModal: FunctionComponent<TaskOptionsModalProps> = ({
       return action === "edit" ? "Edit" : "Delete";
     }
   };
+  const {
+    isToggled: isHidden,
+    toggleOn: toggleOnIsHidden,
+    toggleOff: toggleOffIsHidden,
+  } = useToggle(true);
 
   return (
     <em
       title="Options"
-      onMouseEnter={displayTaskOptionsTooltip}
-      onMouseLeave={hideTaskOptionsTooltip}
+      onMouseEnter={toggleOffIsHidden}
+      onMouseLeave={toggleOnIsHidden}
       className={"task-options-tooltip-btn highlight-me"}
     >
-      <div className="task-options-modal hidden">
+      <div className={`task-options-modal ${isHidden ? `hidden` : ``}`}>
         <em
           title="Create"
           onClick={openCreateTaskModal}
@@ -73,16 +75,15 @@ export const TaskOptionsModal: FunctionComponent<TaskOptionsModalProps> = ({
               : async () => {
                   startLoading();
 
-
                   try {
-                    const {data: {tasks}} = await TasksApi.deleteById(taskId);
+                    const {
+                      data: { tasks },
+                    } = await TasksApi.deleteById(taskId);
 
-              
                     const filteredData = persistFilter(tasks);
                     const sortedData = sortFn(filteredData);
 
                     setTasks(sortedData);
-                    setTasksCopy(sortedData);
                   } catch (err) {
                     console.error(err);
                   }

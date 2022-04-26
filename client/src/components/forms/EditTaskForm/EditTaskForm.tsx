@@ -5,19 +5,19 @@ import { useModalsContext } from "../../../context/ModalsContext/useModalsContex
 import { useTasksContext } from "../../../context/TasksContext/useTasksContext";
 import { persistFilter } from "../../../static/js/filter/filter";
 import { sortFn } from "../../../static/js/sort-fn/sort-fn";
-import { editTaskSchema } from "../../../static/js/validation/edit-task-schema/edit-task-schema";
+// import { editTaskSchema } from "../../../static/js/validation/edit-task-schema/edit-task-schema";
 import { FormikInput } from "../../FormikInput/FormikInput";
 
 export const EditTaskForm = () => {
-  const { setTasks, setTasksCopy, editTaskId } = useTasksContext();
+  const { setTasks, editTaskId } = useTasksContext();
   const { closeEditTaskModal } = useModalsContext();
-  const { startLoading, stopLoading, loading } = useLoadingContext();
+  const { startLoading, stopLoading, isLoading } = useLoadingContext();
 
   return (
     <Formik
       initialValues={{ priority: "", description: "", status: "" }}
-      validationSchema={editTaskSchema}
-      onSubmit={async ({priority, description, status}) => {
+      // validationSchema={editTaskSchema}
+      onSubmit={async ({ priority, description, status }) => {
         startLoading();
 
         const { data: resData } = await TasksApi.updateById(
@@ -33,7 +33,6 @@ export const EditTaskForm = () => {
         const sortedData = sortFn(filteredData);
 
         setTasks(sortedData);
-        setTasksCopy(sortedData);
         stopLoading();
       }}
     >
@@ -64,8 +63,8 @@ export const EditTaskForm = () => {
             autoComplete="on"
             placeholder="Status"
           />
-          <button disabled={loading} type="submit" className="primary-btn">
-            {loading ? (
+          <button disabled={isLoading} type="submit" className="primary-btn">
+            {isLoading ? (
               <i className="fas fa-spinner fa-spin" />
             ) : (
               <p className="custom-span link-underline">Edit</p>

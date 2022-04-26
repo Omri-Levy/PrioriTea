@@ -4,16 +4,36 @@ import { Home } from "../pages/Home/Home";
 import { Profile } from "../pages/Profile/Profile";
 import { SignIn } from "../pages/SignIn/SignIn";
 import { SignUp } from "../pages/SignUp/SignUp";
+import {
+  Login as SignInIcon,
+  Logout as SignOutIcon,
+  Home as HomeIcon,
+  Id,
+  Icon,
+  UserPlus as SignUpIcon,
+} from "tabler-icons-react";
+import { ReactNode } from "react";
+
+interface IRoute {
+  path: string;
+  element: ReactNode;
+  auth: boolean;
+  end: boolean;
+  text: string;
+  Icon: Icon;
+  onClick?: (args?: any[]) => any;
+}
 
 export const useRoutes = function () {
-  const { isSignedIn, signOut } = useAuthContext();
-  const routes = [
+  const { isSignedIn } = useAuthContext();
+  const routes: Array<IRoute> = [
     {
       path: "/",
       element: <Home />,
       auth: true,
       end: true,
       text: "home",
+      Icon: HomeIcon,
     },
     {
       path: "/profile",
@@ -21,21 +41,15 @@ export const useRoutes = function () {
       auth: true,
       end: false,
       text: "profile",
+      Icon: Id,
     },
     {
       path: `/sign-in`,
       element: <SignIn />,
       auth: false,
       end: true,
-      // Navigates to sign in on sign out.
-      text: `sign ${isSignedIn ? "out" : "in"}`,
-      async onClick() {
-        // Signs out at the server
-        await AuthApi.signOut();
-
-        // Updates the UI
-        signOut();
-      },
+      text: `sign in`,
+      Icon: SignInIcon,
     },
     {
       path: "/sign-up",
@@ -43,11 +57,9 @@ export const useRoutes = function () {
       auth: false,
       end: true,
       text: "sign up",
+      Icon: SignUpIcon,
     },
   ];
 
-  return routes.filter(
-    ({ auth, path }) =>
-      (auth && isSignedIn) || (!auth && !isSignedIn) || path === "/sign-in"
-  );
+  return routes.filter(({ auth }) => !isSignedIn && !auth);
 };

@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { userSchema } from '../../users/users-validation';
 import { sharedSchema } from './shared-schema';
+import {userSchema } from './users-schema';
 
 export const signUpSchema = sharedSchema
 	.merge(

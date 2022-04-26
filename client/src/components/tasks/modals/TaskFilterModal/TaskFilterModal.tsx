@@ -1,11 +1,8 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { useTasksContext } from "../../../../context/TasksContext/useTasksContext";
+import { useToggle } from "../../../../hooks/useToggle/useToggle";
 import { ITask } from "../../../../interfaces";
 import { filterByBtn } from "../../../../static/js/filter/filter";
-import {
-  displayTaskFilterTooltip,
-  hideTaskFilterTooltip,
-} from "../../../../static/js/handlers";
 
 interface TaskFilterModalProps {
   target: any;
@@ -16,7 +13,7 @@ export const TaskFilterModal: FunctionComponent<TaskFilterModalProps> = ({
   target,
   noTasks,
 }) => {
-  const { tasks, setTasksCopy } = useTasksContext();
+  const { tasks, setTasks } = useTasksContext();
 
   const filterSet = () => {
     const tempArr: Array<string> = [];
@@ -41,12 +38,17 @@ export const TaskFilterModal: FunctionComponent<TaskFilterModalProps> = ({
   };
   const mySet = filterSet();
   const filterByBtnWrapper = (event: any) => {
-    filterByBtn(event, tasks, setTasksCopy);
+    filterByBtn(event, tasks, setTasks);
   };
+  const {
+    isToggled: isHidden,
+    toggleOn: toggleOnIsHidden,
+    toggleOff: toggleOffIsHidden,
+  } = useToggle(true);
   const filterObj = localStorage.getItem("filter");
   const resetFilter = () => {
     localStorage.removeItem("filter");
-    setTasksCopy(tasks);
+    setTasks(tasks);
   };
 
   return (
@@ -55,8 +57,8 @@ export const TaskFilterModal: FunctionComponent<TaskFilterModalProps> = ({
       className={
         noTasks ? "task-filter-tooltip-btn draft" : "task-filter-tooltip-btn"
       }
-      onMouseEnter={noTasks ? undefined : displayTaskFilterTooltip}
-      onMouseLeave={hideTaskFilterTooltip}
+      onMouseEnter={noTasks ? undefined : toggleOffIsHidden}
+      onMouseLeave={toggleOnIsHidden}
     >
       {filterObj && (
         <em
@@ -67,9 +69,9 @@ export const TaskFilterModal: FunctionComponent<TaskFilterModalProps> = ({
       )}
       <div>
         <div
-          onMouseLeave={hideTaskFilterTooltip}
+          onMouseLeave={toggleOnIsHidden}
           id="hidden-filter-modal"
-          className="task-filter-modal hidden"
+          className={`task-filter-modal ${isHidden ? "hidden" : ""}`}
         >
           <ul>
             {Array.from(mySet).map((item) => {

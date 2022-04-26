@@ -1,20 +1,24 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../context/AuthContext/useAuthContext';
+import { useToggle } from '../../hooks/useToggle/useToggle';
 
 
 export const EmailExists = () => {
-	const { toggleEmailExistsMsg } = useAuthContext();
-	const [msgFits, setMsgFits] = useState(true);
+	const { toggleOffDisplayEmailExistsMsg } = useAuthContext();
+	const {
+    isToggled: msgFits,
+    toggleOff: toggleOffMsgFits,
+    toggleOn: toggleOnMsgFits,
+  } = useToggle(true);
 
 	const ifMsgFits = () => {
 		if (window.innerWidth < 399) {
-			setMsgFits(false);
+			toggleOffMsgFits();
+		} else {
+			toggleOnMsgFits();
 		}
 	};
-	const closeEmailExistsMsg = useCallback(function() {
-		toggleEmailExistsMsg(false);
-	}, [toggleEmailExistsMsg])
 
 	useEffect(() => {
 		window.addEventListener('resize', ifMsgFits);
@@ -32,7 +36,7 @@ export const EmailExists = () => {
 					<Link
 						to="/sign-in"
 						className="sign-in-link"
-						onClick={closeEmailExistsMsg}
+						onClick={toggleOffDisplayEmailExistsMsg}
 					>
 						<em>Signin</em>
 					</Link>
