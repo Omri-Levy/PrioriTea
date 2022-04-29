@@ -2,7 +2,7 @@ import { Router } from "express";
 import { z } from "zod";
 import { Method } from "../enums";
 import { Middleware, RequestHandler } from "../types";
-import { iterableArray } from "../utils/iterable-array";
+import { iterableArray } from "@prioritea/utils";
 import { logger } from "../utils/logger";
 
 export interface IRoute {
@@ -41,16 +41,19 @@ export abstract class Controller<TService> implements IController<TService> {
 	}
 
 	public registerRoutes() {
-		z.array(z.object({
-			method: z.nativeEnum(Method),
-			path: z.string().min(1),
-			handler: z.function(),
-			middleware: z.array(z.any()).optional()
-		})).nonempty().parse(this.routes);
+		z.array(
+			z.object({
+				method: z.nativeEnum(Method),
+				path: z.string().min(1),
+				handler: z.function(),
+				middleware: z.array(z.any()).optional(),
+			})
+		)
+			.nonempty()
+			.parse(this.routes);
 		z.string().min(1).parse(this.prefix);
 
 		this.routes.forEach(({ method, path, handler, middleware }) => {
-
 			iterableArray(middleware)
 				? this.router[method](path, ...middleware!, handler)
 				: this.router[method](path, handler);

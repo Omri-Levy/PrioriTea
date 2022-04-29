@@ -11,7 +11,7 @@ import { AuthService } from "./auth-service";
 import { emailAlreadyInUse } from "./utils/email-already-in-use";
 import { getUser } from "./utils/get-user";
 import { JwtUtils } from "./utils/jwt-utils";
-import { signUpSchema, signInSchema } from "@prioritea/common";
+import { signUpSchema, signInSchema } from "@prioritea/validation";
 
 interface IAuthController {
 	signUp: RequestHandler;

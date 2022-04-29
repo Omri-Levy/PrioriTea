@@ -24,7 +24,10 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"@prioritea/common": "*",
+		"@prioritea/types": "*",
+		"@prioritea/utils": "*",
+		"@prioritea/validation": "*",
+		"@prioritea/config": "*",
 		"@prisma/client": "^3.12.0",
 		"argon2": "^0.28.5",
 		"cookie-parser": "^1.4.6",

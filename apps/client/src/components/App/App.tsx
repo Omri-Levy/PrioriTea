@@ -4,10 +4,9 @@ import {
   MantineProvider,
 } from "@mantine/core";
 import { useColorScheme, useHotkeys, useLocalStorage } from "@mantine/hooks";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { AuthProvider } from "../../context/AuthContext/AuthContext";
-import { LoadingProvider } from "../../context/LoadingContext/LoadingContext";
+import { QueryClientProvider } from "react-query";
 import { Router } from "../Router/Router";
+import { queryClient } from "../../lib/query-client";
 
 export const App = () => {
   const preferredColorScheme = useColorScheme();
@@ -20,8 +19,6 @@ export const App = () => {
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   useHotkeys([["mod+J", () => toggleColorScheme()]]);
-
-  const queryClient = new QueryClient();
 
   return (
     <ColorSchemeProvider
@@ -51,11 +48,7 @@ export const App = () => {
         withNormalizeCSS
       >
         <QueryClientProvider client={queryClient}>
-          <AuthProvider>
-            <LoadingProvider>
               <Router />
-            </LoadingProvider>
-          </AuthProvider>
         </QueryClientProvider>
       </MantineProvider>
     </ColorSchemeProvider>

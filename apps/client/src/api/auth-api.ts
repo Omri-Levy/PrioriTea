@@ -1,8 +1,8 @@
-import axios from "axios";
-import { TIMEOUT_IN_MS } from "../config";
-import { fetchFn, Method } from "../static/js/requests/fetch-fn/fetch-fn";
+import { axiosClient } from "../lib/axios-client";
+import { Method } from "../static/js/requests/fetch-fn/fetch-fn";
 
 interface IAuthResponse {
+  data: {
   data: {
     user: {
       id: string;
@@ -15,11 +15,7 @@ interface IAuthResponse {
   };
   errors: Array<{ message: string; field?: string }> | null;
 }
-
-export const axiosClient = axios.create({
-  baseURL: `${process.env.REACT_APP_API_URL}/`,
-  timeout: TIMEOUT_IN_MS,
-});
+}
 
 export class AuthApi {
   private static readonly API_URL = "/auth";

@@ -2,7 +2,7 @@ import express from "express";
 import { z } from "zod";
 import { NotFoundError } from "../errors/not-found-error";
 import { Middleware, ErrorHandler } from "../types";
-import { iterableArray } from "../utils/iterable-array";
+import { iterableArray } from "@prioritea/utils";
 import { logger } from "../utils/logger";
 import { IConfig, IServer } from "./app";
 

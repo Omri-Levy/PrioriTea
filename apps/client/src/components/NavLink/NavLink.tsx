@@ -1,12 +1,11 @@
 import { createStyles } from "@mantine/core";
-import { FunctionComponent, ReactNode } from "react";
+import { FunctionComponent, MouseEventHandler, ReactNode } from "react";
 import { NavLink as RouterNavLink } from "react-router-dom";
-import { VoidFunction } from "../../types";
 
 interface LinkProps {
   end: boolean;
   to: string;
-  onClick?: VoidFunction;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
   children: ReactNode;
 }
 
@@ -49,10 +48,10 @@ export const NavLink: FunctionComponent<LinkProps> = function ({
       "&, &:hover": {
         backgroundColor:
           theme.colorScheme === "dark"
-            ? theme.fn.rgba(theme.colors[theme.primaryColor][9], 0.25)
-            : theme.colors[theme.primaryColor][0],
+            ? theme.fn.rgba(theme.primaryColor[9]!, 0.25)
+            : theme.primaryColor[0],
         color:
-          theme.colors[theme.primaryColor][
+          theme.primaryColor[
             theme.colorScheme === "dark" ? 3 : 7
           ],
       },

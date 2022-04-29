@@ -1,43 +1,24 @@
 import {
-  ActionIcon,
-  AppShell,
-  Burger,
-  Code,
-  createStyles,
-  Divider,
-  Group,
-  Header,
-  MediaQuery,
-  Navbar,
+  AppShell, createStyles,
+  Divider, Navbar,
   Text,
-  Title,
-  useMantineColorScheme,
-  useMantineTheme,
+  useMantineTheme
 } from "@mantine/core";
-import { useBooleanToggle } from "@mantine/hooks";
 import { FunctionComponent } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
-  Logout,
-  MoonStars,
-  Settings,
-  Sun,
-  SwitchHorizontal,
+  Logout, Settings, SwitchHorizontal
 } from "tabler-icons-react";
 import { AuthApi } from "../../api/auth-api";
-import { useAuthContext } from "../../context/AuthContext/useAuthContext";
+import { queryClient } from "../../lib/query-client";
 import { NavLink } from "../NavLink/NavLink";
 import { useRoutes } from "../Router/useRoutes";
 
 interface LayoutProps {}
 
 export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
-  const {signOut} = useAuthContext();
   const theme = useMantineTheme();
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const [isOpen, toggleIsOpen] = useBooleanToggle(false);
   // Avoids passing an unneeded value argument from the burger's onClick.
-  const toggleBurger = () => toggleIsOpen();
   const routes = useRoutes();
   const useStyles = createStyles((mantineTheme, _params, getRef) => {
     const icon = getRef("icon");
@@ -108,15 +89,15 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
         "&, &:hover": {
           backgroundColor:
             theme.colorScheme === "dark"
-              ? theme.fn.rgba(theme.colors[theme.primaryColor][8], 0.25)
-              : theme.colors[theme.primaryColor][0],
+              ? theme.fn.rgba(theme.primaryColor[8]!, 0.25)
+              : theme.primaryColor[0],
           color:
             theme.colorScheme === "dark"
               ? theme.white
-              : theme.colors[theme.primaryColor][7],
+              : theme.primaryColor[7],
           [`& .${icon}`]: {
             color:
-              theme.colors[theme.primaryColor][
+              theme.primaryColor[
                 theme.colorScheme === "dark" ? 5 : 7
               ],
           },
@@ -128,7 +109,6 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
   const links = routes.map(function ({ path, end, text, Icon, onClick }) {
     const handleClick = function () {
       onClick && onClick();
-      toggleIsOpen();
     };
 
     return (
@@ -194,10 +174,12 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
             <NavLink
               to="/sign-in"
               end
-              onClick={async () => {
+              onClick={async (e) => {
+                e.preventDefault();
+
                 await AuthApi.signOut();
 
-                signOut();
+                queryClient.invalidateQueries(['userInfo']);
               }}
             >
               <Logout className={classes.linkIcon} />

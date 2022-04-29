@@ -1,52 +1,47 @@
-import { AuthApi } from "../../api/auth-api";
-import { useAuthContext } from "../../context/AuthContext/useAuthContext";
+import { ReactNode } from "react";
+import {
+  Home as HomeIcon, Icon, Login as SignInIcon, User, UserPlus as SignUpIcon
+} from "tabler-icons-react";
+import { useIsAuth } from "../../api/useIsAuth";
+import { Account } from "../pages/Account/Account";
 import { Home } from "../pages/Home/Home";
-import { Profile } from "../pages/Profile/Profile";
 import { SignIn } from "../pages/SignIn/SignIn";
 import { SignUp } from "../pages/SignUp/SignUp";
-import {
-  Login as SignInIcon,
-  Logout as SignOutIcon,
-  Home as HomeIcon,
-  Id,
-  Icon,
-  UserPlus as SignUpIcon,
-} from "tabler-icons-react";
-import { ReactNode } from "react";
 
 interface IRoute {
   path: string;
   element: ReactNode;
-  auth: boolean;
   end: boolean;
   text: string;
   Icon: Icon;
   onClick?: (args?: any[]) => any;
 }
 
+export  const protectedRoutes = [
+    "/",
+    "/account"
+  ];
+
 export const useRoutes = function () {
-  const { isSignedIn } = useAuthContext();
+  const isAuth = useIsAuth();
   const routes: Array<IRoute> = [
     {
       path: "/",
       element: <Home />,
-      auth: true,
       end: true,
       text: "home",
       Icon: HomeIcon,
     },
     {
-      path: "/profile",
-      element: <Profile />,
-      auth: true,
+      path: "/account",
+      element: <Account />,
       end: false,
-      text: "profile",
-      Icon: Id,
+      text: "account",
+      Icon: User,
     },
     {
       path: `/sign-in`,
       element: <SignIn />,
-      auth: false,
       end: true,
       text: `sign in`,
       Icon: SignInIcon,
@@ -54,12 +49,11 @@ export const useRoutes = function () {
     {
       path: "/sign-up",
       element: <SignUp />,
-      auth: false,
       end: true,
       text: "sign up",
       Icon: SignUpIcon,
     },
   ];
 
-  return routes.filter(({ auth }) => !isSignedIn && !auth);
+  return routes.filter(({path}) => (isAuth && protectedRoutes.includes(path)) || (!isAuth && !protectedRoutes.includes(path)));
 };

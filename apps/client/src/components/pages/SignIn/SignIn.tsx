@@ -1,3 +1,4 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Anchor,
   Button,
@@ -7,24 +8,53 @@ import {
   Paper,
   PasswordInput,
   Text,
-  TextInput,
+  TextInput
 } from "@mantine/core";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { signInSchema } from "@prioritea/validation";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import { BrandGoogle, BrandTwitter } from "tabler-icons-react";
-import { Link } from "react-router-dom";
+import { ErrorAlert } from "../../ErrorAlert/ErrorAlert";
+import { FieldError } from "../../FieldError/FieldError";
+import { useSignInMutation } from "./hooks/useSignInMutation/useSignInMutation";
+import { ISignInForm } from "./interfaces";
 
 export const SignIn = () => {
-  const { handleSubmit } = useForm();
-  const onSubmit: SubmitHandler<FieldValues> = (e) => {
-    e.preventDefault();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<ISignInForm>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  const navigate = useNavigate();
+  const { mutateAsync, isLoading, isError } = useSignInMutation();
+  const onSubmit: SubmitHandler<ISignInForm> = async function ({
+    email,
+    password,
+  }) {
+    await mutateAsync({
+      email,
+      password,
+    });
+
+    navigate("/");
   };
+
+  // TODO Finalize loading state, disable button, etc.
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <Paper radius="md" p="xl" withBorder>
       <Text size="lg" weight={500}>
-        Welcome to PrioriTea, sign in with
+        Welcome to PrioriTea, Sign In with
       </Text>
-
       <Group grow mb="md" mt="md">
         <Button radius="xl" leftIcon={<BrandGoogle size={18} />}>
           Google
@@ -33,33 +63,35 @@ export const SignIn = () => {
           Twitter
         </Button>
       </Group>
-
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
-
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {isError && (
+        <ErrorAlert title="Something went wrong..">
+          Please refresh this page or try again later. If the problem persists
+          please contact us.
+        </ErrorAlert>
+      )}
+      <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <Group direction="column" grow>
           <TextInput
+            {...register("email")}
             required
             label="Email"
-            placeholder="hello@mantine.dev"
-            value={""}
-            onChange={(event) => event}
-            error={"Invalid email"}
+            placeholder="Type here.."
+            
           />
-
+          <FieldError field={errors.email} />
           <PasswordInput
+            {...register("password")}
+            autoComplete="new-password"
             required
             label="Password"
-            placeholder="Your password"
-            value={""}
-            onChange={(event) => event}
-            error={"Password should include at least 6 characters"}
+            placeholder="Type here.."
+            
           />
-
+          <FieldError field={errors.password} />
           <Checkbox
             label="Remember password"
-            checked={true}
-            onChange={(event) => event}
+            
           />
         </Group>
 
@@ -68,13 +100,14 @@ export const SignIn = () => {
             component={Link}
             type="button"
             color="gray"
-            size="xs"
             to="/sign-up"
+            size="xs"
           >
-            Don't have an account? Sign Up!
+            Don't have an account? Sign up!
           </Anchor>
+          {/* TODO Add loader */}
           <Button type="submit" style={{ textTransform: "capitalize" }}>
-            sign in
+            Sign In
           </Button>
         </Group>
       </form>

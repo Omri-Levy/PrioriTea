@@ -6,13 +6,11 @@ import {
   createStyles,
   Footer,
   Group,
-  Header,
-  MediaQuery,
-  Paper,
+  Header, Paper,
   Text,
   Transition,
   useMantineColorScheme,
-  useMantineTheme,
+  useMantineTheme
 } from "@mantine/core";
 import { useBooleanToggle } from "@mantine/hooks";
 import { FunctionComponent } from "react";
@@ -207,7 +205,7 @@ export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
                         ? theme.colors.dark[6]
                         : theme.colors.gray[0],
                     color:
-                      theme.colors[theme.primaryColor][
+                      theme.primaryColor[
                         theme.colorScheme === "dark" ? 5 : 7
                       ],
                   })}
