@@ -18,7 +18,7 @@ export const SignInForm = () => {
       <Formik
         initialValues={{
           email: "",
-          fullName: "",
+          name: "",
           password: "",
           passwordConfirmation: "",
         }}
@@ -45,9 +45,7 @@ export const SignInForm = () => {
       >
         {() => (
           <Form className="sign-in-form">
-            <p className="required-fields-msg">
-              Indicates required fields
-            </p>
+            <p className="required-fields-msg">Indicates required fields</p>
             {error && <div className="error">{error}</div>}
             <FormikInput
               maxLength={320}

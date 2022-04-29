@@ -45,7 +45,7 @@ describe("sign-up email", function () {
 		it(`validates email on sign-up ${email}`, async function () {
 			const res = await agentFetch(Method.POST, "/auth/sign-up", {
 				email: email as string,
-				fullName: "John Doe",
+				name: "John Doe",
 				password: "123!@#qweQWE",
 				passwordConfirmation: "123!@#qweQWE",
 			});
@@ -72,7 +72,7 @@ describe("sign-up email", function () {
 	it("handles email already in use", async function () {
 		const successRes = await agentFetch(Method.POST, "/auth/sign-up", {
 			email: "test@test.com",
-			fullName: "John Doe",
+			name: "John Doe",
 			password: "123!@#qweQWE",
 			passwordConfirmation: "123!@#qweQWE",
 		});
@@ -81,7 +81,7 @@ describe("sign-up email", function () {
 
 		const failureRes = await agentFetch(Method.POST, "/auth/sign-up", {
 			email: "test@test.com",
-			fullName: "John Doe",
+			name: "John Doe",
 			password: "123!@#qweQWE",
 			passwordConfirmation: "123!@#qweQWE",
 		});

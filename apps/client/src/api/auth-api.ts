@@ -7,7 +7,7 @@ interface IAuthResponse {
     user: {
       id: string;
       email: string;
-      fullName: string;
+      name: string;
       password: string;
       createdAt: string;
       updatedAt: string;
@@ -37,13 +37,13 @@ export class AuthApi {
 
   public static async signUp(
     email: string,
-    fullName: string,
+    name: string,
     password: string,
     passwordConfirmation: string
   ): Promise<IAuthResponse> {
     return axiosClient[Method.POST](`${this.API_URL}/sign-up`, {
       email,
-      fullName,
+      name,
       password,
       passwordConfirmation,
     });

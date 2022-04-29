@@ -5,7 +5,7 @@ CREATE EXTENSION IF NOT EXISTS citext;
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" CITEXT NOT NULL,
-    "fullName" VARCHAR(70) NOT NULL,
+    "name" VARCHAR(70) NOT NULL,
     "password" VARCHAR(255) NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

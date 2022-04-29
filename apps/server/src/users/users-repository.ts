@@ -2,11 +2,11 @@ import { PassUtils } from "../auth/utils/pass-utils";
 import { db } from "../core/db/db";
 
 export class UsersRepository {
-	public async createUser(email: string, fullName: string, password: string) {
+	public async createUser(email: string, name: string, password: string) {
 		return db.user.create({
 			data: {
 				email,
-				fullName,
+				name,
 				password: await PassUtils.hash(password),
 			},
 		});
@@ -35,14 +35,14 @@ export class UsersRepository {
 	public async updateUserById(
 		id: string,
 		email?: string,
-		fullName?: string,
+		name?: string,
 		password?: string
 	) {
 		return db.user.update({
 			where: { id },
 			data: {
 				email,
-				fullName,
+				name,
 				password,
 			},
 		});

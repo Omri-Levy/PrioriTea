@@ -59,7 +59,7 @@ export class JwtUtils {
 				data: {
 					id: user.id,
 					email: user.email,
-					fullName: user.fullName,
+					name: user.name,
 				},
 			},
 			SECRET_ACCESS_TOKEN!

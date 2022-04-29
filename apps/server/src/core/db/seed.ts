@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 // Iterate 10 times
 const userData: Prisma.UserCreateInput[] = [...Array(10)].map(function () {
 	return {
-		fullName: `${faker.name.firstName()} ${faker.name.lastName()}`,
+		name: `${faker.name.firstName()} ${faker.name.lastName()}`,
 		email: faker.internet.email(),
 		password: faker.internet.password() + "!1qQ",
 		tasks: {

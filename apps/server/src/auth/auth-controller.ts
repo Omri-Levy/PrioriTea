@@ -64,12 +64,12 @@ export class AuthController
 	 * @desc add a new user to db
 	 */
 	async signUp(req: Request, res: Response) {
-		const { email, fullName, password } = await zParse(
+		const { email, name, password } = await zParse(
 			signUpSchema as any,
 			req.body
 		);
 		try {
-			const user = await this.service.signUp(email, fullName, password);
+			const user = await this.service.signUp(email, name, password);
 
 			return new CreatedResponse(res, { data: { user } });
 		} catch (err) {
@@ -113,7 +113,7 @@ export class AuthController
 				user: user
 					? {
 							email: user.email,
-							fullName: user.fullName,
+							name: user.name,
 					  }
 					: null,
 			},

@@ -15,7 +15,7 @@ import {
 } from "@mantine/core";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@prioritea/common";
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode, useEffect } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
@@ -47,8 +47,50 @@ export const useSignUpMutation = () => {
   );
 };
 
+export interface ErrorAlertProps {
+  title?: string;
+  children: ReactNode;
+}
+
+export const ErrorAlert: FunctionComponent<ErrorAlertProps> = ({
+  title,
+  children,
+}) => {
+  return (
+    <Alert
+      color="red"
+      icon={<AlertCircle size={16} />}
+      variant="outline"
+      title={title}
+      mb={10}
+    >
+      {children}
+    </Alert>
+  );
+};
+
+interface FieldErrorProps {
+  field:
+    | {
+        message?: string;
+      }
+    | undefined;
+}
+
+export const FieldError: FunctionComponent<FieldErrorProps> = ({ field }) => {
+  if (!field) {
+    return null;
+  }
+
+  return <ErrorAlert>{field.message}</ErrorAlert>;
+};
+
 export const SignUp = () => {
-  const { handleSubmit, register } = useForm<ISignUpForm>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm<ISignUpForm>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       email: "",
@@ -59,7 +101,7 @@ export const SignUp = () => {
     },
   });
   const navigate = useNavigate();
-  const { mutateAsync, isLoading, error } = useSignUpMutation();
+  const { mutateAsync, isLoading, isError } = useSignUpMutation();
   const onSubmit: SubmitHandler<ISignUpForm> = async function ({
     email,
     name,
@@ -77,49 +119,10 @@ export const SignUp = () => {
 
     navigate("/sign-in");
   };
-  const theme = useMantineTheme();
 
   if (isLoading) {
     return <Text>Loading...</Text>;
   }
-
-  const ErrorsList: FunctionComponent<ErrorsListProps> = ({
-    field,
-    errors,
-    messages,
-  }) => {
-    if (!iterableArray(errors)) return null;
-
-    return (
-      <List
-        size="xs"
-        styles={{
-          item: { color: theme.colors.red[6], lineHeight: 1.8 },
-        }}
-        icon={
-          <ThemeIcon variant="light" color="error" size={20} radius="xl">
-            <AlertCircle size={16} />
-          </ThemeIcon>
-        }
-      >
-        {errors
-          .filter(
-            (err) => err.field === field || messages?.includes(err.message)
-          )
-          .map((err) => {
-            return <List.Item>{err.message}</List.Item>;
-          })}
-      </List>
-    );
-  };
-  const unexpectedError =
-    error &&
-    (!iterableArray(
-      // @ts-ignore
-      error?.response?.data?.errors
-    ) ||
-      // @ts-ignore
-      error?.response?.data?.errors?.filter(({ field }) => !field).length > 0);
 
   return (
     <Paper radius="md" p="xl" withBorder>
@@ -135,21 +138,13 @@ export const SignUp = () => {
         </Button>
       </Group>
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
-      <>
-        {unexpectedError && (
-          <Alert
-            color="red"
-            icon={<AlertCircle size={16} />}
-            variant="outline"
-            title="Something went wrong.."
-            mb={10}
-          >
-            Please refresh this page or try again later. If the problem persists
-            please contact us.
-          </Alert>
-        )}
-      </>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      {isError && (
+        <ErrorAlert title="Something went wrong..">
+          Please refresh this page or try again later. If the problem persists
+          please contact us.
+        </ErrorAlert>
+      )}
+      <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <Group direction="column" grow>
           <TextInput
             {...register("email")}
@@ -158,23 +153,14 @@ export const SignUp = () => {
             placeholder="Type here.."
             onChange={(event) => event}
           />
-          <ErrorsList
-            field="email"
-            // @ts-ignore
-            errors={error?.response?.data?.errors}
-            messages={["Email already in use"]}
-          />
+          <FieldError field={errors.email} />
           <TextInput
             {...register("name")}
             label="Full Name"
             placeholder="Type here.."
             onChange={(event) => event}
           />
-          <ErrorsList
-            field="fullName"
-            // @ts-ignore
-            errors={error?.response?.data?.errors}
-          />
+          <FieldError field={errors.name} />
           <PasswordInput
             {...register("password")}
             autoComplete="new-password"
@@ -183,11 +169,7 @@ export const SignUp = () => {
             placeholder="Type here.."
             onChange={(event) => event}
           />
-          <ErrorsList
-            field="password"
-            // @ts-ignore
-            errors={error?.response?.data?.errors}
-          />
+          <FieldError field={errors.password} />
           <PasswordInput
             {...register("passwordConfirmation")}
             autoComplete="new-password"
@@ -196,11 +178,7 @@ export const SignUp = () => {
             placeholder="Type here.."
             onChange={(event) => event}
           />
-          <ErrorsList
-            field="passwordConfirmation"
-            // @ts-ignore
-            errors={error?.response?.data?.errors}
-          />
+          <FieldError field={errors.passwordConfirmation} />
           <Checkbox
             {...register("tos")}
             label="I accept terms and conditions"

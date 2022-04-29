@@ -8,13 +8,16 @@ export interface IUsersService {
 	updateUser(
 		id: string,
 		email?: string,
-		fullName?: string,
+		name?: string,
 		password?: string
 	): Promise<Array<User> | null>;
 	deleteUser(id: string): Promise<Array<User> | null>;
 }
 
-export class UsersService extends Service<UsersRepository> implements IUsersService {
+export class UsersService
+	extends Service<UsersRepository>
+	implements IUsersService
+{
 	_repository = new UsersRepository();
 
 	public async getUsers() {
@@ -28,10 +31,10 @@ export class UsersService extends Service<UsersRepository> implements IUsersServ
 	public async updateUser(
 		id: string,
 		email?: string,
-		fullName?: string,
+		name?: string,
 		password?: string
 	) {
-		await this.repository.updateUserById(id, email, fullName, password);
+		await this.repository.updateUserById(id, email, name, password);
 
 		return this.repository.getAllUsers();
 	}

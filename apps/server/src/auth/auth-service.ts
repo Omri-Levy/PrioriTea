@@ -5,19 +5,18 @@ import { UsersRepository } from "../users/users-repository";
 import { PassUtils } from "./utils/pass-utils";
 
 interface IAuthService {
-	signUp(
-		email: string,
-		fullName: string,
-		password: string
-	): Promise<User | null>;
-	signIn(email: string, fullName: string): Promise<User | null>;
+	signUp(email: string, name: string, password: string): Promise<User | null>;
+	signIn(email: string, name: string): Promise<User | null>;
 }
 
-export class AuthService extends Service<UsersRepository> implements IAuthService {
+export class AuthService
+	extends Service<UsersRepository>
+	implements IAuthService
+{
 	_repository = new UsersRepository();
 
-	async signUp(email: string, fullName: string, password: string) {
-		return this.repository.createUser(email, fullName, password);
+	async signUp(email: string, name: string, password: string) {
+		return this.repository.createUser(email, name, password);
 	}
 
 	async signIn(email: string, password: string) {

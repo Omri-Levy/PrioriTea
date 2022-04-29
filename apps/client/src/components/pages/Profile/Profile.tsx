@@ -8,7 +8,7 @@ export const Profile: FunctionComponent = () => {
     const { data } = await AuthApi.getUserInfo();
 
     setCurrentEmail(data?.user?.email);
-    setCurrentFullName(data?.user?.fullName);
+    setCurrentFullName(data?.user?.name);
   }, []);
 
   useEffect(() => {
@@ -18,9 +18,9 @@ export const Profile: FunctionComponent = () => {
   }, [fetchCurrentUser]);
 
   return (
-      <div className="form-container">
-        <div className="form-label">Email: {currentEmail}</div>
-        <div className="form-label">Full Name: {currentFullName}</div>
-      </div>
+    <div className="form-container">
+      <div className="form-label">Email: {currentEmail}</div>
+      <div className="form-label">Full Name: {currentFullName}</div>
+    </div>
   );
 };

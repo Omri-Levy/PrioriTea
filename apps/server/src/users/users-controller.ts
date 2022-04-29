@@ -94,7 +94,7 @@ export class UsersController
 			const users = await this.service.updateUser(
 				req.params.id!,
 				req.body.email,
-				req.body.fullName,
+				req.body.name,
 				req.body.password
 			);
 
