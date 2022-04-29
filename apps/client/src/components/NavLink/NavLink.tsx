@@ -15,7 +15,10 @@ export const NavLink: FunctionComponent<LinkProps> = function ({
   children,
   onClick,
 }) {
-  const useStyles = createStyles((theme) => ({
+  const useStyles = createStyles((theme, _params, getRef) => {
+        const icon = getRef("icon");
+
+    return {
     link: {
       textTransform: "capitalize",
       display: "flex",
@@ -45,18 +48,27 @@ export const NavLink: FunctionComponent<LinkProps> = function ({
     },
 
     linkActive: {
-      "&, &:hover": {
-        backgroundColor:
-          theme.colorScheme === "dark"
-            ? theme.fn.rgba(theme.primaryColor[9]!, 0.25)
-            : theme.primaryColor[0],
-        color:
-          theme.primaryColor[
-            theme.colorScheme === "dark" ? 3 : 7
-          ],
+        "&, &:hover": {
+          backgroundColor:
+            theme.colorScheme === "dark"
+            // @ts-ignore
+              ? theme.fn.rgba(theme.colors[theme.primaryColor][8], 0.25)
+              // @ts-ignore
+              : theme.colors[theme.primaryColor][0],
+          color:
+            theme.colorScheme === "dark"
+              ? theme.white
+              // @ts-ignore
+              : theme.colors[theme.primaryColor][7],
+          [`& .${icon}`]: {
+            color:
+            // @ts-ignore
+            theme.colors[
+              theme.primaryColor][theme.colorScheme === "dark" ? 5 : 7],
+          },
+        },
       },
-    },
-  }));
+  }});
   const { classes, cx } = useStyles();
 
   return (

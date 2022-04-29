@@ -1,10 +1,8 @@
 import {
-  AppShell, createStyles,
-  Divider, Navbar,
-  Text,
-  useMantineTheme
+  AppShell, Burger, createStyles,
+  Divider, Header, MediaQuery, Navbar, Text, useMantineTheme
 } from "@mantine/core";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import {
   Logout, Settings, SwitchHorizontal
@@ -20,10 +18,21 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
   const theme = useMantineTheme();
   // Avoids passing an unneeded value argument from the burger's onClick.
   const routes = useRoutes();
-  const useStyles = createStyles((mantineTheme, _params, getRef) => {
+
+  const useStyles = createStyles((_theme, _params, getRef) => {
     const icon = getRef("icon");
 
     return {
+
+ navbar: {
+
+  },
+
+  links: {
+
+  },
+
+    
       footer: {
         paddingTop: theme.spacing.md,
         marginTop: theme.spacing.md,
@@ -36,17 +45,14 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
       icon: {
         ref: icon,
         color: "inherit",
-        marginRight: mantineTheme.spacing.sm,
+        marginRight: theme.spacing.sm,
       },
 
       header: {
-        paddingBottom: theme.spacing.md,
-        marginBottom: theme.spacing.md * 1.5,
-        borderBottom: `1px solid ${
-          theme.colorScheme === "dark"
-            ? theme.colors.dark[4]
-            : theme.colors.gray[2]
-        }`,
+        display: "flex",
+        alignItems: "center",
+        top: 0,
+        right: 0,
       },
 
       link: {
@@ -85,30 +91,14 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
         marginRight: theme.spacing.sm,
       },
 
-      linkActive: {
-        "&, &:hover": {
-          backgroundColor:
-            theme.colorScheme === "dark"
-              ? theme.fn.rgba(theme.primaryColor[8]!, 0.25)
-              : theme.primaryColor[0],
-          color:
-            theme.colorScheme === "dark"
-              ? theme.white
-              : theme.primaryColor[7],
-          [`& .${icon}`]: {
-            color:
-              theme.primaryColor[
-                theme.colorScheme === "dark" ? 5 : 7
-              ],
-          },
-        },
-      },
+     
     };
   });
   const { classes } = useStyles();
   const links = routes.map(function ({ path, end, text, Icon, onClick }) {
     const handleClick = function () {
       onClick && onClick();
+      setOpened(false);
     };
 
     return (
@@ -123,6 +113,7 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
       </NavLink>
     );
   });
+  const [opened, setOpened] = useState(false);
 
   return (
     <AppShell
@@ -137,10 +128,25 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       fixed
-      navbar={
-        <Navbar height={"100%"} width={{ sm: 300 }} p="md">
+      header={
+           <Header height={50}  className={classes.header}>
+                    <MediaQuery largerThan="sm" styles={{display: "none"}}>
+                <Burger
+                  opened={opened}
+                  onClick={() => setOpened((prev) => !prev)}
+                  size="md"
+                  color={theme.colors.gray[6]}
+                  mr="xl"
+                  ml="auto"
+                />
+                </MediaQuery>
+          </Header>
+      }
+      navbar={        
+        <Navbar width={{ sm: 300 }} p="md" hiddenBreakpoint="sm" hidden={!opened} className={classes.navbar}>
           <Navbar.Section grow>
             <Text
+              mt="auto"
               component={Link}
               to="/"
               style={{
@@ -152,7 +158,7 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
               PrioriTea
             </Text>
             <Divider/>
-            {links}
+                      {links}
             <NavLink to={"/settings"} end={true}>
               <Settings className={classes.icon} />
               <span>Settings</span>
@@ -174,12 +180,10 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
             <NavLink
               to="/sign-in"
               end
-              onClick={async (e) => {
-                e.preventDefault();
-
+              onClick={async () => {
                 await AuthApi.signOut();
 
-                queryClient.invalidateQueries(['userInfo']);
+                queryClient.setQueryData(['userInfo'], undefined);
               }}
             >
               <Logout className={classes.linkIcon} />
@@ -187,6 +191,7 @@ export const AuthenticatedLayout: FunctionComponent<LayoutProps> = function () {
             </NavLink>
           </Navbar.Section>
         </Navbar>
+        
       }
     >
       <Outlet />

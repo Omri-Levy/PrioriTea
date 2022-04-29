@@ -46,6 +46,7 @@ export const App = () => {
         }}
         withGlobalStyles
         withNormalizeCSS
+        withCSSVariables
       >
         <QueryClientProvider client={queryClient}>
               <Router />

@@ -5,7 +5,7 @@ import { createTaskSchema } from "@prioritea/validation";
 import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { GripVertical, Plus } from "tabler-icons-react";
+import { GripVertical, Pencil, Plus, Trash } from "tabler-icons-react";
 import { TasksApi } from "../../../api/tasks-api";
 import { ITask } from "../../../interfaces";
 import { FieldError } from "../../FieldError/FieldError";
@@ -95,19 +95,26 @@ export const Home = () => {
            />
                      </Group>
                      <Group position="apart" mt="xl">
-              <Button type="submit" style={{ textTransform: "capitalize" }}>
+              <Button type="submit" style={{ textTransform: "capitalize" }} variant="filled">
             Create
           </Button>
           </Group>
         </form>
       </Modal>
-
-      <Group position="center">
-            <ActionIcon ml="auto" mr="1rem" mb="1rem" size={38} color="primary" radius="xl" variant="filled"
+      <Group position="right">
+                    <ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
              onClick={() => setOpened(true)}>
-      <Plus size={38} />
+      <Plus size={18} />
     </ActionIcon>
-      </Group>
+                  <ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
+             >
+      <Trash size={18} />
+      </ActionIcon>
+                        <ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
+             >
+      <Pencil size={18} />
+      </ActionIcon>
+    </Group>
    <ScrollArea>
       <DragDropContext
         onDragEnd={({ destination, source }) => {

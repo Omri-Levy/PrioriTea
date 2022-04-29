@@ -14,6 +14,7 @@ import { signInSchema } from "@prioritea/validation";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { BrandGoogle, BrandTwitter } from "tabler-icons-react";
+import { queryClient } from "../../../lib/query-client";
 import { ErrorAlert } from "../../ErrorAlert/ErrorAlert";
 import { FieldError } from "../../FieldError/FieldError";
 import { useSignInMutation } from "./hooks/useSignInMutation/useSignInMutation";
@@ -42,6 +43,8 @@ export const SignIn = () => {
       password,
     });
 
+    queryClient.invalidateQueries(['userInfo']);
+
     navigate("/");
   };
 
@@ -56,10 +59,10 @@ export const SignIn = () => {
         Welcome to PrioriTea, Sign In with
       </Text>
       <Group grow mb="md" mt="md">
-        <Button radius="xl" leftIcon={<BrandGoogle size={18} />}>
+        <Button variant="filled" radius="xl" leftIcon={<BrandGoogle size={18} />}>
           Google
         </Button>
-        <Button radius="xl" leftIcon={<BrandTwitter size={18} />}>
+        <Button variant="filled"radius="xl" leftIcon={<BrandTwitter size={18} />}>
           Twitter
         </Button>
       </Group>
@@ -106,7 +109,7 @@ export const SignIn = () => {
             Don't have an account? Sign up!
           </Anchor>
           {/* TODO Add loader */}
-          <Button type="submit" style={{ textTransform: "capitalize" }}>
+          <Button variant="filled" type="submit" style={{ textTransform: "capitalize" }}>
             Sign In
           </Button>
         </Group>

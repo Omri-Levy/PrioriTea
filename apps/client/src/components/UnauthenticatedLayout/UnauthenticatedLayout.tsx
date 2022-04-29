@@ -139,7 +139,7 @@ export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
                 href="https://www.linkedin.com/in/omri-levy-798b901b1/"
                 target="_blank"
               >
-                <BrandLinkedin size={18} />
+                <BrandLinkedin size={20} />
               </ActionIcon>
               <ActionIcon
                 size="lg"
@@ -147,7 +147,7 @@ export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
                 href="https://github.com/Omri-Levy"
                 target="_blank"
               >
-                <BrandGithub size={18} />
+                <BrandGithub size={20} />
               </ActionIcon>
             </Group>
           </Footer>
@@ -204,8 +204,9 @@ export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
                       theme.colorScheme === "dark"
                         ? theme.colors.dark[6]
                         : theme.colors.gray[0],
-                    color:
-                      theme.primaryColor[
+                        // @ts-ignore
+                    color: theme.colors[
+                      theme.primaryColor][
                         theme.colorScheme === "dark" ? 5 : 7
                       ],
                   })}

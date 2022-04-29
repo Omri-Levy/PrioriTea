@@ -65,10 +65,10 @@ export const SignUp = () => {
         Welcome to PrioriTea, Sign Up with
       </Text>
       <Group grow mb="md" mt="md">
-        <Button radius="xl" leftIcon={<BrandGoogle size={18} />}>
+        <Button variant="filled" radius="xl" leftIcon={<BrandGoogle size={18} />}>
           Google
         </Button>
-        <Button radius="xl" leftIcon={<BrandTwitter size={18} />}>
+        <Button variant="filled" radius="xl" leftIcon={<BrandTwitter size={18} />}>
           Twitter
         </Button>
       </Group>
@@ -132,7 +132,7 @@ export const SignUp = () => {
             Already have an account? Sign In!
           </Anchor>
           {/* TODO Add loader */}
-          <Button type="submit" style={{ textTransform: "capitalize" }}>
+          <Button variant="filled" type="submit" style={{ textTransform: "capitalize" }}>
             Sign Up
           </Button>
         </Group>
