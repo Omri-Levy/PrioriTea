@@ -1,5 +1,5 @@
 {
-	"name": "prioritea",
+	"name": "@prioritea/server",
 	"version": "1.0.0",
 	"description": "MERN CRUD",
 	"main": "dist/index.js",
@@ -24,6 +24,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@prioritea/common": "*",
 		"@prisma/client": "^3.12.0",
 		"argon2": "^0.28.5",
 		"cookie-parser": "^1.4.6",

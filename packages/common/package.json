@@ -1,8 +1,9 @@
 {
-  "name": "common",
+  "main": "dist/index.js",
+  "name": "@prioritea/common",
+  "types": "dist/index.d.ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "devDependencies": {
     "typescript": "^4.6.3"
   },

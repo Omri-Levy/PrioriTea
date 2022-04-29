@@ -13,8 +13,8 @@ import {
   ThemeIcon,
   useMantineTheme,
 } from "@mantine/core";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {signUpSchema} from "@common/validation/sign-up-schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signUpSchema } from "@prioritea/common";
 import { FunctionComponent } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMutation } from "react-query";

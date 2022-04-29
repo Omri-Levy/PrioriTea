@@ -21,7 +21,7 @@ export class AuthService extends Service<UsersRepository> implements IAuthServic
 	}
 
 	async signIn(email: string, password: string) {
-		const invalidCredentialsMsg = `Email or password are wrong - please try again.`;
+		const invalidCredentialsMsg = `Invalid credentials.`;
 
 		const user = await this.repository.getUserByEmail(email);
 
