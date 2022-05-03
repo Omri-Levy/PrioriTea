@@ -4,4 +4,4 @@ export * from "./src/sign-in-schema";
 
 export * from "./src/tasks-schema";
 export * from "./src/create-task-schema";
-export * from "./src/edit-task-schema";
+export * from "./src/update-task-schema";

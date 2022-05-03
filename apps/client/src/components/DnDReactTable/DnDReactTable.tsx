@@ -101,7 +101,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 	// Second half of updating data on change.
 	useEffect(() => {
 		handlers.setState(rows);
-	}, [rows, handlers]);
+	}, [rows, handlers.setState]);
 
 	useEffect(() => {
 		if (!getSelectedRowIds) return;

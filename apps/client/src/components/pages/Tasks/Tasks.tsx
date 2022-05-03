@@ -7,7 +7,8 @@ import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
 import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
 import {useCallback, useState} from "react";
 import {useMutation, useQueryClient} from "react-query";
-import {Tasks, TasksApi} from "../../../api/tasks-api";
+import {Tasks as TasksType, TasksApi} from "../../../api/tasks-api";
+import { UpdateTaskModal } from "./UpdateTaskModal/UpdateTaskModal";
 
 
 export const useDeleteTasksMutation = () => {
@@ -21,16 +22,16 @@ export const useDeleteTasksMutation = () => {
 		async onMutate({ids}) {
 			await queryClient.cancelQueries(['tasks']);
 
-			const prevTasks = queryClient.getQueryData(['tasks']) as Tasks;
+			const prevTasks = queryClient.getQueryData(['tasks']) as TasksType;
 
 			queryClient.setQueryData(['tasks'], (prev) =>
-			// @ts-ignore
+				// @ts-ignore
 				prev.filter((id) => !ids.includes(id))
 			);
 
 			return {prevTasks};
 		},
-		onError(_err, _ids, context: {prevTasks: Tasks} | undefined) {
+		onError(_err, _ids, context: {prevTasks: TasksType} | undefined) {
 			queryClient.setQueryData(['tasks'], context?.prevTasks);
 		},
 		onSuccess(tasks) {
@@ -39,8 +40,9 @@ export const useDeleteTasksMutation = () => {
 	})
 }
 
-export const Home = () => {
-	const {isToggled: isOpen, toggleOn: onOpen, toggleOff: onClose} = useToggle(false);
+export const Tasks = () => {
+	const {isToggled: deleteModalIsOpen, toggleOn: deleteModalOnOpen, toggleOff: deleteModalOnClose} = useToggle(false);
+	const {isToggled: updateModalIsOpen, toggleOn: updateModalOnOpen, toggleOff: updateModalOnClose} = useToggle(false);
 
 	const columns = useTasksColumns();
 	const {data: tasks, isLoading, isError} = useTasksQuery();
@@ -67,45 +69,52 @@ export const Home = () => {
 
 	return (
 		<>
-		<CreateTaskModal
-			isOpen={isOpen}
-			onClose={onClose}
-		/>
-			<Group position="right" pr={"1rem"}>
+			<CreateTaskModal
+				isOpen={deleteModalIsOpen}
+				onClose={deleteModalOnClose}
+			/>
+			<UpdateTaskModal
+				id={selectedRowIds?.[0] ?? ''}
+				isOpen={updateModalIsOpen}
+				onClose={updateModalOnClose}
+			/>
+			<Group position="right" pr={"3rem"}>
 				<Tooltip label={'Create task'} withArrow>
-				<ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
-							onClick={onOpen}>
-					<Plus size={18} />
-				</ActionIcon>
+					<ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
+								onClick={deleteModalOnOpen}>
+						<Plus size={18} />
+					</ActionIcon>
 				</Tooltip>
 				<Tooltip label={'Delete selected tasks'} withArrow>
-				<ActionIcon
-					mb="1rem"
-					size={24}
-					color="primary"
-					radius="xl"
-					variant="filled"
-					disabled={!selectedRowIds?.length}
-					onClick={deleteSelectedTasks}
-				>
-					<Trash size={18} />
-				</ActionIcon>
+					<ActionIcon
+						mb="1rem"
+						size={24}
+						color="primary"
+						radius="xl"
+						variant="filled"
+						disabled={!selectedRowIds?.length}
+						onClick={deleteSelectedTasks}
+					>
+						<Trash size={18} />
+					</ActionIcon>
 				</Tooltip>
-				<Tooltip label={'Edit task'} withArrow>
-				<ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
-				>
-					<Pencil size={18} />
-				</ActionIcon>
+				<Tooltip label={'Update selected task'} withArrow>
+					<ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
+								disabled={selectedRowIds?.length !== 1}
+								onClick={updateModalOnOpen}
+					>
+						<Pencil size={18} />
+					</ActionIcon>
 				</Tooltip>
 			</Group>
 			<DnDReactTable
 				data={tasks}
 				columns={columns}
 				options={{
-				initialState: {
-					hiddenColumns: ['id']
-				}
-			}}
+					initialState: {
+						hiddenColumns: ['id']
+					}
+				}}
 				getSelectedRowIds={getSelectedRowIds}
 			/>
 		</>

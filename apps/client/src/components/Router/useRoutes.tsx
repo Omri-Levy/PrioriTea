@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
 import {
-  Home as HomeIcon, Icon, Login as SignInIcon, User, UserPlus as SignUpIcon
+  ListDetails, Icon, Login as SignInIcon, User, UserPlus as SignUpIcon
 } from "tabler-icons-react";
 import { useIsAuth } from "../pages/SignIn/hooks/useIsAuth/useIsAuth";
 import { Account } from "../pages/Account/Account";
-import { Home } from "../pages/Home/Home";
+import { Tasks } from "../pages/Tasks/Tasks";
 import { SignIn } from "../pages/SignIn/SignIn";
 import { SignUp } from "../pages/SignUp/SignUp";
 
@@ -27,10 +27,10 @@ export const useRoutes = () => {
   const routes: Array<IRoute> = [
     {
       path: "/",
-      element: <Home />,
+      element: <Tasks />,
       end: true,
-      text: "home",
-      Icon: HomeIcon,
+      text: "tasks",
+      Icon: ListDetails,
     },
     {
       path: "/account",
