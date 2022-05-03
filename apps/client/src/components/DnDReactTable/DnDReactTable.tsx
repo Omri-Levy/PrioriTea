@@ -1,5 +1,5 @@
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
-import {useTable} from "react-table";
+import {useSortBy, useTable} from "react-table";
 import {useEffect} from "react";
 import {ScrollArea, Table} from "@mantine/core";
 import {useListState} from "@mantine/hooks";
@@ -18,13 +18,17 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 		getTableBodyProps,
 		rows,
 		prepareRow
-	} = useTable({data, columns});
+	} = useTable({data, columns}, useSortBy);
+	// React table handles sort, filter, search, and pagination,
+	// while react-beautiful-dnd handles drag and drop.
+	// Passing the rows to react-beautiful-dnd and not the data ensures
+	// the table updates when the data changes and the drag and drop works.
 	const [state, handlers] = useListState(rows);
 
 	// Otherwise useListState does not update once the data is no longer empty.
 	useEffect(() => {
 		handlers.setState(rows);
-	}, [data]);
+	}, [rows]);
 
 	return (
 		<ScrollArea>
@@ -36,7 +40,9 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 					})
 				}}
 			>
-				<Table sx={{
+				<Table
+					highlightOnHover
+					sx={{
 					minWidth: 420,
 					'& tbody tr td': {borderBottom: 0}
 				}} {...getTableProps()}>
