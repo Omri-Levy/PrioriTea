@@ -1,6 +1,6 @@
 import { Task } from "@prisma/client";
 import { Service } from "../core/service";
-import { TasksRepository } from "./tasks-repository";
+import { TasksRepository } from "./tasks.repository";
 
 export interface ITasksService {
 	createTask(

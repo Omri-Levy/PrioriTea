@@ -7,7 +7,7 @@ import { restful } from "../middleware/restful";
 import { CreatedResponse } from "../responses/created-response";
 import { OkResponse } from "../responses/ok-response";
 import { Middleware, RequestHandler } from "../types";
-import { TasksService } from "./tasks-service";
+import { TasksService } from "./tasks.service";
 
 interface ITasksController {
 	createTask: RequestHandler;

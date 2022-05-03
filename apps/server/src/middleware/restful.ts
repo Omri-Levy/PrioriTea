@@ -36,8 +36,8 @@ import { MethodNotAllowedError } from "../errors/method-not-allowed-error";
 
 export type Restful = (methods: Array<Method>) => RequestHandler;
 
-export const restful: Restful = function (methods) {
-	return function (req, res, next) {
+export const restful: Restful = (methods) =>
+	(req, res, next) => {
 		const { method } = req; // [2]
 
 		if (!methods.includes(method.toLowerCase() as Method)) {
@@ -47,5 +47,4 @@ export const restful: Restful = function (methods) {
 		} else {
 			next();
 		}
-	};
 };

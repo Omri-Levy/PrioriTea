@@ -9,12 +9,12 @@ interface LinkProps {
   children: ReactNode;
 }
 
-export const NavLink: FunctionComponent<LinkProps> = function ({
+export const NavLink: FunctionComponent<LinkProps> = ({
   end,
   to,
   children,
   onClick,
-}) {
+}) => {
   const useStyles = createStyles((theme, _params, getRef) => {
         const icon = getRef("icon");
 

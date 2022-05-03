@@ -1,18 +1,10 @@
 import { useState } from "react";
 
-export const useToggle = function (initialState = false) {
+export const useToggle = (initialState = false) => {
   const [isToggled, setIsToggled] = useState(initialState);
-  const toggle = function () {
-    setIsToggled(function (prevState) {
-      return !prevState;
-    });
-  };
-  const toggleOn = function () {
-    setIsToggled(true);
-  };
-  const toggleOff = function () {
-    setIsToggled(false);
-  };
+  const toggle = () => setIsToggled((prevState) => !prevState);
+  const toggleOn = () => setIsToggled(true);
+  const toggleOff = () => setIsToggled(false);
 
   return { isToggled, toggle, toggleOn, toggleOff };
 };

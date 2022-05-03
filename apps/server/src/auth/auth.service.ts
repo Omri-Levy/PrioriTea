@@ -1,7 +1,7 @@
 import { User } from "@prisma/client";
 import { Service } from "../core/service";
 import { BadRequestError } from "../errors/bad-request-error";
-import { UsersRepository } from "../users/users-repository";
+import { UsersRepository } from "../users/users.repository";
 import { PassUtils } from "./utils/pass-utils";
 
 interface IAuthService {

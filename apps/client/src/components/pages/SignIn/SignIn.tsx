@@ -34,10 +34,10 @@ export const SignIn = () => {
   });
   const navigate = useNavigate();
   const { mutateAsync, isLoading, isError } = useSignInMutation();
-  const onSubmit: SubmitHandler<ISignInForm> = async function ({
+  const onSubmit: SubmitHandler<ISignInForm> = async ({
     email,
     password,
-  }) {
+  }) => {
     await mutateAsync({
       email,
       password,

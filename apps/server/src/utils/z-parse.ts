@@ -2,10 +2,10 @@ import { Request } from 'express';
 import { AnyZodObject, z, ZodError } from "zod";
 import { RequestValidationError } from "../errors/request-validation-error";
 
-export const zParse = async function<T extends AnyZodObject>(
+export const zParse = async <T extends AnyZodObject>(
 	schema: T,
 	req: Request
-): Promise<z.infer<T>> {
+): Promise<z.infer<T>> => {
 	try {
 		return await schema.parseAsync(req);
 	} catch (err) {

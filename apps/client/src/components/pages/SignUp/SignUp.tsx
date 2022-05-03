@@ -36,13 +36,13 @@ export const SignUp = () => {
   });
   const navigate = useNavigate();
   const { mutateAsync, isLoading, isError } = useSignUpMutation();
-  const onSubmit: SubmitHandler<ISignUpForm> = async function ({
+  const onSubmit: SubmitHandler<ISignUpForm> = async ({
     email,
     name,
     password,
     passwordConfirmation,
     tos,
-  }) {
+  }) => {
     await mutateAsync({
       email,
       name,

@@ -22,7 +22,7 @@ export  const protectedRoutes = [
     "/account"
   ];
 
-export const useRoutes = function () {
+export const useRoutes = () => {
   const isAuth = useIsAuth();
   const routes: Array<IRoute> = [
     {

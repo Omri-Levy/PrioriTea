@@ -7,7 +7,7 @@ import { CreatedResponse } from "../responses/created-response";
 import { OkResponse } from "../responses/ok-response";
 import { Middleware } from "../types";
 import { zParse } from "../utils/z-parse";
-import { AuthService } from "./auth-service";
+import { AuthService } from "./auth.service";
 import { emailAlreadyInUse } from "./utils/email-already-in-use";
 import { getUser } from "./utils/get-user";
 import { JwtUtils } from "./utils/jwt-utils";

@@ -1,145 +1,51 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ActionIcon, Button, createStyles, Group, Modal, ScrollArea, Table, TextInput } from "@mantine/core";
-import { useListState } from "@mantine/hooks";
-import { createTaskSchema } from "@prioritea/validation";
-import { useEffect, useState } from "react";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { GripVertical, Pencil, Plus, Trash } from "tabler-icons-react";
-import { ITask, TasksApi } from "../../../api/tasks-api";
-import { FieldError } from "../../FieldError/FieldError";
+import {ActionIcon, Group} from "@mantine/core";
+import {Pencil, Plus, Trash} from "tabler-icons-react";
+import {DnDReactTable} from "../../DnDReactTable/DnDReactTable";
+import {useToggle} from "../../../hooks/useToggle/useToggle";
+import {useTasksColumns} from "./hooks/useTasksColumns/useTasksColumns";
+import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
+import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
+
 
 export const Home = () => {
-  const [opened, setOpened] = useState(false);
- const {register, handleSubmit, formState: {errors}} = useForm<{priority: string, description: string}>({
-   defaultValues: {
-      priority: '',
-      description: '',
-   },
-   resolver: zodResolver(createTaskSchema)
- });
-     const useStyles = createStyles((theme) => ({
-  item: {
-    backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.white,
-  },
+	const {isToggled: isOpen, toggleOn: onOpen, toggleOff: onClose} = useToggle(false);
 
-  dragHandle: {
-    ...theme.fn.focusStyles(),
-    width: 40,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100%',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
-  },
-}));
-    const { classes } = useStyles();
-    const [state, handlers] = useListState<ITask>([]);
-    const items = state?.map(function(item, index) {
+	const columns = useTasksColumns();
+	const {data: tasks, isLoading, isError} = useTasksQuery();
 
-    return (
-    <Draggable key={item.description} index={index} draggableId={item.description}>
-      {(provided) => (
-        <tr className={classes.item} ref={provided.innerRef} {...provided.draggableProps}>
-          <td>
-            <div className={classes.dragHandle} {...provided.dragHandleProps}>
-              <GripVertical size={18} />
-            </div>
-          </td>
-          <td style={{ width: 80 }}>{item.priority}</td>
-          <td style={{ width: 120 }}>{item.description}</td>
-          <td style={{ width: 80 }}>{item.status}</td>
-        </tr>
-      )}
-    </Draggable>
-  )
-      }
-  );
- const onSubmit: SubmitHandler<{priority: string, description: string}> = async function({priority, description}) {
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 
-   const {data} = await TasksApi.create(priority, description);
+	if (isError) {
+		return <div>Error</div>;
+	}
 
-   handlers.setState(data.data.tasks);
+	if (!tasks) {
+		return <div>No tasks</div>;
+	}
 
-   setOpened(false);
- };
-
-   useEffect(() => {
-    TasksApi.getAll().then(({data}) => {
-      handlers.setState(data.data.tasks)
-    });
-  }, [])
-
-  return (
-    <>
-          <Modal
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Create a task"
-      >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Group direction="column" grow>
-          <TextInput
-            required
-            label="Priority"
-            placeholder="Type here.."
-           {...register("priority")}
-           />
-          <FieldError field={errors.priority}/>
-                    <TextInput
-            required
-            label="Description"
-            placeholder="Type here.."
-           {...register("description")}
-           />
-                     </Group>
-                     <Group position="apart" mt="xl">
-              <Button type="submit" style={{ textTransform: "capitalize" }} variant="filled">
-            Create
-          </Button>
-          </Group>
-        </form>
-      </Modal>
-      <Group position="right">
-                    <ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
-             onClick={() => setOpened(true)}>
-      <Plus size={18} />
-    </ActionIcon>
-                  <ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
-             >
-      <Trash size={18} />
-      </ActionIcon>
-                        <ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
-             >
-      <Pencil size={18} />
-      </ActionIcon>
-    </Group>
-   <ScrollArea>
-      <DragDropContext
-        onDragEnd={({ destination, source }) => {
-          return handlers.reorder({ from: source.index, to: destination!.index })
-        }}
-      >
-        <Table sx={{ minWidth: 420, '& tbody tr td': { borderBottom: 0 } }}>
-          <thead>
-            <tr>
-              <th style={{ width: 40 }}/>
-              <th style={{ width: 80 }}>Priority</th>
-              <th style={{ width: 120 }}>Description</th>
-              <th style={{ width: 40 }}>Status</th>
-            </tr>
-          </thead>
-          <Droppable droppableId="dnd-list" direction="vertical">
-            {(provided) => (
-              <tbody {...provided.droppableProps} ref={provided.innerRef}>
-                {items}
-                {provided.placeholder}
-              </tbody>
-            )}
-          </Droppable>
-        </Table>
-      </DragDropContext>
-    </ScrollArea>
-    </>
-  );
+	return (
+		<>
+		<CreateTaskModal
+			isOpen={isOpen}
+			onClose={onClose}
+		/>
+			<Group position="right">
+				<ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
+							onClick={onOpen}>
+					<Plus size={18} />
+				</ActionIcon>
+				<ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
+				>
+					<Trash size={18} />
+				</ActionIcon>
+				<ActionIcon mb="1rem" size={24} color="primary" radius="xl" variant="filled"
+				>
+					<Pencil size={18} />
+				</ActionIcon>
+			</Group>
+			<DnDReactTable data={tasks} columns={columns}/>
+		</>
+	);
 };

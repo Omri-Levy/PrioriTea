@@ -2,12 +2,12 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import { Application, json, urlencoded } from "express";
 import helmet from "helmet";
-import { AuthController } from "../auth/auth-controller";
+import { AuthController } from "../auth/auth.controller";
 import { BASE_URL, CORS_ORIGIN } from "../env/env";
 import { errorHandler } from "../middleware/error-handler";
 import { morgan } from "../middleware/morgan";
-import { TasksController } from "../tasks/tasks-controller";
-import { UsersController } from "../users/users-controller";
+import { TasksController } from "../tasks/tasks.controller";
+import { UsersController } from "../users/users.controller";
 import { Server } from "./server";
 
 export interface IServer {

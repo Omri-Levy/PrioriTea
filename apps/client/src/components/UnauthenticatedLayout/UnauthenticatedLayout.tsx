@@ -20,15 +20,15 @@ import {useRoutes} from "../Router/useRoutes";
 import "./Unauthenticated.css"
 
 export const UnauthenticatedLayout: FunctionComponent =
-  function () {
+   () => {
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     const [isOpen, toggleIsOpen] = useBooleanToggle(false);
     // Avoids passing an unneeded value argument from the burger's onClick.
     const toggleBurger = () => toggleIsOpen();
     const routes = useRoutes();
     const HEADER_HEIGHT = 60;
-    const links = routes.map(function ({ path, end, text, Icon, onClick }) {
-      const handleClick = function () {
+    const links = routes.map(({ path, end, text, Icon, onClick }) => {
+      const handleClick = () => {
         onClick && onClick();
         toggleIsOpen();
       };
@@ -128,6 +128,10 @@ export const UnauthenticatedLayout: FunctionComponent =
                   onClick={() => toggleColorScheme()}
                   size="lg"
 				  className={"app-shell__color-scheme-toggle--unauthenticated"}
+				  sx={(theme) => ({
+					  // @ts-ignore
+					  color: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 5 : 7]
+				  })}
                 >
                   {colorScheme === "dark" ? (
                     <Sun size={18} />

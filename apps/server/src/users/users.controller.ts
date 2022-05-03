@@ -5,7 +5,7 @@ import { auth } from "../middleware/auth";
 import { restful } from "../middleware/restful";
 import { OkResponse } from "../responses/ok-response";
 import { Middleware } from "../types";
-import { UsersService } from "./users-service";
+import { UsersService } from "./users.service";
 
 export interface IUsersController {
 	getUsers(req: Request, res: Response): void;

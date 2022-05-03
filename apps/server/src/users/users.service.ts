@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { Service } from "../core/service";
-import { UsersRepository } from "./users-repository";
+import { UsersRepository } from "./users.repository";
 
 export interface IUsersService {
 	getUsers(): Promise<Array<User>>;

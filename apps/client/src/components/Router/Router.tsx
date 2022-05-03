@@ -18,16 +18,14 @@ export const Router = () => {
             isAuth ? <AuthenticatedLayout /> : <UnauthenticatedLayout />
           }
         >
-          {routes.map(function ({ path, element, text }) {
-            return (
+          {routes.map(({ path, element, text }) =>
               <Route
                 index={path === "/"}
                 key={`${path}-route`}
                 path={path}
                 element={<Section title={text}>{element}</Section>}
               />
-            );
-          })}
+          )}
         </Route>
       </Routes>
     </BrowserRouter>

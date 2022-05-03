@@ -6,10 +6,10 @@ interface SectionProps {
   children: ReactNode;
 }
 
-export const Section: FunctionComponent<SectionProps> = function ({
+export const Section: FunctionComponent<SectionProps> = ({
   title,
   children,
-}) {
+}) => {
   const useStyles = createStyles((theme) => ({
     root: {
       textTransform: "capitalize",

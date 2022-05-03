@@ -10,9 +10,7 @@ const envVars = [
 
 // Throws an error is a required env variable is undefined.
 // if (!process.env.[KEY]) { throw error }
-envVars.forEach(function (env) {
-	undefinedEnvVar(env);
-});
+envVars.forEach((env) => undefinedEnvVar(env));
 
 const {
 	NODE_ENV,

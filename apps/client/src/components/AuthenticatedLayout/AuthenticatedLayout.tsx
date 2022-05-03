@@ -8,11 +8,11 @@ import {NavLink} from "../NavLink/NavLink";
 import {useRoutes} from "../Router/useRoutes";
 import "./AuthenticatedLayout.css";
 
-export const AuthenticatedLayout: FunctionComponent = function () {
+export const AuthenticatedLayout: FunctionComponent = () => {
   // Avoids passing an unneeded value argument from the burger's onClick.
   const routes = useRoutes();
-  const links = routes.map(function ({ path, end, text, Icon, onClick }) {
-    const handleClick = function () {
+  const links = routes.map(({ path, end, text, Icon, onClick }) => {
+    const handleClick = () => {
       onClick && onClick();
       setOpened(false);
     };
