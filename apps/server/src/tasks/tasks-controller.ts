@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getUserId } from "../auth/utils/get-user-id";
 import { Controller, IRoute } from "../core/controller";
-import { Method } from "../enums";
+import { Method } from "@prioritea/types";
 import { auth } from "../middleware/auth";
 import { restful } from "../middleware/restful";
 import { CreatedResponse } from "../responses/created-response";

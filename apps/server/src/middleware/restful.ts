@@ -1,5 +1,5 @@
 import { RequestHandler } from "express";
-import { Method } from "../enums";
+import { Method } from "@prioritea/types";
 import { MethodNotAllowedError } from "../errors/method-not-allowed-error";
 
 //
@@ -7,7 +7,7 @@ import { MethodNotAllowedError } from "../errors/method-not-allowed-error";
 // to the requests having a method that does not
 // have corresponding request handler. For example
 // if a resource allows only GET and POST requests
-// then PUT, DELETE, etc requests will be responded
+// then PATCH, DELETE, etc requests will be responded
 // with the 405 status code. HTTP 405 is required to have Allow
 // header set to a list of allowed methods so in
 // this case the response has "Allow: GET, POST" in

@@ -1,16 +1,26 @@
-import { fetchFn, Method } from "../static/js/requests/fetch-fn/fetch-fn";
-import { Tasks } from "../types";
+import { axiosClient } from "../lib/axios-client";
+
+export interface ITask {
+  id: string;
+  priority: string;
+  description: string;
+  status: string;
+}
+
+export type Tasks = Array<ITask>;
 
 interface ITasksResponse {
+  data: {
   data: {
     tasks: Tasks;
   };
   errors: Array<{ message: string; field?: string }> | null;
 }
+}
 
 export class TasksApi {
   private static _instance: TasksApi;
-  private static readonly API_URL = `${process.env.REACT_APP_API_URL}/tasks`;
+  private static readonly API_URL = `/tasks`;
 
   private constructor() {}
 
@@ -28,7 +38,7 @@ export class TasksApi {
     status?: string
   ): Promise<ITasksResponse> {
 
-    return fetchFn(Method.POST, this.API_URL, {
+    return axiosClient.post(this.API_URL, {
       priority,
       description,
       status,
@@ -36,11 +46,11 @@ export class TasksApi {
   }
 
   public static async getAll(): Promise<ITasksResponse> {
-    return fetchFn(Method.GET, this.API_URL);
+    return axiosClient.get(this.API_URL);
   }
 
   public static async getById(id: string): Promise<ITasksResponse> {
-    return fetchFn(Method.GET, `${this.API_URL}/${id}`);
+    return axiosClient.get(`${this.API_URL}/${id}`);
   }
 
   public static async updateById(
@@ -49,7 +59,7 @@ export class TasksApi {
     description?: string,
     status?: string
   ): Promise<ITasksResponse> {
-    return fetchFn(Method.PATCH, `${this.API_URL}/${id}`, {
+    return axiosClient.patch(`${this.API_URL}/${id}`, {
       priority,
       description,
       status,
@@ -57,6 +67,6 @@ export class TasksApi {
   }
 
   public static async deleteById(id: string): Promise<ITasksResponse> {
-    return fetchFn(Method.DELETE, `${this.API_URL}/${id}`);
+    return  axiosClient.delete(`${this.API_URL}/${id}`);
   }
 }

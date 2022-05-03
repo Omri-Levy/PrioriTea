@@ -1,12 +1,12 @@
 import request, { Response } from "supertest";
 import { App } from "../core/app";
-import { Method, MethodUnion } from "../enums";
+import { Method, MethodUnion } from "@prioritea/types";
 import { BASE_URL, PORT } from "../env/env";
 
 const app = new App(Number(PORT)).init().app;
 const agent = request.agent(app);
 
-const badMethods: Array<Method> = [Method.PUT, Method.PATCH, Method.DELETE];
+const badMethods: Array<Method> = [Method.PATCH, Method.PATCH, Method.DELETE];
 const expectStatus = function (res: Response, statusCode: number) {
 	return expect(res.status).toBe(statusCode);
 };

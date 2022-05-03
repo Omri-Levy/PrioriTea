@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { GripVertical, Pencil, Plus, Trash } from "tabler-icons-react";
-import { TasksApi } from "../../../api/tasks-api";
-import { ITask } from "../../../interfaces";
+import { ITask, TasksApi } from "../../../api/tasks-api";
 import { FieldError } from "../../FieldError/FieldError";
 
 export const Home = () => {
@@ -36,7 +35,7 @@ export const Home = () => {
 }));
     const { classes } = useStyles();
     const [state, handlers] = useListState<ITask>([]);
-    const items = state.map(function(item, index) {
+    const items = state?.map(function(item, index) {
 
     return (
     <Draggable key={item.description} index={index} draggableId={item.description}>
@@ -60,14 +59,14 @@ export const Home = () => {
 
    const {data} = await TasksApi.create(priority, description);
 
-   handlers.setState(data.tasks);
+   handlers.setState(data.data.tasks);
 
    setOpened(false);
  };
 
    useEffect(() => {
     TasksApi.getAll().then(({data}) => {
-      handlers.setState(data.tasks)
+      handlers.setState(data.data.tasks)
     });
   }, [])
 

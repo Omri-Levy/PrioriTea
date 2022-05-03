@@ -1,3 +1,6 @@
 {
-  "extends": "@prioritea/config/tsconfig-types.json"
+  "extends": "@prioritea/config/tsconfig-types.json",
+  "compilerOptions": {
+    "outDir": "./dist"
+  }
 }

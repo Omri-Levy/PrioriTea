@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { z } from "zod";
-import { Method } from "../enums";
+import { Method } from "@prioritea/types";
 import { Middleware, RequestHandler } from "../types";
 import { iterableArray } from "@prioritea/utils";
 import { logger } from "../utils/logger";

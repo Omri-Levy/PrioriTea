@@ -1,92 +1,32 @@
 import {
-  ActionIcon,
-  AppShell,
-  Burger,
-  Container,
-  createStyles,
-  Footer,
-  Group,
-  Header, Paper,
-  Text,
-  Transition,
-  useMantineColorScheme,
-  useMantineTheme
+	ActionIcon,
+	AppShell,
+	Burger,
+	Container,
+	Footer,
+	Group,
+	Header,
+	Paper,
+	Text,
+	Transition,
+	useMantineColorScheme
 } from "@mantine/core";
-import { useBooleanToggle } from "@mantine/hooks";
-import { FunctionComponent } from "react";
-import { Link, Outlet } from "react-router-dom";
-import { BrandGithub, BrandLinkedin, MoonStars, Sun } from "tabler-icons-react";
-import { NavLink } from "../NavLink/NavLink";
-import { useRoutes } from "../Router/useRoutes";
+import {useBooleanToggle} from "@mantine/hooks";
+import {FunctionComponent} from "react";
+import {Link, Outlet} from "react-router-dom";
+import {BrandGithub, BrandLinkedin, MoonStars, Sun} from "tabler-icons-react";
+import {NavLink} from "../NavLink/NavLink";
+import {useRoutes} from "../Router/useRoutes";
+import "./Unauthenticated.css"
 
-interface LayoutProps {}
-
-export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
+export const UnauthenticatedLayout: FunctionComponent =
   function () {
-    const theme = useMantineTheme();
     const { colorScheme, toggleColorScheme } = useMantineColorScheme();
     const [isOpen, toggleIsOpen] = useBooleanToggle(false);
     // Avoids passing an unneeded value argument from the burger's onClick.
     const toggleBurger = () => toggleIsOpen();
     const routes = useRoutes();
     const HEADER_HEIGHT = 60;
-    const useStyles = createStyles((mantineTheme, _params, getRef) => {
-      const icon = getRef("icon");
-
-      return {
-        root: {
-          position: "relative",
-          zIndex: 1,
-        },
-
-        dropdown: {
-          position: "absolute",
-          top: HEADER_HEIGHT,
-          left: 0,
-          right: 0,
-          zIndex: 0,
-          borderTopRightRadius: 0,
-          borderTopLeftRadius: 0,
-          borderTopWidth: 0,
-          overflow: "hidden",
-
-          [theme.fn.largerThan("sm")]: {
-            display: "none",
-          },
-        },
-
-        header: {
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          height: "100%",
-        },
-
-        burger: {
-          [theme.fn.largerThan("sm")]: {
-            display: "none",
-          },
-        },
-
-        footer: {
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        },
-        icon: {
-          ref: icon,
-          color: "inherit",
-          marginRight: mantineTheme.spacing.sm,
-        },
-        links: {
-          [theme.fn.smallerThan("sm")]: {
-            display: "none",
-          },
-          marginRight: mantineTheme.spacing.sm,
-        },
-      };
-    });
-    const { classes } = useStyles();
     const links = routes.map(function ({ path, end, text, Icon, onClick }) {
       const handleClick = function () {
         onClick && onClick();
@@ -100,7 +40,7 @@ export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
           onClick={handleClick}
           key={`${path}-nav-link`}
         >
-          <Icon className={classes.icon} />
+          <Icon className={"navlink__icon"} />
           <span>{text}</span>
         </NavLink>
       );
@@ -108,19 +48,12 @@ export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
 
     return (
       <AppShell
-        styles={{
-          main: {
-            backgroundColor:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
-          },
-        }}
+        className={"app-shell--unauthenticated"}
         navbarOffsetBreakpoint="sm"
         asideOffsetBreakpoint="sm"
         fixed
         footer={
-          <Footer p="md" height={60} className={classes.footer}>
+          <Footer p="md" height={HEADER_HEIGHT} className={"app-shell__footer--unauthenticated"}>
             <Text
               color="dimmed"
               size="sm"
@@ -153,31 +86,26 @@ export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
           </Footer>
         }
         header={
-          <Header height={HEADER_HEIGHT} className={classes.root}>
-            <Container className={classes.header} size={"xl"}>
+          <Header height={60} className={"app-shell__header--unauthenticated"}>
+            <Container className={"app-shell__header__container--unauthenticated"} size={"xl"}>
               <Group>
                 <Burger
                   opened={isOpen}
                   onClick={toggleBurger}
                   size="sm"
-                  color={theme.colors.gray[6]}
                   mr="xl"
-                  className={classes.burger}
+                  className={"app-shell__burger--unauthenticated"}
                 />
                 <Text
                   component={Link}
                   to="/"
-                  style={{
-                    textTransform: "uppercase",
-                    letterSpacing: "3px",
-                    fontWeight: "bolder",
-                  }}
+                  className={"app-shell__logo--unauthenticated"}
                 >
                   PrioriTea
                 </Text>
               </Group>
               <Group>
-                <Group spacing={5} className={classes.links}>
+                <Group spacing={5} className={"app-shell__links--unauthenticated"}>
                   {links}
                 </Group>
 
@@ -188,7 +116,7 @@ export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
                 >
                   {(styles) => (
                     <Paper
-                      className={classes.dropdown}
+                      className={"app-shell__dropdown--unauthenticated"}
                       withBorder
                       style={styles}
                     >
@@ -199,17 +127,7 @@ export const UnauthenticatedLayout: FunctionComponent<LayoutProps> =
                 <ActionIcon
                   onClick={() => toggleColorScheme()}
                   size="lg"
-                  sx={(theme) => ({
-                    backgroundColor:
-                      theme.colorScheme === "dark"
-                        ? theme.colors.dark[6]
-                        : theme.colors.gray[0],
-                        // @ts-ignore
-                    color: theme.colors[
-                      theme.primaryColor][
-                        theme.colorScheme === "dark" ? 5 : 7
-                      ],
-                  })}
+				  className={"app-shell__color-scheme-toggle--unauthenticated"}
                 >
                   {colorScheme === "dark" ? (
                     <Sun size={18} />

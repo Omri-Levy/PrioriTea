@@ -7,6 +7,7 @@ import { useColorScheme, useHotkeys, useLocalStorage } from "@mantine/hooks";
 import { QueryClientProvider } from "react-query";
 import { Router } from "../Router/Router";
 import { queryClient } from "../../lib/query-client";
+import { useEffect } from "react";
 
 export const App = () => {
   const preferredColorScheme = useColorScheme();
@@ -19,6 +20,10 @@ export const App = () => {
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   useHotkeys([["mod+J", () => toggleColorScheme()]]);
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-color-scheme", colorScheme);
+  }, [colorScheme]);
 
   return (
     <ColorSchemeProvider

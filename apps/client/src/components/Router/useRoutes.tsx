@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import {
   Home as HomeIcon, Icon, Login as SignInIcon, User, UserPlus as SignUpIcon
 } from "tabler-icons-react";
-import { useIsAuth } from "../../api/useIsAuth";
+import { useIsAuth } from "../pages/SignIn/hooks/useIsAuth/useIsAuth";
 import { Account } from "../pages/Account/Account";
 import { Home } from "../pages/Home/Home";
 import { SignIn } from "../pages/SignIn/SignIn";

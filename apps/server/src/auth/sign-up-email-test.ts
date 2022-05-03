@@ -1,7 +1,7 @@
 import request, { Response } from "supertest";
 import { App } from "../core/app";
 import { db } from "../core/db/db";
-import { Method, MethodUnion } from "../enums";
+import { Method, MethodUnion } from "@prioritea/types";
 import { BASE_URL, PORT } from "../env/env";
 
 const app = new App(Number(PORT)).init().app;

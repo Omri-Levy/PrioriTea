@@ -1,4 +1,4 @@
-import { Method } from "./enums";
+import { Method } from "@prioritea/types";
 
 export interface IUser {
 	id: string;

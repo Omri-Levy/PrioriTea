@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useIsAuth } from "../../api/useIsAuth";
+import { useIsAuth } from "../pages/SignIn/hooks/useIsAuth/useIsAuth";
 import { AuthenticatedLayout } from "../AuthenticatedLayout/AuthenticatedLayout";
 import { Section } from "../Section/Section";
 import { UnauthenticatedLayout } from "../UnauthenticatedLayout/UnauthenticatedLayout";

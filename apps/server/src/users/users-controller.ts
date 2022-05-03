@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Controller, IRoute } from "../core/controller";
-import { Method } from "../enums";
+import { Method } from "@prioritea/types";
 import { auth } from "../middleware/auth";
 import { restful } from "../middleware/restful";
 import { OkResponse } from "../responses/ok-response";

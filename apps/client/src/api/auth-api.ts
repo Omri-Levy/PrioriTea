@@ -1,5 +1,4 @@
 import { axiosClient } from "../lib/axios-client";
-import { Method } from "../static/js/requests/fetch-fn/fetch-fn";
 
 interface IAuthResponse {
   data: {
@@ -37,7 +36,7 @@ export class AuthApi {
     password: string,
     passwordConfirmation: string
   ): Promise<IAuthResponse> {
-    return axiosClient[Method.POST](`${this.API_URL}/sign-up`, {
+    return axiosClient.post(`${this.API_URL}/sign-up`, {
       email,
       name,
       password,
@@ -49,17 +48,17 @@ export class AuthApi {
     email: string,
     password: string
   ): Promise<IAuthResponse> {
-    return axiosClient[Method.POST](`${this.API_URL}/sign-in`, {
+    return axiosClient.post(`${this.API_URL}/sign-in`, {
       email,
       password,
     });
   }
 
   public static async signOut(): Promise<IAuthResponse> {
-    return axiosClient[Method.POST](`${this.API_URL}/sign-out`);
+    return axiosClient.post(`${this.API_URL}/sign-out`);
   }
 
   public static async getUserInfo(): Promise<IAuthResponse> {
-    return axiosClient[Method.GET](`${this.API_URL}/user-info`);
+    return axiosClient.get(`${this.API_URL}/user-info`);
   }
 }

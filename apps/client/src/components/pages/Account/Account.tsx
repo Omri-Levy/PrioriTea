@@ -1,6 +1,6 @@
 import {Paper, Avatar, createStyles, Group, Text } from "@mantine/core";
 import { FunctionComponent } from "react";
-import { useUserInfoQuery } from "../../../api/useUserInfoQuery";
+import { useUserInfoQuery } from "../SignIn/hooks/useUserInfoQuery/useUserInfoQuery";
 
 export const Account: FunctionComponent = () => {
   const {data: user} = useUserInfoQuery();
