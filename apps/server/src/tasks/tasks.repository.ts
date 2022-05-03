@@ -51,6 +51,12 @@ export class TasksRepository {
 		});
 	}
 
+	public async deleteTasksByIds(ids: Array<string>) {
+		return db.task.deleteMany({
+			where: { id: {in: ids} },
+		});
+	}
+
 	public async deleteTaskById(id: string) { 
 		return db.task.delete({
 			where: { id },

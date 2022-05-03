@@ -55,8 +55,14 @@ export class TasksService extends Service<TasksRepository> implements ITasksServ
 		return this.repository.getAllTasksByUserId(userId);
 	}
 
-	async deleteTask(id: string, userId: string) {
+	async deleteTask(userId: string, id: string) {
 		await this.repository.deleteTaskById(id);
+
+		return this.repository.getAllTasksByUserId(userId);
+	}
+
+	async deleteTasks(userId: string, ids: Array<string>) {
+		await this.repository.deleteTasksByIds(ids);
 
 		return this.repository.getAllTasksByUserId(userId);
 	}

@@ -49,6 +49,11 @@ export class TasksController
 			path: "/:id",
 			handler: this.deleteTask.bind(this),
 		},
+		{
+			method: Method.DELETE,
+			path: "/",
+			handler: this.deleteTasks.bind(this),
+		},
 	];
 	middleware?: Array<Middleware> = [
 		auth,
@@ -127,6 +132,15 @@ export class TasksController
 		const tasks = await this.service.deleteTask(
 			getUserId(res)!,
 			req.params.id!
+		);
+
+		return new OkResponse(res, { data: { tasks } });
+	}
+
+	public async deleteTasks(req: Request, res: Response) {
+		const tasks = await this.service.deleteTasks(
+			getUserId(res)!,
+			req.body.ids,
 		);
 
 		return new OkResponse(res, { data: { tasks } });

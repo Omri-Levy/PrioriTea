@@ -66,7 +66,11 @@ export class TasksApi {
     });
   }
 
-  public static async deleteById(id: string): Promise<ITasksResponse> {
-    return  axiosClient.delete(`${this.API_URL}/${id}`);
+  public static async deleteByIds(ids: Array<string>): Promise<ITasksResponse> {
+    return  axiosClient.delete(`${this.API_URL}`, {
+		data: {
+			ids,
+		},
+	});
   }
 }

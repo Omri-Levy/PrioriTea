@@ -17,11 +17,7 @@ export const TBody: FunctionComponent<TBodyProps> = ({
 
 		dragHandle: {
 			...theme.fn.focusStyles(),
-			width: 40,
 			display: 'flex',
-			alignItems: 'center',
-			justifyContent: 'center',
-			height: '100%',
 			color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[6],
 		},
 	}));
@@ -48,7 +44,7 @@ export const TBody: FunctionComponent<TBodyProps> = ({
 							<td>
 								<div
 									className={classes.dragHandle} {...provided.dragHandleProps}>
-									<GripVertical size={18}/>
+									<GripVertical size={20} />
 								</div>
 							</td>
 							{row.cells.map((cell) =>

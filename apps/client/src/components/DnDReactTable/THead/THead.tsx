@@ -18,13 +18,15 @@ export const THead: FunctionComponent<THeadProps> = ({headerGroups}) => {
 							.getSortByToggleProps())}
 							style={{padding: 0}}
 						>
-							<Group position="apart" sx={(theme) => ({
+							<Group position="apart" p={"0.6rem"} sx={(theme) => ({
 								padding: `1rem`,
 								borderRadius: 3,
-								cursor: 'pointer',
-								'&:hover': {
+								// @ts-ignore
+								cursor: col.canSort ? 'pointer' : '',
+								// @ts-ignore
+								'&:hover': col.canSort ? {
 									backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-								},
+								} : {},
 							})}>
 								<Text weight={500} size={'sm'}>
 							{col.render('Header')}
@@ -35,14 +37,16 @@ export const THead: FunctionComponent<THeadProps> = ({headerGroups}) => {
 									height: 21,
 								}}>
               {col
+				  // @ts-ignore
+				  .canSort ? col
 				// @ts-ignore
 				.isSorted
 					? col
 						// @ts-ignore
 						.isSortedDesc
-						? <ChevronDown size={14}/>
-						: <ChevronUp size={14}/>
-					: <Selector/>}
+						? <ChevronDown size={16}/>
+						: <ChevronUp size={16}/>
+					: <Selector size={16}/> : null}
           </Center>
 							</Group>
 						</th>
