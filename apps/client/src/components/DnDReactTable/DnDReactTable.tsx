@@ -1,7 +1,13 @@
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
-import {useGlobalFilter, useRowSelect, useSortBy, usePagination, useTable} from "react-table";
+import {
+	useGlobalFilter,
+	usePagination,
+	useRowSelect,
+	useSortBy,
+	useTable
+} from "react-table";
 import {forwardRef, FunctionComponent, useEffect, useMemo, useRef} from "react";
-import {Checkbox, ScrollArea, Table} from "@mantine/core";
+import {Checkbox, Pagination, ScrollArea, Table} from "@mantine/core";
 import {useListState} from "@mantine/hooks";
 import {THead} from "./THead/THead";
 import {TBody} from "./TBody/TBody";
@@ -59,7 +65,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 	getSelectedRowIds,
 																					}: DnDReactTableProps<TData, TColumns>) => {
 	const filterTypes = useMemo(() => ({
-		fuzzyText: fuzzyTextFilter,
+		text: fuzzyTextFilter,
 	}), []);
 	const {
 		getTableProps,
@@ -70,16 +76,10 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 		preGlobalFilteredRows,
 		setGlobalFilter,
 		visibleColumns,
-		state: {globalFilter, pageIndex, pageSize},
+		state: {globalFilter, pageIndex},
 		page,
-		canPreviousPage,
-		canNextPage,
-		pageOptions,
 		pageCount,
 		gotoPage,
-		nextPage,
-		previousPage,
-		setPageSize,
 	} = useTable({
 			data,
 			columns,
@@ -155,6 +155,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 				<Table
 					highlightOnHover
 					sx={{
+						marginBottom: "1rem",
 						minWidth: 420,
 						'& tbody tr td': {borderBottom: 0}
 					}} {...getTableProps()}>
@@ -176,50 +177,29 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 						)}
 					</Droppable>
 				</Table>
-				<div className="pagination">
-					<button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-						{'<<'}
-					</button>{' '}
-					<button onClick={() => previousPage()} disabled={!canPreviousPage}>
-						{'<'}
-					</button>{' '}
-					<button onClick={() => nextPage()} disabled={!canNextPage}>
-						{'>'}
-					</button>{' '}
-					<button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-						{'>>'}
-					</button>{' '}
-					<span>
-          Page{' '}
-						<strong>
-            {pageIndex + 1} of {pageOptions.length}
-          </strong>{' '}
-        </span>
-					<span>
-          | Go to page:{' '}
-						<input
-							type="number"
-							defaultValue={pageIndex + 1}
-							onChange={e => {
-								const page = e.target.value ? Number(e.target.value) - 1 : 0
-								gotoPage(page)
-							}}
-							style={{ width: '100px' }}
-						/>
-        </span>{' '}
-					<select
-						value={pageSize}
-						onChange={e => {
-							setPageSize(Number(e.target.value))
-						}}
-					>
-						{[10, 20, 30, 40, 50].map(pageSize => (
-							<option key={pageSize} value={pageSize}>
-								Show {pageSize}
-							</option>
-						))}
-					</select>
-				</div>
+				<Pagination
+					withEdges
+					onChange={(page) => gotoPage(page - 1)}
+					total={pageCount}
+					page={pageIndex + 1}
+					siblings={2}
+					getItemAriaLabel={(page) => {
+						switch (page) {
+							case 'dots':
+								return 'dots element aria-label';
+							case 'prev':
+								return 'previous page button aria-label';
+							case 'next':
+								return 'next page button aria-label';
+							case 'first':
+								return 'first page button aria-label';
+							case 'last':
+								return 'last page button aria-label';
+							default:
+								return `${page} item aria-label`;
+						}
+					}}
+				/>
 			</DragDropContext>
 		</ScrollArea>
 	);
