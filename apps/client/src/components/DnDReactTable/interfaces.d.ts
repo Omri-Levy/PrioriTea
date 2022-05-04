@@ -6,4 +6,5 @@ export interface DnDReactTableProps<TData extends BaseData, TColumns extends Bas
 	columns: TColumns;
 	options?: UseTableOptions;
 	getSelectedRowIds?: (ids: Array<string>) => void;
+	isLoading?: boolean;
 }

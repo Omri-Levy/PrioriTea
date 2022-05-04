@@ -7,7 +7,7 @@ import {
 	useTable
 } from "react-table";
 import {forwardRef, FunctionComponent, useEffect, useMemo, useRef} from "react";
-import {Checkbox, Pagination, ScrollArea, Table} from "@mantine/core";
+import {Checkbox, Pagination, ScrollArea, Skeleton, Table} from "@mantine/core";
 import {useListState} from "@mantine/hooks";
 import {THead} from "./THead/THead";
 import {TBody} from "./TBody/TBody";
@@ -63,7 +63,13 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 																						columns,
 																						options,
 	getSelectedRowIds,
+	isLoading,
 																					}: DnDReactTableProps<TData, TColumns>) => {
+	const tableData = useMemo(() => isLoading ? Array(10).fill({}) : data, [isLoading, data])
+	const tableCols = useMemo(() => isLoading ? columns.map((col) => ({
+		...col,
+		Cell: <Skeleton height={20}/>,
+	})) : columns, [isLoading, data])
 	const filterTypes = useMemo(() => ({
 		text: fuzzyTextFilter,
 	}), []);
@@ -81,8 +87,8 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 		pageCount,
 		gotoPage,
 	} = useTable({
-			data,
-			columns,
+			data: tableData,
+			columns: tableCols,
 			filterTypes,
 			...options,
 		},
@@ -98,29 +104,25 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 					// @ts-ignore
 					Header({ getToggleAllRowsSelectedProps }) {
 						return (
-							<div>
 								<IndeterminateCheckbox
 									{...getToggleAllRowsSelectedProps()}
 								/>
-							</div>
 						);
 					},
 					// @ts-ignore
 					Cell({ row }) {
 						return (
-							<div>
 								<IndeterminateCheckbox
 									// @ts-ignore
 									{...row.getToggleRowSelectedProps()}
 								/>
-							</div>
 						);
 					},
 				},
 				...cols,
 			])
 	);
-	useConsole(gotoPage, pageIndex, pageCount);
+
 	const selectedRowIds = useMemo(() =>
 		selectedFlatRows?.map(
 			// @ts-ignore
