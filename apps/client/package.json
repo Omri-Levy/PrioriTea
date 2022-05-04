@@ -1,0 +1,70 @@
+{
+  "name": "@prioritea/client",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@hookform/resolvers": "^2.8.8",
+    "@mantine/core": "^4.1.5",
+    "@mantine/dates": "^4.1.5",
+    "@mantine/dropzone": "^4.1.5",
+    "@mantine/hooks": "^4.1.5",
+    "@mantine/modals": "^4.1.5",
+    "@mantine/notifications": "^4.1.5",
+    "@mantine/spotlight": "^4.1.5",
+    "@prioritea/config": "*",
+    "@prioritea/utils": "*",
+    "@prioritea/validation": "*",
+    "axios": "^0.27.0",
+    "dayjs": "^1.11.1",
+    "formik": "^2.2.9",
+    "match-sorter": "^6.3.1",
+    "react": "^18.0.0",
+    "react-beautiful-dnd": "^13.1.0",
+    "react-dom": "^18.0.0",
+    "react-hook-form": "^7.30.0",
+    "react-query": "^3.38.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "react-table": "^7.7.0",
+    "sass": "^1.50.1",
+    "tabler-icons-react": "^1.46.0",
+    "url": "^0.11.0",
+    "zod": "^3.14.4"
+  },
+  "scripts": {
+	"plop": "plop",
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.25",
+    "@types/react": "^18.0.6",
+    "@types/react-beautiful-dnd": "^13.1.2",
+    "@types/react-dom": "^18.0.2",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/react-table": "^7.7.11",
+    "autoprefixer": "^10.4.5",
+    "eslint-config-airbnb": "^19.0.4",
+    "postcss": "^8.4.12",
+    "prettier-plugin-tailwindcss": "^0.1.10",
+    "tailwindcss": "^3.0.24",
+    "typescript": "^4.6.3"
+  }
+}
