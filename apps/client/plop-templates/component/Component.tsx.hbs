@@ -1,0 +1,12 @@
+import React, { FunctionComponent } from 'react';
+import styles from './{{pascalCase name}}.module.scss';
+
+export const {{pascalCase name}}: FunctionComponent = (props) => {
+	const { children, ...rest} = props;
+
+	return (
+		<div {...rest} className={styles.root}>
+			{children}
+		</div>
+	);
+};

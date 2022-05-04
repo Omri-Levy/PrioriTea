@@ -1,6 +1,6 @@
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
-import {useGlobalFilter, useRowSelect, useSortBy, useTable} from "react-table";
-import {forwardRef, useEffect, useMemo, useRef} from "react";
+import {useGlobalFilter, useRowSelect, useSortBy, usePagination, useTable} from "react-table";
+import {forwardRef, FunctionComponent, useEffect, useMemo, useRef} from "react";
 import {Checkbox, ScrollArea, Table} from "@mantine/core";
 import {useListState} from "@mantine/hooks";
 import {THead} from "./THead/THead";
@@ -15,7 +15,11 @@ export const useConsole = (value: any) => {
 	}, [value]);
 };
 
-export const IndeterminateCheckbox = forwardRef(
+interface IndeterminateCheckboxProps {
+
+}
+
+export const IndeterminateCheckbox: FunctionComponent<IndeterminateCheckboxProps> = forwardRef(
 	// @ts-ignore
 	({indeterminate, ...rest}, ref) => {
 		const defaultRef = useRef(null);
@@ -61,17 +65,21 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 		getTableProps,
 		headerGroups,
 		getTableBodyProps,
-		rows,
 		prepareRow,
-		// @ts-ignore
 		selectedFlatRows,
-		// @ts-ignore
 		preGlobalFilteredRows,
-		// @ts-ignore
 		setGlobalFilter,
 		visibleColumns,
-		// @ts-ignore
-		state: {globalFilter},
+		state: {globalFilter, pageIndex, pageSize},
+		page,
+		canPreviousPage,
+		canNextPage,
+		pageOptions,
+		pageCount,
+		gotoPage,
+		nextPage,
+		previousPage,
+		setPageSize,
 	} = useTable({
 			data,
 			columns,
@@ -80,6 +88,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 		},
 		useGlobalFilter,
 		useSortBy,
+		usePagination,
 		useRowSelect,
 		(hooks) =>
 			hooks.visibleColumns.push((cols) => [
@@ -113,18 +122,19 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 	);
 	const selectedRowIds = useMemo(() =>
 		selectedFlatRows?.map(
-			(row: {original: {id: string}}) => row.original.id), [selectedFlatRows.length]);
+			// @ts-ignore
+			(row) => row.original.id), [selectedFlatRows.length]);
 
 	// React table handles sort, filter, search, and pagination,
 	// while react-beautiful-dnd handles drag and drop.
-	// Passing the rows to react-beautiful-dnd and not the data ensures
+	// Passing the page to react-beautiful-dnd and not the data ensures
 	// the table updates when the data changes and the drag and drop works. (when combined with the useEffect below)
-	const [state, handlers] = useListState(rows);
+	const [state, handlers] = useListState(page);
 
 	// Second half of updating data on change.
 	useEffect(() => {
-		handlers.setState(rows);
-	}, [rows, handlers.setState]);
+		handlers.setState(page);
+	}, [page, handlers.setState]);
 
 	useEffect(() => {
 		if (!getSelectedRowIds) return;
@@ -160,12 +170,56 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 							<DnDReactTable.TBody
 								provided={provided}
 								getTableBodyProps={getTableBodyProps}
-								rows={state}
+								page={state}
 								prepareRow={prepareRow}
 							/>
 						)}
 					</Droppable>
 				</Table>
+				<div className="pagination">
+					<button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+						{'<<'}
+					</button>{' '}
+					<button onClick={() => previousPage()} disabled={!canPreviousPage}>
+						{'<'}
+					</button>{' '}
+					<button onClick={() => nextPage()} disabled={!canNextPage}>
+						{'>'}
+					</button>{' '}
+					<button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+						{'>>'}
+					</button>{' '}
+					<span>
+          Page{' '}
+						<strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{' '}
+        </span>
+					<span>
+          | Go to page:{' '}
+						<input
+							type="number"
+							defaultValue={pageIndex + 1}
+							onChange={e => {
+								const page = e.target.value ? Number(e.target.value) - 1 : 0
+								gotoPage(page)
+							}}
+							style={{ width: '100px' }}
+						/>
+        </span>{' '}
+					<select
+						value={pageSize}
+						onChange={e => {
+							setPageSize(Number(e.target.value))
+						}}
+					>
+						{[10, 20, 30, 40, 50].map(pageSize => (
+							<option key={pageSize} value={pageSize}>
+								Show {pageSize}
+							</option>
+						))}
+					</select>
+				</div>
 			</DragDropContext>
 		</ScrollArea>
 	);
@@ -176,3 +230,4 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 DnDReactTable.THead = THead;
 
 DnDReactTable.TBody = TBody;
+

@@ -7,7 +7,7 @@ import {TBodyProps} from "./interfaces";
 export const TBody: FunctionComponent<TBodyProps> = ({
 														 provided,
 														 getTableBodyProps,
-														 rows,
+														 page,
 														 prepareRow
 													 }) => {
 	const useStyles = createStyles((theme) => ({
@@ -26,7 +26,7 @@ export const TBody: FunctionComponent<TBodyProps> = ({
 	return (
 		<tbody  {...provided.droppableProps}
 				ref={provided.innerRef} {...getTableBodyProps()}>
-		{rows.map((row, index) => {
+		{page.map((row, index) => {
 			prepareRow(row);
 
 			return (
