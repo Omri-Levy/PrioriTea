@@ -1,5 +1,5 @@
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
-import {useRowSelect, useSortBy, useTable} from "react-table";
+import {useGlobalFilter, useRowSelect, useSortBy, useTable} from "react-table";
 import {forwardRef, useEffect, useMemo, useRef} from "react";
 import {Checkbox, ScrollArea, Table} from "@mantine/core";
 import {useListState} from "@mantine/hooks";
@@ -7,6 +7,7 @@ import {THead} from "./THead/THead";
 import {TBody} from "./TBody/TBody";
 import {BaseColumns, BaseData} from "./types";
 import {DnDReactTableProps} from "./interfaces";
+import {matchSorter} from "match-sorter";
 
 export const useConsole = (value: any) => {
 	useEffect(() => {
@@ -38,6 +39,12 @@ export const IndeterminateCheckbox = forwardRef(
 		);
 	});
 
+const fuzzyTextFilter = function(rows: Array<{values: {[key: string]: any}}>, id: string, filterValue: string) {
+	return matchSorter(rows, filterValue, { keys: [row => row.values[id]] })
+}
+
+fuzzyTextFilter.autoRemove = (val: string | undefined) => !val;
+
 /**
  * @description Combines react-table and react-beautiful-dnd into a drag and drop table with sort, filter, search, and pagination.
  */
@@ -47,6 +54,9 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 																						options,
 	getSelectedRowIds,
 																					}: DnDReactTableProps<TData, TColumns>) => {
+	const filterTypes = useMemo(() => ({
+		fuzzyText: fuzzyTextFilter,
+	}), []);
 	const {
 		getTableProps,
 		headerGroups,
@@ -55,7 +65,20 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 		prepareRow,
 		// @ts-ignore
 		selectedFlatRows,
-	} = useTable({data, columns, 				...options,},
+		// @ts-ignore
+		preGlobalFilteredRows,
+		// @ts-ignore
+		setGlobalFilter,
+		visibleColumns,
+		// @ts-ignore
+		state: {globalFilter},
+	} = useTable({
+			data,
+			columns,
+			filterTypes,
+			...options,
+		},
+		useGlobalFilter,
 		useSortBy,
 		useRowSelect,
 		(hooks) =>
@@ -126,6 +149,10 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 						'& tbody tr td': {borderBottom: 0}
 					}} {...getTableProps()}>
 					<DnDReactTable.THead
+						visibleColumnsLength={visibleColumns.length}
+						preGlobalFilteredRows={preGlobalFilteredRows}
+						setGlobalFilter={setGlobalFilter}
+						globalFilter={globalFilter}
 						headerGroups={headerGroups}
 					/>
 					<Droppable droppableId="dnd-list" direction="vertical">

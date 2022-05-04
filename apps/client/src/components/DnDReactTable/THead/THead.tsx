@@ -1,12 +1,25 @@
-import {FunctionComponent} from "react";
 import {THeadProps} from "./interfaces";
 import {Center, Group, Text} from "@mantine/core";
 import {ChevronDown, ChevronUp, Selector} from "tabler-icons-react";
+import {Search} from "../../pages/Tasks/Tasks";
+import {FunctionComponent} from "react";
 
-export const THead: FunctionComponent<THeadProps> = ({headerGroups}) => {
+export const THead: FunctionComponent<THeadProps> = ({headerGroups,
+														 visibleColumnsLength, preGlobalFilteredRows, globalFilter, setGlobalFilter}) => {
 
 	return (
 		<thead>
+		<tr>
+			<th
+				colSpan={visibleColumnsLength}
+			>
+				<Search
+					preGlobalFilteredRows={preGlobalFilteredRows}
+					globalFilter={globalFilter}
+					setGlobalFilter={setGlobalFilter}
+				/>
+			</th>
+		</tr>
 		{headerGroups.map(
 			// @ts-ignore
 			(headerGroup) =>

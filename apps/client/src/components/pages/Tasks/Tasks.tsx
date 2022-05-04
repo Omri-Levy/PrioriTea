@@ -1,15 +1,61 @@
-import {ActionIcon, Group, Tooltip} from "@mantine/core";
-import {Pencil, Plus, Trash} from "tabler-icons-react";
+import {
+	ActionIcon,
+	Group,
+	TextInput,
+	Tooltip,
+	useMantineTheme
+} from "@mantine/core";
+import {ArrowLeft, ArrowRight, Pencil, Plus, Search as SearchIcon, Trash} from "tabler-icons-react";
 import {DnDReactTable} from "../../DnDReactTable/DnDReactTable";
 import {useToggle} from "../../../hooks/useToggle/useToggle";
 import {useTasksColumns} from "./hooks/useTasksColumns/useTasksColumns";
 import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
 import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
-import {useCallback, useState} from "react";
+import {FunctionComponent, useCallback, useState} from "react";
 import {useMutation, useQueryClient} from "react-query";
 import {Tasks as TasksType, TasksApi} from "../../../api/tasks-api";
 import { UpdateTaskModal } from "./UpdateTaskModal/UpdateTaskModal";
+import {useAsyncDebounce} from "react-table";
 
+export interface SearchProps {
+	preGlobalFilteredRows: TasksType;
+	setGlobalFilter: (value: string) => void;
+	globalFilter: string | undefined;
+}
+
+export const Search: FunctionComponent<SearchProps> = function({
+						  preGlobalFilteredRows,
+						  globalFilter,
+						  setGlobalFilter,
+					  }) {
+	const count = preGlobalFilteredRows.length
+	const [value, setValue] = useState(globalFilter)
+	const onChange = useAsyncDebounce(value => {
+		setGlobalFilter(value || undefined)
+	}, 1000)
+	const theme = useMantineTheme();
+
+	return (
+		<TextInput
+			icon={<SearchIcon size={18} />}
+			radius="xl"
+			size="md"
+			rightSection={
+				<ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
+					{theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
+				</ActionIcon>
+			}
+			styles={{wrapper: {width: "25rem"}}}
+			rightSectionWidth={42}
+			value={value || ""}
+			onChange={e => {
+				setValue(e.target.value);
+				onChange(e.target.value);
+			}}
+			placeholder={`Searching in ${count} records...`}
+		/>
+	)
+}
 
 export const useDeleteTasksMutation = () => {
 	const queryClient = useQueryClient();
