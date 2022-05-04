@@ -22,7 +22,7 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 		register,
 		handleSubmit,
 		formState: {errors}
-	} = useForm<{ priority: string, description: string, status: string }>({
+	} = useForm<UpdateTaskDto>({
 		defaultValues: {
 			priority: task?.priority,
 			description: task?.description,

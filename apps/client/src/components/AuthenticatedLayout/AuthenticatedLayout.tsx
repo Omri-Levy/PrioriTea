@@ -1,7 +1,7 @@
 import {AppShell, Burger, Divider, Header, Navbar, Text} from "@mantine/core";
 import {FunctionComponent, useState} from "react";
 import {Link, Outlet} from "react-router-dom";
-import {Logout, Settings, SwitchHorizontal} from "tabler-icons-react";
+import {Logout} from "tabler-icons-react";
 import {AuthApi} from "../../api/auth-api";
 import {queryClient} from "../../lib/query-client";
 import {NavLink} from "../NavLink/NavLink";
@@ -62,23 +62,23 @@ export const AuthenticatedLayout: FunctionComponent = () => {
             </Text>
             <Divider/>
                       {links}
-            <NavLink to={"/settings"} end={true}>
-              <Settings className={"navlink__icon"} />
-              <span>Settings</span>
-            </NavLink>
+            {/*<NavLink to={"/settings"} end={true}>*/}
+            {/*  <Settings className={"navlink__icon"} />*/}
+            {/*  <span>Settings</span>*/}
+            {/*</NavLink>*/}
           </Navbar.Section>
 
           <Navbar.Section className={"app-shell__footer"}>
-            <Link
-              to="#"
-              className="app-shell__link"
-              onClick={(event) => event.preventDefault()}
-            >
-              <SwitchHorizontal className={"app-shell__link__icon"} />
-              <span className="capitalize">
-                Change account
-              </span>
-            </Link>
+            {/*<Link*/}
+            {/*  to="#"*/}
+            {/*  className="app-shell__link"*/}
+            {/*  onClick={(event) => event.preventDefault()}*/}
+            {/*>*/}
+            {/*  <SwitchHorizontal className={"app-shell__link__icon"} />*/}
+            {/*  <span className="capitalize">*/}
+            {/*    Change account*/}
+            {/*  </span>*/}
+            {/*</Link>*/}
 
             <Link
               to="/sign-in"

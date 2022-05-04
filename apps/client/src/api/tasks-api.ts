@@ -1,11 +1,5 @@
 import { axiosClient } from "../lib/axios-client";
-
-export interface ITask {
-  id: string;
-  priority: string;
-  description: string;
-  status: string;
-}
+import {ITask} from "@prioritea/types";
 
 export type Tasks = Array<ITask>;
 

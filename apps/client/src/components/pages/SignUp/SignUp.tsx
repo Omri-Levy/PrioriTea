@@ -1,23 +1,20 @@
 import {
-  Anchor,
-  Button,
-  Checkbox,
-  Divider,
-  Group,
-  Paper,
-  PasswordInput,
-  Text,
-  TextInput,
+	Anchor,
+	Button,
+	Group,
+	Paper,
+	PasswordInput,
+	Text,
+	TextInput,
 } from "@mantine/core";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpSchema } from "@prioritea/validation";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { BrandGoogle, BrandTwitter } from "tabler-icons-react";
-import { ErrorAlert } from "../../ErrorAlert/ErrorAlert";
-import { useSignUpMutation } from "./hooks/useSignUpMutation/useSignUpMutation";
-import { FieldError } from "../../FieldError/FieldError";
-import { ISignUpForm } from "./interfaces";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {signUpSchema} from "@prioritea/validation";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {Link, useNavigate} from "react-router-dom";
+import {ErrorAlert} from "../../ErrorAlert/ErrorAlert";
+import {useSignUpMutation} from "./hooks/useSignUpMutation/useSignUpMutation";
+import {FieldError} from "../../FieldError/FieldError";
+import {ISignUpForm} from "./interfaces";
 
 export const SignUp = () => {
   const {
@@ -61,18 +58,18 @@ export const SignUp = () => {
 
   return (
     <Paper radius="md" p="xl" withBorder>
-      <Text size="lg" weight={500}>
-        Welcome to PrioriTea, Sign Up with
-      </Text>
-      <Group grow mb="md" mt="md">
-        <Button variant="filled" radius="xl" leftIcon={<BrandGoogle size={18} />}>
-          Google
-        </Button>
-        <Button variant="filled" radius="xl" leftIcon={<BrandTwitter size={18} />}>
-          Twitter
-        </Button>
-      </Group>
-      <Divider label="Or continue with email" labelPosition="center" my="lg" />
+      {/*<Text size="lg" weight={500}>*/}
+      {/*  Welcome to PrioriTea, Sign Up with*/}
+      {/*</Text>*/}
+      {/*<Group grow mb="md" mt="md">*/}
+      {/*  <Button variant="filled" radius="xl" leftIcon={<BrandGoogle size={18} />}>*/}
+      {/*    Google*/}
+      {/*  </Button>*/}
+      {/*  <Button variant="filled" radius="xl" leftIcon={<BrandTwitter size={18} />}>*/}
+      {/*    Twitter*/}
+      {/*  </Button>*/}
+      {/*</Group>*/}
+      {/*<Divider label="Or continue with email" labelPosition="center" my="lg" />*/}
       {isError && (
         <ErrorAlert title="Something went wrong..">
           Please refresh this page or try again later. If the problem persists
@@ -114,11 +111,11 @@ export const SignUp = () => {
             
           />
           <FieldError field={errors.passwordConfirmation} />
-          <Checkbox
-            {...register("tos")}
-            label="I accept terms and conditions"
-            
-          />
+          {/*<Checkbox*/}
+          {/*  {...register("tos")}*/}
+          {/*  label="I accept terms and conditions"*/}
+          {/*  */}
+          {/*/>*/}
         </Group>
 
         <Group position="apart" mt="xl">

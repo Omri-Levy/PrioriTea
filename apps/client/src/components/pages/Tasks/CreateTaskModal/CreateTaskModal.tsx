@@ -6,8 +6,9 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Button, Group, Modal, TextInput} from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
-import {CreateTaskDto, CreateTaskModalProps} from "./interfaces";
+import { CreateTaskModalProps} from "./interfaces";
 import {createTaskSchema} from "@prioritea/validation";
+import {CreateTaskDto} from "@prioritea/types";
 
 export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 																			 isOpen,
@@ -18,7 +19,7 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 		register,
 		handleSubmit,
 		formState: {errors}
-	} = useForm<{ priority: string, description: string }>({
+	} = useForm<CreateTaskDto>({
 		defaultValues: {
 			priority: '',
 			description: '',

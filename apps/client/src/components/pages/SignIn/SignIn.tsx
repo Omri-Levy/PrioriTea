@@ -1,24 +1,21 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import {zodResolver} from "@hookform/resolvers/zod";
 import {
-  Anchor,
-  Button,
-  Checkbox,
-  Divider,
-  Group,
-  Paper,
-  PasswordInput,
-  Text,
-  TextInput
+	Anchor,
+	Button,
+	Group,
+	Paper,
+	PasswordInput,
+	Text,
+	TextInput
 } from "@mantine/core";
-import { signInSchema } from "@prioritea/validation";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { BrandGoogle, BrandTwitter } from "tabler-icons-react";
-import { queryClient } from "../../../lib/query-client";
-import { ErrorAlert } from "../../ErrorAlert/ErrorAlert";
-import { FieldError } from "../../FieldError/FieldError";
-import { useSignInMutation } from "./hooks/useSignInMutation/useSignInMutation";
-import { ISignInForm } from "./interfaces";
+import {signInSchema} from "@prioritea/validation";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {Link, useNavigate} from "react-router-dom";
+import {queryClient} from "../../../lib/query-client";
+import {ErrorAlert} from "../../ErrorAlert/ErrorAlert";
+import {FieldError} from "../../FieldError/FieldError";
+import {useSignInMutation} from "./hooks/useSignInMutation/useSignInMutation";
+import {ISignInForm} from "./interfaces";
 
 export const SignIn = () => {
   const {
@@ -55,18 +52,18 @@ export const SignIn = () => {
 
   return (
     <Paper radius="md" p="xl" withBorder>
-      <Text size="lg" weight={500}>
-        Welcome to PrioriTea, Sign In with
-      </Text>
-      <Group grow mb="md" mt="md">
-        <Button variant="filled" radius="xl" leftIcon={<BrandGoogle size={18} />}>
-          Google
-        </Button>
-        <Button variant="filled"radius="xl" leftIcon={<BrandTwitter size={18} />}>
-          Twitter
-        </Button>
-      </Group>
-      <Divider label="Or continue with email" labelPosition="center" my="lg" />
+      {/*<Text size="lg" weight={500}>*/}
+      {/*  Welcome to PrioriTea, Sign In with*/}
+      {/*</Text>*/}
+      {/*<Group grow mb="md" mt="md">*/}
+      {/*  <Button variant="filled" radius="xl" leftIcon={<BrandGoogle size={18} />}>*/}
+      {/*    Google*/}
+      {/*  </Button>*/}
+      {/*  <Button variant="filled"radius="xl" leftIcon={<BrandTwitter size={18} />}>*/}
+      {/*    Twitter*/}
+      {/*  </Button>*/}
+      {/*</Group>*/}
+      {/*<Divider label="Or continue with email" labelPosition="center" my="lg" />*/}
       {isError && (
         <ErrorAlert title="Something went wrong..">
           Please refresh this page or try again later. If the problem persists
@@ -92,10 +89,10 @@ export const SignIn = () => {
             
           />
           <FieldError field={errors.password} />
-          <Checkbox
-            label="Remember password"
-            
-          />
+          {/*<Checkbox*/}
+          {/*  label="Remember password"*/}
+          {/*  */}
+          {/*/>*/}
         </Group>
 
         <Group position="apart" mt="xl">

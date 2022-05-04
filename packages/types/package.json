@@ -1,10 +1,9 @@
 {
   "name": "@prioritea/types",
   "version": "1.0.0",
-  "main": "dist/index.js",
+  "main": "index.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
     "watch": "tsc -w"
   },
   "devDependencies": {

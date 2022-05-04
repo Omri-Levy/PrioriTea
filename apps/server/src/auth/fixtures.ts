@@ -1,32 +1,28 @@
-export enum Method {
-	GET = 'get',
-	POST = 'post',
-	PATCH = 'patch',
-	DELETE = 'delete',
-	ALL = 'all',
-}
+import {Method} from "@prioritea/types";
 
-export const badMethods: Array<Method> = [Method.PATCH, Method.PATCH, Method.DELETE];
+export const badMethods: Array<Method> = [
+	Method.PUT, Method.PATCH, Method.DELETE
+];
 
 export const routes = [
 	{
 		method: Method.POST,
-		route: "/auth/sign-up",
+		route: "auth/sign-up",
 		auth: false,
 	},
 	{
 		method: Method.POST,
-		route: "/auth/sign-in",
+		route: "auth/sign-in",
 		auth: false,
 	},
 	{
 		method: Method.POST,
-		route: "/auth/sign-out",
+		route: "auth/sign-out",
 		auth: true,
 	},
 	{
 		method: Method.GET,
-		route: "/auth/user-info",
+		route: "auth/user-info",
 		auth: true,
 	},
 ];

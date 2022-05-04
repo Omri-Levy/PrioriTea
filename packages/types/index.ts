@@ -1,3 +1,3 @@
 export * from "./src/enums";
 export * from "./src/types";
-// export * from './src/interfaces';
+export * from './src/interfaces';

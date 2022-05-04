@@ -1,13 +1,11 @@
 import { useQuery } from "react-query";
 import { AuthApi } from "../../../../../api/auth-api";
+import {UserDto} from "@prioritea/types";
 
 
 export const useUserInfoQuery = () => {
 
-  return useQuery<{
-    email: string;
-    name: string;
-  },
+  return useQuery<UserDto,
     Error
   >(['userInfo'], async () => {
     const { data } = await AuthApi.getUserInfo();

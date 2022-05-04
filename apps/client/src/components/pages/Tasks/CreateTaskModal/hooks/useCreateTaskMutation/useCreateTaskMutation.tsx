@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from "react-query";
 import {Tasks, TasksApi} from "../../../../../../api/tasks-api";
-import {CreateTaskDto} from "../../interfaces";
+import {CreateTaskDto} from "@prioritea/types";
 
 export const useCreateTaskMutation = () => {
 	const queryClient = useQueryClient();
