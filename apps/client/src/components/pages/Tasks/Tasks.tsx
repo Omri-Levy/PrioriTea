@@ -42,6 +42,7 @@ export const Search: FunctionComponent<SearchProps> = function({
 	const theme = useMantineTheme();
 
 	return (
+		<div>
 		<TextInput
 			icon={<SearchIcon size={18} />}
 			radius="xl"
@@ -51,7 +52,7 @@ export const Search: FunctionComponent<SearchProps> = function({
 					{theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
 				</ActionIcon>
 			}
-			styles={{wrapper: {width: "25rem"}}}
+			styles={{root: {maxWidth: '30%'}}}
 			rightSectionWidth={42}
 			value={value || ""}
 			onChange={e => {
@@ -60,6 +61,7 @@ export const Search: FunctionComponent<SearchProps> = function({
 			}}
 			placeholder={`Searching in ${count} records...`}
 		/>
+		</div>
 	)
 }
 

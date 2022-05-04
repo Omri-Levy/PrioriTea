@@ -163,7 +163,8 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 						'& tbody tr td': {borderBottom: 0}
 					}} {...getTableProps()}>
 					<DnDReactTable.THead
-						visibleColumnsLength={visibleColumns.length}
+						// visibleColumns.length without + 1 leaves an empty column.
+						visibleColumnsLength={visibleColumns.length + 1}
 						preGlobalFilteredRows={preGlobalFilteredRows}
 						setGlobalFilter={setGlobalFilter}
 						globalFilter={globalFilter}
