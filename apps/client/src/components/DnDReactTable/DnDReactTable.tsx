@@ -15,10 +15,10 @@ import {BaseColumns, BaseData} from "./types";
 import {DnDReactTableProps} from "./interfaces";
 import {matchSorter} from "match-sorter";
 
-export const useConsole = (value: any) => {
+export const useConsole = (...values: any[]) => {
 	useEffect(() => {
-		console.log(value);
-	}, [value]);
+		console.log(...values);
+	}, [values]);
 };
 
 interface IndeterminateCheckboxProps {
@@ -120,6 +120,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 				...cols,
 			])
 	);
+	useConsole(gotoPage, pageIndex, pageCount);
 	const selectedRowIds = useMemo(() =>
 		selectedFlatRows?.map(
 			// @ts-ignore
@@ -178,11 +179,10 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 					</Droppable>
 				</Table>
 				<Pagination
-					withEdges
+					siblings={2}
+					page={pageIndex + 1}
 					onChange={(page) => gotoPage(page - 1)}
 					total={pageCount}
-					page={pageIndex + 1}
-					siblings={2}
 					getItemAriaLabel={(page) => {
 						switch (page) {
 							case 'dots':
