@@ -18,6 +18,7 @@ export interface UpdateTaskDto {
 }
 
 export interface UserDto {
+	id: string;
 	email: string;
 	name: string;
 }

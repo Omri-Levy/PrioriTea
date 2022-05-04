@@ -1,6 +1,6 @@
 import { Response } from "express";
-import { IUser } from "../../interfaces";
+import {UserDto} from "@prioritea/types";
 
-export const getUser = function (res: Response): IUser | undefined {
+export const getUser = function (res: Response): UserDto | undefined {
 	return res.locals.user;
 };

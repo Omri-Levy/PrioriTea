@@ -1,0 +1,14 @@
+{
+  "name": "@prioritea/tsconfig",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "files": [
+	"tsconfig-base.json",
+	"tsconfig-client.json",
+	"tsconfig-server.json",
+	"tsconfig-types.json",
+	"tsconfig-utils.json",
+	"tsconfig-validation.json"
+  ]
+}
