@@ -30,8 +30,8 @@ export const useCreateTaskMutation = () => {
 		onError(_err, _newTask, context: {prevTasks: Tasks} | undefined) {
 			queryClient.setQueryData(['tasks'], context?.prevTasks);
 		},
-		onSuccess(tasks) {
-			queryClient.setQueryData(['tasks'], tasks);
+		onSettled() {
+			queryClient.invalidateQueries(['tasks']);
 		}
 	});
 }

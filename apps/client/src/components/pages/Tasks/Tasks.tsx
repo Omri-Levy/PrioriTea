@@ -34,8 +34,8 @@ export const useDeleteTasksMutation = () => {
 		onError(_err, _ids, context: {prevTasks: TasksType} | undefined) {
 			queryClient.setQueryData(['tasks'], context?.prevTasks);
 		},
-		onSuccess(tasks) {
-			queryClient.setQueryData(['tasks'], tasks);
+		onSettled() {
+			queryClient.invalidateQueries(['tasks']);
 		}
 	})
 }
