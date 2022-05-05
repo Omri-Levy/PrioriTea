@@ -2,7 +2,7 @@ import {THeadProps} from "./interfaces";
 import {Center, Group, Text} from "@mantine/core";
 import {ChevronDown, ChevronUp, Selector} from "tabler-icons-react";
 import {Search} from "../../pages/Tasks/Tasks";
-import {FunctionComponent, useMemo} from "react";
+import {Fragment, FunctionComponent, useMemo} from "react";
 
 export const THead: FunctionComponent<THeadProps> = ({headerGroups,
 														 visibleColumnsLength, preGlobalFilteredRows, globalFilter, setGlobalFilter,
@@ -10,14 +10,19 @@ export const THead: FunctionComponent<THeadProps> = ({headerGroups,
 }) => {
 	const colsWithFilter = useMemo(() => headerGroups
 		.flatMap(({headers}) => headers)
-		.filter((c) => c.canFilter), [headerGroups.length]);
+		.filter((c) => c.canFilter), [headerGroups]);
 
 	return (
 		<thead>
 		<tr>
 			<th colSpan={visibleColumnsLength}>
+				Filters
 				<Group>
-			{colsWithFilter.map((c) => c.render("Filter"))}
+			{colsWithFilter.map((c) => (
+				<Fragment key={c.getHeaderProps().key}>
+					{c.render("Filter")}
+				</Fragment>
+			))}
 				</Group>
 			</th>
 		</tr>

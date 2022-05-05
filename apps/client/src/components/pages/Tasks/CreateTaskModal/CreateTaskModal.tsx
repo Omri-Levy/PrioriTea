@@ -4,12 +4,20 @@ import {
 } from "./hooks/useCreateTaskMutation/useCreateTaskMutation";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Button, Group, Modal, NumberInput, TextInput} from "@mantine/core";
+import {
+	Button,
+	Group,
+	Modal,
+	NumberInput,
+	Select,
+	TextInput
+} from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
 import {CreateTaskModalProps} from "./interfaces";
 import {createTaskSchema} from "@prioritea/validation";
 import {CreateTaskDto} from "@prioritea/types";
 import {Priority} from "../UpdateTaskModal/UpdateTaskModal";
+import {formatTaskStatus} from "../Tasks";
 
 enum Status {
 IDLE = "IDLE",
@@ -72,6 +80,21 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 						label="Description"
 						placeholder="Type here.."
 						{...register("description")}
+					/>
+					<Controller
+						control={control}
+						name={"status"}
+						render={({field}) => (
+							<Select
+								label="Status"
+								placeholder="Pick one.."
+								data={Object.values(Status).filter((status) => status !== Status.COMPLETED).map((status) => ({
+									value: status,
+									label: formatTaskStatus(status)
+								}))}
+								{...field}
+							/>
+						)}
 					/>
 				</Group>
 				<Group position="apart" mt="xl">

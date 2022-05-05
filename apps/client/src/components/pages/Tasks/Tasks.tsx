@@ -111,7 +111,8 @@ export const FilterCheckboxGroup = (
 
 		// @ts-ignore
 		preFilteredRows.forEach((row) => {
-			opts.add(row.values[id]);
+			// Ensures that the filter value is a string
+			opts.add(`${row.values[id]}`);
 		});
 
 		// @ts-ignore
@@ -130,6 +131,7 @@ export const FilterCheckboxGroup = (
 						{options?.map(
 							(option: any) => (
 									<Checkbox
+										key={`${option}-${id}`}
 										value={option}
 										// @ts-ignore
 										label={rest?.transformer ? rest?.transformer(option) : option}

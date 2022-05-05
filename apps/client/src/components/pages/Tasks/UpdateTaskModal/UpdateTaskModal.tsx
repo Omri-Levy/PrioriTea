@@ -17,6 +17,7 @@ import {UpdateTaskModalProps} from "./interfaces";
 import {UpdateTaskDto} from "@prioritea/types";
 import {updateTaskSchema} from "@prioritea/validation";
 import {useTasksQuery} from "../hooks/useTasksQuery/useTasksQuery";
+import {formatTaskStatus} from "../Tasks";
 
 export enum Status {
 	IDLE = "IDLE",
@@ -109,8 +110,10 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 							<Select
 								label="Status"
 								placeholder="Pick one.."
-								data={Object.values(Status)}
-								style={{textTransform: 'capitalize'}}
+								data={Object.values(Status).filter((status) => status !== Status.COMPLETED).map((status) => ({
+									value: status,
+									label: formatTaskStatus(status)
+								}))}
 								{...field}
 							/>
 						)}

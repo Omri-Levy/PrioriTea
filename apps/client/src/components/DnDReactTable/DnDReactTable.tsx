@@ -78,7 +78,9 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 		multiSelect: (rows, id, filterValues) => {
 			if (filterValues.length === 0) return rows;
 			// @ts-ignore
-			return rows.filter((row) => filterValues.includes(row.values[id]));
+			return rows.filter((row) =>
+				// Handles numbers
+				filterValues.includes(`${row.values[id]}`));
 		},
 	}), []);
 	const {
