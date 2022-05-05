@@ -35,12 +35,12 @@ export const toCapitalized = (str: string) =>
 const toScreamingSnakeCase = (str: string) =>
 	str
 		// camel to snake
-		.replace(/([a-z])([A-Z])/g, '$1_$2')
+		?.replace(/([a-z])([A-Z])/g, '$1_$2')
 		// kebab to snake
-		.replace(/-/g, '_')
+		?.replace(/-/g, '_')
 		// spaces to snake
-		.replace(/\s/g, '_')
-		.toUpperCase();
+		?.replace(/\s/g, '_')
+		?.toUpperCase();
 
 export const taskSchema = z.object({
 	id: z.string().cuid(),
@@ -63,7 +63,8 @@ export const taskSchema = z.object({
 			// Status must be Idle, In-progress, or Completed
 			return {message: `Status must be ${values}`};
 		}
-	}).transform((value) => toScreamingSnakeCase(value)).optional(),
+	})
+		.transform((value) => toScreamingSnakeCase(value)).optional(),
 	userId: z.string().cuid(),
 	createdAt: z.date(),
 	updatedAt: z.date(),

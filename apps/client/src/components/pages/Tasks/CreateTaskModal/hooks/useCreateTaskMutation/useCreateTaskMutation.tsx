@@ -25,10 +25,8 @@ export const useCreateTaskMutation = () => {
 
 			queryClient.setQueryData(['tasks'], (prev) => [
 				...prev as Tasks,
-				{
-					...newTask,
-					status: 'Standby',
-				}]);
+					newTask,
+			]);
 
 			return {prevTasks};
 		},

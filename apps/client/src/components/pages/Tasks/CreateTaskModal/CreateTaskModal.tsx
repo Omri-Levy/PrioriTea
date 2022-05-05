@@ -37,7 +37,7 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 		formState: {errors}
 	} = useForm<CreateTaskDto>({
 		defaultValues: {
-			priority: 1,
+			priority: Priority.MIN,
 			description: '',
 			status: Status.IDLE
 		},
@@ -45,9 +45,10 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 	});
 	const onSubmit: SubmitHandler<CreateTaskDto> = async ({
 															  priority,
-															  description
+															  description,
+			status,
 														  }) => {
-		await mutateAsync({priority, description});
+		await mutateAsync({priority, description, status});
 
 		onClose();
 	};
