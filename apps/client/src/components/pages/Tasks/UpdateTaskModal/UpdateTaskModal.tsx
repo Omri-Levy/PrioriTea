@@ -2,9 +2,9 @@ import {FunctionComponent, useEffect, useMemo} from "react";
 import {
 	useUpdateTaskMutation
 } from "./hooks/useUpdateTaskMutation/useUpdateTaskMutation";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Button, Group, Modal, TextInput} from "@mantine/core";
+import {Button, Group, Modal, NumberInput, TextInput} from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
 import {UpdateTaskModalProps} from "./interfaces";
 import {UpdateTaskDto} from "@prioritea/types";
@@ -20,6 +20,7 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 	const task = useMemo(() => tasks?.find((task) => task.id === id), [tasks?.length, id]);
 	const {
 		reset,
+		control,
 		register,
 		handleSubmit,
 		formState: {errors}
@@ -56,10 +57,17 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 		>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Group direction="column" grow>
-					<TextInput
-						label="Priority"
-						placeholder={task?.priority}
-						{...register("priority")}
+					<Controller
+						control={control}
+						name={"priority"}
+						render={({field}) => (
+							<NumberInput
+								required
+								label="Priority"
+								placeholder="Type here.."
+								{...field}
+							/>
+						)}
 					/>
 					<FieldError field={errors.priority}/>
 					<TextInput

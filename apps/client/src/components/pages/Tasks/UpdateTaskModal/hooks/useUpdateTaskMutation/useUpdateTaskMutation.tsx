@@ -11,7 +11,7 @@ export const useUpdateTaskMutation = () => {
 											 description,
 		status,
 										 }: UpdateTaskDto) => {
-		const {data} = await TasksApi.updateById(id, priority, description, status);
+		const {data} = await TasksApi.updateById({id, priority, description, status});
 
 		return data.data.tasks;
 	}, {

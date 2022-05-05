@@ -2,9 +2,9 @@ import {FunctionComponent} from "react";
 import {
 	useCreateTaskMutation
 } from "./hooks/useCreateTaskMutation/useCreateTaskMutation";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Button, Group, Modal, TextInput} from "@mantine/core";
+import {Button, Group, Modal, NumberInput, TextInput} from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
 import {CreateTaskModalProps} from "./interfaces";
 import {createTaskSchema} from "@prioritea/validation";
@@ -22,6 +22,7 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 																		 }) => {
 	const {mutateAsync} = useCreateTaskMutation();
 	const {
+		control,
 		register,
 		handleSubmit,
 		formState: {errors}
@@ -50,11 +51,17 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 		>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<Group direction="column" grow>
-					<TextInput
-						required
-						label="Priority"
-						placeholder="Type here.."
-						{...register("priority")}
+					<Controller
+						control={control}
+						name={"priority"}
+						render={({field}) => (
+							<NumberInput
+								required
+								label="Priority"
+								placeholder="Type here.."
+								{...field}
+							/>
+						)}
 					/>
 					<FieldError field={errors.priority}/>
 					<TextInput
