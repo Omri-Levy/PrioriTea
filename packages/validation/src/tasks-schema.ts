@@ -26,6 +26,8 @@ export const toKebabCase = (str: string) =>
 	// spaces to kebab
 	.replace(/\s/g, '-')
 ;
+export const formatTaskStatus = (status: string) => toCapitalized(toKebabCase(status)?.toLowerCase())
+
 
 export const toCapitalized = (str: string) =>
 	str.charAt(0).toUpperCase() + str.slice(1);
@@ -51,7 +53,7 @@ export const taskSchema = z.object({
 				.map((status, i, arr) => {
 					// Enums are separated by underscores, turns
 					// In_progress to In-progress.
-					const str = toCapitalized(toKebabCase(status).toLowerCase());
+					const str = formatTaskStatus(status);
 
 					// Prepends 'or' to the last item in the enum
 					return i === arr.length - 1 ? `or ${str}` :

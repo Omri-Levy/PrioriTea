@@ -104,7 +104,7 @@ export const FilterCheckboxGroup = (
 	// @ts-ignore
 	{column:
 		// @ts-ignore
-	{filterValue, setFilter, preFilteredRows, id}
+	{filterValue, setFilter, preFilteredRows, id, ...rest},
 	}) => {
 	const options = useMemo(() => {
 		const opts = new Set<string>();
@@ -112,7 +112,6 @@ export const FilterCheckboxGroup = (
 		// @ts-ignore
 		preFilteredRows.forEach((row) => {
 			opts.add(row.values[id]);
-
 		});
 
 		// @ts-ignore
@@ -132,9 +131,12 @@ export const FilterCheckboxGroup = (
 							(option: any) => (
 									<Checkbox
 										value={option}
-										label={option}
-										sx={{
-											textTransform: "capitalize",
+										// @ts-ignore
+										label={rest?.transformer ? rest?.transformer(option) : option}
+										styles={{
+											label: {
+												textTransform: "capitalize",
+											},
 										}}
 									/>
 						))}
@@ -145,11 +147,13 @@ export const FilterCheckboxGroup = (
 export const toKebabCase = (str: string) =>
 	str
 		// camel to kebab
-		.replace(/([a-z])([A-Z])/g, '$1-$2')
+		?.replace(/([a-z])([A-Z])/g, '$1-$2')
 		// snake to kebab
-		.replace(/_/g, '-')
+		?.replace(/_/g, '-')
 		// spaces to kebab
-		.replace(/\s/g, '-')
+		?.replace(/\s/g, '-')
+
+export const formatTaskStatus = (status: string) => toCapitalized(toKebabCase(status)?.toLowerCase())
 
 export const Tasks = () => {
 	const {isToggled: deleteModalIsOpen, toggleOn: deleteModalOnOpen, toggleOff: deleteModalOnClose} = useToggle(false);
@@ -171,10 +175,19 @@ export const Tasks = () => {
 			Header: 'Status',
 			accessor: 'status',
 			filter: 'multiSelect',
-			Filter: FilterCheckboxGroup,
+			Filter: (props) => (
+				<FilterCheckboxGroup
+					{...props}
+					column={{
+			...props.column,
+				// @ts-ignore
+				transformer: formatTaskStatus,
+			}
+			}/>
+			),
 			// @ts-ignore
 			Cell({value}) {
-				return toCapitalized(toKebabCase(value)?.toLowerCase());
+				return formatTaskStatus(value);
 			}
 		},
 	];
