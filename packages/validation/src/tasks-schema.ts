@@ -1,6 +1,6 @@
 import z from 'zod';
 
-// FIXME: importing @prioritea/validation from client when @prioritea/validation imports from @prioritea/types causes CRA to error.
+// FIXME: importing @prioritea/types or @prioritea/validation into client breaks CRA
 enum Status {
 	IDLE = 'IDLE',
 	IN_PROGRESS = 'IN_PROGRESS',
@@ -17,7 +17,7 @@ enum Priority {
 	MAX = Priority.FIVE,
 }
 
-const toKebabCase = (str: string) =>
+export const toKebabCase = (str: string) =>
 	str
 		// camel to kebab
 		.replace(/([a-z])([A-Z])/g, '$1-$2')
@@ -27,7 +27,7 @@ const toKebabCase = (str: string) =>
 	.replace(/\s/g, '-')
 ;
 
-const toCapitalized = (str: string) =>
+export const toCapitalized = (str: string) =>
 	str.charAt(0).toUpperCase() + str.slice(1);
 
 const toScreamingSnakeCase = (str: string) =>

@@ -4,12 +4,36 @@ import {
 } from "./hooks/useUpdateTaskMutation/useUpdateTaskMutation";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Button, Group, Modal, NumberInput, TextInput} from "@mantine/core";
+import {
+	Button,
+	Group,
+	Modal,
+	NumberInput,
+	Select,
+	TextInput
+} from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
 import {UpdateTaskModalProps} from "./interfaces";
 import {UpdateTaskDto} from "@prioritea/types";
 import {updateTaskSchema} from "@prioritea/validation";
 import {useTasksQuery} from "../hooks/useTasksQuery/useTasksQuery";
+
+export enum Status {
+	IDLE = "IDLE",
+	IN_PROGRESS = "IN_PROGRESS",
+	COMPLETED = "COMPLETED",
+}
+
+export enum Priority {
+	ONE = 1,
+	TWO = 2,
+	THREE = 3,
+	FOUR = 4,
+	FIVE = 5,
+	MIN = Priority.ONE,
+	MAX = Priority.FIVE,
+}
+
 
 export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 							id,												 isOpen,
@@ -65,8 +89,8 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 								required
 								label="Priority"
 								placeholder="Type here.."
-								min={1}
-								max={5}
+								min={Priority.MIN}
+								max={Priority.MAX}
 								{...field}
 							/>
 						)}
@@ -78,10 +102,18 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 						{...register("description")}
 					/>
 					<FieldError field={errors.description}/>
-					<TextInput
-						label="Status"
-						placeholder={task?.status}
-						{...register("status")}
+					<Controller
+						control={control}
+						name={"status"}
+						render={({field}) => (
+							<Select
+								label="Status"
+								placeholder="Pick one.."
+								data={Object.values(Status)}
+								style={{textTransform: 'capitalize'}}
+								{...field}
+							/>
+						)}
 					/>
 					<FieldError field={errors.status}/>
 				</Group>

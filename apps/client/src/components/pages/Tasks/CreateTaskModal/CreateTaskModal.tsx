@@ -9,6 +9,7 @@ import {FieldError} from "../../../FieldError/FieldError";
 import {CreateTaskModalProps} from "./interfaces";
 import {createTaskSchema} from "@prioritea/validation";
 import {CreateTaskDto} from "@prioritea/types";
+import {Priority} from "../UpdateTaskModal/UpdateTaskModal";
 
 enum Status {
 IDLE = "IDLE",
@@ -59,8 +60,8 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 								required
 								label="Priority"
 								placeholder="Type here.."
-								min={1}
-								max={5}
+								min={Priority.MIN}
+								max={Priority.MAX}
 								{...field}
 							/>
 						)}

@@ -32,6 +32,9 @@ export interface SearchProps {
 	globalFilter: string | undefined;
 }
 
+const toCapitalized = (str: string) =>
+	str?.charAt(0)?.toUpperCase() + str?.slice(1);
+
 export const Search: FunctionComponent<SearchProps> = function({
 						  preGlobalFilteredRows,
 						  globalFilter,
@@ -139,6 +142,15 @@ export const FilterCheckboxGroup = (
 	);
 }
 
+export const toKebabCase = (str: string) =>
+	str
+		// camel to kebab
+		.replace(/([a-z])([A-Z])/g, '$1-$2')
+		// snake to kebab
+		.replace(/_/g, '-')
+		// spaces to kebab
+		.replace(/\s/g, '-')
+
 export const Tasks = () => {
 	const {isToggled: deleteModalIsOpen, toggleOn: deleteModalOnOpen, toggleOff: deleteModalOnClose} = useToggle(false);
 	const {isToggled: updateModalIsOpen, toggleOn: updateModalOnOpen, toggleOff: updateModalOnClose} = useToggle(false);
@@ -160,6 +172,10 @@ export const Tasks = () => {
 			accessor: 'status',
 			filter: 'multiSelect',
 			Filter: FilterCheckboxGroup,
+			// @ts-ignore
+			Cell({value}) {
+				return toCapitalized(toKebabCase(value)?.toLowerCase());
+			}
 		},
 	];
 	const {data: tasks = [], isLoading, isError} = useTasksQuery();
