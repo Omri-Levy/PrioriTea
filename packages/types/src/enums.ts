@@ -6,3 +6,9 @@ export enum Method {
   DELETE = "delete",
   ALL = "all",
 }
+
+export enum Status {
+	IDLE = "IDLE",
+	IN_PROGRESS = "IN_PROGRESS",
+	COMPLETED = "COMPLETED",
+}

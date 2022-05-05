@@ -6,9 +6,15 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Button, Group, Modal, TextInput} from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
-import { CreateTaskModalProps} from "./interfaces";
+import {CreateTaskModalProps} from "./interfaces";
 import {createTaskSchema} from "@prioritea/validation";
 import {CreateTaskDto} from "@prioritea/types";
+
+enum Status {
+IDLE = "IDLE",
+	IN_PROGRESS = "IN_PROGRESS",
+	COMPLETED = "COMPLETED"
+}
 
 export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 																			 isOpen,
@@ -21,8 +27,9 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 		formState: {errors}
 	} = useForm<CreateTaskDto>({
 		defaultValues: {
-			priority: '',
+			priority: 1,
 			description: '',
+			status: Status.IDLE
 		},
 		resolver: zodResolver(createTaskSchema)
 	});

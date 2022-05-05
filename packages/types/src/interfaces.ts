@@ -1,20 +1,23 @@
-export interface ITask {
+import {Status} from "./enums";
+
+export interface TaskDto {
   id: string;
-  priority: string;
+  priority: number;
   description: string;
-  status: string;
+  status: Status;
 }
 
 export interface CreateTaskDto {
-  priority: string;
+  priority: number;
   description: string;
+  status?: Status;
 }
 
 export interface UpdateTaskDto {
 	id: string;
-  priority?: string;
+  priority?: number;
   description?: string;
-  status?: string;
+  status?: Status;
 }
 
 export interface UserDto {

@@ -6,7 +6,8 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Button, Group, Modal, TextInput} from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
-import {UpdateTaskDto, UpdateTaskModalProps} from "./interfaces";
+import {UpdateTaskModalProps} from "./interfaces";
+import {UpdateTaskDto} from "@prioritea/types";
 import {updateTaskSchema} from "@prioritea/validation";
 import {useTasksQuery} from "../hooks/useTasksQuery/useTasksQuery";
 

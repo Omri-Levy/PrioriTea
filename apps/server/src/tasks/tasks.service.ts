@@ -1,3 +1,4 @@
+import { CreateTaskDto, UpdateTaskDto } from "@prioritea/types";
 import { Task } from "@prisma/client";
 import { Service } from "../core/service";
 import { TasksRepository } from "./tasks.repository";
@@ -5,18 +6,13 @@ import { TasksRepository } from "./tasks.repository";
 export interface ITasksService {
 	createTask(
 		userId: string,
-		priority: string,
-		description: string,
-		status?: string
+		task: CreateTaskDto
 	): Promise<Array<Task> | null>;
 	getTasks(userId: string): Promise<Array<Task> | null>;
 	getTask(id: string): Promise<Task | null>;
 	updateTask(
 		userId: string,
-		id: string,
-		priority?: string,
-		description?: string,
-		status?: string
+		task: UpdateTaskDto
 	): Promise<Array<Task> | null>;
 	deleteTask(userId: string, id: string): Promise<Array<Task> | null>;
 }
@@ -26,11 +22,17 @@ export class TasksService extends Service<TasksRepository> implements ITasksServ
 
 	async createTask(
 		userId: string,
-		priority: string,
-		description: string,
-		status?: string
+		{
+			priority,
+			description,
+			status,
+		}: CreateTaskDto
 	) {
-		await this.repository.createTask(userId, priority, description, status);
+		await this.repository.createTask(userId, {
+			priority,
+			description,
+			status,
+		});
 
 		return this.repository.getAllTasksByUserId(userId);
 	}
@@ -45,12 +47,19 @@ export class TasksService extends Service<TasksRepository> implements ITasksServ
 
 	async updateTask(
 		userId: string,
-		id: string,
-		priority?: string,
-		description?: string,
-		status?: string
+		{
+			id,
+			priority,
+			description,
+			status,
+		}: UpdateTaskDto
 	) {
-		await this.repository.updateTaskById(id, priority, description, status);
+		await this.repository.updateTaskById({
+			id,
+			priority,
+			description,
+			status
+		});
 
 		return this.repository.getAllTasksByUserId(userId);
 	}

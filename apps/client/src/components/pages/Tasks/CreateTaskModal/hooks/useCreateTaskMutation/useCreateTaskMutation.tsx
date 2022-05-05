@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from "react-query";
-import {Tasks, TasksApi} from "../../../../../../api/tasks-api";
-import {CreateTaskDto} from "@prioritea/types";
+import {TasksApi} from "../../../../../../api/tasks-api";
+import {Tasks, CreateTaskDto} from "@prioritea/types";
 
 export const useCreateTaskMutation = () => {
 	const queryClient = useQueryClient();
@@ -8,8 +8,13 @@ export const useCreateTaskMutation = () => {
 	return useMutation(['tasks'], async ({
 											 priority,
 											 description,
+		status
 										 }: CreateTaskDto) => {
-		const {data} = await TasksApi.create(priority, description);
+		const {data} = await TasksApi.create({
+			priority,
+			description,
+			status
+		});
 
 		return data.data.tasks;
 	}, {
