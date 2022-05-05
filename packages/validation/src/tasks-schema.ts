@@ -45,7 +45,7 @@ const toScreamingSnakeCase = (str: string) =>
 export const taskSchema = z.object({
 	id: z.string().cuid(),
 	priority: z.number().min(Priority.MIN, `Priority must be greater than or equal to ${Priority.MIN}`).max(Priority.MAX, `Priority must be less than or equal to ${Priority.MAX}`),
-	description: z.string().min(1).max(80),
+	description: z.string().min(1, `Description must contain at least 1 character(s)`).max(500, `Description must contain at most 500 character(s)`),
 	status: z.nativeEnum(Status, {
 		errorMap() {
 			// Convert the SCREAMING_SNAKE_CASE enum to human-readable
