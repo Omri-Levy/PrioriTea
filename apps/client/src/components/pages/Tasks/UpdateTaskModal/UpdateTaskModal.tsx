@@ -80,14 +80,13 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 			onClose={onClose}
 			title="Update a task"
 		>
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<Group direction="column" grow>
 					<Controller
 						control={control}
 						name={"priority"}
 						render={({field}) => (
 							<NumberInput
-								required
 								label="Priority"
 								placeholder="Type here.."
 								min={Priority.MIN}

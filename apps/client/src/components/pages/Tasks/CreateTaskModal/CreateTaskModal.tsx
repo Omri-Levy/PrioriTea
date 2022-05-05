@@ -58,7 +58,7 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 			onClose={onClose}
 			title="Create a task"
 		>
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<Group direction="column" grow>
 					<Controller
 						control={control}
@@ -81,6 +81,7 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 						placeholder="Type here.."
 						{...register("description")}
 					/>
+					<FieldError field={errors.description}/>
 					<Controller
 						control={control}
 						name={"status"}
@@ -96,6 +97,7 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 							/>
 						)}
 					/>
+					<FieldError field={errors.status}/>
 				</Group>
 				<Group position="apart" mt="xl">
 					<Button type="submit" style={{textTransform: "capitalize"}}
