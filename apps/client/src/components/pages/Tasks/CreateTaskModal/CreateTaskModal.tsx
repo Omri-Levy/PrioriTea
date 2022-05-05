@@ -59,6 +59,8 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 								required
 								label="Priority"
 								placeholder="Type here.."
+								min={1}
+								max={5}
 								{...field}
 							/>
 						)}
