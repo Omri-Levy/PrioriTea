@@ -1,5 +1,5 @@
 {
-  "extends": "@prioritea/config/tsconfig-client.json",
+  "extends": "@prioritea/tsconfig/tsconfig-client.json",
   "compilerOptions": {
     "rootDir": ".",
   },

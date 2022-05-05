@@ -1,5 +1,5 @@
 {
-  "extends": "@prioritea/config/tsconfig-types.json",
+  "extends": "@prioritea/tsconfig/tsconfig-types.json",
   "compilerOptions": {
 	"noEmit": true,
   },

@@ -1,5 +1,5 @@
 {
-  "extends": "@prioritea/config/tsconfig-utils.json",
+  "extends": "@prioritea/tsconfig/tsconfig-utils.json",
   "compilerOptions": {
     "outDir": "./dist"
   }

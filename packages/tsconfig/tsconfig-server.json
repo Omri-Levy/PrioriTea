@@ -3,7 +3,7 @@
 	"compilerOptions": {
 	    "moduleResolution": "node",
 	    "target": "ESNext",
-	  	"module": "commonjs",
+	  	"module": "commonjs"
 	}
 }
 
