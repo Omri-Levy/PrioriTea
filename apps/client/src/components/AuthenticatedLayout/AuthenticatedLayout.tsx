@@ -33,6 +33,13 @@ export const AuthenticatedLayout: FunctionComponent = () => {
 
   return (
     <AppShell
+		sx={{
+			['@media (max-width: 768px)']: {
+				main: {
+					paddingInline: "0.5rem",
+				}
+			},
+		}}
       className={"app-shell"}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"

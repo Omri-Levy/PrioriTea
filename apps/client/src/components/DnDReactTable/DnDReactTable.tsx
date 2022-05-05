@@ -8,12 +8,13 @@ import {
 } from "react-table";
 import {forwardRef, FunctionComponent, useEffect, useMemo, useRef} from "react";
 import {Checkbox, Pagination, ScrollArea, Skeleton, Table} from "@mantine/core";
-import {useListState} from "@mantine/hooks";
+import {useListState, useMediaQuery} from "@mantine/hooks";
 import {THead} from "./THead/THead";
 import {TBody} from "./TBody/TBody";
 import {BaseColumns, BaseData} from "./types";
 import {DnDReactTableProps} from "./interfaces";
 import {matchSorter} from "match-sorter";
+
 
 export const useConsole = (...values: any[]) => {
 	useEffect(() => {
@@ -68,7 +69,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 	const tableData = useMemo(() => isLoading ? Array(10).fill({}) : data, [isLoading, data])
 	const tableCols = useMemo(() => isLoading ? columns.map((col) => ({
 		...col,
-		Cell: <Skeleton height={20}/>,
+		Cell: <Skeleton height={21.7}/>,
 	})) : columns, [isLoading, data])
 	const filterTypes = useMemo(() => ({
 		text: fuzzyTextFilter,
@@ -133,6 +134,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 	// Passing the page to react-beautiful-dnd and not the data ensures
 	// the table updates when the data changes and the drag and drop works. (when combined with the useEffect below)
 	const [state, handlers] = useListState(page);
+	const isLargerThanSm = useMediaQuery('(min-width: 500px)');
 
 	// Second half of updating data on change.
 	useEffect(() => {
@@ -155,11 +157,12 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 					})
 				}}
 			>
+				<div style={{display: "grid", alignItems: "flex-start", gridTemplateColumns: "1fr", minHeight: "55vh"}}>
 				<Table
 					highlightOnHover
 					sx={{
-						marginBottom: "1rem",
 						minWidth: 420,
+						marginBottom: "1rem",
 						'& tbody tr td': {borderBottom: 0}
 					}} {...getTableProps()}>
 					<DnDReactTable.THead
@@ -182,10 +185,13 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 					</Droppable>
 				</Table>
 				<Pagination
-					siblings={2}
+					style={{alignSelf: "flex-end"}}
+					withEdges={isLargerThanSm}
+					boundaries={isLargerThanSm ? 0 : 1}
+					siblings={isLargerThanSm ? 2 : undefined}
 					page={pageIndex + 1}
 					onChange={(page) => gotoPage(page - 1)}
-					total={pageCount}
+					total={isLoading ? 10 : pageCount}
 					getItemAriaLabel={(page) => {
 						switch (page) {
 							case 'dots':
@@ -203,6 +209,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 						}
 					}}
 				/>
+				</div>
 			</DragDropContext>
 		</ScrollArea>
 	);

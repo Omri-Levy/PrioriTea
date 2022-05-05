@@ -52,7 +52,7 @@ export const Search: FunctionComponent<SearchProps> = function({
 					{theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
 				</ActionIcon>
 			}
-			styles={{root: {maxWidth: '30%'}}}
+			styles={{root: {maxWidth: '30%', minWidth: "280px"}}}
 			rightSectionWidth={42}
 			value={value || ""}
 			onChange={e => {
