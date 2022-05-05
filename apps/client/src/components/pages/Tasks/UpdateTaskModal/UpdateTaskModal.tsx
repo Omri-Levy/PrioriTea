@@ -109,7 +109,7 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 							<Select
 								label="Status"
 								placeholder="Pick one.."
-								data={Object.values(Status).filter((status) => status !== Status.COMPLETED).map((status) => ({
+								data={Object.values(Status).map((status) => ({
 									value: status,
 									label: formatTaskStatus(status)
 								}))}

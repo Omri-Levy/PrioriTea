@@ -100,6 +100,8 @@ export const useDeleteTasksMutation = () => {
 	})
 }
 
+// FIXME: one checkbox group changes length, one does not. They should either both change length or both not.
+
 export const FilterCheckboxGroup = (
 	// @ts-ignore
 	{column:
