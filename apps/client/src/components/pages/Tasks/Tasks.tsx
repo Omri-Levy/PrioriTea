@@ -5,16 +5,22 @@ import {
 	Tooltip,
 	useMantineTheme
 } from "@mantine/core";
-import {ArrowLeft, ArrowRight, Pencil, Plus, Search as SearchIcon, Trash} from "tabler-icons-react";
+import {
+	ArrowLeft,
+	ArrowRight,
+	Pencil,
+	Plus,
+	Search as SearchIcon,
+	Trash
+} from "tabler-icons-react";
 import {DnDReactTable} from "../../DnDReactTable/DnDReactTable";
 import {useToggle} from "../../../hooks/useToggle/useToggle";
-import {useTasksColumns} from "./hooks/useTasksColumns/useTasksColumns";
 import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
 import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
 import {FunctionComponent, useCallback, useState} from "react";
 import {useMutation, useQueryClient} from "react-query";
 import {Tasks as TasksType, TasksApi} from "../../../api/tasks-api";
-import { UpdateTaskModal } from "./UpdateTaskModal/UpdateTaskModal";
+import {UpdateTaskModal} from "./UpdateTaskModal/UpdateTaskModal";
 import {useAsyncDebounce} from "react-table";
 
 export interface SearchProps {
@@ -36,6 +42,7 @@ export const Search: FunctionComponent<SearchProps> = function({
 	const theme = useMantineTheme();
 
 	return (
+		<div>
 		<TextInput
 			icon={<SearchIcon size={18} />}
 			radius="xl"
@@ -45,7 +52,7 @@ export const Search: FunctionComponent<SearchProps> = function({
 					{theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
 				</ActionIcon>
 			}
-			styles={{wrapper: {width: "25rem"}}}
+			styles={{root: {maxWidth: '30%', minWidth: "280px"}}}
 			rightSectionWidth={42}
 			value={value || ""}
 			onChange={e => {
@@ -54,6 +61,7 @@ export const Search: FunctionComponent<SearchProps> = function({
 			}}
 			placeholder={`Searching in ${count} records...`}
 		/>
+		</div>
 	)
 }
 
@@ -90,8 +98,21 @@ export const Tasks = () => {
 	const {isToggled: deleteModalIsOpen, toggleOn: deleteModalOnOpen, toggleOff: deleteModalOnClose} = useToggle(false);
 	const {isToggled: updateModalIsOpen, toggleOn: updateModalOnOpen, toggleOff: updateModalOnClose} = useToggle(false);
 
-	const columns = useTasksColumns();
-	const {data: tasks, isLoading, isError} = useTasksQuery();
+	const columns = [
+		{
+			Header: 'Priority',
+			accessor: 'priority',
+		},
+		{
+			Header: 'Description',
+			accessor: 'description',
+		},
+		{
+			Header: 'Status',
+			accessor: 'status',
+		},
+	];
+	const {data: tasks = [], isLoading, isError} = useTasksQuery();
 	const [selectedRowIds, setSelectedRowIds] = useState<Array<string>>([]);
 	const getSelectedRowIds = useCallback((ids: Array<string>) => {
 		setSelectedRowIds(ids);
@@ -101,16 +122,8 @@ export const Tasks = () => {
 		await mutateAsync({ids: selectedRowIds});
 	}, [selectedRowIds]);
 
-	if (isLoading) {
-		return <div>Loading...</div>;
-	}
-
 	if (isError) {
 		return <div>Error</div>;
-	}
-
-	if (!tasks) {
-		return <div>No tasks</div>;
 	}
 
 	return (
@@ -154,6 +167,7 @@ export const Tasks = () => {
 				</Tooltip>
 			</Group>
 			<DnDReactTable
+				isLoading={isLoading}
 				data={tasks}
 				columns={columns}
 				options={{

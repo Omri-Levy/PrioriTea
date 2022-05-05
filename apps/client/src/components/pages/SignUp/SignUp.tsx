@@ -4,7 +4,6 @@ import {
 	Group,
 	Paper,
 	PasswordInput,
-	Text,
 	TextInput,
 } from "@mantine/core";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -52,9 +51,6 @@ export const SignUp = () => {
   };
 
   // TODO Finalize loading state, disable button, etc.
-  if (isLoading) {
-    return <Text>Loading...</Text>;
-  }
 
   return (
     <Paper radius="md" p="xl" withBorder>
@@ -129,7 +125,9 @@ export const SignUp = () => {
             Already have an account? Sign In!
           </Anchor>
           {/* TODO Add loader */}
-          <Button variant="filled" type="submit" style={{ textTransform: "capitalize" }}>
+          <Button
+			 loading={isLoading}
+			  variant="filled" type="submit" style={{ textTransform: "capitalize" }}>
             Sign Up
           </Button>
         </Group>

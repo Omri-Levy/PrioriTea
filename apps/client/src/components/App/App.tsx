@@ -1,13 +1,13 @@
 import {
-  ColorScheme,
-  ColorSchemeProvider,
-  MantineProvider,
+	ColorScheme,
+	ColorSchemeProvider,
+	MantineProvider,
 } from "@mantine/core";
-import { useColorScheme, useHotkeys, useLocalStorage } from "@mantine/hooks";
-import { QueryClientProvider } from "react-query";
-import { Router } from "../Router/Router";
-import { queryClient } from "../../lib/query-client";
-import { useEffect } from "react";
+import {useColorScheme, useHotkeys, useLocalStorage} from "@mantine/hooks";
+import {QueryClientProvider} from "react-query";
+import {Router} from "../Router/Router";
+import {queryClient} from "../../lib/query-client";
+import {useEffect} from "react";
 
 export const App = () => {
   const preferredColorScheme = useColorScheme();
@@ -26,6 +26,7 @@ export const App = () => {
   }, [colorScheme]);
 
   return (
+	  <QueryClientProvider client={queryClient}>
     <ColorSchemeProvider
       colorScheme={colorScheme}
       toggleColorScheme={toggleColorScheme}
@@ -53,10 +54,9 @@ export const App = () => {
         withNormalizeCSS
         withCSSVariables
       >
-        <QueryClientProvider client={queryClient}>
               <Router />
-        </QueryClientProvider>
       </MantineProvider>
     </ColorSchemeProvider>
+	  </QueryClientProvider>
   );
 };

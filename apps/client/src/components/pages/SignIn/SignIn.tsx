@@ -5,13 +5,11 @@ import {
 	Group,
 	Paper,
 	PasswordInput,
-	Text,
 	TextInput
 } from "@mantine/core";
 import {signInSchema} from "@prioritea/validation";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Link, useNavigate} from "react-router-dom";
-import {queryClient} from "../../../lib/query-client";
 import {ErrorAlert} from "../../ErrorAlert/ErrorAlert";
 import {FieldError} from "../../FieldError/FieldError";
 import {useSignInMutation} from "./hooks/useSignInMutation/useSignInMutation";
@@ -40,15 +38,10 @@ export const SignIn = () => {
       password,
     });
 
-    queryClient.invalidateQueries(['userInfo']);
-
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   // TODO Finalize loading state, disable button, etc.
-  if (isLoading) {
-    return <Text>Loading...</Text>;
-  }
 
   return (
     <Paper radius="md" p="xl" withBorder>
@@ -106,7 +99,9 @@ export const SignIn = () => {
             Don't have an account? Sign up!
           </Anchor>
           {/* TODO Add loader */}
-          <Button variant="filled" type="submit" style={{ textTransform: "capitalize" }}>
+          <Button
+			 loading={isLoading}
+			  variant="filled" type="submit" style={{ textTransform: "capitalize" }}>
             Sign In
           </Button>
         </Group>

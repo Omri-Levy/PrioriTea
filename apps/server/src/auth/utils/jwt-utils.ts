@@ -4,8 +4,9 @@ import { sign, verify as verifyJwt } from "jsonwebtoken";
 import { DOMAIN, SECRET_ACCESS_TOKEN } from "../../env/env";
 import { isDev } from "../../env/is-dev";
 import { UnauthorizedError } from "../../errors/unauthorized-error";
-import { IUser, IJwtPayload } from "../../interfaces";
+import { IJwtPayload } from "../../interfaces";
 import { Expiration } from "../../utils/expiration";
+import {UserDto} from "@prioritea/types";
 
 export class JwtUtils {
 	// eslint-disable-next-line no-use-before-define
@@ -33,7 +34,7 @@ export class JwtUtils {
 		return token;
 	}
 
-	static createAccessTokenCookie(res: Response, toTokenize: IUser | string) {
+	static createAccessTokenCookie(res: Response, toTokenize: UserDto | string) {
 		const isProd = !isDev();
 		// Allows passing an empty string instead of a user when unauthenticated.
 		const token =
@@ -52,7 +53,7 @@ export class JwtUtils {
 		});
 	}
 
-	static createAccessToken(user: IUser) {
+	static createAccessToken(user: UserDto) {
 		return sign(
 			{
 				exp: Expiration.inHours(9).getTime(),

@@ -8,7 +8,8 @@ export const TBody: FunctionComponent<TBodyProps> = ({
 														 provided,
 														 getTableBodyProps,
 														 page,
-														 prepareRow
+														 prepareRow,
+
 													 }) => {
 	const useStyles = createStyles((theme) => ({
 		item: {

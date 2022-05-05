@@ -30,6 +30,7 @@ export const UnauthenticatedLayout: FunctionComponent =
     const links = routes.map(({ path, end, text, Icon, onClick }) => {
       const handleClick = () => {
         onClick && onClick();
+
         toggleIsOpen();
       };
 
