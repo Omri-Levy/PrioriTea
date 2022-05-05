@@ -6,4 +6,11 @@ export interface THeadProps {
 	globalFilter: string;
 	preGlobalFilteredRows: Array<any>;
 	visibleColumnsLength: number;
+	filters?: Array<{
+		// An array of filters
+		value: Array<string>;
+		label: string;
+		onChange: (value: Array<string>) => void;
+		values: Array<string>;
+	}>;
 }

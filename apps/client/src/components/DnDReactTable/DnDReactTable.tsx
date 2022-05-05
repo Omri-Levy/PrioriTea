@@ -1,5 +1,7 @@
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import {
+	Column,
+	useFilters,
 	useGlobalFilter,
 	usePagination,
 	useRowSelect,
@@ -11,7 +13,7 @@ import {Checkbox, Pagination, ScrollArea, Skeleton, Table} from "@mantine/core";
 import {useListState, useMediaQuery} from "@mantine/hooks";
 import {THead} from "./THead/THead";
 import {TBody} from "./TBody/TBody";
-import {BaseColumns, BaseData} from "./types";
+import {BaseData} from "./types";
 import {DnDReactTableProps} from "./interfaces";
 import {matchSorter} from "match-sorter";
 
@@ -59,13 +61,12 @@ fuzzyTextFilter.autoRemove = (val: string | undefined) => !val;
 /**
  * @description Combines react-table and react-beautiful-dnd into a drag and drop table with sort, filter, search, and pagination.
  */
-export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColumns>({
+export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Column>>({
 																						data,
 																						columns,
 																						options,
 	getSelectedRowIds,
-	isLoading,
-																					}: DnDReactTableProps<TData, TColumns>) => {
+	isLoading,}: DnDReactTableProps<TData, TColumns>) => {
 	const tableData = useMemo(() => isLoading ? Array(10).fill({}) : data, [isLoading, data])
 	const tableCols = useMemo(() => isLoading ? columns.map((col) => ({
 		...col,
@@ -73,6 +74,12 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 	})) : columns, [isLoading, data])
 	const filterTypes = useMemo(() => ({
 		text: fuzzyTextFilter,
+		// @ts-ignore
+		multiSelect: (rows, id, filterValues) => {
+			if (filterValues.length === 0) return rows;
+			// @ts-ignore
+			return rows.filter((row) => filterValues.includes(row.values[id]));
+		},
 	}), []);
 	const {
 		getTableProps,
@@ -93,6 +100,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends BaseColum
 			filterTypes,
 			...options,
 		},
+		useFilters,
 		useGlobalFilter,
 		useSortBy,
 		usePagination,

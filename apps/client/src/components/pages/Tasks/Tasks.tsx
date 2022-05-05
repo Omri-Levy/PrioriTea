@@ -1,5 +1,7 @@
 import {
 	ActionIcon,
+	Checkbox,
+	CheckboxGroup,
 	Group,
 	TextInput,
 	Tooltip,
@@ -17,11 +19,11 @@ import {DnDReactTable} from "../../DnDReactTable/DnDReactTable";
 import {useToggle} from "../../../hooks/useToggle/useToggle";
 import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
 import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
-import {FunctionComponent, useCallback, useState} from "react";
+import {FunctionComponent, useCallback, useMemo, useState} from "react";
 import {useMutation, useQueryClient} from "react-query";
 import {Tasks as TasksType, TasksApi} from "../../../api/tasks-api";
 import {UpdateTaskModal} from "./UpdateTaskModal/UpdateTaskModal";
-import {useAsyncDebounce} from "react-table";
+import {Column, useAsyncDebounce} from "react-table";
 
 export interface SearchProps {
 	preGlobalFilteredRows: TasksType;
@@ -52,7 +54,7 @@ export const Search: FunctionComponent<SearchProps> = function({
 					{theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
 				</ActionIcon>
 			}
-			styles={{root: {maxWidth: '30%', minWidth: "280px"}}}
+			styles={{root: {maxWidth: '35%', minWidth: "280px"}}}
 			rightSectionWidth={42}
 			value={value || ""}
 			onChange={e => {
@@ -94,22 +96,69 @@ export const useDeleteTasksMutation = () => {
 	})
 }
 
+export const FilterCheckboxGroup = (
+	// @ts-ignore
+	{column:
+		// @ts-ignore
+	{filterValue, setFilter, preFilteredRows, id}
+	}) => {
+	const options = useMemo(() => {
+		const opts = new Set<string>();
+
+		// @ts-ignore
+		preFilteredRows.forEach((row) => {
+			opts.add(row.values[id]);
+
+		});
+
+		// @ts-ignore
+		return 	[...opts.values()]
+	}, [id, preFilteredRows]);
+
+
+	return (
+		<CheckboxGroup
+			styles={{label: {textTransform: "capitalize"}}}
+			label={id}
+			value={filterValue}
+			onChange={setFilter}
+			size={"xs"}
+		>
+						{options?.map(
+							(option: any) => (
+									<Checkbox
+										value={option}
+										label={option}
+										sx={{
+											textTransform: "capitalize",
+										}}
+									/>
+						))}
+		</CheckboxGroup>
+	);
+}
+
 export const Tasks = () => {
 	const {isToggled: deleteModalIsOpen, toggleOn: deleteModalOnOpen, toggleOff: deleteModalOnClose} = useToggle(false);
 	const {isToggled: updateModalIsOpen, toggleOn: updateModalOnOpen, toggleOff: updateModalOnClose} = useToggle(false);
 
-	const columns = [
+	const columns: Array<Column> = [
 		{
 			Header: 'Priority',
 			accessor: 'priority',
+			filter: 'multiSelect',
+			Filter: FilterCheckboxGroup,
 		},
 		{
 			Header: 'Description',
 			accessor: 'description',
+			disableFilters: true,
 		},
 		{
 			Header: 'Status',
 			accessor: 'status',
+			filter: 'multiSelect',
+			Filter: FilterCheckboxGroup,
 		},
 	];
 	const {data: tasks = [], isLoading, isError} = useTasksQuery();
