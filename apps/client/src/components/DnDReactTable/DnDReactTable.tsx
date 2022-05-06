@@ -16,6 +16,7 @@ import {TBody} from "./TBody/TBody";
 import {BaseData} from "./types";
 import {DnDReactTableProps} from "./interfaces";
 import {matchSorter} from "match-sorter";
+import { useSearchParams } from "react-router-dom";
 
 
 export const useConsole = (...values: any[]) => {
@@ -92,7 +93,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 		preGlobalFilteredRows,
 		setGlobalFilter,
 		visibleColumns,
-		state: {globalFilter, pageIndex},
+		state: {globalFilter, filters, pageIndex},
 		page,
 		pageCount,
 		gotoPage,
@@ -145,6 +146,22 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 	// the table updates when the data changes and the drag and drop works. (when combined with the useEffect below)
 	const [state, handlers] = useListState(page);
 	const isLargerThanSm = useMediaQuery('(min-width: 500px)');
+	const params = useMemo(() => {
+		let arr: Array<string> = [];
+
+		filters.forEach((f) => {
+
+			f.value.forEach((v: string) => {
+				arr = [
+					...arr,
+					`${f.id}=${v}`,
+				]
+			});
+		});
+
+		return arr.join('&');
+	},[filters]);
+	const [,setSearchParams] = useSearchParams();
 
 	// Second half of updating data on change.
 	useEffect(() => {
@@ -156,6 +173,11 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 
 		getSelectedRowIds(selectedRowIds);
 	}, [selectedRowIds.length]);
+
+	useEffect(() => {
+		setSearchParams(params);
+	}, [params]);
+
 
 	return (
 		<ScrollArea>

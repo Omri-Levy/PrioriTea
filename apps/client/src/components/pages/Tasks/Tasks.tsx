@@ -21,7 +21,7 @@ import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
 import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
 import {FunctionComponent, useCallback, useMemo, useState} from "react";
 import {useMutation, useQueryClient} from "react-query";
-import { TasksApi} from "../../../api/tasks-api";
+import {TasksApi} from "../../../api/tasks-api";
 import {UpdateTaskModal} from "./UpdateTaskModal/UpdateTaskModal";
 import {Column, useAsyncDebounce} from "react-table";
 import {Tasks as TasksType} from "@prioritea/types";
@@ -120,7 +120,6 @@ export const FilterCheckboxGroup = (
 		// @ts-ignore
 		return 	[...opts.values()]
 	}, [id, preFilteredRows]);
-
 
 	return (
 		<CheckboxGroup
