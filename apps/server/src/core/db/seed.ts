@@ -9,7 +9,19 @@ const pages = 10;
 
 export type BaseArray = any[];
 
-export const mapRange = <TItem>(n: number, strategy: () => TItem) => Array(n).fill({}).map(strategy);
+/**
+ * @description Returns an array of n numbers.
+ * @param n
+ */
+export const arrayOfN = (n: number) =>
+	Array.from({length: n }, (_, i) => i + 1);
+
+/**
+ * @description Maps n times using the passed in callback, passes a one-based number as the first argument, and a zero-based index as the second argument.
+ * @param n
+ * @param strategy
+ */
+export const mapRange = <TItem>(n: number, strategy: (n: number, i: number) => TItem) => arrayOfN(n).map(strategy);
 
 const userData = mapRange<Prisma.UserCreateInput>(users, () =>
 	({
