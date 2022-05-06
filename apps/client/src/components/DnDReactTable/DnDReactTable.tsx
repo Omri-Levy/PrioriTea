@@ -105,6 +105,12 @@ export const noNullish = <TData extends Array<unknown>,>(
 		// for the function and string | undefined for str.
 	}, parts[0] ?? ``);
 
+export const uniqueArray = <
+	TItem,
+		>
+	(arr: IterableIterator<TItem> | Array<TItem>): Array<TItem> =>
+	[...new Set(arr)];
+
 /**
  * @description Combines react-table and react-beautiful-dnd into a drag and drop table with sort, filter, search, and pagination.
  */
@@ -137,23 +143,19 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 		},
 	}), []);
 	const [searchParams,setSearchParams] = useSearchParams();
+	// const GLOBAL_FILTER = 'search';
 	// Converts the search params to the shape react-table expects
-	const cachedFilters =  useMemo(() => (
-		Object.entries(qs.parse(searchParams.toString()))
-			?.reduce((acc, curr) => {
-				const [key, value] = curr;
+	const cachedFilters =  useMemo(() =>
+		uniqueArray(searchParams.keys())
+		.map((id) => ({id, value: searchParams.getAll(id)}))
+		, [Object.values(searchParams).length]);
 
-				if (!key || !value) return acc;
+useMemo(() => {
+	// @ts-ignore
+	console.log(
 
-				acc.push({
-					id: key,
-					/// react-table expects value to be an array.
-					// @ts-ignore
-					value: Array.isArray(value) ? value : [value],
-				});
-
-				return acc;
-			}, [] as Array<{[key: string]: string | string[]}>)), [Object.values(searchParams).length]);
+	);
+}, [searchParams])
 
 	const {
 		getTableProps,
@@ -174,7 +176,8 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 			filterTypes,
 			...options,
 			initialState: {
-				filters: cachedFilters,
+				filters: cachedFilters.filter((f) => f.id !== 'search'),
+				globalFilter: cachedFilters?.find((f) => f?.id === 'search')?.value?.join(''),
 				...options?.initialState,
 			},
 		},
@@ -251,8 +254,12 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 	useEffect(() => {
 		if (!Object.values(params).length) return;
 
-		setSearchParams(qs.stringify(params, {arrayFormat: 'repeat'}));
-	}, [params]);
+		setSearchParams(qs.stringify({
+			...params,
+			search: globalFilter,
+		}, {arrayFormat: 'repeat'}));
+	}, [params, globalFilter]);
+
 
 	return (
 		<ScrollArea>
