@@ -2,13 +2,30 @@ import {THeadProps} from "./interfaces";
 import {Center, Group, Text} from "@mantine/core";
 import {ChevronDown, ChevronUp, Selector} from "tabler-icons-react";
 import {Search} from "../../pages/Tasks/Tasks";
-import {FunctionComponent} from "react";
+import {Fragment, FunctionComponent, useMemo} from "react";
 
 export const THead: FunctionComponent<THeadProps> = ({headerGroups,
-														 visibleColumnsLength, preGlobalFilteredRows, globalFilter, setGlobalFilter}) => {
+														 visibleColumnsLength, preGlobalFilteredRows, globalFilter, setGlobalFilter,
+
+}) => {
+	const colsWithFilter = useMemo(() => headerGroups
+		.flatMap(({headers}) => headers)
+		.filter((c) => !c.disableFilters), [headerGroups]);
 
 	return (
 		<thead>
+		<tr>
+			<th colSpan={visibleColumnsLength}>
+				Filters
+				<Group>
+			{colsWithFilter?.map((c) => (
+				<Fragment key={c.getHeaderProps().key}>
+					{c.render("Filter")}
+				</Fragment>
+			))}
+				</Group>
+			</th>
+		</tr>
 		<tr>
 			<th
 				colSpan={visibleColumnsLength}

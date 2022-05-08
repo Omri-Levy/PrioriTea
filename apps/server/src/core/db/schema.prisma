@@ -24,11 +24,17 @@ model User {
 
 model Task {
   id String @id @default(cuid())
-  priority    String @db.VarChar(255)
+  priority    Int
   description String @db.VarChar(500)
-  status      String @db.VarChar(255) @default("Standby")
+  status      Status @default(IDLE)
   User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+enum Status {
+  IDLE
+  IN_PROGRESS
+  COMPLETED
 }

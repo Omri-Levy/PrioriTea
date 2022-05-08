@@ -1,7 +1,5 @@
 import { axiosClient } from "../lib/axios-client";
-import {ITask} from "@prioritea/types";
-
-export type Tasks = Array<ITask>;
+import {CreateTaskDto, Tasks, UpdateTaskDto} from "@prioritea/types";
 
 interface ITasksResponse {
   data: {
@@ -26,11 +24,11 @@ export class TasksApi {
     return this._instance;
   }
 
-  public static async create(
-    priority: string,
-    description: string,
-    status?: string
-  ): Promise<ITasksResponse> {
+  public static async create({
+	  priority,
+	  description,
+								 status,
+							 }: CreateTaskDto): Promise<ITasksResponse> {
 
     return axiosClient.post(this.API_URL, {
       priority,
@@ -47,12 +45,12 @@ export class TasksApi {
     return axiosClient.get(`${this.API_URL}/${id}`);
   }
 
-  public static async updateById(
-    id: string,
-    priority?: string,
-    description?: string,
-    status?: string
-  ): Promise<ITasksResponse> {
+  public static async updateById({
+	  id,
+	  priority,
+	  description,
+	  status,
+								 }: UpdateTaskDto): Promise<ITasksResponse> {
     return axiosClient.patch(`${this.API_URL}/${id}`, {
       priority,
       description,

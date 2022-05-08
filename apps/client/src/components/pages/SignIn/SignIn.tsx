@@ -28,7 +28,7 @@ export const SignIn = () => {
     },
   });
   const navigate = useNavigate();
-  const { mutateAsync, isLoading, isError } = useSignInMutation();
+  const { mutateAsync, isLoading, isError, error } = useSignInMutation();
   const onSubmit: SubmitHandler<ISignInForm> = async ({
     email,
     password,
@@ -41,7 +41,7 @@ export const SignIn = () => {
     navigate("/", { replace: true });
   };
 
-  // TODO Finalize loading state, disable button, etc.
+  const queryError = (error as any)?.response.data.errors[0].message;
 
   return (
     <Paper radius="md" p="xl" withBorder>
@@ -59,8 +59,7 @@ export const SignIn = () => {
       {/*<Divider label="Or continue with email" labelPosition="center" my="lg" />*/}
       {isError && (
         <ErrorAlert title="Something went wrong..">
-          Please refresh this page or try again later. If the problem persists
-          please contact us.
+			{queryError ?? `Please refresh this page or try again later. If the problem persists,please contact us.`}
         </ErrorAlert>
       )}
       <form noValidate onSubmit={handleSubmit(onSubmit)}>

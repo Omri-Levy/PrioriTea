@@ -1,7 +1,7 @@
-import { ITask } from "./interfaces";
+import { TaskDto } from "./interfaces";
 
 export type MethodUnion = "post" | "get" | "put" | "patch" | "delete";
 
 export type VoidFunction = () => void;
 
-export type Tasks = Array<ITask>;
+export type Tasks = Array<TaskDto>;

@@ -1,11 +1,14 @@
+import {CreateTaskDto, UpdateTaskDto} from "@prioritea/types";
 import { db } from "../core/db/db";
 
 export class TasksRepository {
 	public async createTask(
 		userId: string,
-		priority: string,
-		description: string,
-		status?: string
+		{
+			priority,
+			description,
+			status
+		}: CreateTaskDto
 	) {
 		return  db.task.create({
 			data: {
@@ -36,10 +39,12 @@ export class TasksRepository {
 	}
 
 	public async updateTaskById(
-		id: string,
-		priority?: string,
-		description?: string,
-		status?: string
+		{
+			id,
+			priority,
+			description,
+			status
+		}: UpdateTaskDto
 	) {
 		return db.task.update({
 			where: { id },

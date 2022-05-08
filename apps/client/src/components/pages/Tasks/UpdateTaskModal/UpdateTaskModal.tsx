@@ -2,13 +2,39 @@ import {FunctionComponent, useEffect, useMemo} from "react";
 import {
 	useUpdateTaskMutation
 } from "./hooks/useUpdateTaskMutation/useUpdateTaskMutation";
-import {SubmitHandler, useForm} from "react-hook-form";
+import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
-import {Button, Group, Modal, TextInput} from "@mantine/core";
+import {
+	Button,
+	Group,
+	Modal,
+	NumberInput,
+	Select,
+	TextInput
+} from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
-import {UpdateTaskDto, UpdateTaskModalProps} from "./interfaces";
+import {UpdateTaskModalProps} from "./interfaces";
+import {UpdateTaskDto} from "@prioritea/types";
 import {updateTaskSchema} from "@prioritea/validation";
 import {useTasksQuery} from "../hooks/useTasksQuery/useTasksQuery";
+import {formatTaskStatus} from "../Tasks";
+
+export enum Status {
+	IDLE = "IDLE",
+	IN_PROGRESS = "IN_PROGRESS",
+	COMPLETED = "COMPLETED",
+}
+
+export enum Priority {
+	ONE = 1,
+	TWO = 2,
+	THREE = 3,
+	FOUR = 4,
+	FIVE = 5,
+	MIN = Priority.ONE,
+	MAX = Priority.FIVE,
+}
+
 
 export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 							id,												 isOpen,
@@ -19,6 +45,7 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 	const task = useMemo(() => tasks?.find((task) => task.id === id), [tasks?.length, id]);
 	const {
 		reset,
+		control,
 		register,
 		handleSubmit,
 		formState: {errors}
@@ -53,12 +80,20 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 			onClose={onClose}
 			title="Update a task"
 		>
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<form noValidate onSubmit={handleSubmit(onSubmit)}>
 				<Group direction="column" grow>
-					<TextInput
-						label="Priority"
-						placeholder={task?.priority}
-						{...register("priority")}
+					<Controller
+						control={control}
+						name={"priority"}
+						render={({field}) => (
+							<NumberInput
+								label="Priority"
+								placeholder="Type here.."
+								min={Priority.MIN}
+								max={Priority.MAX}
+								{...field}
+							/>
+						)}
 					/>
 					<FieldError field={errors.priority}/>
 					<TextInput
@@ -67,10 +102,20 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 						{...register("description")}
 					/>
 					<FieldError field={errors.description}/>
-					<TextInput
-						label="Status"
-						placeholder={task?.status}
-						{...register("status")}
+					<Controller
+						control={control}
+						name={"status"}
+						render={({field}) => (
+							<Select
+								label="Status"
+								placeholder="Pick one.."
+								data={Object.values(Status).map((status) => ({
+									value: status,
+									label: formatTaskStatus(status)
+								}))}
+								{...field}
+							/>
+						)}
 					/>
 					<FieldError field={errors.status}/>
 				</Group>

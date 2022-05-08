@@ -1,7 +1,14 @@
 {
-  "extends": "@prioritea/config/tsconfig-client.json",
+  "extends": "@prioritea/tsconfig/tsconfig-client.json",
   "compilerOptions": {
     "rootDir": ".",
+	"jsx": "react-jsx",
+    "lib": [
+      "dom",
+      "es5",
+      "scripthost",
+      "es2015.collection"
+    ]
   },
   "include": ["src/"],
   "exclude": ["**/node_modules/**", "**/.turbo/**", "**/dist/**", "**/coverage/**", "**/src/**/*.(test|spec).ts"]

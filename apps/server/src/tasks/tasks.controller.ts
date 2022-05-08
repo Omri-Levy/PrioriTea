@@ -74,9 +74,11 @@ export class TasksController
 	public async createTask(req: Request, res: Response) {
 		const tasks = await this.service.createTask(
 			getUserId(res)!,
-			req.body.priority,
-			req.body.description,
-			req.body.status
+			{
+				priority: req.body.priority,
+				description: req.body.description,
+				status: req.body.status,
+			}
 		);
 
 		return new CreatedResponse(res, { data: { tasks } });
@@ -113,10 +115,12 @@ export class TasksController
 	public async updateTask(req: Request, res: Response) {
 		const tasks = await this.service.updateTask(
 			getUserId(res)!,
-			req.params.id!,
-			req.body.priority,
-			req.body.description,
-			req.body.status
+			{
+				id: req.params.id!,
+				priority: req.body.priority,
+				description: req.body.description,
+				status: req.body.status,
+			}
 		);
 
 		return new OkResponse(res, { data: { tasks } });

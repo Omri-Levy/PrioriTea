@@ -31,7 +31,7 @@ export const SignUp = () => {
     },
   });
   const navigate = useNavigate();
-  const { mutateAsync, isLoading, isError } = useSignUpMutation();
+  const { mutateAsync, isLoading, isError, error } = useSignUpMutation();
   const onSubmit: SubmitHandler<ISignUpForm> = async ({
     email,
     name,
@@ -49,8 +49,9 @@ export const SignUp = () => {
 
     navigate("/sign-in");
   };
-
-  // TODO Finalize loading state, disable button, etc.
+  const queryError = (error as any)?.response.data.errors[0];
+  const emailAlreadyInUse = queryError?.message === "Email already in use";
+  const emailError = emailAlreadyInUse ? queryError : errors.email;
 
   return (
     <Paper radius="md" p="xl" withBorder>
@@ -66,7 +67,7 @@ export const SignUp = () => {
       {/*  </Button>*/}
       {/*</Group>*/}
       {/*<Divider label="Or continue with email" labelPosition="center" my="lg" />*/}
-      {isError && (
+      {!emailAlreadyInUse && isError && (
         <ErrorAlert title="Something went wrong..">
           Please refresh this page or try again later. If the problem persists
           please contact us.
@@ -81,7 +82,7 @@ export const SignUp = () => {
             placeholder="Type here.."
             
           />
-          <FieldError field={errors.email} />
+          <FieldError field={emailError} />
           <TextInput
             {...register("name")}
             label="Full Name"
