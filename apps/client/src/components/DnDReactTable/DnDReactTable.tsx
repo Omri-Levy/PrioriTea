@@ -112,8 +112,14 @@ export const uniqueArray = <
 (arr: IterableIterator<TItem> | Array<TItem>): Array<TItem> =>
 	[...new Set(arr)];
 
+export const ifAny = (...conditions: Array<boolean>) =>
+	conditions.some(Boolean);
+
+export const ifEvery = (...conditions: Array<boolean>) =>
+	conditions.every(Boolean);
+
 export const useGetSearchParams = (
-): [Array<{id: string,  value: Array<string>}>, string | undefined, {id: string, desc: boolean}] => {
+): [Array<{id: string,  value: Array<string>}>, string | undefined, {id: string, desc: boolean}, {offset: number; limit: number;}] => {
 	const [searchParams] = useSearchParams();
 	const GLOBAL_FILTER = 'search';
 
@@ -121,7 +127,14 @@ export const useGetSearchParams = (
 	return useMemo(() => {
 		const params = uniqueArray(searchParams.keys())
 			.map((id) => ({id, value: searchParams.getAll(id)}));
-		const filters = params.filter((f) => f.id !== GLOBAL_FILTER && f.id !== 'sort_by' && f.id !== 'order_by');
+		const filters = params.filter((f) =>
+			ifEvery(
+			f.id !== GLOBAL_FILTER,
+			f.id !== 'sort_by',
+			f.id !== 'order_by',
+			f.id !== 'offset',
+			f.id !== 'limit',
+		));
 		const globalFilter = params.find((f) => f.id === GLOBAL_FILTER)?.value.join('');
 		const sortBy = params.reduce((acc, curr) => {
 			const [value] = curr.value;
@@ -139,8 +152,24 @@ export const useGetSearchParams = (
 
 			return acc;
 		}, {} as {id: string, desc: boolean});
+		const pagination = params.reduce((acc, curr) => {
+			const [value] = curr.value;
 
-		return [filters, globalFilter, sortBy];
+			if (!value) return acc;
+
+			if (curr.id === 'offset') {
+				acc.offset = Number(value);
+			}
+
+			if (curr.id === 'limit'){
+				acc.limit = Number(value);
+			}
+
+
+			return acc;
+		}, {} as {offset: number, limit: number});
+
+		return [filters, globalFilter, sortBy, pagination];
 	}, [searchParams]);
 }
 
@@ -152,7 +181,15 @@ export const useSetSearchParams = (
 								   sortBy: Array<SortingRule<{
 	id: string;
 	desc: boolean;
-}>>) => {
+}>>,
+	{
+		offset,
+		limit,
+	}: {
+		offset: number;
+		limit: number;
+	}
+) => {
 	const [searchParams,setSearchParams] = useSearchParams();
 
 	const params = useMemo(() =>
@@ -179,10 +216,12 @@ export const useSetSearchParams = (
 				[GLOBAL_FILTER]: globalFilter,
 				sort_by: sort?.id ?? 'priority',
 				order_by: sort ? (sort?.desc ? 'desc' : 'asc') : 'desc',
+				offset,
+				limit,
 			},
 			{arrayFormat: 'repeat'}
 		));
-	}, [params, globalFilter, sortBy?.[0]?.id, sortBy?.[0]?.desc]);
+	}, [params, globalFilter, sortBy?.[0]?.id, sortBy?.[0]?.desc, offset, limit]);
 }
 
 /**
@@ -217,7 +256,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 				filterValues.includes(row.values[id]?.toString()));
 		},
 	}), []);
-	const [cachedFilters, cachedGlobalFilter, {id, desc}] = useGetSearchParams();
+	const [cachedFilters, cachedGlobalFilter, {id, desc}, {offset, limit }] = useGetSearchParams();
 	const {
 		getTableProps,
 		headerGroups,
@@ -227,7 +266,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 		preGlobalFilteredRows,
 		setGlobalFilter,
 		visibleColumns,
-		state: {globalFilter, filters, sortBy,pageIndex},
+		state: {globalFilter, filters, sortBy,pageIndex, pageSize},
 		page,
 		pageCount,
 		gotoPage,
@@ -237,6 +276,8 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 			filterTypes,
 			...options,
 			initialState: {
+				pageIndex: Math.ceil(offset / limit),
+				pageSize: limit,
 				filters: cachedFilters,
 				globalFilter: cachedGlobalFilter,
 				sortBy: [{id, desc}],
@@ -277,8 +318,17 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 				...cols,
 			])
 	);
+	const pagination = useMemo(() => ({
+		offset: pageIndex * pageSize,
+		limit: pageSize,
+	}), [pageIndex, pageSize]);
 
-	useSetSearchParams(filters, globalFilter, sortBy);
+	useSetSearchParams(
+		filters,
+		globalFilter,
+		sortBy,
+		pagination
+	);
 
 	// Used to send an array of ids to the delete enddpoint
 	const selectedRowIds = useMemo(() =>
@@ -305,6 +355,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 
 		getSelectedRowIds(selectedRowIds);
 	}, [selectedRowIds.length]);
+
 
 	return (
 		<ScrollArea>
