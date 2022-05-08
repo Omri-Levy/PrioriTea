@@ -15,7 +15,7 @@ import {
 	Search as SearchIcon,
 	Trash
 } from "tabler-icons-react";
-import {DnDReactTable, noNullish} from "../../DnDReactTable/DnDReactTable";
+import {DnDReactTable} from "../../DnDReactTable/DnDReactTable";
 import {useToggle} from "../../../hooks/useToggle/useToggle";
 import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
 import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
@@ -106,20 +106,17 @@ export const FilterCheckboxGroup = (
 	// @ts-ignore
 	{column:
 		// @ts-ignore
-	{filterValue, setFilter, preFilteredRows, id, ...rest},
+	{filterValue, setFilter, preFilteredRows, id},
+		...rest
 	}) => {
-	const options = useMemo(() => {
-		const opts = new Set<string>();
-
+	const values = useMemo(() => {
 		// @ts-ignore
-		preFilteredRows.forEach((row) => {
+		return preFilteredRows.map((row) => {
 			// Ensures that the filter value is a string
-			opts.add(noNullish`${row.values[id]}`);
+			return row.values[id]?.toString();
 		});
-
-		// @ts-ignore
-		return 	[...opts.values()]
 	}, [id, preFilteredRows]);
+	const options = useMemo(() => [...new Set(values)], [values]);
 
 	return (
 		<CheckboxGroup
@@ -132,8 +129,8 @@ export const FilterCheckboxGroup = (
 						{options?.map(
 							(option: any) => (
 									<Checkbox
-										key={`${option}-${id}`}
-										value={option}
+										key={`${id}-${option}`}
+										value={option?.toString()}
 										// @ts-ignore
 										label={rest?.transformer ? rest?.transformer(option) : option}
 										styles={{
@@ -181,12 +178,8 @@ export const Tasks = () => {
 			Filter: (props) => (
 				<FilterCheckboxGroup
 					{...props}
-					column={{
-			...props.column,
-				// @ts-ignore
-				transformer: formatTaskStatus,
-			}
-			}/>
+					transformer={formatTaskStatus}
+			/>
 			),
 			// @ts-ignore
 			Cell({value}) {

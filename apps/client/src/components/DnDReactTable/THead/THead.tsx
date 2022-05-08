@@ -10,7 +10,7 @@ export const THead: FunctionComponent<THeadProps> = ({headerGroups,
 }) => {
 	const colsWithFilter = useMemo(() => headerGroups
 		.flatMap(({headers}) => headers)
-		.filter((c) => c.canFilter), [headerGroups]);
+		.filter((c) => !c.disableFilters), [headerGroups]);
 
 	return (
 		<thead>
@@ -18,7 +18,7 @@ export const THead: FunctionComponent<THeadProps> = ({headerGroups,
 			<th colSpan={visibleColumnsLength}>
 				Filters
 				<Group>
-			{colsWithFilter.map((c) => (
+			{colsWithFilter?.map((c) => (
 				<Fragment key={c.getHeaderProps().key}>
 					{c.render("Filter")}
 				</Fragment>

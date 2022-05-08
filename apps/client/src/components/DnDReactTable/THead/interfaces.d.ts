@@ -3,7 +3,7 @@ import {HeaderGroup} from "react-table";
 export interface THeadProps {
 	headerGroups: HeaderGroup<{ [p: string]: any }>[];
 	setGlobalFilter: (value: string) => void;
-	globalFilter: string;
+	globalFilter: string | undefined;
 	preGlobalFilteredRows: Array<any>;
 	visibleColumnsLength: number;
 	filters?: Array<{

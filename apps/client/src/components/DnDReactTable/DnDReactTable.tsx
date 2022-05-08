@@ -111,6 +111,52 @@ export const uniqueArray = <
 	(arr: IterableIterator<TItem> | Array<TItem>): Array<TItem> =>
 	[...new Set(arr)];
 
+export const useGetSearchParams = (
+): [Array<{id: string,  value: Array<string>}>, string | undefined] => {
+	const [searchParams] = useSearchParams();
+	const GLOBAL_FILTER = 'search';
+
+	// Converts the search params to the shape react-table expects
+	return useMemo(() => {
+		const params = uniqueArray(searchParams.keys())
+			.map((id) => ({id, value: searchParams.getAll(id)}));
+		const filters = params.filter((f) => f.id !== GLOBAL_FILTER);
+		const globalFilter = params.find((f) => f.id === GLOBAL_FILTER)?.value.join('');
+
+		return [filters, globalFilter];
+	}, [searchParams]);
+}
+
+export const useSetSearchParams = (filters: Array<{id: string, value: string}>, globalFilter: string | undefined) => {
+	const [searchParams,setSearchParams] = useSearchParams();
+
+	const params = useMemo(() =>
+			// Converts an object of id and value to an object of the id as a key and the value as the key's value.
+			// { id, value } -> { id: value }
+			filters.reduce(
+				// @ts-ignore
+				(acc, curr) => {
+					acc[curr.id] = curr.value;
+
+					return acc;
+				}, {} as {[key: string]: string})
+		, [filters]);
+const GLOBAL_FILTER = 'search';
+	// Syncs the search params with the checked filters,
+	// avoids clearing the search params on refresh.
+	useEffect(() => {
+
+		setSearchParams(qs.stringify(
+			{
+				...searchParams,
+				...params,
+				[GLOBAL_FILTER]: globalFilter,
+			},
+			{arrayFormat: 'repeat'}
+		));
+	}, [params, globalFilter]);
+}
+
 /**
  * @description Combines react-table and react-beautiful-dnd into a drag and drop table with sort, filter, search, and pagination.
  */
@@ -136,27 +182,14 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 		// @ts-ignore
 		multiSelect: (rows, id, filterValues) => {
 			if (filterValues.length === 0) return rows;
+
 			// @ts-ignore
 			return rows.filter((row) =>
 				// Handles numbers
-				filterValues.includes(`${row.values[id]}`));
+				filterValues.includes(row.values[id]?.toString()));
 		},
 	}), []);
-	const [searchParams,setSearchParams] = useSearchParams();
-	// const GLOBAL_FILTER = 'search';
-	// Converts the search params to the shape react-table expects
-	const cachedFilters =  useMemo(() =>
-		uniqueArray(searchParams.keys())
-		.map((id) => ({id, value: searchParams.getAll(id)}))
-		, [Object.values(searchParams).length]);
-
-useMemo(() => {
-	// @ts-ignore
-	console.log(
-
-	);
-}, [searchParams])
-
+	const [cachedFilters, cachedGlobalFilter] = useGetSearchParams();
 	const {
 		getTableProps,
 		headerGroups,
@@ -175,11 +208,11 @@ useMemo(() => {
 			columns: tableCols,
 			filterTypes,
 			...options,
-			initialState: {
-				filters: cachedFilters.filter((f) => f.id !== 'search'),
-				globalFilter: cachedFilters?.find((f) => f?.id === 'search')?.value?.join(''),
-				...options?.initialState,
-			},
+		initialState: {
+			filters: cachedFilters,
+			globalFilter: cachedGlobalFilter,
+			...options.initialState,
+		},
 		},
 		useFilters,
 		useGlobalFilter,
@@ -193,6 +226,7 @@ useMemo(() => {
 					id: 'selection',
 					disableSortBy: true,
 					disableFilters: true,
+					disableGlobalFilter: true,
 					// @ts-ignore
 					Header({ getToggleAllRowsSelectedProps }) {
 						return (
@@ -215,6 +249,8 @@ useMemo(() => {
 			])
 	);
 
+	useSetSearchParams(filters, globalFilter);
+
 	// Used to send an array of ids to the delete enddpoint
 	const selectedRowIds = useMemo(() =>
 		selectedFlatRows?.map(
@@ -227,15 +263,7 @@ useMemo(() => {
 	// the table updates when the data changes and the drag and drop works. (when combined with the useEffect below)
 	const [state, handlers] = useListState(page);
 	const isLargerThanSm = useMediaQuery('(min-width: 500px)');
-	const params = useMemo(() =>
-			filters.reduce(
-				// @ts-ignore
-				(acc, curr) => {
-					acc[curr.id] = curr.value;
 
-					return acc;
-				}, {} as {[key: string]: string})
-		, [filters]);
 
 	// Second half of updating data on change.
 	useEffect(() => {
@@ -248,18 +276,6 @@ useMemo(() => {
 
 		getSelectedRowIds(selectedRowIds);
 	}, [selectedRowIds.length]);
-
-	// Syncs the search params with the checked filters,
-	// avoids clearing the search params on refresh.
-	useEffect(() => {
-		if (!Object.values(params).length) return;
-
-		setSearchParams(qs.stringify({
-			...params,
-			search: globalFilter,
-		}, {arrayFormat: 'repeat'}));
-	}, [params, globalFilter]);
-
 
 	return (
 		<ScrollArea>
@@ -279,6 +295,7 @@ useMemo(() => {
 							marginBottom: "1rem",
 							'& tbody tr td': {borderBottom: 0}
 						}} {...getTableProps()}>
+						{!isLoading &&
 						<DnDReactTable.THead
 							// visibleColumns.length without + 1 leaves an empty column.
 							visibleColumnsLength={visibleColumns.length + 1}
@@ -287,6 +304,7 @@ useMemo(() => {
 							globalFilter={globalFilter}
 							headerGroups={headerGroups}
 						/>
+						}
 						<Droppable droppableId="dnd-list" direction="vertical">
 							{(provided) => (
 								<DnDReactTable.TBody
