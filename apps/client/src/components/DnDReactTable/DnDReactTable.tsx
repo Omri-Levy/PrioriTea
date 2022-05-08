@@ -1,6 +1,7 @@
 import {DragDropContext, Droppable} from "react-beautiful-dnd";
 import {
 	Column,
+	SortingRule,
 	useFilters,
 	useGlobalFilter,
 	usePagination,
@@ -89,30 +90,30 @@ export const noNullish = <TData extends Array<unknown>,>(
 		// Concatenate the parts and the expressions, while dropping null and undefined expressions.
 		.reduce((str, char, i) => {
 
-		// drops ${null} and ${undefined}
-		if (!isNullish(exps[i])) {
-			// @ts-ignore
-			str += exps[i];
-		}
+			// drops ${null} and ${undefined}
+			if (!isNullish(exps[i])) {
+				// @ts-ignore
+				str += exps[i];
+			}
 
-		// Add non-expressions regardless of value.
-		str += char;
+			// Add non-expressions regardless of value.
+			str += char;
 
-		return str;
+			return str;
 
-		// parts[1] is unneeded for this purpose.
-		// ?? `` since TypeScript insists the return value is any
-		// for the function and string | undefined for str.
-	}, parts[0] ?? ``);
+			// parts[1] is unneeded for this purpose.
+			// ?? `` since TypeScript insists the return value is any
+			// for the function and string | undefined for str.
+		}, parts[0] ?? ``);
 
 export const uniqueArray = <
 	TItem,
-		>
-	(arr: IterableIterator<TItem> | Array<TItem>): Array<TItem> =>
+	>
+(arr: IterableIterator<TItem> | Array<TItem>): Array<TItem> =>
 	[...new Set(arr)];
 
 export const useGetSearchParams = (
-): [Array<{id: string,  value: Array<string>}>, string | undefined] => {
+): [Array<{id: string,  value: Array<string>}>, string | undefined, {id: string, desc: boolean}] => {
 	const [searchParams] = useSearchParams();
 	const GLOBAL_FILTER = 'search';
 
@@ -120,14 +121,38 @@ export const useGetSearchParams = (
 	return useMemo(() => {
 		const params = uniqueArray(searchParams.keys())
 			.map((id) => ({id, value: searchParams.getAll(id)}));
-		const filters = params.filter((f) => f.id !== GLOBAL_FILTER);
+		const filters = params.filter((f) => f.id !== GLOBAL_FILTER && f.id !== 'sort_by' && f.id !== 'order_by');
 		const globalFilter = params.find((f) => f.id === GLOBAL_FILTER)?.value.join('');
+		const sortBy = params.reduce((acc, curr) => {
+			const [value] = curr.value;
 
-		return [filters, globalFilter];
+			if (!value) return acc;
+
+			if (curr.id === 'sort_by') {
+				acc.id = value;
+			}
+
+			if (curr.id === 'order_by'){
+				acc.desc = value === 'desc';
+			}
+
+
+			return acc;
+		}, {} as {id: string, desc: boolean});
+
+		return [filters, globalFilter, sortBy];
 	}, [searchParams]);
 }
 
-export const useSetSearchParams = (filters: Array<{id: string, value: string}>, globalFilter: string | undefined) => {
+export const useSetSearchParams = (
+	filters: Array<{
+	id: string, value: string
+}>,
+	globalFilter: string | undefined,
+								   sortBy: Array<SortingRule<{
+	id: string;
+	desc: boolean;
+}>>) => {
 	const [searchParams,setSearchParams] = useSearchParams();
 
 	const params = useMemo(() =>
@@ -141,20 +166,23 @@ export const useSetSearchParams = (filters: Array<{id: string, value: string}>, 
 					return acc;
 				}, {} as {[key: string]: string})
 		, [filters]);
-const GLOBAL_FILTER = 'search';
+	const GLOBAL_FILTER = 'search';
 	// Syncs the search params with the checked filters,
 	// avoids clearing the search params on refresh.
 	useEffect(() => {
+		const [sort] = sortBy;
 
 		setSearchParams(qs.stringify(
 			{
 				...searchParams,
 				...params,
 				[GLOBAL_FILTER]: globalFilter,
+				sort_by: sort?.id ?? 'priority',
+				order_by: sort ? (sort?.desc ? 'desc' : 'asc') : 'desc',
 			},
 			{arrayFormat: 'repeat'}
 		));
-	}, [params, globalFilter]);
+	}, [params, globalFilter, sortBy?.[0]?.id, sortBy?.[0]?.desc]);
 }
 
 /**
@@ -189,7 +217,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 				filterValues.includes(row.values[id]?.toString()));
 		},
 	}), []);
-	const [cachedFilters, cachedGlobalFilter] = useGetSearchParams();
+	const [cachedFilters, cachedGlobalFilter, {id, desc}] = useGetSearchParams();
 	const {
 		getTableProps,
 		headerGroups,
@@ -199,7 +227,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 		preGlobalFilteredRows,
 		setGlobalFilter,
 		visibleColumns,
-		state: {globalFilter, filters, pageIndex},
+		state: {globalFilter, filters, sortBy,pageIndex},
 		page,
 		pageCount,
 		gotoPage,
@@ -208,11 +236,12 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 			columns: tableCols,
 			filterTypes,
 			...options,
-		initialState: {
-			filters: cachedFilters,
-			globalFilter: cachedGlobalFilter,
-			...options.initialState,
-		},
+			initialState: {
+				filters: cachedFilters,
+				globalFilter: cachedGlobalFilter,
+				sortBy: [{id, desc}],
+				...options.initialState,
+			},
 		},
 		useFilters,
 		useGlobalFilter,
@@ -249,7 +278,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 			])
 	);
 
-	useSetSearchParams(filters, globalFilter);
+	useSetSearchParams(filters, globalFilter, sortBy);
 
 	// Used to send an array of ids to the delete enddpoint
 	const selectedRowIds = useMemo(() =>
@@ -296,14 +325,14 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 							'& tbody tr td': {borderBottom: 0}
 						}} {...getTableProps()}>
 						{!isLoading &&
-						<DnDReactTable.THead
-							// visibleColumns.length without + 1 leaves an empty column.
-							visibleColumnsLength={visibleColumns.length + 1}
-							preGlobalFilteredRows={preGlobalFilteredRows}
-							setGlobalFilter={setGlobalFilter}
-							globalFilter={globalFilter}
-							headerGroups={headerGroups}
-						/>
+							<DnDReactTable.THead
+								// visibleColumns.length without + 1 leaves an empty column.
+								visibleColumnsLength={visibleColumns.length + 1}
+								preGlobalFilteredRows={preGlobalFilteredRows}
+								setGlobalFilter={setGlobalFilter}
+								globalFilter={globalFilter}
+								headerGroups={headerGroups}
+							/>
 						}
 						<Droppable droppableId="dnd-list" direction="vertical">
 							{(provided) => (
