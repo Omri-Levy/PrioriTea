@@ -357,6 +357,13 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 	}, [selectedRowIds.length]);
 
 
+	// Avoids empty pages with no pagination when filters are enabled.
+	useEffect(() => {
+		if (pageIndex === 0) return;
+
+		gotoPage(0);
+	}, [pageCount])
+
 	return (
 		<ScrollArea>
 			<DragDropContext
