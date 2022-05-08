@@ -256,7 +256,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 				filterValues.includes(row.values[id]?.toString()));
 		},
 	}), []);
-	const [cachedFilters, cachedGlobalFilter, {id, desc}, {offset, limit }] = useGetSearchParams();
+	const [cachedFilters, cachedGlobalFilter, {id, desc}, {offset = 0, limit = 10 }] = useGetSearchParams();
 	const {
 		getTableProps,
 		headerGroups,
