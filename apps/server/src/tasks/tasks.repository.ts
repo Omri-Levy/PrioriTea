@@ -61,11 +61,4 @@ export class TasksRepository {
 			where: { id: {in: ids} },
 		});
 	}
-
-	public async deleteTaskById(id: string) { 
-		return db.task.delete({
-			where: { id },
-		});
-
-	}
 }

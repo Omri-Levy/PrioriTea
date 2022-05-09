@@ -11,13 +11,32 @@ import {TasksService} from "./tasks.service";
 import {NotFoundError} from "../errors/not-found-error";
 import {zParse} from "../utils/z-parse";
 import {z} from "zod";
+import {createTaskSchema, updateTaskSchema} from "@prioritea/validation";
+import {stringUtils} from "@prioritea/utils";
+import {IdParamError} from "../errors/id-param-error";
+
+export const idSchema = z.object({
+	id: z.string().cuid(`id must be a valid CUID`),
+});
+
+export 	const arrayOfUuidsSchema = z.object({
+	ids: z
+		.string()
+		.cuid(`ids must contain valid CUIDs.`)
+		.array()
+		.min(1, `ids must contain at least 1 CUID(s)`),
+})
+
+export const idParamFallback = async () => {
+	throw new IdParamError();
+};
 
 interface ITasksController {
 	createTask: RequestHandler;
 	getTasks: RequestHandler;
 	getTask: RequestHandler;
 	updateTask: RequestHandler;
-	deleteTask: RequestHandler;
+	deleteTasks: RequestHandler;
 }
 
 export class TasksController
@@ -48,9 +67,9 @@ export class TasksController
 			handler: this.updateTask.bind(this),
 		},
 		{
-			method: Method.DELETE,
-			path: "/:id",
-			handler: this.deleteTask.bind(this),
+			method: Method.PATCH,
+			path: "/",
+			handler: idParamFallback,
 		},
 		{
 			method: Method.DELETE,
@@ -75,13 +94,16 @@ export class TasksController
 	 * @desc adds a new task to db using the body sent from the user input
 	 */
 	public async createTask(req: Request, res: Response) {
+		const createTaskDto = await zParse(createTaskSchema, {
+			...req.body,
+			// FIXME: Zod doesn't transform the status like its supposed to, temproarily done here.
+			// FIXME: .optional() of the schema does not work either.
+			status: stringUtils(req.body.status).toScreamingSnakeCase().string,
+		});
+
 		const tasks = await this.service.createTask(
 			getUserId(res)!,
-			{
-				priority: req.body.priority,
-				description: req.body.description,
-				status: req.body.status,
-			}
+			createTaskDto,
 		);
 
 		return new CreatedResponse(res, { data: { tasks } });
@@ -104,50 +126,41 @@ export class TasksController
 	 * @desc sends back the authenticated user's task by id from db
 	 */
 	public async getTask(req: Request, res: Response) {
-		const task = await this.service.getTask(req.params.id!);
+		const {id} = await zParse(idSchema,
+			// @ts-ignore
+			req.params);
+		const task = await this.service.getTask(id);
+
+		if (!task) {
+			throw new NotFoundError(`No task matches the provided id.`);
+		}
 
 		return new OkResponse(res, { data: { task } });
 	}
 
 	/**
-	 * @path /api/task/:id
-	 * @request put
+	 * @path /api/tasks/:id
+	 * @request patch
 	 * @desc updates an existing authenticated user's task from db using an id param
 	 * sent from the user
 	 */
 	public async updateTask(req: Request, res: Response) {
+		const updateTaskDto = await zParse(updateTaskSchema, req.body);
+		const {id} = await zParse(idSchema,
+			// @ts-ignore
+			req.params);
 		const tasks = await this.service.updateTask(
 			getUserId(res)!,
 			{
-				id: req.params.id!,
-				priority: req.body.priority,
-				description: req.body.description,
-				status: req.body.status,
+				id,
+				...updateTaskDto,
 			}
 		);
 
 		return new OkResponse(res, { data: { tasks } });
 	}
 
-	/**
-	 * @path /api/task/:id
-	 * @request delete
-	 * @desc deletes an existing authenticated user's task from db using an id param
-	 * sent from the user
-	 */
-	public async deleteTask(req: Request, res: Response) {
-		const tasks = await this.service.deleteTask(
-			getUserId(res)!,
-			req.params.id!
-		);
-
-		return new OkResponse(res, { data: { tasks } });
-	}
-
 	public async deleteTasks(req: Request, res: Response) {
-		const arrayOfUuidsSchema = z.object({
-			ids: z.string().uuid(`Ids must be valid UUIDs.`).array().min(1, `Ids must contain at least 1 UUID(s)`),
-		})
 		const {ids} = await zParse(arrayOfUuidsSchema, req.body);
 
 		const {count, tasks} = await this.service.deleteTasks(

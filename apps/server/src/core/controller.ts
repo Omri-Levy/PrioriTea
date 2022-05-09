@@ -58,7 +58,7 @@ export abstract class Controller<TService> implements IController<TService> {
 				? this.router[method](path, ...middleware!, handler)
 				: this.router[method](path, handler);
 
-			logger.info(`Registered route: ${method} ${this.prefix}${path}`);
+			logger.info(`Registered route: ${method.toUpperCase()} ${this.prefix}${path}`);
 		});
 	}
 }
