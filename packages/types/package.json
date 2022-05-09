@@ -10,6 +10,7 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
-	"@prioritea/config": "*"
+	"@prioritea/config": "*",
+	"@prioritea/tsconfig": "*"
   }
 }

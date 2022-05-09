@@ -1,3 +1,3 @@
 export const isDev = function () {
-	return process.env.NODE_ENV === `development`;
+	return import.meta.env.DEV;
 };

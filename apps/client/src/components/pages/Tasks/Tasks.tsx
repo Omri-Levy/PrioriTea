@@ -15,7 +15,7 @@ import {
 	Search as SearchIcon,
 	Trash
 } from "tabler-icons-react";
-import {DnDReactTable} from "../../DnDReactTable/DnDReactTable";
+import {DnDReactTable, noNullish} from "../../DnDReactTable/DnDReactTable";
 import {useToggle} from "../../../hooks/useToggle/useToggle";
 import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
 import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
@@ -114,7 +114,7 @@ export const FilterCheckboxGroup = (
 		// @ts-ignore
 		return preFilteredRows.map((row) => {
 			// Ensures that the filter value is a string
-			return row.values[id]?.toString();
+			return noNullish`${row.values[id]}`;
 		});
 	}, [id, preFilteredRows]);
 	const options = useMemo(() => [...new Set(values)], [values]);

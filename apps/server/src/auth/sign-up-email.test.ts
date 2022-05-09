@@ -2,9 +2,9 @@ import request, { Response } from "supertest";
 import { App } from "../core/app";
 import { db } from "../core/db/db";
 import { Method, MethodUnion } from "@prioritea/types";
-import { BASE_URL, PORT } from "../env/env";
+import { VITE_BASE_URL, VITE_PORT } from "../env/env";
 
-const app = new App(Number(PORT)).init().app;
+const app = new App(Number(VITE_PORT)).init().app;
 const agent = request.agent(app);
 
 const invalidValues = [undefined, true, false, {}, 0, [], "", function () {}];
@@ -29,7 +29,7 @@ const agentFetch = async function (
 	url: string,
 	body?: Record<string, string>
 ) {
-	return agent[method as MethodUnion](`/${BASE_URL}${url}`)
+	return agent[method as MethodUnion](`/${VITE_BASE_URL}${url}`)
 		.set("Accept", "application/json")
 		.send(body);
 };

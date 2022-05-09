@@ -3,13 +3,8 @@
   "compilerOptions": {
     "rootDir": ".",
 	"jsx": "react-jsx",
-    "lib": [
-      "dom",
-      "es5",
-      "scripthost",
-      "es2015.collection"
-    ]
   },
   "include": ["src/"],
-  "exclude": ["**/node_modules/**", "**/.turbo/**", "**/dist/**", "**/coverage/**", "**/src/**/*.(test|spec).ts"]
+  "exclude": ["**/node_modules/**", "**/.turbo/**", "**/dist/**", "**/coverage/**", "**/src/**/*.(test|spec).ts"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

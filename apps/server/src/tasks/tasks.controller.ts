@@ -146,7 +146,7 @@ export class TasksController
 
 	public async deleteTasks(req: Request, res: Response) {
 		const arrayOfUuidsSchema = z.object({
-			ids: z.string().uuid(`Ids must be valid UUIDs.`).array(),
+			ids: z.string().uuid(`Ids must be valid UUIDs.`).array().min(1, `Ids must contain at least 1 UUID(s)`),
 		})
 		const {ids} = await zParse(arrayOfUuidsSchema, req.body);
 

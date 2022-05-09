@@ -1,33 +1,29 @@
 import { undefinedEnvVar } from "./undefined-env-var";
 
 const envVars = [
-	"PORT",
-	"CORS_ORIGIN",
-	"SECRET_ACCESS_TOKEN",
-	"DOMAIN",
-	"BASE_URL",
+	"VITE_PORT",
+	"VITE_CORS_ORIGIN",
+	"VITE_SECRET_ACCESS_TOKEN",
+	"VITE_DOMAIN",
+	"VITE_BASE_URL",
 ];
 
 // Throws an error is a required env variable is undefined.
-// if (!process.env.[KEY]) { throw error }
+// if (!import.meta.env[KEY]) { throw error }
 envVars.forEach((env) => undefinedEnvVar(env));
 
 const {
-	NODE_ENV,
-	PORT,
-	DB_URL,
-	CORS_ORIGIN,
-	SECRET_ACCESS_TOKEN,
-	DOMAIN,
-	BASE_URL,
-} = process.env;
+	VITE_PORT,
+	VITE_CORS_ORIGIN,
+	VITE_SECRET_ACCESS_TOKEN,
+	VITE_DOMAIN,
+	VITE_BASE_URL,
+} = import.meta.env;
 
 export {
-	NODE_ENV,
-	PORT,
-	DB_URL,
-	CORS_ORIGIN,
-	SECRET_ACCESS_TOKEN,
-	DOMAIN,
-	BASE_URL,
+	VITE_PORT,
+	VITE_CORS_ORIGIN,
+	VITE_SECRET_ACCESS_TOKEN,
+	VITE_DOMAIN,
+	VITE_BASE_URL,
 };
