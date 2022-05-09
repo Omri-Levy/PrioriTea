@@ -1,4 +1,4 @@
-import {useMutation, useQueryClient} from "react-query";
+import {useMutation} from "react-query";
 import {AuthApi} from "../../../../../api/auth-api";
 import {ISignInForm} from "../../interfaces";
 
@@ -13,17 +13,12 @@ export const asyncTimeout: AsyncTimeout = async (ms = 0, payload?: any)  =>
 	);
 
 export const useSignInMutation = () => {
-	const queryClient = useQueryClient();
+
 
   return useMutation(
-    ["signUp"],
+    ["userInfo"],
     async ({ email, password }: ISignInForm) => {
       return AuthApi.signIn(email, password);
     },
-	  {
-		  onSuccess: () => {
-			  queryClient.invalidateQueries(['userInfo']);
-		  }
-	  }
   );
 };

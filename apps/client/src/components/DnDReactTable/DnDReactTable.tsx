@@ -158,11 +158,11 @@ export const useGetSearchParams = (
 			if (!value) return acc;
 
 			if (curr.id === 'offset') {
-				acc.offset = Number(value);
+				acc.offset = parseInt(value);
 			}
 
 			if (curr.id === 'limit'){
-				acc.limit = Number(value);
+				acc.limit = parseInt(value);
 			}
 
 
@@ -411,7 +411,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 						// human-readable, not zero-based.
 						page={pageIndex + 1}
 						onChange={(page) => gotoPage(page - 1)}
-						total={isLoading ? skeletonPages : pageCount}
+						total={isLoading ? skeletonPages : pageCount || 1}
 						getItemAriaLabel={(page) => {
 							switch (page) {
 								case 'dots':

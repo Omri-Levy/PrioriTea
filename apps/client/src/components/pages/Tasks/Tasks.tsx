@@ -74,8 +74,9 @@ export const Search: FunctionComponent<SearchProps> = function({
 export const useDeleteTasksMutation = () => {
 	const queryClient = useQueryClient();
 
-	return useMutation(['tasks'], async ({ids}: {ids: Array<string>}) => {
-		const {data} = await TasksApi.deleteByIds(ids);
+	return useMutation(['tasks'], async ({ ids }: {ids: Array<string>}) => {
+		console.log(ids);
+		const {data} = await TasksApi.deleteByIds(['qwer']);
 
 		return data.data.tasks;
 	}, {

@@ -1,9 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useIsAuth } from "../pages/SignIn/hooks/useIsAuth/useIsAuth";
-import { AuthenticatedLayout } from "../AuthenticatedLayout/AuthenticatedLayout";
-import { Section } from "../Section/Section";
-import { UnauthenticatedLayout } from "../UnauthenticatedLayout/UnauthenticatedLayout";
-import { useRoutes } from "./useRoutes";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {useIsAuth} from "../pages/SignIn/hooks/useIsAuth/useIsAuth";
+import {AuthenticatedLayout} from "../AuthenticatedLayout/AuthenticatedLayout";
+import {Section} from "../Section/Section";
+import {
+	UnauthenticatedLayout
+} from "../UnauthenticatedLayout/UnauthenticatedLayout";
+import {useRoutes} from "./useRoutes";
 
 export const Router = () => {
   const routes = useRoutes();
@@ -26,6 +28,10 @@ export const Router = () => {
                 element={<Section title={text}>{element}</Section>}
               />
           )}
+			<Route
+				path={"*"}
+				element={<Navigate to={isAuth ? "/" : "/sign-in"} />}
+			/>
         </Route>
       </Routes>
     </BrowserRouter>

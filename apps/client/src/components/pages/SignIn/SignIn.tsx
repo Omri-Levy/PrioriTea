@@ -41,7 +41,7 @@ export const SignIn = () => {
     navigate("/", { replace: true });
   };
 
-  const queryError = (error as any)?.response.data.errors[0].message;
+  const [{message}] = (error as any)?.response?.data?.errors ?? [{message: ''}];
 
   return (
     <Paper radius="md" p="xl" withBorder>
@@ -59,7 +59,7 @@ export const SignIn = () => {
       {/*<Divider label="Or continue with email" labelPosition="center" my="lg" />*/}
       {isError && (
         <ErrorAlert title="Something went wrong..">
-			{queryError ?? `Please refresh this page or try again later. If the problem persists,please contact us.`}
+			{message ?? `Please refresh this page or try again later. If the problem persists,please contact us.`}
         </ErrorAlert>
       )}
       <form noValidate onSubmit={handleSubmit(onSubmit)}>

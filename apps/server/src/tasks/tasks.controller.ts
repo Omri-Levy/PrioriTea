@@ -1,13 +1,16 @@
-import { Request, Response } from "express";
-import { getUserId } from "../auth/utils/get-user-id";
-import { Controller, IRoute } from "../core/controller";
-import { Method } from "@prioritea/types";
-import { auth } from "../middleware/auth";
-import { restful } from "../middleware/restful";
-import { CreatedResponse } from "../responses/created-response";
-import { OkResponse } from "../responses/ok-response";
-import { Middleware, RequestHandler } from "../types";
-import { TasksService } from "./tasks.service";
+import {Request, Response} from "express";
+import {getUserId} from "../auth/utils/get-user-id";
+import {Controller, IRoute} from "../core/controller";
+import {Method} from "@prioritea/types";
+import {auth} from "../middleware/auth";
+import {restful} from "../middleware/restful";
+import {CreatedResponse} from "../responses/created-response";
+import {OkResponse} from "../responses/ok-response";
+import {Middleware, RequestHandler} from "../types";
+import {TasksService} from "./tasks.service";
+import {NotFoundError} from "../errors/not-found-error";
+import {zParse} from "../utils/z-parse";
+import {z} from "zod";
 
 interface ITasksController {
 	createTask: RequestHandler;
@@ -142,10 +145,19 @@ export class TasksController
 	}
 
 	public async deleteTasks(req: Request, res: Response) {
-		const tasks = await this.service.deleteTasks(
+		const arrayOfUuidsSchema = z.object({
+			ids: z.string().uuid(`Ids must be valid UUIDs.`).array(),
+		})
+		const {ids} = await zParse(arrayOfUuidsSchema, req.body);
+
+		const {count, tasks} = await this.service.deleteTasks(
 			getUserId(res)!,
-			req.body.ids,
+			ids,
 		);
+
+		if (count === 0) {
+			throw new NotFoundError('No tasks match the provided ids.');
+		}
 
 		return new OkResponse(res, { data: { tasks } });
 	}

@@ -68,6 +68,7 @@ export class AuthController
 			signUpSchema as any,
 			req.body
 		);
+
 		try {
 			const user = await this.service.signUp(email, name, password);
 

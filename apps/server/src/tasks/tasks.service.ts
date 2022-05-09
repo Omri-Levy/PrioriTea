@@ -1,7 +1,7 @@
-import { CreateTaskDto, UpdateTaskDto } from "@prioritea/types";
-import { Task } from "@prisma/client";
-import { Service } from "../core/service";
-import { TasksRepository } from "./tasks.repository";
+import {CreateTaskDto, UpdateTaskDto} from "@prioritea/types";
+import {Task} from "@prisma/client";
+import {Service} from "../core/service";
+import {TasksRepository} from "./tasks.repository";
 
 export interface ITasksService {
 	createTask(
@@ -71,8 +71,9 @@ export class TasksService extends Service<TasksRepository> implements ITasksServ
 	}
 
 	async deleteTasks(userId: string, ids: Array<string>) {
-		await this.repository.deleteTasksByIds(ids);
+		const {count} = await this.repository.deleteTasksByIds(ids);
+		const tasks = await this.repository.getAllTasksByUserId(userId);
 
-		return this.repository.getAllTasksByUserId(userId);
+		return {count, tasks};
 	}
 }

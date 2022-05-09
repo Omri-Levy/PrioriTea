@@ -49,7 +49,7 @@ export const SignUp = () => {
 
     navigate("/sign-in");
   };
-  const queryError = (error as any)?.response.data.errors[0];
+  const [queryError] = (error as any)?.response?.data?.errors ?? [];
   const emailAlreadyInUse = queryError?.message === "Email already in use";
   const emailError = emailAlreadyInUse ? queryError : errors.email;
 
@@ -84,10 +84,10 @@ export const SignUp = () => {
           />
           <FieldError field={emailError} />
           <TextInput
-            {...register("name")}
+			  required
             label="Full Name"
             placeholder="Type here.."
-            
+			{...register("name")}
           />
           <FieldError field={errors.name} />
           <PasswordInput
@@ -96,7 +96,7 @@ export const SignUp = () => {
             required
             label="Password"
             placeholder="Type here.."
-            
+
           />
           <FieldError field={errors.password} />
           <PasswordInput
