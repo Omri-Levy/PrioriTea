@@ -40,7 +40,7 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 							id,												 isOpen,
 																			 onClose
 																		 }) => {
-	const {mutateAsync} = useUpdateTaskMutation();
+	const {mutateAsync} = useUpdateTaskMutation(onClose);
 	const {data: tasks} = useTasksQuery();
 	const task = useMemo(() => tasks?.find((task) => task.id === id), [tasks?.length, id]);
 	const {

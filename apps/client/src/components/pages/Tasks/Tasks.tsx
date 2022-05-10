@@ -36,6 +36,14 @@ export interface SearchProps {
 	globalFilter: string | undefined;
 }
 
+export const errorToast = (message: string) =>
+	showNotification({
+		icon: <AlertCircle size={24} />,
+		title: "Error",
+		// @ts-ignore
+		message,
+	});
+
 const toCapitalized = (str: string) =>
 	str?.charAt(0)?.toUpperCase() + str?.slice(1);
 
@@ -96,15 +104,17 @@ export const useDeleteTasksMutation = () => {
 			return {prevTasks};
 		},
 		onError(err, _ids, context: {prevTasks: TasksType} | undefined) {
-
-			showNotification({
-				icon: <AlertCircle size={24} />,
-				title: "Error",
-				// @ts-ignore
-				message: err.response?.data.errors?.[0].message ?? "Failed to delete tasks",
-			});
-
 			queryClient.setQueryData(['tasks'], context?.prevTasks);
+
+			// @ts-ignore
+			if (err.response?.status === 404) {
+				// @ts-ignore
+				errorToast(err.response?.data.errors?.[0].message);
+
+				return;
+			}
+
+			errorToast("Failed to delete tasks");
 		},
 		onSettled() {
 			queryClient.invalidateQueries(['tasks']);

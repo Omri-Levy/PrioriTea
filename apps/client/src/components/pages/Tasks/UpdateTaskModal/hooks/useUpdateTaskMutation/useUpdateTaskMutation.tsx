@@ -1,8 +1,9 @@
 import {useMutation, useQueryClient} from "react-query";
 import {TasksApi} from "../../../../../../api/tasks-api";
 import {Tasks, UpdateTaskDto} from "@prioritea/types";
+import {errorToast} from "../../../Tasks";
 
-export const useUpdateTaskMutation = () => {
+export const useUpdateTaskMutation = (onClose: () => void) => {
 	const queryClient = useQueryClient();
 
 	return useMutation(async ({
@@ -32,8 +33,19 @@ export const useUpdateTaskMutation = () => {
 
 			return {prevTasks};
 		},
-		onError(_err, _editedTask, context: {prevTasks: Tasks} | undefined) {
+		onError(err, _editedTask, context: {prevTasks: Tasks} | undefined) {
 			queryClient.setQueryData(['tasks'], context?.prevTasks);
+
+			// @ts-ignore
+			if (err.response?.status === 404) {
+				onClose();
+				// @ts-ignore
+				errorToast(err.response?.data.errors?.[0].message);
+
+				return;
+			}
+
+			errorToast("Failed to update task");
 		},
 		onSettled() {
 			queryClient.invalidateQueries(['tasks']);
