@@ -145,7 +145,11 @@ export class TasksController
 	 * sent from the user
 	 */
 	public async updateTask(req: Request, res: Response) {
-		const updateTaskDto = await zParse(updateTaskSchema, req.body);
+		const updateTaskDto = await zParse(updateTaskSchema, {
+			...req.body,
+			// See createTask FIXME above (line 99).
+			status: req.body.status ? stringUtils(req.body.status).toScreamingSnakeCase().string : undefined,
+		});
 		const {id} = await zParse(idSchema,
 			// @ts-ignore
 			req.params);

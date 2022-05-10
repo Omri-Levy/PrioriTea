@@ -24,13 +24,16 @@ export const useSignOutMutation = () => {
 				queryClient.setQueryData(['userInfo'], undefined);
 
 				navigate('/sign-in', {replace: true});
+			},
+			onSettled() {
+				queryClient.invalidateQueries(['userInfo']);
 			}
 		})
 }
 
 export const AuthenticatedLayout: FunctionComponent = () => {
 	// Avoids passing an unneeded value argument from the burger's onClick.
-	const routes = useRoutes();
+	const routes = useRoutes(true);
 	const links = routes.map(({ path, end, text, Icon, onClick }) => {
 		const handleClick = () => {
 			onClick && onClick();

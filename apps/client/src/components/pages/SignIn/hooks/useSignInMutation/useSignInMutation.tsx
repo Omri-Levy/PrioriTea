@@ -22,10 +22,15 @@ export const useSignInMutation = () => {
       return AuthApi.signIn(email, password);
     },
 	  {
-		  onSuccess() {
-			  queryClient.invalidateQueries(['userInfo']);
+		  onSuccess({data}) {
+			  const {user} = data?.data;
+
+			  queryClient.setQueryData(['userInfo'], user)
 
 			  navigate("/", { replace: true });
+		  },
+		  onSettled() {
+			  queryClient.invalidateQueries(['userInfo']);
 		  }
 	  }
   );

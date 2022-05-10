@@ -5,51 +5,12 @@ import {
 	UnauthenticatedLayout
 } from "../UnauthenticatedLayout/UnauthenticatedLayout";
 import {useRoutes} from "./useRoutes";
-import {
-	useUserInfoQuery
-} from "../pages/SignIn/hooks/useUserInfoQuery/useUserInfoQuery";
-import {Progress} from "@mantine/core";
-import {useEffect, useState} from "react";
-import {useInterval} from "@mantine/hooks";
-import {SomethingWentWrong} from "../pages/Tasks/Tasks";
+import {useIsAuth} from "../pages/SignIn/hooks/useIsAuth/useIsAuth";
+
 
 export const Router = () => {
-	const {data: isAuth, isLoading, isError} = useUserInfoQuery();
-	const routes = useRoutes();
-	const [percent, setPercent] = useState(0);
-	const interval = useInterval(() =>
-			setPercent((percent) => ++percent),
-		1000);
-
-
-	useEffect(() => {
-
-		(isLoading && !interval.active)
-			? interval.start() : interval.stop();
-
-		return interval.stop;
-	}, [isLoading]);
-
-	if (isLoading) {
-		return     (
-			<Progress
-				sx={{
-					borderRadius: 0,
-				}}
-				size="xl"
-				value={percent}
-			/>
-		);
-	}
-
-	if (isError) {
-		return (
-			<Section title={''}>
-				<SomethingWentWrong/>
-			</Section>
-		);
-	}
-
+	const isAuth = useIsAuth();
+	const routes = useRoutes(isAuth);
 
 	return (
 		<BrowserRouter>
