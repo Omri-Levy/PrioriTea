@@ -1,5 +1,10 @@
 import {AppShell, Burger, Divider, Header, Navbar, Text} from "@mantine/core";
-import {FunctionComponent, useState} from "react";
+import {
+	FunctionComponent,
+	MouseEventHandler,
+	useCallback,
+	useState
+} from "react";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import {Logout} from "tabler-icons-react";
 import {AuthApi} from "../../api/auth-api";
@@ -13,7 +18,6 @@ export const useSignOutMutation = () => {
 	const navigate = useNavigate();
 
 	return useMutation(
-		['userInfo'],
 		async () => AuthApi.signOut(),
 		{
 			onSuccess() {
@@ -47,6 +51,14 @@ export const AuthenticatedLayout: FunctionComponent = () => {
 	});
 	const [opened, setOpened] = useState(false);
 	const {mutateAsync} = useSignOutMutation();
+	const onSignOut: MouseEventHandler<HTMLAnchorElement> = useCallback(async (e) => {
+			e.preventDefault();
+
+			return mutateAsync();
+		},
+		[mutateAsync],
+	);
+
 
 	return (
 		<AppShell
@@ -107,12 +119,7 @@ export const AuthenticatedLayout: FunctionComponent = () => {
 						<Link
 							to="/sign-in"
 							className="app-shell__link"
-							onClick={async (e) => {
-								e.preventDefault();
-
-								await mutateAsync()
-							}
-							}
+							onClick={onSignOut}
 						>
 							<Logout className={"app-shell__link__icon"} />
 							<span className="capitalize">Sign Out</span>

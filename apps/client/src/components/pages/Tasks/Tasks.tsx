@@ -3,11 +3,12 @@ import {
 	Checkbox,
 	CheckboxGroup,
 	Group,
-	TextInput,
+	TextInput, ThemeIcon,
 	Tooltip,
 	useMantineTheme
 } from "@mantine/core";
 import {
+	AlertCircle,
 	ArrowLeft,
 	ArrowRight,
 	Pencil,
@@ -25,6 +26,9 @@ import {TasksApi} from "../../../api/tasks-api";
 import {UpdateTaskModal} from "./UpdateTaskModal/UpdateTaskModal";
 import {Column, useAsyncDebounce} from "react-table";
 import {Tasks as TasksType} from "@prioritea/types";
+import {showNotification} from "@mantine/notifications";
+import {Warning} from "postcss";
+import {FieldError} from "../../FieldError/FieldError";
 
 export interface SearchProps {
 	preGlobalFilteredRows: TasksType;
@@ -36,10 +40,10 @@ const toCapitalized = (str: string) =>
 	str?.charAt(0)?.toUpperCase() + str?.slice(1);
 
 export const Search: FunctionComponent<SearchProps> = function({
-						  preGlobalFilteredRows,
-						  globalFilter,
-						  setGlobalFilter,
-					  }) {
+																   preGlobalFilteredRows,
+																   globalFilter,
+																   setGlobalFilter,
+															   }) {
 	const count = preGlobalFilteredRows.length
 	const [value, setValue] = useState(globalFilter)
 	const onChange = useAsyncDebounce(value => {
@@ -49,24 +53,24 @@ export const Search: FunctionComponent<SearchProps> = function({
 
 	return (
 		<div>
-		<TextInput
-			icon={<SearchIcon size={18} />}
-			radius="xl"
-			size="md"
-			rightSection={
-				<ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-					{theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
-				</ActionIcon>
-			}
-			styles={{root: {maxWidth: '35%', minWidth: "280px"}}}
-			rightSectionWidth={42}
-			value={value || ""}
-			onChange={e => {
-				setValue(e.target.value);
-				onChange(e.target.value);
-			}}
-			placeholder={`Searching in ${count} records...`}
-		/>
+			<TextInput
+				icon={<SearchIcon size={18} />}
+				radius="xl"
+				size="md"
+				rightSection={
+					<ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
+						{theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
+					</ActionIcon>
+				}
+				styles={{root: {maxWidth: '35%', minWidth: "280px"}}}
+				rightSectionWidth={42}
+				value={value || ""}
+				onChange={e => {
+					setValue(e.target.value);
+					onChange(e.target.value);
+				}}
+				placeholder={`Searching in ${count} records...`}
+			/>
 		</div>
 	)
 }
@@ -74,9 +78,8 @@ export const Search: FunctionComponent<SearchProps> = function({
 export const useDeleteTasksMutation = () => {
 	const queryClient = useQueryClient();
 
-	return useMutation(['tasks'], async ({ ids }: {ids: Array<string>}) => {
-		console.log(ids);
-		const {data} = await TasksApi.deleteByIds(['qwer']);
+	return useMutation( async ({ ids }: {ids: Array<string>}) => {
+		const {data} = await TasksApi.deleteByIds(ids);
 
 		return data.data.tasks;
 	}, {
@@ -92,7 +95,15 @@ export const useDeleteTasksMutation = () => {
 
 			return {prevTasks};
 		},
-		onError(_err, _ids, context: {prevTasks: TasksType} | undefined) {
+		onError(err, _ids, context: {prevTasks: TasksType} | undefined) {
+
+			showNotification({
+				icon: <AlertCircle size={24} />,
+				title: "Error",
+				// @ts-ignore
+				message: err.response?.data.errors?.[0].message ?? "Failed to delete tasks",
+			});
+
 			queryClient.setQueryData(['tasks'], context?.prevTasks);
 		},
 		onSettled() {
@@ -107,7 +118,7 @@ export const FilterCheckboxGroup = (
 	// @ts-ignore
 	{column:
 		// @ts-ignore
-	{filterValue, setFilter, preFilteredRows, id},
+		{filterValue, setFilter, preFilteredRows, id},
 		...rest
 	}) => {
 	const values = useMemo(() => {
@@ -127,20 +138,20 @@ export const FilterCheckboxGroup = (
 			onChange={setFilter}
 			size={"xs"}
 		>
-						{options?.map(
-							(option: any) => (
-									<Checkbox
-										key={`${id}-${option}`}
-										value={option?.toString()}
-										// @ts-ignore
-										label={rest?.transformer ? rest?.transformer(option) : option}
-										styles={{
-											label: {
-												textTransform: "capitalize",
-											},
-										}}
-									/>
-						))}
+			{options?.map(
+				(option: any) => (
+					<Checkbox
+						key={`${id}-${option}`}
+						value={option?.toString()}
+						// @ts-ignore
+						label={rest?.transformer ? rest?.transformer(option) : option}
+						styles={{
+							label: {
+								textTransform: "capitalize",
+							},
+						}}
+					/>
+				))}
 		</CheckboxGroup>
 	);
 }
@@ -180,7 +191,7 @@ export const Tasks = () => {
 				<FilterCheckboxGroup
 					{...props}
 					transformer={formatTaskStatus}
-			/>
+				/>
 			),
 			// @ts-ignore
 			Cell({value}) {

@@ -3,8 +3,7 @@ import {Task} from "@prisma/client";
 import {Service} from "../core/service";
 import {TasksRepository} from "./tasks.repository";
 import {PrismaClientKnownRequestError} from "@prisma/client/runtime";
-import {BadRequestError} from "../errors/bad-request-error";
-import { NotFoundError } from "../errors/not-found-error";
+import {NotFoundError} from "../errors/not-found-error";
 
 export interface ITasksService {
 	createTask(

@@ -5,7 +5,7 @@ import {Tasks, UpdateTaskDto} from "@prioritea/types";
 export const useUpdateTaskMutation = () => {
 	const queryClient = useQueryClient();
 
-	return useMutation(['tasks'], async ({
+	return useMutation(async ({
 		id,
 											 priority,
 											 description,

@@ -8,6 +8,7 @@ import {QueryClientProvider} from "react-query";
 import {Router} from "../Router/Router";
 import {queryClient} from "../../lib/query-client";
 import {useEffect} from "react";
+import {NotificationsProvider} from "@mantine/notifications";
 
 export const App = () => {
   const preferredColorScheme = useColorScheme();
@@ -54,7 +55,9 @@ export const App = () => {
         withNormalizeCSS
         withCSSVariables
       >
+		  <NotificationsProvider position={"top-center"}>
               <Router />
+		  </NotificationsProvider>
       </MantineProvider>
     </ColorSchemeProvider>
 	  </QueryClientProvider>
