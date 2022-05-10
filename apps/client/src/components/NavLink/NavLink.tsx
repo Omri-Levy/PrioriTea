@@ -3,7 +3,7 @@ import { FunctionComponent, MouseEventHandler, ReactNode } from "react";
 import { NavLink as RouterNavLink } from "react-router-dom";
 
 interface LinkProps {
-  end: boolean;
+  end?: boolean;
   to: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   children: ReactNode;

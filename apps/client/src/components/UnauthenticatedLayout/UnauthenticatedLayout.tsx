@@ -41,7 +41,7 @@ export const UnauthenticatedLayout: FunctionComponent =
           onClick={handleClick}
           key={`${path}-nav-link`}
         >
-          <Icon className={"navlink__icon"} />
+			{Icon && <Icon className={"navlink__icon"} />}
           <span>{text}</span>
         </NavLink>
       );

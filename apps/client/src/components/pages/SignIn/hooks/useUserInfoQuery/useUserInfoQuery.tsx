@@ -1,5 +1,5 @@
-import { useQuery } from "react-query";
-import { AuthApi } from "../../../../../api/auth-api";
+import {useQuery} from "react-query";
+import {AuthApi} from "../../../../../api/auth-api";
 import {UserDto} from "@prioritea/types";
 
 

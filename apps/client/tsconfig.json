@@ -5,6 +5,7 @@
 	"jsx": "react-jsx",
   },
   "include": ["src/"],
+  "types": ["node"],
   "exclude": ["**/node_modules/**", "**/.turbo/**", "**/dist/**", "**/coverage/**", "**/src/**/*.(test|spec).ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

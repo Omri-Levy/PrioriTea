@@ -1,12 +1,20 @@
-import {Avatar, createStyles, Group, Paper, Text} from "@mantine/core";
+import {
+	Avatar,
+	Container,
+	createStyles,
+	Group,
+	Paper,
+	Text
+} from "@mantine/core";
 import {FunctionComponent} from "react";
 import {
 	useUserInfoQuery
 } from "../SignIn/hooks/useUserInfoQuery/useUserInfoQuery";
 import {noNullish} from "../../DnDReactTable/DnDReactTable";
+import {SomethingWentWrong} from "../Tasks/Tasks";
 
 export const Account: FunctionComponent = () => {
-  const {data: user} = useUserInfoQuery();
+  const {data: user, isError, isLoading} = useUserInfoQuery();
   const useStyles = createStyles((theme) => ({
   icon: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
@@ -16,12 +24,19 @@ export const Account: FunctionComponent = () => {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
   },
 }));
-
-
     const { classes } = useStyles();
+
+	if (isError) {
+		return <SomethingWentWrong/>;
+	}
+
+	if (isLoading) {
+		return <div>Loading...</div>;
+	}
 
 
   return (
+	  <Container>
             <Paper
       radius="md"
       withBorder
@@ -52,5 +67,6 @@ export const Account: FunctionComponent = () => {
         </div>
       </Group>
     </Paper>
+	  </Container>
   );
 };

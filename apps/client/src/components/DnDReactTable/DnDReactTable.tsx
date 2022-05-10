@@ -382,7 +382,6 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 							marginBottom: "1rem",
 							'& tbody tr td': {borderBottom: 0}
 						}} {...getTableProps()}>
-						{!isLoading &&
 							<DnDReactTable.THead
 								// visibleColumns.length without + 1 leaves an empty column.
 								visibleColumnsLength={visibleColumns.length + 1}
@@ -391,7 +390,6 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 								globalFilter={globalFilter}
 								headerGroups={headerGroups}
 							/>
-						}
 						<Droppable droppableId="dnd-list" direction="vertical">
 							{(provided) => (
 								<DnDReactTable.TBody

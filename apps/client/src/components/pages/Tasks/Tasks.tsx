@@ -1,9 +1,16 @@
 import {
 	ActionIcon,
+	Button,
 	Checkbox,
 	CheckboxGroup,
+	Container,
+	createStyles,
 	Group,
-	TextInput, ThemeIcon,
+	Image,
+	SimpleGrid,
+	Text,
+	TextInput,
+	Title,
 	Tooltip,
 	useMantineTheme
 } from "@mantine/core";
@@ -27,8 +34,6 @@ import {UpdateTaskModal} from "./UpdateTaskModal/UpdateTaskModal";
 import {Column, useAsyncDebounce} from "react-table";
 import {Tasks as TasksType} from "@prioritea/types";
 import {showNotification} from "@mantine/notifications";
-import {Warning} from "postcss";
-import {FieldError} from "../../FieldError/FieldError";
 
 export interface SearchProps {
 	preGlobalFilteredRows: TasksType;
@@ -43,6 +48,60 @@ export const errorToast = (message: string) =>
 		// @ts-ignore
 		message,
 	});
+
+export const SomethingWentWrong = () => {
+	const useStyles = createStyles((theme) => ({
+
+		title: {
+			fontWeight: 900,
+			fontSize: 34,
+			fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+
+			[theme.fn.smallerThan('sm')]: {
+				fontSize: 32,
+			},
+		},
+	}));
+	const { classes } = useStyles();
+	const theme = useMantineTheme();
+
+	return (
+		<Container >
+			<SimpleGrid
+				spacing={80}
+				cols={2}
+				breakpoints={[{ maxWidth: 'sm', cols: 1, spacing: 40 }]}
+			>
+				<div>
+					<Title className={classes.title}>Something went wrong...</Title>
+					<Text color="dimmed" size="lg" mb={"1rem"}>
+						Please refresh this page, or try again later. If the problem persists, please contact us.
+					</Text>
+					<Button
+						size="md"
+						onClick={() => {
+							document.location.reload();
+						}}
+					>
+						Refresh the page
+					</Button>
+				</div>
+				<Text
+					component={"h1"}
+					sx={{
+						marginBlock: 0,
+						fontSize: "15rem",
+					}}
+					variant={"gradient"}
+					// @ts-ignore
+					gradient={{from: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 7 : 5], to: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 5 : 7]}}
+				>
+					500
+				</Text>
+			</SimpleGrid>
+		</Container>
+	);
+}
 
 const toCapitalized = (str: string) =>
 	str?.charAt(0)?.toUpperCase() + str?.slice(1);
@@ -82,6 +141,7 @@ export const Search: FunctionComponent<SearchProps> = function({
 		</div>
 	)
 }
+
 
 export const useDeleteTasksMutation = () => {
 	const queryClient = useQueryClient();
@@ -177,6 +237,7 @@ export const toKebabCase = (str: string) =>
 
 export const formatTaskStatus = (status: string) => toCapitalized(toKebabCase(status)?.toLowerCase())
 
+
 export const Tasks = () => {
 	const {isToggled: deleteModalIsOpen, toggleOn: deleteModalOnOpen, toggleOff: deleteModalOnClose} = useToggle(false);
 	const {isToggled: updateModalIsOpen, toggleOn: updateModalOnOpen, toggleOff: updateModalOnClose} = useToggle(false);
@@ -220,7 +281,9 @@ export const Tasks = () => {
 	}, [selectedRowIds]);
 
 	if (isError) {
-		return <div>Error</div>;
+		return (
+		<SomethingWentWrong/>
+		);
 	}
 
 	return (
