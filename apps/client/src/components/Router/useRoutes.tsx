@@ -1,62 +1,62 @@
-import { ReactNode } from "react";
 import {
-	ListDetails, Icon, Login as SignInIcon, User, UserPlus as SignUpIcon
+	ListDetails,
+	Login as SignInIcon,
+	User,
+	UserPlus as SignUpIcon
 } from "tabler-icons-react";
-import { useIsAuth } from "../pages/SignIn/hooks/useIsAuth/useIsAuth";
-import { Account } from "../pages/Account/Account";
-import { Tasks } from "../pages/Tasks/Tasks";
-import { SignIn } from "../pages/SignIn/SignIn";
-import { SignUp } from "../pages/SignUp/SignUp";
-import {Navigate, Route} from "react-router-dom";
+import {Account} from "../pages/Account/Account";
+import {Tasks} from "../pages/Tasks/Tasks";
+import {SignIn} from "../pages/SignIn/SignIn";
+import {SignUp} from "../pages/SignUp/SignUp";
+import {Navigate} from "react-router-dom";
+import {protectedRoutes} from "./protectedRoutes";
+import {IRoute} from "./interfaces";
 
-interface IRoute {
-	path: string;
-	element: ReactNode;
-	end?: boolean;
-	text?: string;
-	Icon?: Icon;
-	onClick?: (args?: any[]) => any;
-}
-
-export  const protectedRoutes = [
-	"/",
-	"/account"
-];
-
+/**
+ * @description Returns an array of properties to be used for nav links and routes, filtered by auth state.
+ * @param isAuth {boolean} - Whether the user is authenticated.
+ * @returns {Array<IRoute>} - An array of path, text, and icon for nav link, end and element for the router.
+ */
 export const useRoutes = (isAuth: boolean) => {
 	const routes: Array<IRoute> = [
 		{
 			path: "/",
-			element: <Tasks />,
+			element: <Tasks/>,
 			end: true,
 			text: "tasks",
 			Icon: ListDetails,
 		},
 		{
 			path: "/account",
-			element: <Account />,
+			element: <Account/>,
 			text: "account",
 			Icon: User,
 		},
 		{
 			path: `/sign-in`,
-			element: <SignIn />,
+			element: <SignIn/>,
 			end: true,
 			text: `sign in`,
 			Icon: SignInIcon,
 		},
 		{
 			path: "/sign-up",
-			element: <SignUp />,
+			element: <SignUp/>,
 			end: true,
 			text: "sign up",
 			Icon: SignUpIcon,
 		},
 		{
 			path: '*',
-			element: <Navigate to={isAuth ? "/" : "/sign-in"} />,
+			element: <Navigate to={isAuth ? "/" : "/sign-in"}/>,
 		}
 	];
 
-	return routes.filter(({path}) => (isAuth && protectedRoutes.includes(path)) || (!isAuth && !protectedRoutes.includes(path) || path === '*'));
+	return routes.filter(({path}) => {
+		const isProtected = isAuth && protectedRoutes.includes(path);
+		const isUnprotected = !isAuth && !protectedRoutes.includes(path);
+		const isFallback = path === '*';
+
+		return isProtected || isUnprotected || isFallback;
+	});
 };

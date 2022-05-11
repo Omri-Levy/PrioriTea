@@ -1,18 +1,20 @@
 import express from "express";
-import { z } from "zod";
-import { NotFoundError } from "../errors/not-found-error";
-import { Middleware, ErrorHandler } from "../types";
-import { iterableArray } from "@prioritea/utils";
-import { logger } from "../utils/logger";
-import { IConfig, IServer } from "./app";
+import {z} from "zod";
+import {NotFoundError} from "../errors/not-found-error";
+import {ErrorHandler, Middleware} from "../types";
+import {iterableArray} from "@prioritea/utils";
+import {logger} from "../utils/logger";
+import {IConfig, IServer} from "./app";
+import {BaseArray} from "@prioritea/types";
 
 export abstract class Server implements IServer {
 	app = express();
 	abstract readonly BASE_URL: string;
 
-	constructor(public readonly port: number) {}
+	constructor(public readonly port: number) {
+	}
 
-	setupControllers(...controllers: any[]) {
+	setupControllers(...controllers: BaseArray) {
 		z.array(
 			z.object({
 				prefix: z.string().min(1),
@@ -23,7 +25,7 @@ export abstract class Server implements IServer {
 			.nonempty()
 			.parse(controllers);
 
-		controllers.forEach(({ prefix, router, middleware }) => {
+		controllers.forEach(({prefix, router, middleware}) => {
 			const path = `/${this.BASE_URL}${prefix}`;
 
 			iterableArray(middleware)
@@ -61,7 +63,7 @@ export abstract class Server implements IServer {
 			.nonempty()
 			.parse(config);
 
-		config.forEach(({ setting, val }) => {
+		config.forEach(({setting, val}) => {
 			this.app.set(setting, val);
 		});
 

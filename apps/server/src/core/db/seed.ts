@@ -1,27 +1,12 @@
-import { Prisma } from "@prisma/client";
-import { db } from "../db/db";
-import { faker } from "@faker-js/faker";
+import {Prisma} from "@prisma/client";
+import {db} from "../db/db";
+import {faker} from "@faker-js/faker";
+import {mapRange} from "@prioritea/utils";
 
 // Iterate n times
 const users = 10;
 const rows = 10;
 const pages = 10;
-
-export type BaseArray = any[];
-
-/**
- * @description Returns an array of n numbers.
- * @param n
- */
-export const arrayOfN = (n: number) =>
-	Array.from({length: n }, (_, i) => i + 1);
-
-/**
- * @description Maps n times using the passed in callback, passes a one-based number as the first argument, and a zero-based index as the second argument.
- * @param n
- * @param strategy
- */
-export const mapRange = <TItem>(n: number, strategy: (n: number, i: number) => TItem) => arrayOfN(n).map(strategy);
 
 const userData = mapRange<Prisma.UserCreateInput>(users, () =>
 	({

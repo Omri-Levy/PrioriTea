@@ -8,17 +8,23 @@ import {morgan} from "../middleware/morgan";
 import {TasksController} from "../tasks/tasks.controller";
 import {Server} from "./server";
 import helmet from "helmet";
+import {BaseArray} from "@prioritea/types";
 
 export interface IServer {
 	app: Application;
 	readonly port: number;
 	readonly BASE_URL: string;
 
-	setupControllers(...controllers: any[]): Server;
-	setupMiddleware(...middleware: any[]): Server;
-	setupConfig(...config: any[]): Server;
+	setupControllers(...controllers: BaseArray): Server;
+
+	setupMiddleware(...middleware: BaseArray): Server;
+
+	setupConfig(...config: BaseArray): Server;
+
 	onListen(): Server;
+
 	init(): Server;
+
 	listen(): void;
 }
 
@@ -31,11 +37,11 @@ export class App extends Server {
 	readonly BASE_URL = VITE_BASE_URL!;
 
 	public init() {
-		this.setupConfig({ setting: "trust proxy", val: 1 })
+		this.setupConfig({setting: "trust proxy", val: 1})
 			.setupMiddleware(
 				cookieParser(),
-				cors({ origin: VITE_CORS_ORIGIN, credentials: true }),
-				urlencoded({ extended: true }),
+				cors({origin: VITE_CORS_ORIGIN, credentials: true}),
+				urlencoded({extended: true}),
 				json(),
 				morgan,
 				helmet()

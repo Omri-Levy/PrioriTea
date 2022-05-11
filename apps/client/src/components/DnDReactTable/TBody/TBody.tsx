@@ -1,11 +1,10 @@
 import {FunctionComponent} from "react";
 import {createStyles} from "@mantine/core";
-import {Draggable} from "react-beautiful-dnd";
+import {Draggable, Droppable} from "react-beautiful-dnd";
 import {GripVertical} from "tabler-icons-react";
 import {TBodyProps} from "./interfaces";
 
 export const TBody: FunctionComponent<TBodyProps> = ({
-														 provided,
 														 getTableBodyProps,
 														 page,
 														 prepareRow,
@@ -25,40 +24,44 @@ export const TBody: FunctionComponent<TBodyProps> = ({
 	const {classes} = useStyles();
 
 	return (
-		<tbody  {...provided.droppableProps}
-				ref={provided.innerRef} {...getTableBodyProps()}>
-		{page.map((row, index) => {
-			prepareRow(row);
+		<Droppable droppableId="dnd-list" direction="vertical">
+			{(provided) => (
+				<tbody  {...provided.droppableProps}
+						ref={provided.innerRef} {...getTableBodyProps()}>
+				{page.map((row, index) => {
+					prepareRow(row);
 
-			return (
-				<Draggable
-					key={row.id}
-					index={index} draggableId={row.id}
-				>
-					{(provided) => (
-						<tr
-							{...row.getRowProps()}
-							{...provided.draggableProps}
-							className={classes.item}
-							ref={provided.innerRef}
+					return (
+						<Draggable
+							key={row.id}
+							index={index} draggableId={row.id}
 						>
-							<td>
-								<div
-									className={classes.dragHandle} {...provided.dragHandleProps}>
-									<GripVertical size={20} />
-								</div>
-							</td>
-							{row.cells.map((cell) =>
-								<td {...cell.getCellProps()}>
-									{cell.render('Cell')}
-								</td>
+							{(provided) => (
+								<tr
+									{...row.getRowProps()}
+									{...provided.draggableProps}
+									className={classes.item}
+									ref={provided.innerRef}
+								>
+									<td>
+										<div
+											className={classes.dragHandle} {...provided.dragHandleProps}>
+											<GripVertical size={20}/>
+										</div>
+									</td>
+									{row.cells.map((cell) =>
+										<td {...cell.getCellProps()}>
+											{cell.render('Cell')}
+										</td>
+									)}
+								</tr>
 							)}
-						</tr>
-					)}
-				</Draggable>
-			);
-		})}
-		{provided.placeholder}
-		</tbody>
+						</Draggable>
+					);
+				})}
+				{provided.placeholder}
+				</tbody>
+			)}
+		</Droppable>
 	);
 }

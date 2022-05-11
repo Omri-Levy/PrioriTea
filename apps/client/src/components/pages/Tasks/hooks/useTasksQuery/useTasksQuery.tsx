@@ -1,5 +1,5 @@
 import {useQuery} from "react-query";
-import {TasksApi} from "../../../../../api/tasks-api";
+import {TasksApi} from "../../../../../api/tasks-api/tasks-api";
 
 export const useTasksQuery = () => {
 	return useQuery(['tasks'], async () => {
