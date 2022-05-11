@@ -68,6 +68,7 @@ export class AuthController
 			signUpSchema as any,
 			req.body
 		);
+
 		try {
 			const user = await this.service.signUp(email, name, password);
 
@@ -91,7 +92,10 @@ export class AuthController
 
 		JwtUtils.createAccessTokenCookie(res, user);
 
-		return new OkResponse(res);
+		return new OkResponse(res, { data: { user: {
+					email: user.email,
+					name: user.name,
+				} } });
 	}
 
 	/**
@@ -112,9 +116,9 @@ export class AuthController
 			data: {
 				user: user
 					? {
-							email: user.email,
-							name: user.name,
-					  }
+						email: user.email,
+						name: user.name,
+					}
 					: null,
 			},
 		});

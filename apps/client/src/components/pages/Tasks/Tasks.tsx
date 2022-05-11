@@ -1,13 +1,21 @@
 import {
 	ActionIcon,
+	Button,
 	Checkbox,
 	CheckboxGroup,
+	Container,
+	createStyles,
 	Group,
+	Image,
+	SimpleGrid,
+	Text,
 	TextInput,
+	Title,
 	Tooltip,
 	useMantineTheme
 } from "@mantine/core";
 import {
+	AlertCircle,
 	ArrowLeft,
 	ArrowRight,
 	Pencil,
@@ -15,7 +23,7 @@ import {
 	Search as SearchIcon,
 	Trash
 } from "tabler-icons-react";
-import {DnDReactTable} from "../../DnDReactTable/DnDReactTable";
+import {DnDReactTable, noNullish} from "../../DnDReactTable/DnDReactTable";
 import {useToggle} from "../../../hooks/useToggle/useToggle";
 import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
 import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
@@ -25,6 +33,7 @@ import {TasksApi} from "../../../api/tasks-api";
 import {UpdateTaskModal} from "./UpdateTaskModal/UpdateTaskModal";
 import {Column, useAsyncDebounce} from "react-table";
 import {Tasks as TasksType} from "@prioritea/types";
+import {showNotification} from "@mantine/notifications";
 
 export interface SearchProps {
 	preGlobalFilteredRows: TasksType;
@@ -32,14 +41,76 @@ export interface SearchProps {
 	globalFilter: string | undefined;
 }
 
+export const errorToast = (message: string) =>
+	showNotification({
+		icon: <AlertCircle size={24} />,
+		title: "Error",
+		// @ts-ignore
+		message,
+	});
+
+export const SomethingWentWrong = () => {
+	const useStyles = createStyles((theme) => ({
+
+		title: {
+			fontWeight: 900,
+			fontSize: 34,
+			fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+
+			[theme.fn.smallerThan('sm')]: {
+				fontSize: 32,
+			},
+		},
+	}));
+	const { classes } = useStyles();
+	const theme = useMantineTheme();
+
+	return (
+		<Container >
+			<SimpleGrid
+				spacing={80}
+				cols={2}
+				breakpoints={[{ maxWidth: 'sm', cols: 1, spacing: 40 }]}
+			>
+				<div>
+					<Title className={classes.title}>Something went wrong...</Title>
+					<Text color="dimmed" size="lg" mb={"1rem"}>
+						Please refresh this page, or try again later. If the problem persists, please contact us.
+					</Text>
+					<Button
+						size="md"
+						onClick={() => {
+							document.location.reload();
+						}}
+					>
+						Refresh the page
+					</Button>
+				</div>
+				<Text
+					component={"h1"}
+					sx={{
+						marginBlock: 0,
+						fontSize: "15rem",
+					}}
+					variant={"gradient"}
+					// @ts-ignore
+					gradient={{from: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 7 : 5], to: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 5 : 7]}}
+				>
+					500
+				</Text>
+			</SimpleGrid>
+		</Container>
+	);
+}
+
 const toCapitalized = (str: string) =>
 	str?.charAt(0)?.toUpperCase() + str?.slice(1);
 
 export const Search: FunctionComponent<SearchProps> = function({
-						  preGlobalFilteredRows,
-						  globalFilter,
-						  setGlobalFilter,
-					  }) {
+																   preGlobalFilteredRows,
+																   globalFilter,
+																   setGlobalFilter,
+															   }) {
 	const count = preGlobalFilteredRows.length
 	const [value, setValue] = useState(globalFilter)
 	const onChange = useAsyncDebounce(value => {
@@ -49,32 +120,33 @@ export const Search: FunctionComponent<SearchProps> = function({
 
 	return (
 		<div>
-		<TextInput
-			icon={<SearchIcon size={18} />}
-			radius="xl"
-			size="md"
-			rightSection={
-				<ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
-					{theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
-				</ActionIcon>
-			}
-			styles={{root: {maxWidth: '35%', minWidth: "280px"}}}
-			rightSectionWidth={42}
-			value={value || ""}
-			onChange={e => {
-				setValue(e.target.value);
-				onChange(e.target.value);
-			}}
-			placeholder={`Searching in ${count} records...`}
-		/>
+			<TextInput
+				icon={<SearchIcon size={18} />}
+				radius="xl"
+				size="md"
+				rightSection={
+					<ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled">
+						{theme.dir === 'ltr' ? <ArrowRight size={18} /> : <ArrowLeft size={18} />}
+					</ActionIcon>
+				}
+				styles={{root: {maxWidth: '35%', minWidth: "280px"}}}
+				rightSectionWidth={42}
+				value={value || ""}
+				onChange={e => {
+					setValue(e.target.value);
+					onChange(e.target.value);
+				}}
+				placeholder={`Searching in ${count} records...`}
+			/>
 		</div>
 	)
 }
 
+
 export const useDeleteTasksMutation = () => {
 	const queryClient = useQueryClient();
 
-	return useMutation(['tasks'], async ({ids}: {ids: Array<string>}) => {
+	return useMutation( async ({ ids }: {ids: Array<string>}) => {
 		const {data} = await TasksApi.deleteByIds(ids);
 
 		return data.data.tasks;
@@ -91,8 +163,18 @@ export const useDeleteTasksMutation = () => {
 
 			return {prevTasks};
 		},
-		onError(_err, _ids, context: {prevTasks: TasksType} | undefined) {
+		onError(err, _ids, context: {prevTasks: TasksType} | undefined) {
 			queryClient.setQueryData(['tasks'], context?.prevTasks);
+
+			// @ts-ignore
+			if (err.response?.status === 404) {
+				// @ts-ignore
+				errorToast(err.response?.data.errors?.[0].message);
+
+				return;
+			}
+
+			errorToast("Failed to delete tasks");
 		},
 		onSettled() {
 			queryClient.invalidateQueries(['tasks']);
@@ -106,14 +188,14 @@ export const FilterCheckboxGroup = (
 	// @ts-ignore
 	{column:
 		// @ts-ignore
-	{filterValue, setFilter, preFilteredRows, id},
+		{filterValue, setFilter, preFilteredRows, id},
 		...rest
 	}) => {
 	const values = useMemo(() => {
 		// @ts-ignore
 		return preFilteredRows.map((row) => {
 			// Ensures that the filter value is a string
-			return row.values[id]?.toString();
+			return noNullish`${row.values[id]}`;
 		});
 	}, [id, preFilteredRows]);
 	const options = useMemo(() => [...new Set(values)], [values]);
@@ -126,20 +208,20 @@ export const FilterCheckboxGroup = (
 			onChange={setFilter}
 			size={"xs"}
 		>
-						{options?.map(
-							(option: any) => (
-									<Checkbox
-										key={`${id}-${option}`}
-										value={option?.toString()}
-										// @ts-ignore
-										label={rest?.transformer ? rest?.transformer(option) : option}
-										styles={{
-											label: {
-												textTransform: "capitalize",
-											},
-										}}
-									/>
-						))}
+			{options?.map(
+				(option: any) => (
+					<Checkbox
+						key={`${id}-${option}`}
+						value={option?.toString()}
+						// @ts-ignore
+						label={rest?.transformer ? rest?.transformer(option) : option}
+						styles={{
+							label: {
+								textTransform: "capitalize",
+							},
+						}}
+					/>
+				))}
 		</CheckboxGroup>
 	);
 }
@@ -154,6 +236,7 @@ export const toKebabCase = (str: string) =>
 		?.replace(/\s/g, '-')
 
 export const formatTaskStatus = (status: string) => toCapitalized(toKebabCase(status)?.toLowerCase())
+
 
 export const Tasks = () => {
 	const {isToggled: deleteModalIsOpen, toggleOn: deleteModalOnOpen, toggleOff: deleteModalOnClose} = useToggle(false);
@@ -179,7 +262,7 @@ export const Tasks = () => {
 				<FilterCheckboxGroup
 					{...props}
 					transformer={formatTaskStatus}
-			/>
+				/>
 			),
 			// @ts-ignore
 			Cell({value}) {
@@ -198,7 +281,9 @@ export const Tasks = () => {
 	}, [selectedRowIds]);
 
 	if (isError) {
-		return <div>Error</div>;
+		return (
+		<SomethingWentWrong/>
+		);
 	}
 
 	return (

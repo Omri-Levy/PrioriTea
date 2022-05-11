@@ -2,13 +2,13 @@
 import "dotenv/config";
 // Required for the error-handler middleware
 import "express-async-errors";
-import { App } from "./core/app";
-import { NODE_ENV, PORT } from "./env/env";
+import {App} from "./core/app";
+import {VITE_PORT} from "./env/env";
 
-(async () => {
-	const app = new App(Number(PORT));
+const app = new App(Number(VITE_PORT));
 
-	if (NODE_ENV !== "test") {
-		app.listen();
-	}
-})();
+if (import.meta.env.PROD) {
+	app.listen();
+}
+
+export const viteNodeApp = app.init().app;

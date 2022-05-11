@@ -25,7 +25,7 @@ export const UnauthenticatedLayout: FunctionComponent =
     const [isOpen, toggleIsOpen] = useBooleanToggle(false);
     // Avoids passing an unneeded value argument from the burger's onClick.
     const toggleBurger = () => toggleIsOpen();
-    const routes = useRoutes();
+    const routes = useRoutes(false);
     const HEADER_HEIGHT = 60;
     const links = routes.map(({ path, end, text, Icon, onClick }) => {
       const handleClick = () => {
@@ -41,7 +41,7 @@ export const UnauthenticatedLayout: FunctionComponent =
           onClick={handleClick}
           key={`${path}-nav-link`}
         >
-          <Icon className={"navlink__icon"} />
+			{Icon && <Icon className={"navlink__icon"} />}
           <span>{text}</span>
         </NavLink>
       );

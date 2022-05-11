@@ -1,7 +1,7 @@
 // Not to confuse with argon2 verify
 import { Request, Response } from "express";
 import { sign, verify as verifyJwt } from "jsonwebtoken";
-import { DOMAIN, SECRET_ACCESS_TOKEN } from "../../env/env";
+import { VITE_DOMAIN, VITE_SECRET_ACCESS_TOKEN } from "../../env/env";
 import { isDev } from "../../env/is-dev";
 import { UnauthorizedError } from "../../errors/unauthorized-error";
 import { IJwtPayload } from "../../interfaces";
@@ -49,7 +49,7 @@ export class JwtUtils {
 			path: `/`,
 			secure: isProd,
 			expires: Expiration.inHours(9),
-			domain: isProd ? DOMAIN : undefined,
+			domain: isProd ? VITE_DOMAIN : undefined,
 		});
 	}
 
@@ -63,7 +63,7 @@ export class JwtUtils {
 					name: user.name,
 				},
 			},
-			SECRET_ACCESS_TOKEN!
+			VITE_SECRET_ACCESS_TOKEN!
 		);
 	}
 
@@ -82,7 +82,7 @@ export class JwtUtils {
 
 		const { exp, data } = verifyJwt(
 			token,
-			SECRET_ACCESS_TOKEN!
+			VITE_SECRET_ACCESS_TOKEN!
 		) as IJwtPayload;
 
 		if (this.isExpired(exp)) {

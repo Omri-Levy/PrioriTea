@@ -4,7 +4,6 @@ import {ISignUpForm} from "../../interfaces";
 
 export const useSignUpMutation = () => {
   return useMutation(
-    ["signUp"],
     async (
 		{ email, name, password, passwordConfirmation }: ISignUpForm
 	) => {

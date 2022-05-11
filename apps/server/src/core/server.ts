@@ -35,7 +35,7 @@ export abstract class Server implements IServer {
 
 		// catches 404 response error/non-existent route
 		this.app.all(`*`, function () {
-			throw new NotFoundError(`Route`);
+			throw new NotFoundError(`Route not found.`);
 		});
 
 		return this;

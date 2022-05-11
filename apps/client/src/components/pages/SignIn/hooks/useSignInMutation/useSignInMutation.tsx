@@ -1,6 +1,7 @@
 import {useMutation, useQueryClient} from "react-query";
 import {AuthApi} from "../../../../../api/auth-api";
 import {ISignInForm} from "../../interfaces";
+import {useNavigate} from "react-router-dom";
 
 type AsyncTimeout = {
 	(ms: number): Promise<unknown>;
@@ -14,14 +15,21 @@ export const asyncTimeout: AsyncTimeout = async (ms = 0, payload?: any)  =>
 
 export const useSignInMutation = () => {
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
   return useMutation(
-    ["signUp"],
     async ({ email, password }: ISignInForm) => {
       return AuthApi.signIn(email, password);
     },
 	  {
-		  onSuccess: () => {
+		  onSuccess({data}) {
+			  const {user} = data?.data;
+
+			  queryClient.setQueryData(['userInfo'], user)
+
+			  navigate("/", { replace: true });
+		  },
+		  onSettled() {
 			  queryClient.invalidateQueries(['userInfo']);
 		  }
 	  }

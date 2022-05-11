@@ -46,7 +46,7 @@ export class UsersService
 	}
 
 	public async deleteUsers() {
-		this.repository.deleteAllUsers();
+		await this.repository.deleteAllUsers();
 
 		return this.repository.getAllUsers();
 	}

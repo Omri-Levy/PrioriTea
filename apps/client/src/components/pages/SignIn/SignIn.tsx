@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import {signInSchema} from "@prioritea/validation";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {ErrorAlert} from "../../ErrorAlert/ErrorAlert";
 import {FieldError} from "../../FieldError/FieldError";
 import {useSignInMutation} from "./hooks/useSignInMutation/useSignInMutation";
@@ -27,21 +27,16 @@ export const SignIn = () => {
       password: "",
     },
   });
-  const navigate = useNavigate();
   const { mutateAsync, isLoading, isError, error } = useSignInMutation();
   const onSubmit: SubmitHandler<ISignInForm> = async ({
     email,
     password,
-  }) => {
-    await mutateAsync({
+  }) =>  mutateAsync({
       email,
       password,
     });
 
-    navigate("/", { replace: true });
-  };
-
-  const queryError = (error as any)?.response.data.errors[0].message;
+  const [{message}] = (error as any)?.response?.data?.errors ?? [{message: ''}];
 
   return (
     <Paper radius="md" p="xl" withBorder>
@@ -59,7 +54,7 @@ export const SignIn = () => {
       {/*<Divider label="Or continue with email" labelPosition="center" my="lg" />*/}
       {isError && (
         <ErrorAlert title="Something went wrong..">
-			{queryError ?? `Please refresh this page or try again later. If the problem persists,please contact us.`}
+			{message ?? `Please refresh this page or try again later. If the problem persists,please contact us.`}
         </ErrorAlert>
       )}
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
