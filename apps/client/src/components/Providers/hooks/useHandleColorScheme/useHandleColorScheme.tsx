@@ -15,6 +15,7 @@ export const useHandleColorScheme = (): [ColorScheme, (value?: ColorScheme) => v
 
 	useHotkeys([["mod+J", () => toggleColorScheme()]]);
 
+	// Makes the color scheme available in CSS.
 	useEffect(() => {
 		document.documentElement.setAttribute("data-color-scheme", colorScheme);
 	}, [colorScheme]);

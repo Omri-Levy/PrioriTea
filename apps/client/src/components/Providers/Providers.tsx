@@ -1,5 +1,4 @@
 import {FunctionComponent} from "react";
-import {ProvidersProps} from "./types";
 import {queryClient} from "../../lib/query-client";
 import {QueryClientProvider} from "react-query";
 import {ColorSchemeProvider, MantineProvider} from "@mantine/core";
@@ -7,8 +6,9 @@ import {NotificationsProvider} from "@mantine/notifications";
 import {
 	useHandleColorScheme
 } from "./hooks/useHandleColorScheme/useHandleColorScheme";
+import {IChildren} from "../../interfaces";
 
-export const Providers: FunctionComponent<ProvidersProps> = (props) => {
+export const Providers: FunctionComponent<IChildren> = (props) => {
 	const {children} = props;
 	const [colorScheme, toggleColorScheme] = useHandleColorScheme();
 
@@ -23,6 +23,7 @@ export const Providers: FunctionComponent<ProvidersProps> = (props) => {
 					theme={{
 						colorScheme,
 						colors: {
+							// Tailwind orange
 							"tw-orange": [
 								"#FFF7ED",
 								"#FFEDD5",

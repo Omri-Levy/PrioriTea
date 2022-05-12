@@ -1,9 +1,9 @@
 import {createStyles, Title, Transition} from "@mantine/core";
-import {FunctionComponent, ReactNode, useEffect, useRef} from "react";
+import {FunctionComponent, useEffect, useRef} from "react";
+import {IChildren} from "../../interfaces";
 
-interface SectionProps {
+interface SectionProps extends IChildren {
 	title: string;
-	children: ReactNode;
 }
 
 export const useIsMountedRef = () => useRef(false);
@@ -35,7 +35,7 @@ export const Section: FunctionComponent<SectionProps> = ({
 			borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7],
 		},
 	}));
-	const { classes } = useStyles();
+	const {classes} = useStyles();
 	const isMounted = useIsMounted();
 
 	return (
@@ -49,7 +49,7 @@ export const Section: FunctionComponent<SectionProps> = ({
 			duration={75}
 			timingFunction={'ease'}
 		>
-			{(styles)=> (
+			{(styles) => (
 				<section style={styles}>
 					<Title order={1} className={classes.root}>
 						{title}

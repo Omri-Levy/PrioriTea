@@ -11,7 +11,7 @@ import {FunctionComponent} from "react";
 import {
 	useUserInfoQuery
 } from "../SignIn/hooks/useUserInfoQuery/useUserInfoQuery";
-import {SomethingWentWrong} from "../Tasks/Tasks";
+import {SomethingWentWrong} from "../../SomethingWentWrong/SomethingWentWrong";
 
 export const Account: FunctionComponent = () => {
 	const {data: user, isError, isLoading} = useUserInfoQuery();

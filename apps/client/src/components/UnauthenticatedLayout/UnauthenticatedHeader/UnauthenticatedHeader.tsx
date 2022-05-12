@@ -42,8 +42,10 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 	});
 
 	return (
-		<Header height={HEADER_HEIGHT}
-				className={"app-shell__header--unauthenticated"}>
+		<Header
+			height={HEADER_HEIGHT}
+			className={"app-shell__header--unauthenticated"}
+		>
 			<Container
 				className={"app-shell__header__container--unauthenticated"}
 				size={"xl"}>

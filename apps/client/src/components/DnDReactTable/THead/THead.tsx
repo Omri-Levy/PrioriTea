@@ -3,7 +3,7 @@ import {Group, Text} from "@mantine/core";
 import {FunctionComponent} from "react";
 import {Filters} from "./Filters/Filters";
 import {SortToggle} from "./SortToggle/SortToggle";
-import {SearchBar} from "./SearchBar/SearchBar";
+import {Search} from "./Search/Search";
 
 export const THead: FunctionComponent<THeadProps> = ({
 														 headerGroups,
@@ -21,7 +21,7 @@ export const THead: FunctionComponent<THeadProps> = ({
 			headerGroups={headerGroups}
 			visibleColumnsLength={visibleColumnsLength}
 		/>
-		<SearchBar
+		<Search
 			visibleColumnsLength={visibleColumnsLength}
 			preGlobalFilteredRows={preGlobalFilteredRows}
 			globalFilter={globalFilter}

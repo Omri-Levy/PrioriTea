@@ -52,6 +52,7 @@ export const useRoutes = (isAuth: boolean) => {
 		}
 	];
 
+	// Filter routes based on auth state
 	return routes.filter(({path}) => {
 		const isProtected = isAuth && protectedRoutes.includes(path);
 		const isUnprotected = !isAuth && !protectedRoutes.includes(path);

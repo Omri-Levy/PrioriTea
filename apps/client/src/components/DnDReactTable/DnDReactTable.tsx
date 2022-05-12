@@ -5,7 +5,6 @@ import {Pagination, ScrollArea, Skeleton, Table} from "@mantine/core";
 import {useMediaQuery} from "@mantine/hooks";
 import {THead} from "./THead/THead";
 import {TBody} from "./TBody/TBody";
-import {BaseData} from "./types";
 import {DnDReactTableProps} from "./interfaces";
 import {arrayOfN} from "@prioritea/utils";
 import {useTableWithPlugins} from "./useTableWithPlugins/useTableWithPlugins";
@@ -20,12 +19,12 @@ import {useHandleDnD} from "./hooks/useHandleDnD/useHandleDnD";
 /**
  * @description Combines react-table and react-beautiful-dnd into a drag and drop table with sort, filter, search, and pagination.
  */
-export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Column>>(props: DnDReactTableProps<TData, TColumns>) => {
+export const DnDReactTable = <TData extends Array<Column<{}>>, TColumns extends Array<Column>>(props: DnDReactTableProps<TData, TColumns>) => {
 	const {
 		data,
 		columns,
 		options,
-		getSelectedRowIds,
+		setSelectedRowsIds,
 		// Let the consumer decide how many skeleton rows and pages to show.
 		// default to 10.
 		skeletonPages = 10,
@@ -75,7 +74,7 @@ export const DnDReactTable = <TData extends BaseData, TColumns extends Array<Col
 		},
 	});
 
-	const [page, reorder] = useHandleDnD(selectedFlatRows, getSelectedRowIds, rows);
+	const [page, reorder] = useHandleDnD(selectedFlatRows, setSelectedRowsIds, rows);
 
 	const pagination = useMemo(() => ({
 		offset: pageIndex * pageSize,

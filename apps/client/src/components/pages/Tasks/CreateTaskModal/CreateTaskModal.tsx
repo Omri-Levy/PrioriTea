@@ -5,30 +5,30 @@ import {
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {
+	ActionIcon,
 	Button,
 	Group,
 	Modal,
 	NumberInput,
 	Select,
-	TextInput
+	TextInput,
+	Tooltip
 } from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
 import {CreateTaskModalProps} from "./interfaces";
 import {createTaskSchema} from "@prioritea/validation";
-import {CreateTaskDto} from "@prioritea/types";
-import {Priority} from "../UpdateTaskModal/UpdateTaskModal";
-import {formatTaskStatus} from "../Tasks";
+import {CreateTaskDto, Priority, Status} from "@prioritea/types";
+import {formatTaskStatus} from "../utils/format-task-status/format-task-status";
+import {useToggle} from "../../../../hooks/useToggle/useToggle";
+import {Plus} from "tabler-icons-react";
 
-enum Status {
-IDLE = "IDLE",
-	IN_PROGRESS = "IN_PROGRESS",
-	COMPLETED = "COMPLETED"
-}
-
-export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
-																			 isOpen,
-																			 onClose
-																		 }) => {
+export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = () => {
+	const [
+		modalIsOpen,
+		,
+		openModal,
+		closeModal
+	] = useToggle();
 	const {mutateAsync} = useCreateTaskMutation();
 	const {
 		control,
@@ -46,67 +46,82 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = ({
 	const onSubmit: SubmitHandler<CreateTaskDto> = async ({
 															  priority,
 															  description,
-			status,
+															  status,
 														  }) => {
 		await mutateAsync({priority, description, status});
 
-		onClose();
+		closeModal();
 	};
 
 	return (
-		<Modal
-			opened={isOpen}
-			onClose={onClose}
-			title="Create a task"
-		>
-			<form noValidate onSubmit={handleSubmit(onSubmit)}>
-				<Group direction="column" grow>
-					<Controller
-						control={control}
-						name={"priority"}
-						render={({field}) => (
-							<NumberInput
-								required
-								label="Priority"
-								placeholder="Type here.."
-								min={Priority.MIN}
-								max={Priority.MAX}
-								{...field}
-							/>
-						)}
-					/>
-					<FieldError field={errors.priority}/>
-					<TextInput
-						required
-						label="Description"
-						placeholder="Type here.."
-						{...register("description")}
-					/>
-					<FieldError field={errors.description}/>
-					<Controller
-						control={control}
-						name={"status"}
-						render={({field}) => (
-							<Select
-								label="Status"
-								placeholder="Pick one.."
-								data={Object.values(Status).filter((status) => status !== Status.COMPLETED).map((status) => ({
-									value: status,
-									label: formatTaskStatus(status)
-								}))}
-								{...field}
-							/>
-						)}
-					/>
-					<FieldError field={errors.status}/>
-				</Group>
-				<Group position="apart" mt="xl">
-					<Button type="submit" style={{textTransform: "capitalize"}}
-							variant="filled">
-						Create
-					</Button>
-				</Group>
-			</form>
-		</Modal>
+		<>
+			<Modal
+				opened={modalIsOpen}
+				onClose={closeModal}
+				title="Create a task"
+			>
+				<form noValidate onSubmit={handleSubmit(onSubmit)}>
+					<Group direction="column" grow>
+						<Controller
+							control={control}
+							name={"priority"}
+							render={({field}) => (
+								<NumberInput
+									required
+									label="Priority"
+									placeholder="Type here.."
+									min={Priority.MIN}
+									max={Priority.MAX}
+									{...field}
+								/>
+							)}
+						/>
+						<FieldError field={errors.priority}/>
+						<TextInput
+							required
+							label="Description"
+							placeholder="Type here.."
+							{...register("description")}
+						/>
+						<FieldError field={errors.description}/>
+						<Controller
+							control={control}
+							name={"status"}
+							render={({field}) => (
+								<Select
+									label="Status"
+									placeholder="Pick one.."
+									data={Object.values(Status).filter((status) => status !== Status.COMPLETED).map((status) => ({
+										value: status,
+										label: formatTaskStatus(status)
+									}))}
+									{...field}
+								/>
+							)}
+						/>
+						<FieldError field={errors.status}/>
+					</Group>
+					<Group position="apart" mt="xl">
+						<Button type="submit"
+								style={{textTransform: "capitalize"}}
+								variant="filled">
+							Create
+						</Button>
+					</Group>
+				</form>
+			</Modal>
+			<Tooltip label={'Create task'} withArrow>
+				<ActionIcon
+					mb="1rem"
+					size={24}
+					color="primary"
+					radius="xl"
+					variant="filled"
+					onClick={openModal}
+				>
+					<Plus size={18}/>
+				</ActionIcon>
+			</Tooltip>
+		</>
 	);
 }
