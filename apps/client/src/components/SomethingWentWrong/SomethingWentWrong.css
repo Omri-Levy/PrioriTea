@@ -1,0 +1,11 @@
+.title {
+	font-weight: 900;
+	font-size: 34px;
+	font-family: Greycliff CF, var(--mantine-font-family);
+}
+
+@media only screen and (max-width: 768px) {
+	.title {
+		font-size: 32px;
+	}
+}

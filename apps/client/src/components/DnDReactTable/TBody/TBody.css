@@ -1,0 +1,17 @@
+.draggable__item {
+	background-color: var(--mantine-color-white);
+}
+
+html[data-color-scheme="dark"] .draggable__item {
+	background-color: var(--mantine-colors-dark-7);
+}
+
+.draggable__handle {
+	/* ...theme.fn.focusStyles() */
+	display: flex;
+	color: var(--mantine-color-gray-6);
+}
+
+html[data-color-scheme="dark"] .draggable__handle {
+	color: var(--mantine-color-dark-1);
+}

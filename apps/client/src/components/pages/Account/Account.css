@@ -1,0 +1,8 @@
+.account__name {
+	font-family: Greycliff CF, var(--mantine-font-family);
+}
+
+.account__paper {
+	radius: var(--mantine-radius-md);
+	padding: var(--mantine-spacing-lg);
+}

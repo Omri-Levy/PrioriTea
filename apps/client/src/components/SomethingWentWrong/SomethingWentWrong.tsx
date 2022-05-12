@@ -1,27 +1,14 @@
 import {
 	Button,
 	Container,
-	createStyles,
 	SimpleGrid,
 	Text,
 	Title,
 	useMantineTheme
 } from "@mantine/core";
+import './SomethingWentWrong.css';
 
 export const SomethingWentWrong = () => {
-	const useStyles = createStyles((theme) => ({
-
-		title: {
-			fontWeight: 900,
-			fontSize: 34,
-			fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-
-			[theme.fn.smallerThan('sm')]: {
-				fontSize: 32,
-			},
-		},
-	}));
-	const {classes} = useStyles();
 	const theme = useMantineTheme();
 
 	return (
@@ -32,7 +19,7 @@ export const SomethingWentWrong = () => {
 				breakpoints={[{maxWidth: 'sm', cols: 1, spacing: 40}]}
 			>
 				<div>
-					<Title className={classes.title}>Something went
+					<Title className={'title'}>Something went
 						wrong...</Title>
 					<Text color="dimmed" size="lg" mb={"1rem"}>
 						Please refresh this page, or try again later. If the

@@ -8,6 +8,7 @@ import {Divider, Navbar, Text} from "@mantine/core";
 import {Link} from "react-router-dom";
 import {Logout} from "tabler-icons-react";
 import {AuthenticatedNavbarProps} from "./interfaces";
+import './AuthenticatedNavbar.css';
 
 export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = (props) => {
 	const {isOpen, toggleOffIsOpen} = props;
@@ -35,7 +36,8 @@ export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = 
 				onClick={handleClick}
 				key={`${path}-nav-link`}
 			>
-				{Icon && <Icon className={"navlink__icon"}/>}
+				{Icon &&
+					<Icon className={"authenticated-navbar__nav-link__icon"}/>}
 				<span>{text}</span>
 			</NavLink>
 		);
@@ -49,7 +51,7 @@ export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = 
 					mt="auto"
 					component={Link}
 					to="/"
-					className="app-shell__logo"
+					className="authenticated-navbar__logo"
 				>
 					PrioriTea
 				</Text>
@@ -61,7 +63,7 @@ export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = 
 				{/*</NavLink>*/}
 			</Navbar.Section>
 
-			<Navbar.Section className={"app-shell__footer"}>
+			<Navbar.Section className={"authenticated-navbar__footer"}>
 				{/*<Link*/}
 				{/*  to="#"*/}
 				{/*  className="app-shell__link"*/}
@@ -75,10 +77,10 @@ export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = 
 
 				<Link
 					to="/sign-in"
-					className="app-shell__link"
+					className="authenticated-navbar__link"
 					onClick={onSignOut}
 				>
-					<Logout className={"app-shell__link__icon"}/>
+					<Logout className={"authenticated-navbar__link__icon"}/>
 					<span className="capitalize">Sign Out</span>
 				</Link>
 			</Navbar.Section>

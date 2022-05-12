@@ -1,7 +1,7 @@
 import {AppShell, Container} from "@mantine/core";
 import {FunctionComponent} from "react";
 import {Outlet} from "react-router-dom";
-import "./Unauthenticated.css"
+import "./UnauthenticatedLayout.css"
 import {
 	UnauthenticatedHeader
 } from "./UnauthenticatedHeader/UnauthenticatedHeader";

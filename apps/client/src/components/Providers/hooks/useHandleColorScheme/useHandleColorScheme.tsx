@@ -1,6 +1,6 @@
 import {useColorScheme, useHotkeys, useLocalStorage} from "@mantine/hooks";
 import {ColorScheme} from "@mantine/core";
-import {useEffect} from "react";
+import {useCallback, useEffect} from "react";
 
 // Typescript inference fails without specifying the return type.
 export const useHandleColorScheme = (): [ColorScheme, (value?: ColorScheme) => void] => {
@@ -10,8 +10,8 @@ export const useHandleColorScheme = (): [ColorScheme, (value?: ColorScheme) => v
 		defaultValue: preferredColorScheme,
 		getInitialValueInEffect: true,
 	});
-	const toggleColorScheme = (value?: ColorScheme) =>
-		setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
+	const toggleColorScheme = useCallback((value?: ColorScheme) =>
+		setColorScheme(value || (colorScheme === "dark" ? "light" : "dark")), [colorScheme, setColorScheme]);
 
 	useHotkeys([["mod+J", () => toggleColorScheme()]]);
 
@@ -19,6 +19,7 @@ export const useHandleColorScheme = (): [ColorScheme, (value?: ColorScheme) => v
 	useEffect(() => {
 		document.documentElement.setAttribute("data-color-scheme", colorScheme);
 	}, [colorScheme]);
+
 
 	return [colorScheme, toggleColorScheme];
 }

@@ -7,7 +7,7 @@ import {
 	formatTaskStatus
 } from "../../utils/format-task-status/format-task-status";
 
-export const useTasksColumns = (): Array<Column> => useMemo(() => [
+export const useTasksColumns = () => useMemo((): Array<Column> => [
 	{
 		Header: 'Priority',
 		accessor: 'priority',

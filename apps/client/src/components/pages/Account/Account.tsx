@@ -1,30 +1,14 @@
-import {
-	Avatar,
-	Container,
-	createStyles,
-	Group,
-	Paper,
-	Text
-} from "@mantine/core";
+import {Avatar, Container, Group, Paper, Text} from "@mantine/core";
 import {noNullish} from "@prioritea/utils";
 import {FunctionComponent} from "react";
 import {
 	useUserInfoQuery
 } from "../SignIn/hooks/useUserInfoQuery/useUserInfoQuery";
 import {SomethingWentWrong} from "../../SomethingWentWrong/SomethingWentWrong";
+import './Account.css';
 
 export const Account: FunctionComponent = () => {
 	const {data: user, isError, isLoading} = useUserInfoQuery();
-	const useStyles = createStyles((theme) => ({
-		icon: {
-			color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[5],
-		},
-
-		name: {
-			fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-		},
-	}));
-	const {classes} = useStyles();
 
 	if (isError) {
 		return <SomethingWentWrong/>;
@@ -38,24 +22,27 @@ export const Account: FunctionComponent = () => {
 	return (
 		<Container>
 			<Paper
-				radius="md"
 				withBorder
-				p="lg"
-				sx={(theme) => ({
-					backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-				})}
+				className={"account__paper"}
 			>
 				<Group noWrap>
 					<Avatar
 						// src={avatar}
 						size={94} radius="md"/>
 					<div>
-						<Text size="xs" sx={{textTransform: 'uppercase'}}
-							  weight={700} color="dimmed">
+						<Text
+							size="xs"
+							sx={{textTransform: 'uppercase'}}
+							weight={700} color="dimmed"
+						>
 							{/* {user?.createdAt} */}
 						</Text>
 
-						<Text size="lg" weight={500} className={classes.name}>
+						<Text
+							size="lg"
+							weight={500}
+							className={'account__name'}
+						>
 							{noNullish`${user?.name}`}
 						</Text>
 

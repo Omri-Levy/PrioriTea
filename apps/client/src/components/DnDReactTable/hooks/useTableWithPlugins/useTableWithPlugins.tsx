@@ -10,10 +10,10 @@ import {
 	UseTableOptions
 } from "react-table";
 import {useMemo} from "react";
-import {fuzzyTextFilter} from "../utils/fuzzy-text-filter/fuzzy-text-filter";
+import {fuzzyTextFilter} from "../../utils/fuzzy-text-filter/fuzzy-text-filter";
 import {
 	IndeterminateCheckbox
-} from "../IndeterminateCheckbox/IndeterminateCheckbox";
+} from "../../IndeterminateCheckbox/IndeterminateCheckbox";
 
 /**
  * @param options

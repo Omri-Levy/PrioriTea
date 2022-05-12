@@ -1,6 +1,6 @@
 import {useMemo} from "react";
 import {Checkbox, CheckboxGroup} from "@mantine/core";
-import {noNullish} from "@prioritea/utils";
+import {noNullish, uniqueArray} from "@prioritea/utils";
 
 // FIXME: one checkbox group changes length, one does not. They should either both change length or both not.
 export const FilterCheckboxGroup = (

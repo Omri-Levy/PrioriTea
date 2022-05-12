@@ -1,4 +1,3 @@
-import {DragDropContext} from "react-beautiful-dnd";
 import {Column} from "react-table";
 import {useEffect, useMemo} from "react";
 import {Pagination, ScrollArea, Skeleton, Table} from "@mantine/core";
@@ -7,14 +6,18 @@ import {THead} from "./THead/THead";
 import {TBody} from "./TBody/TBody";
 import {DnDReactTableProps} from "./interfaces";
 import {arrayOfN} from "@prioritea/utils";
-import {useTableWithPlugins} from "./useTableWithPlugins/useTableWithPlugins";
+import {
+	useTableWithPlugins
+} from "./hooks/useTableWithPlugins/useTableWithPlugins";
 import {
 	useGetSearchParams
 } from "./hooks/useGetSearchParams/useGetSearchParams";
 import {
 	useSetSearchParams
 } from "./hooks/useSetSearchParams/useSetSearchParams";
-import {useHandleDnD} from "./hooks/useHandleDnD/useHandleDnD";
+import {
+	useSelectedRowsIds
+} from "./hooks/useSelectedRowsIds/useSelectedRowsIds";
 
 /**
  * @description Combines react-table and react-beautiful-dnd into a drag and drop table with sort, filter, search, and pagination.
@@ -73,8 +76,7 @@ export const DnDReactTable = <TData extends Array<Column<{}>>, TColumns extends 
 			...options.initialState,
 		},
 	});
-
-	const [page, reorder] = useHandleDnD(selectedFlatRows, setSelectedRowsIds, rows);
+	useSelectedRowsIds(selectedFlatRows, setSelectedRowsIds);
 
 	const pagination = useMemo(() => ({
 		offset: pageIndex * pageSize,
@@ -98,70 +100,60 @@ export const DnDReactTable = <TData extends Array<Column<{}>>, TColumns extends 
 
 	return (
 		<ScrollArea>
-			<DragDropContext
-				onDragEnd={({destination, source}) => {
-					return reorder({
-						from: source.index,
-						to: destination!.index
-					})
-				}}
-			>
-				<div style={{
-					display: "grid",
-					alignItems: "flex-start",
-					gridTemplateColumns: "1fr",
-					minHeight: "55vh"
-				}}>
-					<Table
-						highlightOnHover
-						sx={{
-							minWidth: 420,
-							marginBottom: "1rem",
-							'& tbody tr td': {borderBottom: 0}
-						}} {...getTableProps()}>
-						<DnDReactTable.THead
-							// visibleColumns.length without + 1 leaves an empty column.
-							visibleColumnsLength={visibleColumns.length + 1}
-							preGlobalFilteredRows={preGlobalFilteredRows}
-							setGlobalFilter={setGlobalFilter}
-							globalFilter={globalFilter}
-							headerGroups={headerGroups}
-						/>
-
-						<DnDReactTable.TBody
-							getTableBodyProps={getTableBodyProps}
-							page={page}
-							prepareRow={prepareRow}
-						/>
-					</Table>
-					<Pagination
-						style={{alignSelf: "flex-end"}}
-						withEdges={isLargerThanSm}
-						boundaries={isLargerThanSm ? 0 : 1}
-						siblings={isLargerThanSm ? 2 : undefined}
-						// human-readable, not zero-based.
-						page={pageIndex + 1}
-						onChange={(page) => gotoPage(page - 1)}
-						total={isLoading ? skeletonPages : pageCount || 1}
-						getItemAriaLabel={(page) => {
-							switch (page) {
-								case 'dots':
-									return 'dots element aria-label';
-								case 'prev':
-									return 'previous page button aria-label';
-								case 'next':
-									return 'next page button aria-label';
-								case 'first':
-									return 'first page button aria-label';
-								case 'last':
-									return 'last page button aria-label';
-								default:
-									return `${page} item aria-label`;
-							}
-						}}
+			<div style={{
+				display: "grid",
+				alignItems: "flex-start",
+				gridTemplateColumns: "1fr",
+				minHeight: "65vh"
+			}}>
+				<Table
+					highlightOnHover
+					sx={{
+						minWidth: 420,
+						marginBottom: "1rem",
+						'& tbody tr td': {borderBottom: 0}
+					}} {...getTableProps()}>
+					<DnDReactTable.THead
+						// visibleColumns.length without + 1 leaves an empty column.
+						visibleColumnsLength={visibleColumns.length + 1}
+						preGlobalFilteredRows={preGlobalFilteredRows}
+						setGlobalFilter={setGlobalFilter}
+						globalFilter={globalFilter}
+						headerGroups={headerGroups}
 					/>
-				</div>
-			</DragDropContext>
+					<DnDReactTable.TBody
+						getTableBodyProps={getTableBodyProps}
+						rows={rows}
+						prepareRow={prepareRow}
+					/>
+				</Table>
+				<Pagination
+					style={{alignSelf: "flex-end"}}
+					withEdges={isLargerThanSm}
+					boundaries={isLargerThanSm ? 0 : 1}
+					siblings={isLargerThanSm ? 2 : undefined}
+					// human-readable, not zero-based.
+					page={pageIndex + 1}
+					onChange={(page) => gotoPage(page - 1)}
+					total={isLoading ? skeletonPages : pageCount || 1}
+					getItemAriaLabel={(page) => {
+						switch (page) {
+							case 'dots':
+								return 'dots element aria-label';
+							case 'prev':
+								return 'previous page button aria-label';
+							case 'next':
+								return 'next page button aria-label';
+							case 'first':
+								return 'first page button aria-label';
+							case 'last':
+								return 'last page button aria-label';
+							default:
+								return `${page} item aria-label`;
+						}
+					}}
+				/>
+			</div>
 		</ScrollArea>
 	);
 }
