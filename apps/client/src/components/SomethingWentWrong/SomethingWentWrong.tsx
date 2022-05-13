@@ -19,7 +19,8 @@ export const SomethingWentWrong = () => {
 				breakpoints={[{maxWidth: 'sm', cols: 1, spacing: 40}]}
 			>
 				<div>
-					<Title className={'title'}>Something went
+					<Title className={'something-went-wrong__title'}>Something
+						went
 						wrong...</Title>
 					<Text color="dimmed" size="lg" mb={"1rem"}>
 						Please refresh this page, or try again later. If the
@@ -36,10 +37,7 @@ export const SomethingWentWrong = () => {
 				</div>
 				<Text
 					component={"h1"}
-					sx={{
-						marginBlock: 0,
-						fontSize: "15rem",
-					}}
+					className={`something-went-wrong__code`}
 					variant={"gradient"}
 					// @ts-ignore
 					gradient={{

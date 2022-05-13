@@ -18,6 +18,7 @@ import {
 import {
 	useSelectedRowsIds
 } from "./hooks/useSelectedRowsIds/useSelectedRowsIds";
+import './DnDReactTable.css';
 
 /**
  * @description Combines react-table and react-beautiful-dnd into a drag and drop table with sort, filter, search, and pagination.
@@ -108,11 +109,9 @@ export const DnDReactTable = <TData extends Array<Column<{}>>, TColumns extends 
 			}}>
 				<Table
 					highlightOnHover
-					sx={{
-						minWidth: 420,
-						marginBottom: "1rem",
-						'& tbody tr td': {borderBottom: 0}
-					}} {...getTableProps()}>
+					className={'dnd-react-table'}
+					{...getTableProps()}
+				>
 					<DnDReactTable.THead
 						// visibleColumns.length without + 1 leaves an empty column.
 						visibleColumnsLength={visibleColumns.length + 1}

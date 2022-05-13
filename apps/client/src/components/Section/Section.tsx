@@ -2,6 +2,7 @@ import {Title, Transition} from "@mantine/core";
 import {FunctionComponent} from "react";
 import {useIsMounted} from "../../hooks/useIsMounted/useIsMounted";
 import {SectionProps} from "./interfaces";
+import './Section.css';
 
 export const Section: FunctionComponent<SectionProps> = ({
 															 title,
@@ -22,7 +23,7 @@ export const Section: FunctionComponent<SectionProps> = ({
 		>
 			{(styles) => (
 				<section style={styles}>
-					<Title order={1} className={'section__title'}>
+					<Title order={1} className={'section__title capitalize'}>
 						{title}
 					</Title>
 					{children}

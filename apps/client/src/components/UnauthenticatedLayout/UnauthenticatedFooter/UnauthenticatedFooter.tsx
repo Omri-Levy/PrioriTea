@@ -8,6 +8,7 @@ import {
 } from "../../../../constants";
 import {BrandGithub, BrandLinkedin} from "tabler-icons-react";
 import {IconLink} from "../../IconLink/IconLink";
+import './UnauthenticatedFooter.css';
 
 export const UnauthenticatedFooter: FunctionComponent = () => {
 

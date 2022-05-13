@@ -15,6 +15,7 @@ import {HEADER_HEIGHT} from "../../../../constants";
 import {Link} from "react-router-dom";
 import {ThemeToggle} from "../ThemeToggle/ThemeToggle";
 import {invokeIfFunction} from "@prioritea/utils";
+import "./UnauthenticatedHeader.css";
 
 export const UnauthenticatedHeader: FunctionComponent = () => {
 	const [isOpen, toggleIsOpen] = useToggle();
@@ -35,7 +36,11 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 				onClick={handleClick}
 				key={`${path}-nav-link`}
 			>
-				{Icon && <Icon className={"navlink__icon"}/>}
+				{Icon && (
+					<Icon
+						className={"app-shell__header__navlink__icon--unauthenticated"}
+					/>
+				)}
 				<span>{text}</span>
 			</NavLink>
 		);
@@ -44,7 +49,7 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 	return (
 		<Header
 			height={HEADER_HEIGHT}
-			className={"app-shell__header--unauthenticated"}
+			className={"header"}
 		>
 			<Container
 				className={"app-shell__header__container--unauthenticated"}
@@ -55,19 +60,19 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 						onClick={toggleIsOpen}
 						size="sm"
 						mr="xl"
-						className={"app-shell__burger--unauthenticated"}
+						className={"app-shell__header__burger--unauthenticated"}
 					/>
 					<Text
 						component={Link}
-						to="/"
-						className={"app-shell__logo--unauthenticated"}
+						to="/sign-in"
+						className={"app-shell__header__logo--unauthenticated"}
 					>
 						PrioriTea
 					</Text>
 				</Group>
 				<Group>
 					<Group spacing={5}
-						   className={"app-shell__links--unauthenticated"}>
+						   className={"app-shell__header__links--unauthenticated"}>
 						{links}
 					</Group>
 
@@ -78,7 +83,7 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 					>
 						{(styles) => (
 							<Paper
-								className={"app-shell__dropdown--unauthenticated"}
+								className={"app-shell__header__dropdown--unauthenticated"}
 								withBorder
 								style={styles}
 							>

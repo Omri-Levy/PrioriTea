@@ -37,7 +37,8 @@ export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = 
 				key={`${path}-nav-link`}
 			>
 				{Icon &&
-					<Icon className={"authenticated-navbar__nav-link__icon"}/>}
+					<Icon
+						className={"app-shell__navbar__nav-link__icon--authenticated"}/>}
 				<span>{text}</span>
 			</NavLink>
 		);
@@ -51,7 +52,7 @@ export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = 
 					mt="auto"
 					component={Link}
 					to="/"
-					className="authenticated-navbar__logo"
+					className="app-shell__navbar__logo--authenticated"
 				>
 					PrioriTea
 				</Text>
@@ -63,7 +64,8 @@ export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = 
 				{/*</NavLink>*/}
 			</Navbar.Section>
 
-			<Navbar.Section className={"authenticated-navbar__footer"}>
+			<Navbar.Section
+				className={"app-shell__navbar__footer--authenticated"}>
 				{/*<Link*/}
 				{/*  to="#"*/}
 				{/*  className="app-shell__link"*/}
@@ -77,10 +79,11 @@ export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = 
 
 				<Link
 					to="/sign-in"
-					className="authenticated-navbar__link"
+					className="app-shell__navbar__link--authenticated"
 					onClick={onSignOut}
 				>
-					<Logout className={"authenticated-navbar__link__icon"}/>
+					<Logout
+						className={"app-shell__navbar__link__icon--authenticated"}/>
 					<span className="capitalize">Sign Out</span>
 				</Link>
 			</Navbar.Section>

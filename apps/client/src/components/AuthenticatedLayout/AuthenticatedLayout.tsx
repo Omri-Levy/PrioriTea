@@ -11,7 +11,7 @@ export const AuthenticatedLayout: FunctionComponent = () => {
 
 	return (
 		<AppShell
-			className={"app-shell"}
+			className={"app-shell--authenticated"}
 			navbarOffsetBreakpoint="sm"
 			asideOffsetBreakpoint="sm"
 			fixed

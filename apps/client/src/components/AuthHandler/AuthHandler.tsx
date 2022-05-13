@@ -9,6 +9,7 @@ import {
 } from "../../hooks/useIncrementOnInterval/useIncrementOnInterval";
 import {SomethingWentWrong} from "../SomethingWentWrong/SomethingWentWrong";
 import {IChildren} from "../../interfaces";
+import './AuthHandler.css';
 
 /**
  * @description Used as a way of rendering errors, loadings, and calling the useUserInfoQuery prior to the Router component.
@@ -25,9 +26,7 @@ export const AuthHandler: FunctionComponent<IChildren> = ({children}) => {
 	if (isLoading) {
 		return (
 			<Progress
-				sx={{
-					borderRadius: 0,
-				}}
+				className="progress-bar"
 				size="xl"
 				value={percent}
 			/>

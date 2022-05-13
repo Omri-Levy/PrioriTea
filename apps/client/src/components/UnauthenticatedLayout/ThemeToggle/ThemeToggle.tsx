@@ -1,6 +1,7 @@
 import {FunctionComponent} from "react";
 import {ActionIcon, useMantineColorScheme} from "@mantine/core";
 import {MoonStars, Sun} from "tabler-icons-react";
+import './ThemeToggle.css';
 
 export const ThemeToggle: FunctionComponent = () => {
 	const {colorScheme, toggleColorScheme} = useMantineColorScheme();
@@ -9,11 +10,8 @@ export const ThemeToggle: FunctionComponent = () => {
 		<ActionIcon
 			onClick={() => toggleColorScheme()}
 			size="lg"
-			className={"app-shell__color-scheme-toggle--unauthenticated"}
-			sx={(theme) => ({
-				// @ts-ignore
-				color: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 5 : 7]
-			})}
+			className={"app-shell__theme-toggle--unauthenticated"}
+
 		>
 			{colorScheme === "dark" ? (
 				<Sun size={18}/>

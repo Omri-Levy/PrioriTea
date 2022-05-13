@@ -47,17 +47,11 @@ export const THead: FunctionComponent<THeadProps> = ({
 							>
 								{col.id === "selection" && col.render('Header')}
 								{col.id !== "selection" && (
-									<Group position="apart" p={"0.6rem"}
-										   sx={(theme) => ({
-											   padding: `1rem`,
-											   borderRadius: 3,
-											   // @ts-ignore
-											   cursor: col.canSort ? 'pointer' : '',
-											   // @ts-ignore
-											   '&:hover': col.canSort ? {
-												   backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-											   } : {},
-										   })}>
+									<Group
+										position="apart"
+										p={"0.6rem"}
+										className={`thead__col`}
+									>
 										<Text weight={500} size={'sm'}>
 											{col.render('Header')}
 										</Text>

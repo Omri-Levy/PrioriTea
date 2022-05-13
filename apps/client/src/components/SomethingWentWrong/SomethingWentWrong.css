@@ -1,11 +1,16 @@
-.title {
+.something-went-wrong__title {
 	font-weight: 900;
 	font-size: 34px;
 	font-family: Greycliff CF, var(--mantine-font-family);
 }
 
+.something-went-wrong__code {
+	margin-block: 0;
+	font-size: 15rem;
+}
+
 @media only screen and (max-width: 768px) {
-	.title {
+	.something-went-wrong__title {
 		font-size: 32px;
 	}
 }

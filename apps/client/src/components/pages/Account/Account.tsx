@@ -32,8 +32,9 @@ export const Account: FunctionComponent = () => {
 					<div>
 						<Text
 							size="xs"
-							sx={{textTransform: 'uppercase'}}
-							weight={700} color="dimmed"
+							className={`uppercase`}
+							weight={700}
+							color="dimmed"
 						>
 							{/* {user?.createdAt} */}
 						</Text>

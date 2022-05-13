@@ -1,20 +1,9 @@
-.app-shell main {
+.app-shell--authenticated main {
 	background-color: var(--mantine-color-gray-0);
 }
 
-@media (max-width: 768px) {
-	.app-shell main {
-		padding-inline: 0.5rem;
-	}
-}
-
-html[data-color-scheme="dark"] .app-shell main {
+html[data-color-scheme="dark"] .app-shell--authenticated main {
 	background-color: var(--mantine-color-dark-8);
-}
-
-
-.hidden {
-	display: none;
 }
 
 .capitalize {
@@ -22,4 +11,8 @@ html[data-color-scheme="dark"] .app-shell main {
 }
 
 
-
+@media (max-width: 768px) {
+	.app-shell--authenticated main {
+		padding-inline: 0.5rem;
+	}
+}

@@ -1,0 +1,8 @@
+.dnd-react-table {
+	min-width: 420px;
+	margin-bottom: 1rem;
+}
+
+.dnd-react-table tbody-tr-td {
+	border-bottom: 0;
+}

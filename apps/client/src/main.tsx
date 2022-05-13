@@ -1,3 +1,4 @@
+import './index.css';
 // Required for react-table
 import "regenerator-runtime";
 import {createRoot} from "react-dom/client";

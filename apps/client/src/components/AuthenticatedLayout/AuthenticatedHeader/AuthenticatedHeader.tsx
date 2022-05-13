@@ -10,12 +10,12 @@ export const AuthenticatedHeader: FunctionComponent<AuthenticatedHeaderProps> = 
 
 	return (
 		<Header height={HEADER_HEIGHT - offset}
-				className={"authenticated-header__header"}>
+				className={"app-shell__header--authenticated"}>
 			<Burger
 				opened={isOpen}
 				onClick={toggleIsOpen}
 				size="md"
-				className={"authenticated-header__burger"}
+				className={"app-shell__header__burger--authenticated"}
 				ml="auto"
 			/>
 		</Header>
