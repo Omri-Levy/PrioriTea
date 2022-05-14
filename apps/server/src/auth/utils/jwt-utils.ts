@@ -1,29 +1,20 @@
 // Not to confuse with argon2 verify
-import { Request, Response } from "express";
-import { sign, verify as verifyJwt } from "jsonwebtoken";
-import { VITE_DOMAIN, VITE_SECRET_ACCESS_TOKEN } from "../../env/env";
-import { isDev } from "../../env/is-dev";
-import { UnauthorizedError } from "../../errors/unauthorized-error";
-import { IJwtPayload } from "../../interfaces";
-import { Expiration } from "../../utils/expiration";
+import {Request, Response} from "express";
+import {sign, verify as verifyJwt} from "jsonwebtoken";
+import {VITE_DOMAIN, VITE_SECRET_ACCESS_TOKEN} from "../../env/env";
+import {isDev} from "../../env/is-dev";
+import {UnauthorizedError} from "../../errors/unauthorized-error";
+import {IJwtPayload} from "../../interfaces";
+import {Expiration} from "../../utils/expiration";
 import {UserDto} from "@prioritea/types";
 
 export class JwtUtils {
-	// eslint-disable-next-line no-use-before-define
-	private static _instance: JwtUtils;
 
-	private constructor() {}
-
-	static get instance() {
-		if (!JwtUtils._instance) {
-			this._instance = new JwtUtils();
-		}
-
-		return this._instance;
+	private constructor() {
 	}
 
 	static getToken(req: Request) {
-		const { cookie } = req.headers;
+		const {cookie} = req.headers;
 
 		if (!cookie) {
 			throw new UnauthorizedError();
@@ -80,7 +71,7 @@ export class JwtUtils {
 			throw new UnauthorizedError();
 		}
 
-		const { exp, data } = verifyJwt(
+		const {exp, data} = verifyJwt(
 			token,
 			VITE_SECRET_ACCESS_TOKEN!
 		) as IJwtPayload;

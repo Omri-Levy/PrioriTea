@@ -1,6 +1,6 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import {Application, json, urlencoded} from "express";
+import {json, urlencoded} from "express";
 import {AuthController} from "../auth/auth.controller";
 import {VITE_BASE_URL, VITE_CORS_ORIGIN} from "../env/env";
 import {errorHandler} from "../middleware/error-handler";
@@ -8,30 +8,6 @@ import {morgan} from "../middleware/morgan";
 import {TasksController} from "../tasks/tasks.controller";
 import {Server} from "./server";
 import helmet from "helmet";
-import {BaseArray} from "@prioritea/types";
-
-export interface IServer {
-	app: Application;
-	readonly port: number;
-	readonly BASE_URL: string;
-
-	setupControllers(...controllers: BaseArray): Server;
-
-	setupMiddleware(...middleware: BaseArray): Server;
-
-	setupConfig(...config: BaseArray): Server;
-
-	onListen(): Server;
-
-	init(): Server;
-
-	listen(): void;
-}
-
-export interface IConfig {
-	setting: string;
-	val: any;
-}
 
 export class App extends Server {
 	readonly BASE_URL = VITE_BASE_URL!;

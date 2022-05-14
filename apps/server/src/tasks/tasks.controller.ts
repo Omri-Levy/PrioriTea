@@ -3,46 +3,23 @@ import {getUserId} from "../auth/utils/get-user-id";
 import {Controller, IRoute} from "../core/controller";
 import {Method} from "@prioritea/types";
 import {auth} from "../middleware/auth";
-import {restful} from "../middleware/restful";
+import {restful} from "../middleware/restful/restful";
 import {CreatedResponse} from "../responses/created-response";
 import {OkResponse} from "../responses/ok-response";
-import {Middleware, RequestHandler} from "../types";
+import {Middleware} from "../types";
 import {TasksService} from "./tasks.service";
 import {NotFoundError} from "../errors/not-found-error";
 import {zParse} from "../utils/z-parse";
-import {z} from "zod";
 import {createTaskSchema, updateTaskSchema} from "@prioritea/validation";
 import {stringUtils} from "@prioritea/utils";
-import {IdParamError} from "../errors/id-param-error";
-
-export const idSchema = z.object({
-	id: z.string().cuid(`id must be a valid CUID`),
-});
-
-export 	const arrayOfUuidsSchema = z.object({
-	ids: z
-		.string()
-		.cuid(`ids must contain valid CUIDs.`)
-		.array()
-		.min(1, `ids must contain at least 1 CUID(s)`),
-})
-
-export const idParamFallback = async () => {
-	throw new IdParamError();
-};
-
-interface ITasksController {
-	createTask: RequestHandler;
-	getTasks: RequestHandler;
-	getTask: RequestHandler;
-	updateTask: RequestHandler;
-	deleteTasks: RequestHandler;
-}
+import {idSchema} from "./validation/id-schema";
+import {arrayOfUuidsSchema} from "./validation/array-of-uuids-schema";
+import {idParamFallback} from "./utils/id-param-fallback";
+import {ITasksController} from "./interfaces";
 
 export class TasksController
 	extends Controller<TasksService>
-	implements ITasksController
-{
+	implements ITasksController {
 	_service = new TasksService();
 	prefix = "/tasks";
 	routes: Array<IRoute> = [
@@ -106,7 +83,7 @@ export class TasksController
 			createTaskDto,
 		);
 
-		return new CreatedResponse(res, { data: { tasks } });
+		return new CreatedResponse(res, {data: {tasks}});
 	}
 
 	/**
@@ -117,7 +94,7 @@ export class TasksController
 	public async getTasks(_req: Request, res: Response) {
 		const tasks = await this.service.getTasks(getUserId(res)!);
 
-		return new OkResponse(res, { data: { tasks } });
+		return new OkResponse(res, {data: {tasks}});
 	}
 
 	/**
@@ -135,7 +112,7 @@ export class TasksController
 			throw new NotFoundError(`No task matches the provided id.`);
 		}
 
-		return new OkResponse(res, { data: { task } });
+		return new OkResponse(res, {data: {task}});
 	}
 
 	/**
@@ -161,7 +138,7 @@ export class TasksController
 			}
 		);
 
-		return new OkResponse(res, { data: { tasks } });
+		return new OkResponse(res, {data: {tasks}});
 	}
 
 	public async deleteTasks(req: Request, res: Response) {
@@ -176,6 +153,6 @@ export class TasksController
 			throw new NotFoundError('No tasks match the provided ids.');
 		}
 
-		return new OkResponse(res, { data: { tasks } });
+		return new OkResponse(res, {data: {tasks}});
 	}
 }

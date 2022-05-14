@@ -1,29 +1,22 @@
-import { Request, RequestHandler, Response } from "express";
-import { Controller, IRoute } from "../core/controller";
-import { Method } from "@prioritea/types";
-import { auth } from "../middleware/auth";
-import { restful } from "../middleware/restful";
-import { CreatedResponse } from "../responses/created-response";
-import { OkResponse } from "../responses/ok-response";
-import { Middleware } from "../types";
-import { zParse } from "../utils/z-parse";
-import { AuthService } from "./auth.service";
-import { emailAlreadyInUse } from "./utils/email-already-in-use";
-import { getUser } from "./utils/get-user";
-import { JwtUtils } from "./utils/jwt-utils";
-import { signUpSchema, signInSchema } from "@prioritea/validation";
-
-interface IAuthController {
-	signUp: RequestHandler;
-	signIn: RequestHandler;
-	signOut: RequestHandler;
-	userInfo: RequestHandler;
-}
+import {Request, Response} from "express";
+import {Controller, IRoute} from "../core/controller";
+import {Method} from "@prioritea/types";
+import {auth} from "../middleware/auth";
+import {restful} from "../middleware/restful/restful";
+import {CreatedResponse} from "../responses/created-response";
+import {OkResponse} from "../responses/ok-response";
+import {Middleware} from "../types";
+import {zParse} from "../utils/z-parse";
+import {AuthService} from "./auth.service";
+import {emailAlreadyInUse} from "./validation/email-already-in-use";
+import {getUser} from "./utils/get-user";
+import {JwtUtils} from "./utils/jwt-utils";
+import {signInSchema, signUpSchema} from "@prioritea/validation";
+import {IAuthController} from "./interfaces";
 
 export class AuthController
 	extends Controller<AuthService>
-	implements IAuthController
-{
+	implements IAuthController {
 	_service = new AuthService();
 	prefix = "/auth";
 	routes: Array<IRoute> = [
@@ -64,7 +57,7 @@ export class AuthController
 	 * @desc add a new user to db
 	 */
 	async signUp(req: Request, res: Response) {
-		const { email, name, password } = await zParse(
+		const {email, name, password} = await zParse(
 			signUpSchema as any,
 			req.body
 		);
@@ -72,7 +65,7 @@ export class AuthController
 		try {
 			const user = await this.service.signUp(email, name, password);
 
-			return new CreatedResponse(res, { data: { user } });
+			return new CreatedResponse(res, {data: {user}});
 		} catch (err) {
 			emailAlreadyInUse(err);
 
@@ -86,16 +79,20 @@ export class AuthController
 	 * @desc sign in an existing user from db
 	 */
 	async signIn(req: Request, res: Response) {
-		const { email, password } = await zParse(signInSchema, req.body);
+		const {email, password} = await zParse(signInSchema, req.body);
 
 		const user = await this.service.signIn(email, password);
 
 		JwtUtils.createAccessTokenCookie(res, user);
 
-		return new OkResponse(res, { data: { user: {
+		return new OkResponse(res, {
+			data: {
+				user: {
 					email: user.email,
 					name: user.name,
-				} } });
+				}
+			}
+		});
 	}
 
 	/**

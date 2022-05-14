@@ -1,6 +1,6 @@
-import { RequestHandler } from "express";
-import { Method } from "@prioritea/types";
-import { MethodNotAllowedError } from "../errors/method-not-allowed-error";
+import {Method} from "@prioritea/types";
+import {MethodNotAllowedError} from "../../errors/method-not-allowed-error";
+import {Restful} from "./types";
 
 //
 // This shortcut function responses with HTTP 405
@@ -33,12 +33,9 @@ import { MethodNotAllowedError } from "../errors/method-not-allowed-error";
 //     [2] Express.js request method
 //     https://expressjs.com/en/guide/routing.html
 //
-
-export type Restful = (methods: Array<Method>) => RequestHandler;
-
 export const restful: Restful = (methods) =>
 	(req, res, next) => {
-		const { method } = req; // [2]
+		const {method} = req; // [2]
 
 		if (!methods.includes(method.toLowerCase() as Method)) {
 			res.set(`Allow`, methods.join(`, `));
@@ -47,4 +44,4 @@ export const restful: Restful = (methods) =>
 		} else {
 			next();
 		}
-};
+	};

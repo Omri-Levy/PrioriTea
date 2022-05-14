@@ -1,23 +1,16 @@
-import { Request, Response } from "express";
-import { Controller, IRoute } from "../core/controller";
-import { Method } from "@prioritea/types";
-import { auth } from "../middleware/auth";
-import { restful } from "../middleware/restful";
-import { OkResponse } from "../responses/ok-response";
-import { Middleware } from "../types";
-import { UsersService } from "./users.service";
-
-export interface IUsersController {
-	getUsers(req: Request, res: Response): void;
-	getUser(req: Request, res: Response): void;
-	updateUser(req: Request, res: Response): void;
-	deleteUser(req: Request, res: Response): void;
-}
+import {Request, Response} from "express";
+import {Controller, IRoute} from "../core/controller";
+import {Method} from "@prioritea/types";
+import {auth} from "../middleware/auth";
+import {restful} from "../middleware/restful/restful";
+import {OkResponse} from "../responses/ok-response";
+import {Middleware} from "../types";
+import {UsersService} from "./users.service";
+import {IUsersController} from "./interfaces";
 
 export class UsersController
 	extends Controller<UsersService>
-	implements IUsersController
-{
+	implements IUsersController {
 	_service = new UsersService();
 	prefix = "/users";
 	routes: Array<IRoute> = [
@@ -66,7 +59,7 @@ export class UsersController
 	public async getUsers(_req: Request, res: Response) {
 		const users = await this.service.getUsers();
 
-		return new OkResponse(res, { data: { users } });
+		return new OkResponse(res, {data: {users}});
 	}
 
 	/**
@@ -78,7 +71,7 @@ export class UsersController
 		try {
 			const user = await this.service.getUser(req.params.id!);
 
-			return new OkResponse(res, { data: { user } });
+			return new OkResponse(res, {data: {user}});
 		} catch (err) {
 			return null;
 		}
@@ -98,7 +91,7 @@ export class UsersController
 				req.body.password
 			);
 
-			return new OkResponse(res, { data: { users } });
+			return new OkResponse(res, {data: {users}});
 		} catch (err) {
 			return null;
 		}
@@ -112,7 +105,7 @@ export class UsersController
 	public async deleteUser(req: Request, res: Response) {
 		const users = await this.service.deleteUser(req.params.id!);
 
-		return new OkResponse(res, { data: { users } });
+		return new OkResponse(res, {data: {users}});
 	}
 
 	/**
@@ -123,6 +116,6 @@ export class UsersController
 	public async deleteUsers(_req: Request, res: Response) {
 		const users = await this.service.deleteUsers();
 
-		return new OkResponse(res, { data: { users } });
+		return new OkResponse(res, {data: {users}});
 	}
 }

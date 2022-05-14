@@ -4,8 +4,8 @@ import {NotFoundError} from "../errors/not-found-error";
 import {ErrorHandler, Middleware} from "../types";
 import {iterableArray} from "@prioritea/utils";
 import {logger} from "../utils/logger";
-import {IConfig, IServer} from "./app";
 import {BaseArray} from "@prioritea/types";
+import {IConfig, IServer} from "./interfaces";
 
 export abstract class Server implements IServer {
 	app = express();

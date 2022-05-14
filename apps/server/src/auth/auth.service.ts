@@ -1,18 +1,12 @@
-import { User } from "@prisma/client";
-import { Service } from "../core/service";
-import { BadRequestError } from "../errors/bad-request-error";
-import { UsersRepository } from "../users/users.repository";
-import { PassUtils } from "./utils/pass-utils";
-
-interface IAuthService {
-	signUp(email: string, name: string, password: string): Promise<User | null>;
-	signIn(email: string, name: string): Promise<User | null>;
-}
+import {Service} from "../core/service";
+import {BadRequestError} from "../errors/bad-request-error";
+import {UsersRepository} from "../users/users.repository";
+import {PassUtils} from "./utils/pass-utils";
+import {IAuthService} from "./interfaces";
 
 export class AuthService
 	extends Service<UsersRepository>
-	implements IAuthService
-{
+	implements IAuthService {
 	_repository = new UsersRepository();
 
 	async signUp(email: string, name: string, password: string) {

@@ -1,8 +1,4 @@
-export interface IService<TRepository> {
-	_repository: TRepository;
-
-	repository: TRepository;
-}
+import {IService} from "./interfaces";
 
 export abstract class Service<TRepository> implements IService<TRepository> {
 	public abstract _repository: TRepository;
