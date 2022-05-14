@@ -12,6 +12,10 @@ html[data-color-scheme="dark"] .draggable__item {
 	color: var(--mantine-color-gray-6);
 }
 
+.draggable__handle__icon {
+	cursor: move;
+}
+
 html[data-color-scheme="dark"] .draggable__handle {
 	color: var(--mantine-color-dark-1);
 }

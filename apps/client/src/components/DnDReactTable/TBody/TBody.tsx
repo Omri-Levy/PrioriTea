@@ -42,7 +42,10 @@ export const TBody = <TData extends Array<Row<{ [p: string]: any }>>, >({
 										<td>
 											<div
 												className={'draggable__handle'} {...provided.dragHandleProps}>
-												<GripVertical size={20}/>
+												<GripVertical
+													size={20}
+													className={`draggable__handle__icon`}
+												/>
 											</div>
 										</td>
 										{row.cells.map((cell) =>
