@@ -41,12 +41,8 @@ importers:
     specifiers:
       '@hookform/resolvers': ^2.8.8
       '@mantine/core': ^4.1.5
-      '@mantine/dates': ^4.1.5
-      '@mantine/dropzone': ^4.1.5
       '@mantine/hooks': ^4.1.5
-      '@mantine/modals': ^4.1.5
       '@mantine/notifications': ^4.1.5
-      '@mantine/spotlight': ^4.1.5
       '@prioritea/config': '*'
       '@prioritea/tsconfig': '*'
       '@prioritea/types': '*'
@@ -61,7 +57,6 @@ importers:
       '@vitejs/plugin-react': ^1.3.2
       autoprefixer: ^10.4.5
       axios: ^0.27.0
-      dayjs: ^1.11.1
       eslint-config-airbnb: ^19.0.4
       match-sorter: ^6.3.1
       postcss: ^8.4.12
@@ -85,19 +80,14 @@ importers:
     dependencies:
       '@hookform/resolvers': 2.8.8_react-hook-form@7.31.1
       '@mantine/core': 4.2.4_zp5ohp5cm2rsk7y2yuui2uj7dq
-      '@mantine/dates': 4.2.4_rdyvdm2e3o5qo4tr2iobi6dyae
-      '@mantine/dropzone': 4.2.4_h7seycx44vkao72n2aiq3urbxi
       '@mantine/hooks': 4.2.4_react@18.1.0
-      '@mantine/modals': 4.2.4_h7seycx44vkao72n2aiq3urbxi
       '@mantine/notifications': 4.2.4_h7seycx44vkao72n2aiq3urbxi
-      '@mantine/spotlight': 4.2.4_h7seycx44vkao72n2aiq3urbxi
       '@prioritea/config': link:../../packages/config
       '@prioritea/tsconfig': link:../../packages/tsconfig
       '@prioritea/types': link:../../packages/types
       '@prioritea/utils': link:../../packages/utils
       '@prioritea/validation': link:../../packages/validation
       axios: 0.27.2
-      dayjs: 1.11.2
       match-sorter: 6.3.1
       qs: 6.10.3
       react: 18.1.0
@@ -1150,55 +1140,12 @@ packages:
       - '@types/react'
     dev: false
 
-  /@mantine/dates/4.2.4_rdyvdm2e3o5qo4tr2iobi6dyae:
-    resolution: {integrity: sha512-ullVkmiOhLBTk30zJgRraMggR8ZLPc4IEwM83dJbhx4mTiJ10CFvl8oz23j2yy00tInCw6vYglqK514ytlsItg==}
-    peerDependencies:
-      '@mantine/core': 4.2.4
-      '@mantine/hooks': 4.2.4
-      dayjs: ^1.10.5
-      react: '>=16.8.0'
-    dependencies:
-      '@mantine/core': 4.2.4_zp5ohp5cm2rsk7y2yuui2uj7dq
-      '@mantine/hooks': 4.2.4_react@18.1.0
-      dayjs: 1.11.2
-      react: 18.1.0
-    dev: false
-
-  /@mantine/dropzone/4.2.4_h7seycx44vkao72n2aiq3urbxi:
-    resolution: {integrity: sha512-Y4lzzkKEtfbW941BdEwFBaS87ZAXyXB080GJUxxpuP0KQ1xb9GG66l3l3zu/+UcwXOyT4m91W2E3okip9BcIew==}
-    peerDependencies:
-      '@mantine/core': 4.2.4
-      '@mantine/hooks': 4.2.4
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@mantine/core': 4.2.4_zp5ohp5cm2rsk7y2yuui2uj7dq
-      '@mantine/hooks': 4.2.4_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
-      react-dropzone: 11.7.1_react@18.1.0
-    dev: false
-
   /@mantine/hooks/4.2.4_react@18.1.0:
     resolution: {integrity: sha512-C4Mvm9suYFuM5dDJXKaZ2fRFvJ5JMXl5S7eSNsHvzkRmCy0GppKkDETwXi0uwS7QyjMllNRizGvoyU4CyHyvrA==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
       react: 18.1.0
-    dev: false
-
-  /@mantine/modals/4.2.4_h7seycx44vkao72n2aiq3urbxi:
-    resolution: {integrity: sha512-ce0shaBjAw5kzSCZ8cDgtct3ge1dtB0RQyYMvk+6y3na4gqXqUOsHJmQ8cUVAOb78Ge7ibEQA0rOW6dOSeAVRA==}
-    peerDependencies:
-      '@mantine/core': 4.2.4
-      '@mantine/hooks': 4.2.4
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@mantine/core': 4.2.4_zp5ohp5cm2rsk7y2yuui2uj7dq
-      '@mantine/hooks': 4.2.4_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
     dev: false
 
   /@mantine/notifications/4.2.4_h7seycx44vkao72n2aiq3urbxi:
@@ -1214,20 +1161,6 @@ packages:
       react: 18.1.0
       react-dom: 18.1.0_react@18.1.0
       react-transition-group: 4.4.2_ef5jwxihqo6n7gxfmzogljlgcm
-    dev: false
-
-  /@mantine/spotlight/4.2.4_h7seycx44vkao72n2aiq3urbxi:
-    resolution: {integrity: sha512-jxFqR5myZ0fD8URBF5eH1lisfSUPy2fW28IUHCOEn08oL6+zsHUxeAUuVDUbZXbuhjkoBGyUh7BXRln8YcYXfw==}
-    peerDependencies:
-      '@mantine/core': 4.2.4
-      '@mantine/hooks': 4.2.4
-      react: '>=16.8.0'
-      react-dom: '>=16.8.0'
-    dependencies:
-      '@mantine/core': 4.2.4_zp5ohp5cm2rsk7y2yuui2uj7dq
-      '@mantine/hooks': 4.2.4_react@18.1.0
-      react: 18.1.0
-      react-dom: 18.1.0_react@18.1.0
     dev: false
 
   /@mantine/styles/4.2.4_ohobp6rpsmerwlq5ipwfh5yigy:
@@ -2317,11 +2250,6 @@ packages:
     hasBin: true
     dev: true
 
-  /attr-accept/2.2.2:
-    resolution: {integrity: sha512-7prDjvt9HmqiZ0cl5CRjtS84sEyhsHP2coDkaZKRKVfCDo9s7iw7ChVmar78Gu9pC4SoR/28wFu/G5JJhTnqEg==}
-    engines: {node: '>=4'}
-    dev: false
-
   /autoprefixer/10.4.7_postcss@8.4.13:
     resolution: {integrity: sha512-ypHju4Y2Oav95SipEcCcI5J7CGPuvz8oat7sUtYj3ClK44bldfvtvcxK6IEK++7rqB7YchDGzweZIBG+SD0ZAA==}
     engines: {node: ^10 || ^12 || >=14}
@@ -3107,10 +3035,6 @@ packages:
 
   /csstype/3.0.9:
     resolution: {integrity: sha512-rpw6JPxK6Rfg1zLOYCSwle2GFOOsnjmDYDaBwEcwoOg4qlsIVCN789VkBZDJAGi4T07gI4YSutR43t9Zz4Lzuw==}
-    dev: false
-
-  /dayjs/1.11.2:
-    resolution: {integrity: sha512-F4LXf1OeU9hrSYRPTTj/6FbO4HTjPKXvEIC1P2kcnFurViINCVk3ZV0xAS3XVx9MkMsXbbqlK6hjseaYbgKEHw==}
     dev: false
 
   /debug/2.6.9:
@@ -4231,13 +4155,6 @@ packages:
     dependencies:
       flat-cache: 3.0.4
     dev: true
-
-  /file-selector/0.4.0:
-    resolution: {integrity: sha512-iACCiXeMYOvZqlF1kTiYINzgepRBymz1wwjiuup9u9nayhb6g4fSwiyJ/6adli+EPwrWtpgQAh2PoS7HukEGEg==}
-    engines: {node: '>= 10'}
-    dependencies:
-      tslib: 2.4.0
-    dev: false
 
   /fill-range/4.0.0:
     resolution: {integrity: sha1-1USBHUKPmOsGpj3EAtJAPDKMOPc=}
@@ -7194,18 +7111,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.1.0
       scheduler: 0.22.0
-    dev: false
-
-  /react-dropzone/11.7.1_react@18.1.0:
-    resolution: {integrity: sha512-zxCMwhfPy1olUEbw3FLNPLhAm/HnaYH5aELIEglRbqabizKAdHs0h+WuyOpmA+v1JXn0++fpQDdNfUagWt5hJQ==}
-    engines: {node: '>= 10.13'}
-    peerDependencies:
-      react: '>= 16.8'
-    dependencies:
-      attr-accept: 2.2.2
-      file-selector: 0.4.0
-      prop-types: 15.8.1
-      react: 18.1.0
     dev: false
 
   /react-fast-compare/3.2.0:
