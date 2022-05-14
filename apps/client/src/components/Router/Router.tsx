@@ -11,6 +11,21 @@ import {useIsAuth} from "../pages/SignIn/hooks/useIsAuth/useIsAuth";
 export const Router = () => {
 	const isAuth = useIsAuth();
 	const routes = useRoutes(isAuth);
+	const routesEls = routes.map(({
+									  path, element, text
+								  }) =>
+		<Route
+			index={path === "/"}
+			key={`${path}-route`}
+			path={path}
+			element={
+				// Can assume a route with no text does not require a nav link and a page wrapper
+				text ?
+					<Section title={text}>{element}</Section>
+					: element
+			}
+		/>
+	);
 
 	return (
 		<BrowserRouter>
@@ -18,21 +33,11 @@ export const Router = () => {
 				<Route
 					path={"/"}
 					element={
-						isAuth ? <AuthenticatedLayout /> : <UnauthenticatedLayout />
+						isAuth ? <AuthenticatedLayout/> :
+							<UnauthenticatedLayout/>
 					}
 				>
-					{routes.map(({ path, element, text }) =>
-						<Route
-							index={path === "/"}
-							key={`${path}-route`}
-							path={path}
-							element={
-								text ?
-									<Section title={text}>{element}</Section>
-									: element
-							}
-						/>
-					)}
+					{routesEls}
 				</Route>
 			</Routes>
 		</BrowserRouter>

@@ -6,6 +6,10 @@ export const stringUtils = (str: string) => {
 			super(_str);
 		}
 
+		get string() {
+			return this.toString();
+		}
+
 		public toSnakeCase() {
 			return new StringUtils(snakeCase(this.toString()));
 		}
@@ -14,7 +18,7 @@ export const stringUtils = (str: string) => {
 			return new StringUtils(kebabCase(this.toString()));
 		}
 
-		public capitalize() {
+		public toCapitalized() {
 			return new StringUtils(capitalize(this.toString()));
 		}
 
@@ -27,15 +31,11 @@ export const stringUtils = (str: string) => {
 		}
 
 		public toPascalCase() {
-			return 	new StringUtils(startCase(camelCase(this.toString())));
+			return new StringUtils(startCase(camelCase(this.toString())));
 		}
 
 		public toScreamingSnakeCase() {
 			return new StringUtils(this.toSnakeCase().toUpperCase());
-		}
-
-		get string() {
-			return this.toString();
 		}
 	}
 

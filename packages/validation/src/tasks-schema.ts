@@ -72,7 +72,7 @@ export const taskSchema = z.object({
 		.transform((value) =>
 			toScreamingSnakeCase(value) as Status)
 		.optional(),
-	userId: z.string().cuid(),
+	userId: z.string().cuid(`id must be a valid CUID`),
 	createdAt: z.date(),
 	updatedAt: z.date(),
 });

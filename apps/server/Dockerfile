@@ -1,18 +1,11 @@
-FROM alpine:3.15.4
+FROM node:alpine
 
-WORKDIR /usr/src/app
+COPY pnpm-lock.yaml ./
 
-COPY package*.json ./
+RUN pnpm fetch --prod
 
-RUN apk add --update npm
+RUN pnpm install -r --offline --prod
 
-COPY . .
-
-RUN npm ci --only=production
-
-ENV NODE_ENV production
-
-EXPOSE 8080
+ADD . ./
 
 CMD [ "node", "dist/src/index.js" ]
-

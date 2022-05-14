@@ -1,23 +1,10 @@
-import { User } from "@prisma/client";
-import { Service } from "../core/service";
-import { UsersRepository } from "./users.repository";
-
-export interface IUsersService {
-	getUsers(): Promise<Array<User>>;
-	getUser(id: string): Promise<User | null>;
-	updateUser(
-		id: string,
-		email?: string,
-		name?: string,
-		password?: string
-	): Promise<Array<User> | null>;
-	deleteUser(id: string): Promise<Array<User> | null>;
-}
+import {Service} from "../core/service";
+import {UsersRepository} from "./users.repository";
+import {IUsersService} from "./interfaces";
 
 export class UsersService
 	extends Service<UsersRepository>
-	implements IUsersService
-{
+	implements IUsersService {
 	_repository = new UsersRepository();
 
 	public async getUsers() {

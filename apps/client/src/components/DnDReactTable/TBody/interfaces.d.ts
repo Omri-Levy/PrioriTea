@@ -1,9 +1,7 @@
-import {DroppableProvided} from "react-beautiful-dnd";
 import {Row, TableBodyPropGetter, TableBodyProps} from "react-table";
 
-export interface TBodyProps {
-	provided: DroppableProvided;
+export interface TBodyProps<TData extends Array<Row<{ [p: string]: any }>>> {
 	getTableBodyProps: (propGetter?: (TableBodyPropGetter<{ [p: string]: any }> | undefined)) => TableBodyProps;
-	page:  Row<object>[];
+	rows: TData;
 	prepareRow: (row: Row<{ [p: string]: any }>) => void;
 }

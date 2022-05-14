@@ -3,16 +3,17 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "license": "MIT",
+  "private": true,
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc --watch"
+	"build": "tsc",
+	"watch": "tsc --watch"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.182",
-    "typescript": "^4.6.4"
+	"@types/lodash": "^4.14.182",
+	"typescript": "^4.6.4"
   },
   "dependencies": {
-    "lodash": "^4.17.21",
+	"lodash": "^4.17.21",
 	"@prioritea/types": "*",
 	"@prioritea/tsconfig": "*",
 	"@prioritea/config": "*"

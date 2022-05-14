@@ -1,15 +1,15 @@
 import {useMutation, useQueryClient} from "react-query";
-import {TasksApi} from "../../../../../../api/tasks-api";
-import {Tasks, CreateTaskDto} from "@prioritea/types";
+import {TasksApi} from "../../../../../../api/tasks-api/tasks-api";
+import {CreateTaskDto, Tasks} from "@prioritea/types";
 
 export const useCreateTaskMutation = () => {
 	const queryClient = useQueryClient();
 
 	return useMutation(async ({
-											 priority,
-											 description,
-		status
-										 }: CreateTaskDto) => {
+								  priority,
+								  description,
+								  status
+							  }: CreateTaskDto) => {
 		const {data} = await TasksApi.create({
 			priority,
 			description,
@@ -25,12 +25,12 @@ export const useCreateTaskMutation = () => {
 
 			queryClient.setQueryData(['tasks'], (prev) => [
 				...prev as Tasks,
-					newTask,
+				newTask,
 			]);
 
 			return {prevTasks};
 		},
-		onError(_err, _newTask, context: {prevTasks: Tasks} | undefined) {
+		onError(_err, _newTask, context: { prevTasks: Tasks } | undefined) {
 			queryClient.setQueryData(['tasks'], context?.prevTasks);
 		},
 		onSettled() {

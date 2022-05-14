@@ -3,32 +3,18 @@ version: '3.7'
 services:
   db:
     container_name: db
-    image: mongo
+    image: postgres
     restart: unless-stopped
-    environment:
-      MONGO_INITDB_DATABASE: prioritea
-    ports:
-      - '27017:27017'
-    volumes:
-      - mongo_data:/data/db
-      - mongo_config:/data/configdb
     networks:
       - internal
 
   api:
     container_name: api
     restart: unless-stopped
-    build: ./server
+    build: ./apps/server
     ports:
       - '4000:4000'
     networks:
       - internal
     depends_on:
       - db
-
-networks:
-  internal:
-
-volumes:
-  mongo_data: { }
-  mongo_config: { }

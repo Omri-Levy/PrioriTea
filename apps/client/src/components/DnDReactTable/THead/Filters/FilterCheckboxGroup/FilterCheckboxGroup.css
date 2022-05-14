@@ -1,0 +1,7 @@
+.checkbox-group .mantine-CheckboxGroup-label {
+	text-transform: capitalize;
+}
+
+.checkbox-group .mantine-CheckboxGroup-input {
+	cursor: pointer;
+}

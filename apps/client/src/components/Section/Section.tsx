@@ -1,41 +1,13 @@
-import {createStyles, Title, Transition} from "@mantine/core";
-import {FunctionComponent, ReactNode, useEffect, useRef} from "react";
-
-interface SectionProps {
-	title: string;
-	children: ReactNode;
-}
-
-export const useIsMountedRef = () => useRef(false);
-export const useIsMounted = () => {
-	const isMounted = useIsMountedRef();
-
-	useEffect(() => {
-		isMounted.current = true;
-
-		return () => {
-			isMounted.current = false;
-		};
-	}, []);
-
-	return isMounted;
-};
+import {Title, Transition} from "@mantine/core";
+import {FunctionComponent} from "react";
+import {useIsMounted} from "../../hooks/useIsMounted/useIsMounted";
+import {SectionProps} from "./interfaces";
+import './Section.css';
 
 export const Section: FunctionComponent<SectionProps> = ({
 															 title,
 															 children,
 														 }) => {
-	const useStyles = createStyles((theme) => ({
-		root: {
-			textTransform: "capitalize",
-			marginBottom: theme.spacing.xl,
-			display: 'inline-block',
-			borderBottom: '5px solid',
-			// @ts-ignore
-			borderColor: theme.colors[theme.primaryColor][theme.colorScheme === 'dark' ? 5 : 7],
-		},
-	}));
-	const { classes } = useStyles();
 	const isMounted = useIsMounted();
 
 	return (
@@ -49,9 +21,9 @@ export const Section: FunctionComponent<SectionProps> = ({
 			duration={75}
 			timingFunction={'ease'}
 		>
-			{(styles)=> (
+			{(styles) => (
 				<section style={styles}>
-					<Title order={1} className={classes.root}>
+					<Title order={1} className={'section__title capitalize'}>
 						{title}
 					</Title>
 					{children}

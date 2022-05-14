@@ -1,96 +1,67 @@
 import {THeadProps} from "./interfaces";
-import {Center, Group, Text} from "@mantine/core";
-import {ChevronDown, ChevronUp, Selector} from "tabler-icons-react";
-import {Search} from "../../pages/Tasks/Tasks";
-import {Fragment, FunctionComponent, useMemo} from "react";
+import {Group, Text} from "@mantine/core";
+import {FunctionComponent} from "react";
+import {Filters} from "./Filters/Filters";
+import {SortToggle} from "./SortToggle/SortToggle";
+import {Search} from "./Search/Search";
+import './THead.css';
 
-export const THead: FunctionComponent<THeadProps> = ({headerGroups,
-														 visibleColumnsLength, preGlobalFilteredRows, globalFilter, setGlobalFilter,
+export const THead: FunctionComponent<THeadProps> = ({
+														 headerGroups,
+														 visibleColumnsLength,
+														 preGlobalFilteredRows,
+														 globalFilter,
+														 setGlobalFilter,
 
-}) => {
-	const colsWithFilter = useMemo(() => headerGroups
-		.flatMap(({headers}) => headers)
-		.filter((c) => !c.disableFilters), [headerGroups]);
+													 }) => {
+
 
 	return (
 		<thead>
-		<tr>
-			<th colSpan={visibleColumnsLength}>
-				Filters
-				<Group>
-			{colsWithFilter?.map((c) => (
-				<Fragment key={c.getHeaderProps().key}>
-					{c.render("Filter")}
-				</Fragment>
-			))}
-				</Group>
-			</th>
-		</tr>
-		<tr>
-			<th
-				colSpan={visibleColumnsLength}
-			>
-				<Search
-					preGlobalFilteredRows={preGlobalFilteredRows}
-					globalFilter={globalFilter}
-					setGlobalFilter={setGlobalFilter}
-				/>
-			</th>
-		</tr>
+		<Filters
+			headerGroups={headerGroups}
+			visibleColumnsLength={visibleColumnsLength}
+		/>
+		<Search
+			visibleColumnsLength={visibleColumnsLength}
+			preGlobalFilteredRows={preGlobalFilteredRows}
+			globalFilter={globalFilter}
+			setGlobalFilter={setGlobalFilter}
+		/>
 		{headerGroups.map(
 			// @ts-ignore
 			(headerGroup) =>
 				<tr {...headerGroup.getHeaderGroupProps()}>
-					<th style={{width: 40}}/>
+					<th className={`thead__fill-th`}/>
 					{headerGroup.headers.map((col) => (
-						<th {...col.getHeaderProps(col
-							// @ts-ignore
-							.getSortByToggleProps())}
-							style={{
-								...(col.id === "selection" ? {
-									padding: "0.6rem",
-									width: 0,
-								} : {
-									padding: 0,
-								}),
-						}}
-						>
-							{col.id === "selection" && 	col.render('Header')}
-							{col.id !== "selection" && (
-								<Group position="apart" p={"0.6rem"} sx={(theme) => ({
-									padding: `1rem`,
-									borderRadius: 3,
+							<th
+								{...col.getHeaderProps(col
 									// @ts-ignore
-									cursor: col.canSort ? 'pointer' : '',
-									// @ts-ignore
-									'&:hover': col.canSort ? {
-										backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
-									} : {},
-								})}>
-									<Text weight={500} size={'sm'}>
-										{col.render('Header')}
-									</Text>
-									<Center style={{
-										borderRadius: 21,
-										width: 21,
-										height: 21,
-									}}>
-										{col
-											// @ts-ignore
-											.canSort ? col
-											// @ts-ignore
-											.isSorted
-											? col
-												// @ts-ignore
-												.isSortedDesc
-												? <ChevronDown size={16}/>
-												: <ChevronUp size={16}/>
-											: <Selector size={16}/> : null}
-									</Center>
-								</Group>
-							)}
-						</th>
-					)
+									.getSortByToggleProps())}
+								className={
+									`thead__th${col.id === 'selection'
+										? `--selection` : ''}`
+								}
+							>
+								{col.id === "selection" && col.render('Header')}
+								{col.id !== "selection" && (
+									<Group
+										position="apart"
+										className={`thead__col${col.canSort ? `--can-sort cursor-pointer` : ``}`}
+									>
+										<Text className={`thead__col__text`}
+											  size={'sm'}>
+											{col.render('Header')}
+										</Text>
+										<SortToggle
+											canSort={col.canSort}
+											isSorted={col.isSorted}
+											isSortedDesc={col.isSortedDesc}
+										/>
+									</Group>
+								)}
+							</th>
+						)
 					)}
 				</tr>
 		)}

@@ -1,6 +1,5 @@
-import { ReactNode } from "react";
+import {IChildren} from "../../interfaces";
 
-export interface ErrorAlertProps {
-  title?: string;
-  children: ReactNode;
+export interface ErrorAlertProps extends IChildren {
+	title?: string;
 }
