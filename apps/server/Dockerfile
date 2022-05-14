@@ -1,6 +1,4 @@
-FROM node:18-alpine3.14
-
-ENV NODE_ENV production
+FROM node:alpine
 
 COPY pnpm-lock.yaml ./
 
@@ -8,9 +6,6 @@ RUN pnpm fetch --prod
 
 RUN pnpm install -r --offline --prod
 
-COPY . ./
-
-EXPOSE 8080
+ADD . ./
 
 CMD [ "node", "dist/src/index.js" ]
-
