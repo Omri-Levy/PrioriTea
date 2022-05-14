@@ -2,25 +2,18 @@
   "private": true,
   "scripts": {
 	"dev": "turbo run dev",
-	"watch": "turbo run watch"
+	"watch": "turbo run watch",
+	"build": "turbo run build",
+	"build:client": "turbo run build --scope=@prioritea/client",
+	"build:server": "turbo run build --scope=@prioritea/server"
   },
   "devDependencies": {
 	"@types/jest": "^27.5.0",
-	"esbuild": "^0.14.38",
-	"esbuild-jest": "^0.5.0",
 	"eslint": "^8.14.0",
 	"husky": "^7.0.4",
-	"jest": "^28.0.3",
 	"plop": "^3.1.0",
 	"prettier": "^2.6.2",
 	"rimraf": "^3.0.2",
 	"turbo": "^1.2.5"
-  },
-  "dependencies": {
-	"@prioritea/config": "^1.0.0",
-	"@prioritea/tsconfig": "^1.0.0",
-	"@prioritea/types": "^1.0.0",
-	"@prioritea/utils": "^1.0.0",
-	"@prioritea/validation": "^1.0.0"
   }
 }

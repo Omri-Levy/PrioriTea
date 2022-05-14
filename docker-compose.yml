@@ -1,20 +1,10 @@
 version: '3.7'
 
 services:
-  db:
-    container_name: db
-    image: postgres
-    restart: unless-stopped
-    networks:
-      - internal
-
-  api:
-    container_name: api
-    restart: unless-stopped
-    build: ./apps/server
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - '4000:4000'
-    networks:
-      - internal
-    depends_on:
-      - db
+      - '8080:80'

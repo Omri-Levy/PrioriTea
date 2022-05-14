@@ -13,9 +13,6 @@
 	"typescript": "^4.6.4"
   },
   "dependencies": {
-	"lodash": "^4.17.21",
-	"@prioritea/types": "*",
-	"@prioritea/tsconfig": "*",
-	"@prioritea/config": "*"
+	"lodash": "^4.17.21"
   }
 }
