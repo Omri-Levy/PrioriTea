@@ -1,28 +1,27 @@
 import {FunctionComponent} from "react";
-import {Center} from "@mantine/core";
-import {ChevronDown, ChevronUp, Selector} from "tabler-icons-react";
+import {Selector} from "tabler-icons-react";
 import {SortToggleProps} from "./interfaces";
+import './SortToggle.css';
+import {Chevron} from "./Chevron/Chevron";
+import {Wrapper} from "./Wrapper/Wrapper";
 
 export const SortToggle: FunctionComponent<SortToggleProps> = (props) => {
 	const {canSort, isSorted, isSortedDesc} = props;
+	const size = 16;
+
+	if (!canSort) {
+		return <Wrapper/>;
+	}
 
 	return (
-		<Center style={{
-			borderRadius: 21,
-			width: 21,
-			height: 21,
-		}}>
-			{
-
-				canSort ?
-
-					isSorted
-						?
-
-						isSortedDesc
-							? <ChevronDown size={16}/>
-							: <ChevronUp size={16}/>
-						: <Selector size={16}/> : null}
-		</Center>
+		<Wrapper>
+			{isSorted
+				? <Chevron
+					isSortedDesc={isSortedDesc}
+					size={size}
+				/>
+				: <Selector size={size}/>
+			}
+		</Wrapper>
 	);
 }

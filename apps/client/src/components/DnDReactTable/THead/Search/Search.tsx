@@ -3,6 +3,7 @@ import {SearchProps} from "./interfaces";
 import {useAsyncDebounce} from "react-table";
 import {ActionIcon, TextInput, useMantineTheme} from "@mantine/core";
 import {ArrowLeft, ArrowRight, Search as SearchIcon} from "tabler-icons-react";
+import './Search.css';
 
 export const Search: FunctionComponent<SearchProps> = (props) => {
 	const {
@@ -17,6 +18,7 @@ export const Search: FunctionComponent<SearchProps> = (props) => {
 		setGlobalFilter(value || undefined)
 	}, 1000)
 	const theme = useMantineTheme();
+	const arrowSize = 18;
 
 	return (
 		<tr>
@@ -29,14 +31,19 @@ export const Search: FunctionComponent<SearchProps> = (props) => {
 						radius="xl"
 						size="md"
 						rightSection={
-							<ActionIcon size={32} radius="xl"
-										color={theme.primaryColor}
-										variant="filled">
-								{theme.dir === 'ltr' ? <ArrowRight size={18}/> :
-									<ArrowLeft size={18}/>}
+							<ActionIcon
+								size={32}
+								radius="xl"
+								color={theme.primaryColor}
+								variant="filled"
+							>
+								{theme.dir === 'ltr'
+									? <ArrowRight size={arrowSize}/>
+									: <ArrowLeft size={arrowSize}/>
+								}
 							</ActionIcon>
 						}
-						styles={{root: {maxWidth: '35%', minWidth: "280px"}}}
+						className={`search__input`}
 						rightSectionWidth={42}
 						value={value || ""}
 						onChange={e => {

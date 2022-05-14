@@ -15,7 +15,8 @@ export const TBody = <TData extends Array<Row<{ [p: string]: any }>>, >({
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			<Droppable droppableId="dnd-list" direction="vertical">
+			<Droppable droppableId="dnd-list" direction="vertical"
+			>
 				{(provided) => (
 					<tbody
 						{...getTableBodyProps()}

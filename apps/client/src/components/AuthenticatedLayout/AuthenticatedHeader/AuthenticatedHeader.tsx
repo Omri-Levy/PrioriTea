@@ -1,7 +1,7 @@
 import {FunctionComponent} from "react";
 import {Burger, Header} from "@mantine/core";
 import {AuthenticatedHeaderProps} from "./interfaces";
-import {HEADER_HEIGHT} from "../../../../constants";
+import {HEADER_HEIGHT} from "../../../constants";
 import './AuthenticatedHeader.css';
 
 export const AuthenticatedHeader: FunctionComponent<AuthenticatedHeaderProps> = (props) => {
@@ -16,7 +16,6 @@ export const AuthenticatedHeader: FunctionComponent<AuthenticatedHeaderProps> = 
 				onClick={toggleIsOpen}
 				size="md"
 				className={"app-shell__header__burger--authenticated"}
-				ml="auto"
 			/>
 		</Header>
 	);

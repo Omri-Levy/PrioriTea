@@ -1,6 +1,7 @@
 import {useMemo} from "react";
 import {Checkbox, CheckboxGroup} from "@mantine/core";
 import {noNullish, uniqueArray} from "@prioritea/utils";
+import './FilterCheckboxGroup.css';
 
 // FIXME: one checkbox group changes length, one does not. They should either both change length or both not.
 export const FilterCheckboxGroup = (
@@ -21,7 +22,7 @@ export const FilterCheckboxGroup = (
 
 	return (
 		<CheckboxGroup
-			styles={{label: {textTransform: "capitalize"}}}
+			className={`checkbox-group`}
 			label={id}
 			value={filterValue}
 			onChange={setFilter}
@@ -34,11 +35,6 @@ export const FilterCheckboxGroup = (
 						value={option?.toString()}
 						// @ts-ignore
 						label={rest?.transformer ? rest?.transformer(option) : option}
-						styles={{
-							label: {
-								textTransform: "capitalize",
-							},
-						}}
 					/>
 				))}
 		</CheckboxGroup>

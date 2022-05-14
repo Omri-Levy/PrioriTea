@@ -94,8 +94,10 @@ export const SignIn = () => {
 					{/* TODO Add loader */}
 					<Button
 						loading={isLoading}
-						variant="filled" type="submit"
-						style={{textTransform: "capitalize"}}>
+						variant="filled"
+						type="submit"
+						className={`capitalize`}
+					>
 						Sign In
 					</Button>
 				</Group>

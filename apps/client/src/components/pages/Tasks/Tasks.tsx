@@ -7,6 +7,7 @@ import {UpdateTaskModal} from "./UpdateTaskModal/UpdateTaskModal";
 import {useTasksColumns} from "./hooks/useTasksColumns/useTasksColumns";
 import {DeleteTasks} from "./DeleteTasks/DeleteTasks";
 import {SomethingWentWrong} from "../../SomethingWentWrong/SomethingWentWrong";
+import './Tasks.css';
 
 export const Tasks = () => {
 	const {data: tasks = [], isLoading, isError} = useTasksQuery();
@@ -31,7 +32,7 @@ export const Tasks = () => {
 
 	return (
 		<>
-			<Group position="right" pr={"3rem"}>
+			<Group position="right" className={`tasks__modal-wrapper`}>
 				<CreateTaskModal/>
 				<DeleteTasks
 					disabled={noSelectedTasks}

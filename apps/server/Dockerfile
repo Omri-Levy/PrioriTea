@@ -1,16 +1,14 @@
-FROM alpine:3.15.4
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN apk add --update npm
-
-COPY . .
-
-RUN npm ci --only=production
+FROM node:18-alpine3.14
 
 ENV NODE_ENV production
+
+COPY pnpm-lock.yaml ./
+
+RUN pnpm fetch --prod
+
+RUN pnpm install -r --offline --prod
+
+COPY . ./
 
 EXPOSE 8080
 

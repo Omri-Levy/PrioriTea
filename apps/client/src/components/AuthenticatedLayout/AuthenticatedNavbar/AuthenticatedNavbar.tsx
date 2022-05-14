@@ -45,11 +45,14 @@ export const AuthenticatedNavbar: FunctionComponent<AuthenticatedNavbarProps> = 
 	});
 
 	return (
-		<Navbar width={{sm: 300}} p="md" hiddenBreakpoint="sm"
-				hidden={!isOpen}>
+		<Navbar
+			className={`app-shell__navbar--authenticated`}
+			width={{sm: 300}}
+			hiddenBreakpoint="sm"
+			hidden={!isOpen}
+		>
 			<Navbar.Section grow>
 				<Text
-					mt="auto"
 					component={Link}
 					to="/"
 					className="app-shell__navbar__logo--authenticated"

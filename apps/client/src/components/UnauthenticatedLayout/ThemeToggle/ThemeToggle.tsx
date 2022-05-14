@@ -5,6 +5,7 @@ import './ThemeToggle.css';
 
 export const ThemeToggle: FunctionComponent = () => {
 	const {colorScheme, toggleColorScheme} = useMantineColorScheme();
+	const size = 18;
 
 	return (
 		<ActionIcon
@@ -14,9 +15,9 @@ export const ThemeToggle: FunctionComponent = () => {
 
 		>
 			{colorScheme === "dark" ? (
-				<Sun size={18}/>
+				<Sun size={size}/>
 			) : (
-				<MoonStars size={18}/>
+				<MoonStars size={size}/>
 			)}
 		</ActionIcon>
 	);

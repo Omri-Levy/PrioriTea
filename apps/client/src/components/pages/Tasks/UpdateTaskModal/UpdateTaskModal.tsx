@@ -116,7 +116,7 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 					</Group>
 					<Group position="apart" mt="xl">
 						<Button type="submit"
-								style={{textTransform: "capitalize"}}
+								className={`capitalize`}
 								variant="filled">
 							Update
 						</Button>
@@ -124,10 +124,12 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 				</form>
 			</Modal>
 			<Tooltip label={'Update selected task'} withArrow>
-				<ActionIcon mb="1rem" size={24} color="primary" radius="xl"
-							variant="filled"
-							disabled={disabled}
-							onClick={openModal}
+				<ActionIcon
+					mb="1rem"
+					size={24} color="primary" radius="xl"
+					variant="filled"
+					disabled={disabled}
+					onClick={openModal}
 				>
 					<Pencil size={18}/>
 				</ActionIcon>

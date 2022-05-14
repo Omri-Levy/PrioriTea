@@ -101,12 +101,7 @@ export const DnDReactTable = <TData extends Array<Column<{}>>, TColumns extends 
 
 	return (
 		<ScrollArea>
-			<div style={{
-				display: "grid",
-				alignItems: "flex-start",
-				gridTemplateColumns: "1fr",
-				minHeight: "65vh"
-			}}>
+			<div className={`dnd-react-table__container`}>
 				<Table
 					highlightOnHover
 					className={'dnd-react-table'}
@@ -127,7 +122,7 @@ export const DnDReactTable = <TData extends Array<Column<{}>>, TColumns extends 
 					/>
 				</Table>
 				<Pagination
-					style={{alignSelf: "flex-end"}}
+					className={`dnd-react-table__pagination`}
 					withEdges={isLargerThanSm}
 					boundaries={isLargerThanSm ? 0 : 1}
 					siblings={isLargerThanSm ? 2 : undefined}

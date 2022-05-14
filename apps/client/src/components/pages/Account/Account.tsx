@@ -30,18 +30,17 @@ export const Account: FunctionComponent = () => {
 						// src={avatar}
 						size={94} radius="md"/>
 					<div>
-						<Text
-							size="xs"
-							className={`uppercase`}
-							weight={700}
-							color="dimmed"
-						>
-							{/* {user?.createdAt} */}
-						</Text>
+						{/*<Text*/}
+						{/*	size="xs"*/}
+						{/*	className={`uppercase`}*/}
+						{/*	className={`account__created-at`}*/}
+						{/*	color="dimmed"*/}
+						{/*>*/}
+						{/* {user?.createdAt} */}
+						{/*</Text>*/}
 
 						<Text
 							size="lg"
-							weight={500}
 							className={'account__name'}
 						>
 							{noNullish`${user?.name}`}

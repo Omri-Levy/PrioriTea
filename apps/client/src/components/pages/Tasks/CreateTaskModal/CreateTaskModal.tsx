@@ -15,14 +15,13 @@ import {
 	Tooltip
 } from "@mantine/core";
 import {FieldError} from "../../../FieldError/FieldError";
-import {CreateTaskModalProps} from "./interfaces";
 import {createTaskSchema} from "@prioritea/validation";
 import {CreateTaskDto, Priority, Status} from "@prioritea/types";
 import {formatTaskStatus} from "../utils/format-task-status/format-task-status";
 import {useToggle} from "../../../../hooks/useToggle/useToggle";
 import {Plus} from "tabler-icons-react";
 
-export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = () => {
+export const CreateTaskModal: FunctionComponent = () => {
 	const [
 		modalIsOpen,
 		,
@@ -102,9 +101,11 @@ export const CreateTaskModal: FunctionComponent<CreateTaskModalProps> = () => {
 						<FieldError field={errors.status}/>
 					</Group>
 					<Group position="apart" mt="xl">
-						<Button type="submit"
-								style={{textTransform: "capitalize"}}
-								variant="filled">
+						<Button
+							type="submit"
+							className={`capitalize`}
+							variant="filled"
+						>
 							Create
 						</Button>
 					</Group>

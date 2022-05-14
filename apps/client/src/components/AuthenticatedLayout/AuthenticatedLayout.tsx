@@ -11,10 +11,10 @@ export const AuthenticatedLayout: FunctionComponent = () => {
 
 	return (
 		<AppShell
+			fixed
 			className={"app-shell--authenticated"}
 			navbarOffsetBreakpoint="sm"
 			asideOffsetBreakpoint="sm"
-			fixed
 			header={<AuthenticatedHeader isOpen={isOpen}
 										 toggleIsOpen={toggleIsOpen}/>}
 			navbar={<AuthenticatedNavbar isOpen={isOpen}

@@ -5,7 +5,7 @@ import {
 	HEADER_HEIGHT,
 	LINKEDIN_URL,
 	PORTFOLIO_URL
-} from "../../../../constants";
+} from "../../../constants";
 import {BrandGithub, BrandLinkedin} from "tabler-icons-react";
 import {IconLink} from "../../IconLink/IconLink";
 import './UnauthenticatedFooter.css';

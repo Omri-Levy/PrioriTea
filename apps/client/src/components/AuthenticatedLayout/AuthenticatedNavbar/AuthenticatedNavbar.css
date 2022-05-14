@@ -1,3 +1,7 @@
+.app-shell__navbar--authenticated {
+	padding: var(--mantine-spacing-md);
+}
+
 .app-shell__navbar__footer--authenticated {
 	padding-top: var(--mantine-spacing-md);
 	margin-top: var(--mantine-spacing-md);
@@ -27,6 +31,7 @@
 }
 
 .app-shell__navbar__logo--authenticated {
+	margin-top: auto;
 	text-transform: uppercase;
 	letter-spacing: 3px;
 	font-weight: bolder;

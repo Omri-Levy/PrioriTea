@@ -11,7 +11,7 @@ import {
 	Text,
 	Transition
 } from "@mantine/core";
-import {HEADER_HEIGHT} from "../../../../constants";
+import {HEADER_HEIGHT} from "../../../constants";
 import {Link} from "react-router-dom";
 import {ThemeToggle} from "../ThemeToggle/ThemeToggle";
 import {invokeIfFunction} from "@prioritea/utils";
