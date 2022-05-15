@@ -8,9 +8,6 @@
 	"build": "tsc",
 	"watch": "tsc --watch"
   },
-  "devDependencies": {
-	"typescript": "^4.6.4"
-  },
   "dependencies": {
 	"zod": "^3.14.4"
   }

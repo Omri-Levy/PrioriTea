@@ -1,9 +1,8 @@
 node_modules
 .idea
 dist
-.turbo
 
-.env*
+infra/.env.db
 
 /.pnp
 .pnp.js
@@ -20,8 +19,5 @@ coverage
 
 logs
 *.log
-
-# pnpm uses npm for publishing a new version with
-# dependencies bundled but the npm lockfile is not needed
-# because pnpm use pnpm for installation
-package-lock.json
+infra/clean-docker.zh
+infra/deploy-docker.zh

@@ -1,0 +1,31 @@
+FROM node:14-alpine as builder
+
+WORKDIR /app
+
+COPY package.json .
+COPY yarn.lock .
+
+COPY ./packages/utils/package.json packages/utils/
+COPY ./packages/types/package.json packages/types/
+COPY ./packages/validation/package.json packages/validation/
+COPY ./packages/tsconfig/package.json packages/tsconfig/
+COPY ./packages/config/package.json packages/config/
+
+COPY ./packages/server/package.json packages/server/
+
+RUN yarn install
+
+COPY ./packages/utils packages/utils
+COPY ./packages/types packages/types
+COPY ./packages/validation packages/validation
+COPY ./packages/tsconfig packages/tsconfig
+COPY ./packages/config packages/config
+
+COPY ./packages/server packages/server
+
+RUN yarn workspace @prioritea/server db:gen
+RUN yarn build:server
+
+ENV NODE_ENV production
+EXPOSE 80
+CMD [ "node", "packages/server/dist/src/index.js" ]

@@ -1,2 +1,0 @@
-[context.production]
-  environment = { VITE_API_USER = "https://api.prioritea.cc/api/user", VITE_API_TASK = "https://api.prioritea.cc/api/task", VITE_API = "https://api.prioritea.cc/api" }

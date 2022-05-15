@@ -1,0 +1,16 @@
+{
+  "extends": "@prioritea/tsconfig/tsconfig-server.json",
+  "compilerOptions": {
+	"rootDir": ".",
+	"outDir": "dist"
+  },
+  "include": [
+	"src/"
+  ],
+  "exclude": [
+	"node_modules",
+	"dist",
+	"coverage",
+	"src/**/*.(test|spec).ts"
+  ]
+}
