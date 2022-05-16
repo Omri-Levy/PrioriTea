@@ -1,7 +1,4 @@
 import {FunctionComponent} from "react";
-import {
-	useCreateTaskMutation
-} from "./hooks/useCreateTaskMutation/useCreateTaskMutation";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {
@@ -12,35 +9,33 @@ import {
 	NumberInput,
 	Select,
 	TextInput,
-	Tooltip
+	Tooltip,
 } from "@mantine/core";
-import {FieldError} from "../../../FieldError/FieldError";
+import {Plus} from "tabler-icons-react";
 import {createTaskSchema} from "@prioritea/validation";
 import {CreateTaskDto, Priority, Status} from "@prioritea/types";
+import {
+	useCreateTaskMutation
+} from "./hooks/useCreateTaskMutation/useCreateTaskMutation";
+import {FieldError} from "../../../FieldError/FieldError";
 import {formatTaskStatus} from "../utils/format-task-status/format-task-status";
 import {useToggle} from "../../../../hooks/useToggle/useToggle";
-import {Plus} from "tabler-icons-react";
 
 export const CreateTaskModal: FunctionComponent = () => {
-	const [
-		modalIsOpen,
-		,
-		openModal,
-		closeModal
-	] = useToggle();
+	const [modalIsOpen, , openModal, closeModal] = useToggle();
 	const {mutateAsync} = useCreateTaskMutation();
 	const {
 		control,
 		register,
 		handleSubmit,
-		formState: {errors}
+		formState: {errors},
 	} = useForm<CreateTaskDto>({
 		defaultValues: {
 			priority: Priority.MIN,
-			description: '',
-			status: Status.IDLE
+			description: "",
+			status: Status.IDLE,
 		},
-		resolver: zodResolver(createTaskSchema)
+		resolver: zodResolver(createTaskSchema),
 	});
 	const onSubmit: SubmitHandler<CreateTaskDto> = async ({
 															  priority,
@@ -90,10 +85,15 @@ export const CreateTaskModal: FunctionComponent = () => {
 								<Select
 									label="Status"
 									placeholder="Pick one.."
-									data={Object.values(Status).filter((status) => status !== Status.COMPLETED).map((status) => ({
-										value: status,
-										label: formatTaskStatus(status)
-									}))}
+									data={Object.values(Status)
+										.filter(
+											(status) =>
+												status !== Status.COMPLETED
+										)
+										.map((status) => ({
+											value: status,
+											label: formatTaskStatus(status),
+										}))}
 									{...field}
 								/>
 							)}
@@ -111,7 +111,7 @@ export const CreateTaskModal: FunctionComponent = () => {
 					</Group>
 				</form>
 			</Modal>
-			<Tooltip label={'Create task'} withArrow>
+			<Tooltip label={"Create task"} withArrow>
 				<ActionIcon
 					mb="1rem"
 					size={24}
@@ -125,4 +125,4 @@ export const CreateTaskModal: FunctionComponent = () => {
 			</Tooltip>
 		</>
 	);
-}
+};

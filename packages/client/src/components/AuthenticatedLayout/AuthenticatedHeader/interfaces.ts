@@ -1,4 +1,4 @@
-import {FunctionVoidReturn} from "@prioritea/types";
+import { FunctionVoidReturn } from "@prioritea/types";
 
 export interface AuthenticatedHeaderProps {
 	isOpen: boolean;

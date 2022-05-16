@@ -1,4 +1,4 @@
-import {QueryClient} from "react-query";
+import { QueryClient } from "react-query";
 
 /**
  * react-query's QueryClient

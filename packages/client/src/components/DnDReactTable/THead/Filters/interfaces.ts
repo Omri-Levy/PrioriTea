@@ -1,4 +1,4 @@
-import {HeaderGroup} from "react-table";
+import { HeaderGroup } from "react-table";
 
 export interface FiltersProps {
 	headerGroups: HeaderGroup<{ [p: string]: any }>[];

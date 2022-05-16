@@ -1,4 +1,4 @@
-import {BaseArray} from "@prioritea/types";
+import { BaseArray } from "@prioritea/types";
 
 export interface SearchProps {
 	visibleColumnsLength: number;

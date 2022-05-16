@@ -1,7 +1,4 @@
 import {FunctionComponent} from "react";
-import {useToggle} from "../../../hooks/useToggle/useToggle";
-import {useRoutes} from "../../Router/useRoutes";
-import {NavLink} from "../../NavLink/NavLink";
 import {
 	Burger,
 	Container,
@@ -9,12 +6,15 @@ import {
 	Header,
 	Paper,
 	Text,
-	Transition
+	Transition,
 } from "@mantine/core";
-import {HEADER_HEIGHT} from "../../../constants";
 import {Link} from "react-router-dom";
-import {ThemeToggle} from "../ThemeToggle/ThemeToggle";
 import {invokeIfFunction} from "@prioritea/utils";
+import {ThemeToggle} from "../ThemeToggle/ThemeToggle";
+import {useToggle} from "../../../hooks/useToggle/useToggle";
+import {HEADER_HEIGHT} from "../../../constants";
+import {useRoutes} from "../../Router/useRoutes";
+import {NavLink} from "../../NavLink/NavLink";
 import "./UnauthenticatedHeader.css";
 
 export const UnauthenticatedHeader: FunctionComponent = () => {
@@ -38,7 +38,9 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 			>
 				{Icon && (
 					<Icon
-						className={"app-shell__header__navlink__icon--unauthenticated"}
+						className={
+							"app-shell__header__navlink__icon--unauthenticated"
+						}
 					/>
 				)}
 				<span>{text}</span>
@@ -47,13 +49,11 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 	});
 
 	return (
-		<Header
-			height={HEADER_HEIGHT}
-			className={"header"}
-		>
+		<Header height={HEADER_HEIGHT} className={"header"}>
 			<Container
 				className={"app-shell__header__container--unauthenticated"}
-				size={"xl"}>
+				size={"xl"}
+			>
 				<Group>
 					<Burger
 						opened={isOpen}
@@ -71,8 +71,10 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 					</Text>
 				</Group>
 				<Group>
-					<Group spacing={5}
-						   className={"app-shell__header__links--unauthenticated"}>
+					<Group
+						spacing={5}
+						className={"app-shell__header__links--unauthenticated"}
+					>
 						{links}
 					</Group>
 
@@ -83,7 +85,9 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 					>
 						{(styles) => (
 							<Paper
-								className={"app-shell__header__dropdown--unauthenticated"}
+								className={
+									"app-shell__header__dropdown--unauthenticated"
+								}
 								withBorder
 								style={styles}
 							>
@@ -96,4 +100,4 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 			</Container>
 		</Header>
 	);
-}
+};

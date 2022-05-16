@@ -10,19 +10,28 @@ import {useInterval} from "@mantine/hooks";
  * @param {number} [intervalInMs = 1000] The interval in milliseconds in which to step the number.
  * @param {boolean} [increment = true] Whether to increment or decrement the number.
  */
-export const useIncrementOnInterval = (condition: boolean, start = 0, step = 1, intervalInMs = 1000, increment = true): [number, (count: number) => void] => {
+export const useIncrementOnInterval = (
+	condition: boolean,
+	start = 0,
+	step = 1,
+	intervalInMs = 1000,
+	increment = true
+): [number, (count: number) => void] => {
 	const [count, setCount] = useState(start);
-	const interval = useInterval(() =>
-			setCount((count) => increment ? count + step : count - step),
-		intervalInMs);
-
+	const interval = useInterval(
+		() => setCount((cnt) => (increment ? cnt + step : cnt - step)),
+		intervalInMs
+	);
 
 	useEffect(() => {
-
-		condition ? interval.start() : interval.stop();
+		if (condition) {
+			interval.start();
+		} else {
+			interval.stop();
+		}
 
 		return interval.stop;
 	}, [condition]);
 
 	return [count, setCount];
-}
+};

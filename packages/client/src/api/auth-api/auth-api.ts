@@ -1,11 +1,11 @@
-import {axiosClient} from "../../lib/axios-client";
-import {IAuthResponse} from "./interfaces";
+import { axiosClient } from "../../lib/axios-client";
+import { IAuthResponse } from "./interfaces";
 
 export class AuthApi {
 	private static readonly API_URL = "/auth";
 
-	private constructor() {
-	}
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	private constructor() {}
 
 	public static async signUp(
 		email: string,

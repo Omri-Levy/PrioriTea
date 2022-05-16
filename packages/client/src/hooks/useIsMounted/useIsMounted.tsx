@@ -1,5 +1,5 @@
-import {useEffect} from "react";
-import {useIsMountedRef} from "../useIsMountedRef/useIsMountedRef";
+import { useEffect } from "react";
+import { useIsMountedRef } from "../useIsMountedRef/useIsMountedRef";
 
 export const useIsMounted = () => {
 	const isMounted = useIsMountedRef();

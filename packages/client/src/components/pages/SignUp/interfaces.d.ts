@@ -1,7 +1,7 @@
 export interface ISignUpForm {
-  email: string;
-  name: string;
-  password: string;
-  passwordConfirmation: string;
-  tos: boolean;
+	email: string;
+	name: string;
+	password: string;
+	passwordConfirmation: string;
+	tos: boolean;
 }

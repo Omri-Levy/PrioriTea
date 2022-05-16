@@ -1,13 +1,13 @@
+import {useState} from "react";
 import {Group} from "@mantine/core";
 import {DnDReactTable} from "../../DnDReactTable/DnDReactTable";
 import {CreateTaskModal} from "./CreateTaskModal/CreateTaskModal";
 import {useTasksQuery} from "./hooks/useTasksQuery/useTasksQuery";
-import {useState} from "react";
 import {UpdateTaskModal} from "./UpdateTaskModal/UpdateTaskModal";
 import {useTasksColumns} from "./hooks/useTasksColumns/useTasksColumns";
 import {DeleteTasks} from "./DeleteTasks/DeleteTasks";
 import {SomethingWentWrong} from "../../SomethingWentWrong/SomethingWentWrong";
-import './Tasks.css';
+import "./Tasks.css";
 
 export const Tasks = () => {
 	const {data: tasks = [], isLoading, isError} = useTasksQuery();
@@ -16,7 +16,7 @@ export const Tasks = () => {
 	const [selectedTasksIds, setSelectedTasksIds] = useState<Array<string>>([]);
 
 	// Update selected task
-	const [firstSelectedTaskId = ''] = selectedTasksIds;
+	const [firstSelectedTaskId = ""] = selectedTasksIds;
 
 	// Conditions to disable the actions
 	// Same as length === 0, also covers falsy values. (should not happen in this case)
@@ -25,9 +25,7 @@ export const Tasks = () => {
 	const invalidIdToUpdate = selectedTasksIds.length !== 1;
 
 	if (isError) {
-		return (
-			<SomethingWentWrong/>
-		);
+		return <SomethingWentWrong/>;
 	}
 
 	return (
@@ -49,8 +47,8 @@ export const Tasks = () => {
 				columns={columns}
 				options={{
 					initialState: {
-						hiddenColumns: ['id']
-					}
+						hiddenColumns: ["id"],
+					},
 				}}
 				setSelectedRowsIds={setSelectedTasksIds}
 			/>

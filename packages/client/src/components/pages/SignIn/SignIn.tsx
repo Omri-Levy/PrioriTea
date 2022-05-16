@@ -5,7 +5,7 @@ import {
 	Group,
 	Paper,
 	PasswordInput,
-	TextInput
+	TextInput,
 } from "@mantine/core";
 import {signInSchema} from "@prioritea/validation";
 import {SubmitHandler, useForm} from "react-hook-form";
@@ -28,33 +28,20 @@ export const SignIn = () => {
 		},
 	});
 	const {mutateAsync, isLoading, isError, error} = useSignInMutation();
-	const onSubmit: SubmitHandler<ISignInForm> = async ({
-															email,
-															password,
-														}) => mutateAsync({
-		email,
-		password,
-	});
+	const onSubmit: SubmitHandler<ISignInForm> = async ({email, password}) =>
+		mutateAsync({
+			email,
+			password,
+		});
 
 	const [{message}] = (error as any)?.response?.data?.errors ?? [{}];
 
 	return (
 		<Paper radius="md" p="xl" withBorder>
-			{/*<Text size="lg" weight={500}>*/}
-			{/*  Welcome to PrioriTea, Sign In with*/}
-			{/*</Text>*/}
-			{/*<Group grow mb="md" mt="md">*/}
-			{/*  <Button variant="filled" radius="xl" leftIcon={<BrandGoogle size={18} />}>*/}
-			{/*    Google*/}
-			{/*  </Button>*/}
-			{/*  <Button variant="filled"radius="xl" leftIcon={<BrandTwitter size={18} />}>*/}
-			{/*    Twitter*/}
-			{/*  </Button>*/}
-			{/*</Group>*/}
-			{/*<Divider label="Or continue with email" labelPosition="center" my="lg" />*/}
 			{isError && (
 				<ErrorAlert title="Something went wrong..">
-					{message ?? `Please refresh this page or try again later. If the problem persists,please contact us.`}
+					{message ??
+						`Please refresh this page or try again later. If the problem persists, please contact us.`}
 				</ErrorAlert>
 			)}
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -64,7 +51,6 @@ export const SignIn = () => {
 						required
 						label="Email"
 						placeholder="Type here.."
-
 					/>
 					<FieldError field={errors.email}/>
 					<PasswordInput
@@ -72,13 +58,8 @@ export const SignIn = () => {
 						required
 						label="Password"
 						placeholder="Type here.."
-
 					/>
 					<FieldError field={errors.password}/>
-					{/*<Checkbox*/}
-					{/*  label="Remember password"*/}
-					{/*  */}
-					{/*/>*/}
 				</Group>
 
 				<Group position="apart" mt="xl">
@@ -89,7 +70,7 @@ export const SignIn = () => {
 						to="/sign-up"
 						size="xs"
 					>
-						Don't have an account? Sign up!
+						Don&apos;t have an account? Sign up!
 					</Anchor>
 					{/* TODO Add loader */}
 					<Button

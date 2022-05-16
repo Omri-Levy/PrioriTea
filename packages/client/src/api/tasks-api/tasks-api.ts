@@ -1,19 +1,18 @@
-import {axiosClient} from "../../lib/axios-client";
-import {CreateTaskDto, UpdateTaskDto} from "@prioritea/types";
-import {ITasksResponse} from "./interfaces";
+import { CreateTaskDto, UpdateTaskDto } from "@prioritea/types";
+import { axiosClient } from "../../lib/axios-client";
+import { ITasksResponse } from "./interfaces";
 
 export class TasksApi {
 	private static readonly API_URL = `/tasks`;
 
-	private constructor() {
-	}
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	private constructor() {}
 
 	public static async create({
-								   priority,
-								   description,
-								   status,
-							   }: CreateTaskDto): Promise<ITasksResponse> {
-
+		priority,
+		description,
+		status,
+	}: CreateTaskDto): Promise<ITasksResponse> {
 		return axiosClient.post(this.API_URL, {
 			priority,
 			description,
@@ -26,11 +25,11 @@ export class TasksApi {
 	}
 
 	public static async updateById({
-									   id,
-									   priority,
-									   description,
-									   status,
-								   }: UpdateTaskDto): Promise<ITasksResponse> {
+		id,
+		priority,
+		description,
+		status,
+	}: UpdateTaskDto): Promise<ITasksResponse> {
 		return axiosClient.patch(`${this.API_URL}/${id}`, {
 			priority,
 			description,
@@ -38,7 +37,9 @@ export class TasksApi {
 		});
 	}
 
-	public static async deleteByIds(ids: Array<string>): Promise<ITasksResponse> {
+	public static async deleteByIds(
+		ids: Array<string>
+	): Promise<ITasksResponse> {
 		return axiosClient.delete(`${this.API_URL}`, {
 			data: {
 				ids,

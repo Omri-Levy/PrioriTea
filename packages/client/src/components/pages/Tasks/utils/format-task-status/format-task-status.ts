@@ -1,3 +1,4 @@
-import {stringUtils} from "@prioritea/utils";
+import { stringUtils } from "@prioritea/utils";
 
-export const formatTaskStatus = (status: string) => stringUtils(status).toKebabCase().toCapitalized().string
+export const formatTaskStatus = (status: string) =>
+	stringUtils(status).toKebabCase().toCapitalized().string;

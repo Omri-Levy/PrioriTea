@@ -1,27 +1,25 @@
+import {Row} from "react-table";
 import {DragDropContext, Draggable, Droppable} from "react-beautiful-dnd";
 import {GripVertical} from "tabler-icons-react";
 import {TBodyProps} from "./interfaces";
-import './TBody.css';
-import {Row} from "react-table";
+import "./TBody.css";
 import {useDnD} from "../hooks/useDnD/useDnD";
 
-export const TBody = <TData extends Array<Row<{ [p: string]: any }>>, >({
-																			getTableBodyProps,
-																			rows,
-																			prepareRow,
-
-																		}: TBodyProps<TData>) => {
+export const TBody = <TData extends Array<Row<{ [p: string]: any }>>>({
+																		  getTableBodyProps,
+																		  rows,
+																		  prepareRow,
+																	  }: TBodyProps<TData>) => {
 	const [page, onDragEnd] = useDnD(rows);
 
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
-			<Droppable droppableId="dnd-list" direction="vertical"
-			>
-				{(provided) => (
+			<Droppable droppableId="dnd-list" direction="vertical">
+				{(droppable) => (
 					<tbody
 						{...getTableBodyProps()}
-						{...provided.droppableProps}
-						ref={provided.innerRef}
+						{...droppable.droppableProps}
+						ref={droppable.innerRef}
 					>
 					{page.map((row, index) => {
 						prepareRow(row);
@@ -32,36 +30,40 @@ export const TBody = <TData extends Array<Row<{ [p: string]: any }>>, >({
 								index={index}
 								draggableId={row.id}
 							>
-								{(provided) => (
+								{(draggable) => (
 									<tr
 										{...row.getRowProps()}
-										{...provided.draggableProps}
-										className={'draggable__item'}
-										ref={provided.innerRef}
+										{...draggable.draggableProps}
+										className={"draggable__item"}
+										ref={draggable.innerRef}
 									>
 										<td>
 											<div
-												className={'draggable__handle'} {...provided.dragHandleProps}>
+												className={
+													"draggable__handle"
+												}
+												{...draggable.dragHandleProps}
+											>
 												<GripVertical
 													size={20}
 													className={`draggable__handle__icon`}
 												/>
 											</div>
 										</td>
-										{row.cells.map((cell) =>
+										{row.cells.map((cell) => (
 											<td {...cell.getCellProps()}>
-												{cell.render('Cell')}
+												{cell.render("Cell")}
 											</td>
-										)}
+										))}
 									</tr>
 								)}
 							</Draggable>
 						);
 					})}
-					{provided.placeholder}
+					{droppable.placeholder}
 					</tbody>
 				)}
 			</Droppable>
 		</DragDropContext>
 	);
-}
+};

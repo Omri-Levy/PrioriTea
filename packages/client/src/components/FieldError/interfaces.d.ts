@@ -1,7 +1,7 @@
 export interface FieldErrorProps {
-  field:
-    | {
-        message?: string;
-      }
-    | undefined;
+	field:
+		| {
+				message?: string;
+		  }
+		| undefined;
 }

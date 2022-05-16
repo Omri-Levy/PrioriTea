@@ -1,30 +1,28 @@
 import {FunctionComponent, useState} from "react";
-import {SearchProps} from "./interfaces";
 import {useAsyncDebounce} from "react-table";
 import {ActionIcon, TextInput, useMantineTheme} from "@mantine/core";
-import {ArrowLeft, ArrowRight, Search as SearchIcon} from "tabler-icons-react";
-import './Search.css';
+import {ArrowLeft, ArrowRight, Search as SearchIcon,} from "tabler-icons-react";
+import {SearchProps} from "./interfaces";
+import "./Search.css";
 
 export const Search: FunctionComponent<SearchProps> = (props) => {
 	const {
 		visibleColumnsLength,
 		preGlobalFilteredRows,
 		globalFilter,
-		setGlobalFilter
+		setGlobalFilter,
 	} = props;
-	const count = preGlobalFilteredRows.length
-	const [value, setValue] = useState(globalFilter)
-	const onChange = useAsyncDebounce(value => {
-		setGlobalFilter(value || undefined)
-	}, 1000)
+	const count = preGlobalFilteredRows.length;
+	const [value, setValue] = useState(globalFilter);
+	const onChange = useAsyncDebounce((val) => {
+		setGlobalFilter(val || undefined);
+	}, 1000);
 	const theme = useMantineTheme();
 	const arrowSize = 18;
 
 	return (
 		<tr>
-			<th
-				colSpan={visibleColumnsLength}
-			>
+			<th colSpan={visibleColumnsLength}>
 				<div>
 					<TextInput
 						icon={<SearchIcon size={18}/>}
@@ -37,16 +35,17 @@ export const Search: FunctionComponent<SearchProps> = (props) => {
 								color={theme.primaryColor}
 								variant="filled"
 							>
-								{theme.dir === 'ltr'
-									? <ArrowRight size={arrowSize}/>
-									: <ArrowLeft size={arrowSize}/>
-								}
+								{theme.dir === "ltr" ? (
+									<ArrowRight size={arrowSize}/>
+								) : (
+									<ArrowLeft size={arrowSize}/>
+								)}
 							</ActionIcon>
 						}
 						className={`search__input`}
 						rightSectionWidth={42}
 						value={value || ""}
-						onChange={e => {
+						onChange={(e) => {
 							setValue(e.target.value);
 							onChange(e.target.value);
 						}}
@@ -56,4 +55,4 @@ export const Search: FunctionComponent<SearchProps> = (props) => {
 			</th>
 		</tr>
 	);
-}
+};

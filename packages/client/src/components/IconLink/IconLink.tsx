@@ -1,6 +1,6 @@
-import {FunctionComponent} from "react";
-import {ActionIcon} from "@mantine/core";
-import {IconLinkProps} from "./types";
+import { FunctionComponent } from "react";
+import { ActionIcon } from "@mantine/core";
+import { IconLinkProps } from "./types";
 
 /**
  * Wraps an icon with mantine's ActionIcon component as an anchor with an href, and target. Accepts ActionIcon props, making overriding the size default size of "lg" possible.
@@ -8,17 +8,17 @@ import {IconLinkProps} from "./types";
  * @constructor
  */
 export const IconLink: FunctionComponent<IconLinkProps> = (props) => {
-    const {href, Icon, ...rest} = props;
+	const { href, Icon, ...rest } = props;
 
-    return (
-        <ActionIcon
-            size="lg"
-            component="a"
-            href={href}
-            target="_blank"
-            {...rest}
-        >
-            <Icon size={20}/>
-        </ActionIcon>
-    );
-}
+	return (
+		<ActionIcon
+			size="lg"
+			component="a"
+			href={href}
+			target="_blank"
+			{...rest}
+		>
+			<Icon size={20} />
+		</ActionIcon>
+	);
+};

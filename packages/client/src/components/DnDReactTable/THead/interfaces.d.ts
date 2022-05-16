@@ -1,5 +1,5 @@
-import {HeaderGroup} from "react-table";
-import {BaseArray} from "@prioritea/types";
+import { HeaderGroup } from "react-table";
+import { BaseArray } from "@prioritea/types";
 
 export interface THeadProps {
 	headerGroups: HeaderGroup<{ [p: string]: any }>[];

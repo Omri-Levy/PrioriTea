@@ -4,9 +4,9 @@ import {
 	SimpleGrid,
 	Text,
 	Title,
-	useMantineTheme
+	useMantineTheme,
 } from "@mantine/core";
-import './SomethingWentWrong.css';
+import "./SomethingWentWrong.css";
 
 export const SomethingWentWrong = () => {
 	const theme = useMantineTheme();
@@ -16,12 +16,12 @@ export const SomethingWentWrong = () => {
 			<SimpleGrid
 				spacing={80}
 				cols={2}
-				breakpoints={[{maxWidth: 'sm', cols: 1, spacing: 40}]}
+				breakpoints={[{ maxWidth: "sm", cols: 1, spacing: 40 }]}
 			>
 				<div>
-					<Title className={'something-went-wrong__title'}>Something
-						went
-						wrong...</Title>
+					<Title className={"something-went-wrong__title"}>
+						Something went wrong...
+					</Title>
 					<Text color="dimmed" size="lg" mb={"1rem"}>
 						Please refresh this page, or try again later. If the
 						problem persists, please contact us.
@@ -42,9 +42,13 @@ export const SomethingWentWrong = () => {
 					// @ts-ignore
 					gradient={{
 						// @ts-ignore
-						from: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 7 : 5],
+						from: theme.colors[theme.primaryColor][
+							theme.colorScheme === "dark" ? 7 : 5
+						],
 						// @ts-ignore
-						to: theme.colors[theme.primaryColor][theme.colorScheme === "dark" ? 5 : 7]
+						to: theme.colors[theme.primaryColor][
+							theme.colorScheme === "dark" ? 5 : 7
+						],
 					}}
 				>
 					500
@@ -52,4 +56,4 @@ export const SomethingWentWrong = () => {
 			</SimpleGrid>
 		</Container>
 	);
-}
+};

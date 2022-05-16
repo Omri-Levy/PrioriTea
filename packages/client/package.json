@@ -29,6 +29,8 @@
 		"zod": "^3.14.4"
 	},
 	"scripts": {
+		"lint": "eslint --fix ./src/**/*.ts",
+		"format": "prettier --write ./src/**/* --ignore-unknown",
 		"plop": "plop",
 		"dev": "react-app-rewired start",
 		"build": "react-app-rewired build",
@@ -60,7 +62,6 @@
 		"postcss": "^8.4.12",
 		"prettier-plugin-tailwindcss": "^0.1.10",
 		"react-scripts": "^5.0.1",
-		"regenerator-runtime": "^0.13.9",
 		"tailwindcss": "^3.0.24"
 	}
 }
