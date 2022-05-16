@@ -1,0 +1,17 @@
+.app-shell--authenticated main {
+	background-color: var(--mantine-color-gray-0);
+}
+
+html[data-color-scheme="dark"] .app-shell--authenticated main {
+	background-color: var(--mantine-color-dark-8);
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+
+@media (max-width: 768px) {
+	.app-shell--authenticated main {
+		padding-inline: 0.5rem;
+	}
+}

@@ -1,0 +1,9 @@
+.app-shell__theme-toggle--unauthenticated {
+	color: var(--mantine-color-tw-orange-7);
+	background-color: var(--mantine-color-gray-0);
+}
+
+html[data-color-scheme="dark"] .app-shell__theme-toggle--unauthenticated {
+	color: var(--mantine-color-tw-orange-5);
+	background-color: var(--mantine-color-dark-6);
+}

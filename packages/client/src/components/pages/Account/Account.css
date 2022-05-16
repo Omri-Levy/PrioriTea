@@ -1,0 +1,13 @@
+/*.account__created-at {*/
+/*	font-weight: 500;*/
+/*}*/
+
+.account__name {
+	font-family: Greycliff CF, var(--mantine-font-family);
+	font-weight: 500;
+}
+
+.account__paper {
+	radius: var(--mantine-radius-md);
+	padding: var(--mantine-spacing-lg);
+}
