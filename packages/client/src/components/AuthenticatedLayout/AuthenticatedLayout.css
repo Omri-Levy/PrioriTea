@@ -10,7 +10,6 @@ html[data-color-scheme="dark"] .app-shell--authenticated main {
 	text-transform: capitalize;
 }
 
-
 @media (max-width: 768px) {
 	.app-shell--authenticated main {
 		padding-inline: 0.5rem;

@@ -11,7 +11,8 @@
 	width: 0;
 }
 
-.thead__col, .thead__col--can-sort {
+.thead__col,
+.thead__col--can-sort {
 	padding: 1rem;
 	border-radius: 3px;
 }

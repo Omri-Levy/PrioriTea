@@ -1,5 +1,5 @@
-import {BaseArray} from "@prioritea/types";
-import {useEffect} from "react";
+import { BaseArray } from "@prioritea/types";
+import { useEffect } from "react";
 
 /**
  * @description console.log useEffect with the passed values passed to the dependency array. Accepts any number of arguments, or alternatively an array of values.

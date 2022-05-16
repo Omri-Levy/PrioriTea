@@ -1,6 +1,6 @@
-import {ReactNode} from "react";
-import {Icon} from "tabler-icons-react";
-import {BaseArray} from "@prioritea/types";
+import { ReactNode } from "react";
+import { Icon } from "tabler-icons-react";
+import { BaseArray } from "@prioritea/types";
 
 export interface IRoute {
 	path: string;

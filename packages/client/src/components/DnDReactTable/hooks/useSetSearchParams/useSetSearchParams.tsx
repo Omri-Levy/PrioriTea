@@ -5,7 +5,8 @@ import qs from "qs";
 
 export const useSetSearchParams = (
 	filters: Array<{
-		id: string, value: string
+		id: string;
+		value: string;
 	}>,
 	globalFilter: string | undefined,
 	sortBy: Array<SortingRule<{
@@ -22,7 +23,8 @@ export const useSetSearchParams = (
 ) => {
 	const [searchParams, setSearchParams] = useSearchParams();
 
-	const params = useMemo(() =>
+	const params = useMemo(
+		() =>
 			// Converts an object of id and value to an object of the id as a key and the value as the key's value.
 			// { id, value } -> { id: value }
 			filters.reduce(
@@ -31,25 +33,37 @@ export const useSetSearchParams = (
 					acc[curr.id] = curr.value;
 
 					return acc;
-				}, {} as { [key: string]: string })
-		, [filters]);
-	const GLOBAL_FILTER = 'search';
+				},
+				{} as { [key: string]: string }
+			),
+		[filters]
+	);
+	const GLOBAL_FILTER = "search";
 	// Syncs the search params with the checked filters,
 	// avoids clearing the search params on refresh.
 	useEffect(() => {
 		const [sort] = sortBy;
 
-		setSearchParams(qs.stringify(
-			{
-				...searchParams,
-				...params,
-				[GLOBAL_FILTER]: globalFilter,
-				sort_by: sort?.id ?? 'priority',
-				order_by: sort ? (sort?.desc ? 'desc' : 'asc') : 'desc',
-				offset,
-				limit,
-			},
-			{arrayFormat: 'repeat'}
-		));
-	}, [params, globalFilter, sortBy?.[0]?.id, sortBy?.[0]?.desc, offset, limit]);
-}
+		setSearchParams(
+			qs.stringify(
+				{
+					...searchParams,
+					...params,
+					[GLOBAL_FILTER]: globalFilter,
+					sort_by: sort?.id ?? "priority",
+					order_by: !sort || sort?.desc ? "desc" : "asc",
+					offset,
+					limit,
+				},
+				{arrayFormat: "repeat"}
+			)
+		);
+	}, [
+		params,
+		globalFilter,
+		sortBy?.[0]?.id,
+		sortBy?.[0]?.desc,
+		offset,
+		limit,
+	]);
+};

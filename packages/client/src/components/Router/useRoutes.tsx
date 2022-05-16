@@ -1,16 +1,18 @@
 import {
+	Home,
 	ListDetails,
 	Login as SignInIcon,
 	User,
-	UserPlus as SignUpIcon
+	UserPlus as SignUpIcon,
 } from "tabler-icons-react";
+import {Navigate} from "react-router-dom";
 import {Account} from "../pages/Account/Account";
 import {Tasks} from "../pages/Tasks/Tasks";
 import {SignIn} from "../pages/SignIn/SignIn";
 import {SignUp} from "../pages/SignUp/SignUp";
-import {Navigate} from "react-router-dom";
 import {protectedRoutes} from "./protectedRoutes";
 import {IRoute} from "./interfaces";
+import {Hero} from "../pages/Hero/Hero";
 
 /**
  * @description Returns an array of properties to be used for nav links and routes, filtered by auth state.
@@ -19,12 +21,18 @@ import {IRoute} from "./interfaces";
  */
 export const useRoutes = (isAuth: boolean) => {
 	const routes: Array<IRoute> = [
-		{
+		isAuth ? {
 			path: "/",
-			element: <Tasks/>,
 			end: true,
+			element: <Tasks/>,
 			text: "tasks",
 			Icon: ListDetails,
+		} : {
+			path: "/",
+			end: true,
+			element: <Hero/>,
+			text: "home",
+			Icon: Home,
 		},
 		{
 			path: "/account",
@@ -47,17 +55,18 @@ export const useRoutes = (isAuth: boolean) => {
 			Icon: SignUpIcon,
 		},
 		{
-			path: '*',
+			path: "*",
 			element: <Navigate to={isAuth ? "/" : "/sign-in"}/>,
-		}
+		},
 	];
 
 	// Filter routes based on auth state
 	return routes.filter(({path}) => {
 		const isProtected = isAuth && protectedRoutes.includes(path);
 		const isUnprotected = !isAuth && !protectedRoutes.includes(path);
-		const isFallback = path === '*';
+		const isFallback = path === "*";
+		const isRoot = path === "/";
 
-		return isProtected || isUnprotected || isFallback;
+		return isProtected || isUnprotected || isFallback || isRoot;
 	});
 };

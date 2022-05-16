@@ -1,0 +1,90 @@
+.hero__wrapper {
+	position: relative;
+	box-sizing: border-box;
+	background-color: var(--mantine-color-white);
+}
+
+html[data-color-scheme="dark"] .hero__wrapper {
+	background-color: var(--mantine-color-dark-8);
+}
+
+.hero__inner {
+	position: relative;
+	padding-block: 40px;
+}
+
+.hero__title {
+	margin: 0;
+	padding: 0;
+	font-family: Greycliff CF, var(--mantine-font-family);
+	font-size: 62px;
+	font-weight: 900;
+	line-height: 1.1;
+	color: var(--mantine-color-black);
+}
+
+html[data-color-scheme="dark"] .hero__title {
+	color: var(--mantine-color-white);
+}
+
+.hero__description {
+	margin-top: var(--mantine-spacing-xl);
+	font-size: 24px;
+}
+
+@media only screen and (max-width: 755px) {
+	.hero__title {
+		font-size: 42px;
+		line-height: 1.2;
+	}
+
+	.hero__description {
+		font-size: 18px;
+	}
+
+	.hero__controls {
+		margin-top: var(--mantine-spacing-xl);
+	}
+
+	.hero__control {
+		flex: 1;
+		padding-left: 18px;
+		padding-right: 18px;
+	}
+
+	.hero__inner {
+		padding-block: 20px;
+	}
+}
+
+.hero__controls {
+	margin-top: calc(var(--mantine-spacing-xl) * 2);
+}
+
+.hero__control, .hero__control--github {
+	height: 54px;
+	padding-left: 38px;
+	padding-right: 38px;
+}
+
+.hero__control--github {
+	border-width: 2px;
+	border-color: var(--mantine-var-colors-dark-9);
+	color: var(--mantine-color-dark-9);
+	background-color: transparent;
+}
+
+html[data-color-scheme="dark"] .hero__control--github {
+	border-color: transparent;
+	background-color: var(--mantine-color-dark-5);
+	color: var(--mantine-color-gray-0);
+}
+
+.hero__control--github:hover {
+	border-color: var(--mantine-color-gray-6);
+	color: var(--mantine-color-gray-6) !important;
+}
+
+html[data-color-scheme="dark"] .hero__control--github:hover {
+	background-color: var(--mantine-color-dark-6);
+}

@@ -1,7 +1,4 @@
 import {FunctionComponent, useEffect, useMemo} from "react";
-import {
-	useUpdateTaskMutation
-} from "./hooks/useUpdateTaskMutation/useUpdateTaskMutation";
 import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {
@@ -12,49 +9,49 @@ import {
 	NumberInput,
 	Select,
 	TextInput,
-	Tooltip
+	Tooltip,
 } from "@mantine/core";
-import {FieldError} from "../../../FieldError/FieldError";
-import {UpdateTaskModalProps} from "./interfaces";
+import {Pencil} from "tabler-icons-react";
 import {Priority, Status, UpdateTaskDto} from "@prioritea/types";
 import {updateTaskSchema} from "@prioritea/validation";
+import {FieldError} from "../../../FieldError/FieldError";
+import {UpdateTaskModalProps} from "./interfaces";
+import {
+	useUpdateTaskMutation
+} from "./hooks/useUpdateTaskMutation/useUpdateTaskMutation";
 import {useTasksQuery} from "../hooks/useTasksQuery/useTasksQuery";
 import {formatTaskStatus} from "../utils/format-task-status/format-task-status";
-import {Pencil} from "tabler-icons-react";
 import {useToggle} from "../../../../hooks/useToggle/useToggle";
 
 export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 																			 id,
-																			 disabled
-
+																			 disabled,
 																		 }) => {
-	const [
-		modalIsOpen,
-		,
-		openModal,
-		closeModal
-	] = useToggle();
+	const [modalIsOpen, , openModal, closeModal] = useToggle();
 	const {mutateAsync} = useUpdateTaskMutation(closeModal);
 	const {data: tasks} = useTasksQuery();
-	const task = useMemo(() => tasks?.find((task) => task.id === id), [tasks?.length, id]);
+	const task = useMemo(
+		() => tasks?.find((tsk) => tsk.id === id),
+		[tasks?.length, id]
+	);
 	const {
 		reset,
 		control,
 		register,
 		handleSubmit,
-		formState: {errors}
+		formState: {errors},
 	} = useForm<UpdateTaskDto>({
 		defaultValues: {
 			priority: task?.priority,
 			description: task?.description,
 			status: task?.status,
 		},
-		resolver: zodResolver(updateTaskSchema)
+		resolver: zodResolver(updateTaskSchema),
 	});
-	const onSubmit: SubmitHandler<Omit<UpdateTaskDto, 'id'>> = async ({
+	const onSubmit: SubmitHandler<Omit<UpdateTaskDto, "id">> = async ({
 																		  priority,
 																		  description,
-																		  status
+																		  status,
 																	  }) => {
 		if (!id) return;
 
@@ -66,7 +63,6 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 	useEffect(() => {
 		reset(task);
 	}, [task?.id]);
-
 
 	return (
 		<>
@@ -104,10 +100,12 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 								<Select
 									label="Status"
 									placeholder="Pick one.."
-									data={Object.values(Status).map((status) => ({
-										value: status,
-										label: formatTaskStatus(status)
-									}))}
+									data={Object.values(Status).map(
+										(status) => ({
+											value: status,
+											label: formatTaskStatus(status),
+										})
+									)}
 									{...field}
 								/>
 							)}
@@ -115,18 +113,22 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 						<FieldError field={errors.status}/>
 					</Group>
 					<Group position="apart" mt="xl">
-						<Button type="submit"
-								className={`capitalize`}
-								variant="filled">
+						<Button
+							type="submit"
+							className={`capitalize`}
+							variant="filled"
+						>
 							Update
 						</Button>
 					</Group>
 				</form>
 			</Modal>
-			<Tooltip label={'Update selected task'} withArrow>
+			<Tooltip label={"Update selected task"} withArrow>
 				<ActionIcon
 					mb="1rem"
-					size={24} color="primary" radius="xl"
+					size={24}
+					color="primary"
+					radius="xl"
 					variant="filled"
 					disabled={disabled}
 					onClick={openModal}
@@ -136,4 +138,4 @@ export const UpdateTaskModal: FunctionComponent<UpdateTaskModalProps> = ({
 			</Tooltip>
 		</>
 	);
-}
+};

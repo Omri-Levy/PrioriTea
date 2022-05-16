@@ -1,4 +1,4 @@
-import {FunctionVoidReturn} from "@prioritea/types";
+import { FunctionVoidReturn } from "@prioritea/types";
 
 export interface AuthenticatedNavbarProps {
 	isOpen: boolean;

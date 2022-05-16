@@ -55,23 +55,10 @@ export const SignUp = () => {
 
 	return (
 		<Paper radius="md" p="xl" withBorder>
-			{/*<Text size="lg" weight={500}>*/}
-			{/*  Welcome to PrioriTea, Sign Up with*/}
-			{/*</Text>*/}
-			{/*<Group grow mb="md" mt="md">*/}
-			{/*  <Button variant="filled" radius="xl" leftIcon={<BrandGoogle size={18} />}>*/}
-			{/*    Google*/}
-			{/*  </Button>*/}
-			{/*  <Button variant="filled" radius="xl" leftIcon={<BrandTwitter size={18} />}>*/}
-			{/*    Twitter*/}
-			{/*  </Button>*/}
-			{/*</Group>*/}
-			{/*<Divider label="Or continue with email" labelPosition="center" my="lg" />*/}
 			{!emailAlreadyInUse && isError && (
 				<ErrorAlert title="Something went wrong..">
 					Please refresh this page or try again later. If the problem
-					persists
-					please contact us.
+					persists please contact us.
 				</ErrorAlert>
 			)}
 			<form noValidate onSubmit={handleSubmit(onSubmit)}>
@@ -81,7 +68,6 @@ export const SignUp = () => {
 						required
 						label="Email"
 						placeholder="Type here.."
-
 					/>
 					<FieldError field={emailError}/>
 					<TextInput
@@ -97,7 +83,6 @@ export const SignUp = () => {
 						required
 						label="Password"
 						placeholder="Type here.."
-
 					/>
 					<FieldError field={errors.password}/>
 					<PasswordInput
@@ -106,14 +91,8 @@ export const SignUp = () => {
 						required
 						label="Password Confirmation"
 						placeholder="Type here.."
-
 					/>
 					<FieldError field={errors.passwordConfirmation}/>
-					{/*<Checkbox*/}
-					{/*  {...register("tos")}*/}
-					{/*  label="I accept terms and conditions"*/}
-					{/*  */}
-					{/*/>*/}
 				</Group>
 
 				<Group position="apart" mt="xl">

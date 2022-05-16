@@ -1,22 +1,23 @@
+import {FunctionComponent, useCallback} from "react";
 import {ActionIcon, Tooltip} from "@mantine/core";
 import {Trash} from "tabler-icons-react";
 import {
 	useDeleteTasksMutation
 } from "./hooks/useDeleteTasksMutation/useDeleteTasksMutation";
-import {FunctionComponent, useCallback} from "react";
 import {DeleteTasksProps} from "./interfaces";
 
 export const DeleteTasks: FunctionComponent<DeleteTasksProps> = ({
 																	 disabled,
-																	 selectedTasksIds
+																	 selectedTasksIds,
 																 }) => {
 	const {mutateAsync} = useDeleteTasksMutation();
-	const deleteSelectedTasks = useCallback(async () =>
-			mutateAsync({ids: selectedTasksIds})
-		, [selectedTasksIds]);
+	const deleteSelectedTasks = useCallback(
+		async () => mutateAsync({ids: selectedTasksIds}),
+		[selectedTasksIds]
+	);
 
 	return (
-		<Tooltip label={'Delete selected tasks'} withArrow>
+		<Tooltip label={"Delete selected tasks"} withArrow>
 			<ActionIcon
 				mb="1rem"
 				size={24}
@@ -30,4 +31,4 @@ export const DeleteTasks: FunctionComponent<DeleteTasksProps> = ({
 			</ActionIcon>
 		</Tooltip>
 	);
-}
+};

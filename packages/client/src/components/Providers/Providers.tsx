@@ -1,5 +1,4 @@
 import {FunctionComponent} from "react";
-import {queryClient} from "../../lib/query-client";
 import {QueryClientProvider} from "react-query";
 import {ColorSchemeProvider, MantineProvider} from "@mantine/core";
 import {NotificationsProvider} from "@mantine/notifications";
@@ -7,11 +6,11 @@ import {
 	useHandleColorScheme
 } from "./hooks/useHandleColorScheme/useHandleColorScheme";
 import {IChildren} from "../../interfaces";
+import {queryClient} from "../../lib/query-client";
 
 export const Providers: FunctionComponent<IChildren> = (props) => {
 	const {children} = props;
 	const [colorScheme, toggleColorScheme] = useHandleColorScheme();
-
 
 	return (
 		<QueryClientProvider client={queryClient}>
@@ -50,4 +49,4 @@ export const Providers: FunctionComponent<IChildren> = (props) => {
 			</ColorSchemeProvider>
 		</QueryClientProvider>
 	);
-}
+};

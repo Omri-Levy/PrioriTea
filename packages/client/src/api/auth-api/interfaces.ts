@@ -11,5 +11,5 @@ export interface IAuthResponse {
 			};
 		};
 		errors: Array<{ message: string; field?: string }> | null;
-	}
+	};
 }
