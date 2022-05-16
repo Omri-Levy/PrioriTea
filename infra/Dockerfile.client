@@ -28,5 +28,5 @@ RUN yarn build:client
 
 FROM nginx:alpine
 
-COPY --from=builder /app/packages/client/build /var/www/html;
+COPY --from=builder /app/packages/client/build /var/www/html
 
