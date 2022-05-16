@@ -1,13 +1,25 @@
 version: '3.9'
 services:
-  client:
+  nginx:
+    container_name: nginx
     restart: always
-    container_name: client
     build:
       context: ..
       dockerfile: ./infra/Dockerfile.client
     ports:
-      - "8080:80"
+      - "80:80"
+      - "443:443"
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    volumes:
+      - ./data/nginx:/etc/nginx/conf.d
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
+  certbot:
+    image: certbot/certbot
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
   server:
     depends_on:
       - db
@@ -21,7 +33,7 @@ services:
     env_file:
       - ../packages/server/.env
     environment:
-      - CORS_ORIGIN=http://localhost:8080
+      - CORS_ORIGIN=http://localhost
       - DB_URL=postgresql://postgres:postgres@db:5432/prioritea?schema=public
   db:
     restart: always
