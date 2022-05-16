@@ -3,16 +3,13 @@ services:
   nginx:
     container_name: nginx
     restart: always
-    build:
-      context: ..
-      dockerfile: ./infra/Dockerfile.client
-    environment:
-      - REACT_APP_API_URL=/api/v1
+    image: docker.io/omrilevy0197/client:latest
     ports:
       - "80:80"
       - "443:443"
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
     volumes:
+      - ./data/nginx:/etc/nginx/conf.d
       - ./data/certbot/conf:/etc/letsencrypt
       - ./data/certbot/www:/var/www/certbot
   certbot:
@@ -26,16 +23,11 @@ services:
       - db
     restart: always
     container_name: server
-    build:
-      context: ..
-      dockerfile: ./infra/Dockerfile.server
+    image: docker.io/omrilevy0197/server:latest
     ports:
       - "4000:4000"
     env_file:
-      - ../packages/server/.env
-    environment:
-      - CORS_ORIGIN=http://localhost
-      - DB_URL=postgresql://postgres:postgres@db:5432/prioritea?schema=public
+      - ./.env.server
   db:
     restart: always
     container_name: db
