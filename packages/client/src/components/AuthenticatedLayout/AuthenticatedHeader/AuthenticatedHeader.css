@@ -1,0 +1,17 @@
+.app-shell__header--authenticated {
+	display: flex;
+	align-items: center;
+	top: 0;
+	right: 0;
+}
+
+.app-shell__header__burger--authenticated {
+	color: var(--mantine-color-gray-6);
+	margin-left: auto;
+}
+
+@media only screen and (min-width: 48em) {
+	.app-shell__header__burger--authenticated {
+		display: none;
+	}
+}

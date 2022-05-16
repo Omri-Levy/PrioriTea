@@ -1,0 +1,19 @@
+.dnd-react-table__container {
+	display: grid;
+	align-items: flex-start;
+	grid-template-columns: 1fr;
+	min-height: 65vh;
+}
+
+.dnd-react-table {
+	min-width: 420px;
+	margin-bottom: 1rem;
+}
+
+.dnd-react-table tbody-tr-td {
+	border-bottom: 0;
+}
+
+.dnd-react-table__pagination {
+	align-self: flex-end;
+}

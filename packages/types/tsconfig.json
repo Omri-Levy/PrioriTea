@@ -1,0 +1,7 @@
+{
+  "extends": "@prioritea/tsconfig/tsconfig-types.json",
+  "compilerOptions": {
+	"outDir": "dist",
+	"rootDir": "."
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "extends": "@prioritea/tsconfig/tsconfig-client.json",
+  "compilerOptions": {
+	"rootDir": ".",
+	"jsx": "react-jsx",
+	"outDir": "dist"
+  },
+  "include": [
+	"src/"
+  ],
+  "types": [
+	"node"
+  ],
+  "exclude": [
+	"**/node_modules/**",
+	"**/dist/**",
+	"**/coverage/**",
+	"**/src/**/*.(test|spec).ts"
+  ],
+  "references": [
+	{
+	  "path": "./tsconfig.node.json"
+	}
+  ]
+}

@@ -1,0 +1,15 @@
+.hidden {
+	display: none;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}

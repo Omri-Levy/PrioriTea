@@ -1,0 +1,7 @@
+.app-shell--unauthenticated main {
+	background-color: var(--mantine-color-gray-0);
+}
+
+html[data-color-scheme="dark"] .app-shell--unauthenticated main {
+	background-color: var(--mantine-color-dark-8);
+}

@@ -1,27 +1,23 @@
 node_modules
 .idea
-build
+dist
 
-.env
-.env.production
-.env.development
-.env.development.local
-.env.test.local
-.env.production.local
+infra/.env.db
 
 /.pnp
 .pnp.js
 
 # testing
-/coverage
+coverage
 
 # misc
 .DS_Store
-
-
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.pnp.cjs
 
 # Local Netlify folder
 .netlify
+
+logs
+*.log
+infra/clean-docker.zh
+infra/deploy-docker.zh

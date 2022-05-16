@@ -1,0 +1,59 @@
+.nav-link,
+.nav-link--active {
+	text-transform: capitalize;
+	display: flex;
+	align-items: center;
+	line-height: 1;
+	padding: 8px 12px;
+	border-radius: var(--mantine-radius-sm);
+	text-decoration: none;
+	color: var(--mantine-color-gray-7);
+	font-size: var(--mantine-font-size-sm);
+	font-weight: 500;
+}
+
+html[data-color-scheme="dark"] .nav-link,
+html[data-color-scheme="dark"] .nav-link--active {
+	color: var(--mantine-color-dark-0);
+}
+
+.nav-link:hover,
+.nav-link--active:hover {
+	background-color: var(--mantine-color-gray-0);
+}
+
+html[data-color-scheme="dark"] .nav-link:hover,
+html[data-color-scheme="dark"] .nav-link--active:hover {
+	color: var(--mantine-color-dark-6);
+}
+
+@media only screen and (max-width: 768px) {
+	.nav-link,
+	.nav-link--active {
+		border-radius: 0;
+		padding: var(--mantine-spacing-md);
+	}
+}
+
+.nav-link--active,
+.nav-link--active:hover {
+	background-color: var(--mantine-color-tw-orange-0);
+	color: var(--mantine-color-tw-orange-7);
+}
+
+html[data-color-scheme="dark"] .nav-link--active,
+html[data-color-scheme="dark"] .nav-link--active:hover {
+	background-color: var(--mantine-color-tw-orange-8);
+	color: var(--mantine-color-white);
+}
+
+.nav-link__icon--active {
+	color: var(--mantine-color-tw-orange-7);
+}
+
+html[data-color-scheme="dark"] .nav-link__icon--active {
+	color: var(--mantine-color-tw-orange-5);
+}
+
+/* dark on active nav-link and active nav-link hover */
+/*theme.fn.rgba(theme.colors[theme.primaryColor][8], 0.25)*/
