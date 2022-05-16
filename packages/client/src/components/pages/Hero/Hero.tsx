@@ -11,7 +11,9 @@ export const Hero: FunctionComponent = () => {
 		<div className={'hero__wrapper'}>
 			<Container size={700} className={'hero__inner'}>
 				<h1 className={'hero__title'}>
-					A{" "}
+					PrioriTea,
+					<br/>
+					a{" "}
 					<Text
 						component="span"
 						variant="gradient"
