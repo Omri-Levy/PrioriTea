@@ -64,7 +64,7 @@ export const UnauthenticatedHeader: FunctionComponent = () => {
 					/>
 					<Text
 						component={Link}
-						to="/sign-in"
+						to="/"
 						className={"app-shell__header__logo--unauthenticated"}
 					>
 						PrioriTea
